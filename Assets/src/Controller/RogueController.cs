@@ -5,8 +5,11 @@ using System.Collections;
 public class RogueController : MonoBehaviour
 {
 
+	bool xprio = true;
 
+	Actions actionBuffer;
 
+	float heldDuration = 0f;
 	float inputcooldown = 0f;
 
 	// Use this for initialization
@@ -17,28 +20,71 @@ public class RogueController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if(inputcooldown > 0f)
+		inputcooldown -= Time.deltaTime;
+
+		if (Input.GetButtonDown("Horizontal") || Input.GetButtonDown("Vertical"))
 		{
-			inputcooldown -= Time.deltaTime;
-			return;
+			xprio = Input.GetButtonDown("Horizontal");
+
+			heldDuration += Time.deltaTime;
+			float x = Input.GetAxis("Horizontal");
+			float y = Input.GetAxis("Vertical");
+			if (xprio &&  x < 0f) actionBuffer = Actions.moveleft;
+			else if (xprio && x > 0f) actionBuffer = Actions.moveright;
+			else if (y < 0f) actionBuffer = Actions.movedown;
+			else if (y > 0f) actionBuffer = Actions.moveup;
+			else if (x < 0f) actionBuffer = Actions.moveleft;
+			else if (x > 0f) actionBuffer = Actions.moveright;
 		}
-		float x = Input.GetAxis("Horizontal");
-		float y = Input.GetAxis("Vertical");
-		if (x < 0f) Move(new Vector2(-1f, 0f));
-		else if (x > 0f) Move(new Vector2(1f, 0f));
-		else if (y < 0f) Move(new Vector2(0f, -1f));
-		else if (y > 0f) Move(new Vector2(0f, 1f));
+		else if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+		{
+			heldDuration += Time.deltaTime;
+			if (heldDuration > 0.5f && inputcooldown < 0f)
+			{
+				float x = Input.GetAxis("Horizontal");
+				float y = Input.GetAxis("Vertical");
+				if (xprio && x < 0f) actionBuffer = Actions.moveleft;
+				else if (xprio && x > 0f) actionBuffer = Actions.moveright;
+				else if (y < 0f) actionBuffer = Actions.movedown;
+				else if (y > 0f) actionBuffer = Actions.moveup;
+				else if (x < 0f) actionBuffer = Actions.moveleft;
+				else if (x > 0f) actionBuffer = Actions.moveright;
+			}
+		}
+		else
+		{
+			heldDuration = 0f;
+		}
+
+		
+		if (actionBuffer != Actions.none && inputcooldown < 0f)
+		{
+			PerformAction(actionBuffer);
+			actionBuffer = Actions.none;
+		}
+		
+	}
+
+	void PerformAction(Actions a)
+	{
+		if (a == Actions.moveup) Move(new Vector2(0, 1));
+		if (a == Actions.moveright) Move(new Vector2(1, 0));
+		if (a == Actions.moveleft) Move(new Vector2(-1, 0));
+		if (a == Actions.movedown) Move(new Vector2(0, -1));
 	}
 
 	void Move(Vector2 where)
 	{
-		print(where);
 		GetComponent<Mobile>().MoveTo((Vector2)transform.position + where);
-		EndTurn();
+		inputcooldown = 0.19f;
 	}
 
-	void EndTurn()
+	enum Actions
 	{
-		inputcooldown = 0.19f;
+		none = 0,
+		moveup,
+		movedown,
+		moveleft,
+		moveright
 	}
 }
