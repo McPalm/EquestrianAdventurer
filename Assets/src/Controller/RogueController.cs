@@ -75,8 +75,11 @@ public class RogueController : MonoBehaviour
 
 	void Move(Vector2 where)
 	{
-		if(GetComponent<Mobile>().MoveDirection(where))
+		MapCharacter mc = null;
+		if(GetComponent<Mobile>().MoveDirection(where, out mc))
 			inputcooldown = 0.19f;
+		if (mc)
+			GetComponent<MapCharacter>().Melee(mc);
 	}
 
 	enum Actions

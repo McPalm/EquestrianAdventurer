@@ -6,21 +6,41 @@ public class MapObject : MonoBehaviour
 
 	IntVector2 realLocation;
 
+	/// <summary>
+	/// The objects real location as far as the game is concerned.
+	/// This does not sync with apparent position, if you wish to move the graphic, use Put(Vector2)
+	/// </summary>
 	public IntVector2 RealLocation
 	{
 		get
 		{
 			return realLocation;
 		}
-
 		set
 		{
+			ObjectMap.Instance.Move(this, realLocation, value);
 			realLocation = value;
 		}
 	}
 
-	public void OnEnable()
+	/// <summary>
+	/// Move the object graphic to a specified location
+	/// </summary>
+	/// <param name="v2"></param>
+	public void Put(Vector2 v2)
+	{
+		transform.position = v2;
+		RealLocation = IntVector2.RoundFrom(v2);
+	}
+
+	void OnEnable()
 	{
 		realLocation = IntVector2.RoundFrom(transform.position);
+		ObjectMap.Instance.Add(this);
+	}
+
+	void OnDisable()
+	{
+		ObjectMap.Instance.Remove(this);
 	}
 }

@@ -5,13 +5,26 @@ public class Mobile : MapObject
 {
 	// Vector2 NetworkedPosition = new Vector2(999999999f, 99999999999f);
 
-	public bool MoveDirection(Vector2 v2)
+	public bool MoveDirection(Vector2 v2, out MapCharacter bump)
 	{
 		// destination of move
 		Vector2 d = (Vector2)RealLocation + v2;
+		bump = null;
 
 		// figure out if we can enter
 		if (BlockMap.Instance.BlockMove(d)) return false;
+
+		// check for other characters
+		RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, v2, 1f);
+
+		foreach (RaycastHit2D hit in hits)
+		{
+			if (hit.collider.gameObject != gameObject)
+			{
+				bump = hit.collider.GetComponent<MapCharacter>();
+				return false;
+			}
+		}
 
 		// perform the movement
 		ForceMove(d);
