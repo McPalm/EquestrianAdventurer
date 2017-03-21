@@ -1,14 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Mobile : MonoBehaviour
+public class Mobile : MapObject
 {
 	// Vector2 NetworkedPosition = new Vector2(999999999f, 99999999999f);
 
-	public void MoveTo(Vector2 v2)
+	public bool MoveDirection(Vector2 v2)
+	{
+		// destination of move
+		Vector2 d = (Vector2)RealLocation + v2;
+
+		// figure out if we can enter
+		if (BlockMap.Instance.BlockMove(d)) return false;
+
+		// perform the movement
+		ForceMove(d);
+
+		return true;
+	}
+
+	public void ForceMove(Vector2 v2)
 	{
 		//NetworkedPosition = new Vector2(Mathf.Round(v2.x), Mathf.Round(v2.y));
 		OnMove(v2);
+		RealLocation = IntVector2.RoundFrom(v2);
 	}
 
 	void OnMove(Vector2 v2)
