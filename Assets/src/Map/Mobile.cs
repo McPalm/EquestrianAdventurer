@@ -15,7 +15,7 @@ public class Mobile : MapObject
 		if (BlockMap.Instance.BlockMove(d)) return false;
 
 		// check for other characters
-		RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, v2, 1f);
+		RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, v2, 1f, 1 << 8);
 
 		foreach (RaycastHit2D hit in hits)
 		{
