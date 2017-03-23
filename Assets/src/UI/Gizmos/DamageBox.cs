@@ -20,7 +20,7 @@ public class DamageBox : MonoBehaviour
 
 		background.sprite = backgroundSprites[Random.Range(0, backgroundSprites.Length)];
 		background.color = Color.Lerp(color1, color2, Random.value);
-		StartCoroutine(KillAfterSeconds(1f));
+		StartCoroutine(KillAfterSeconds(0.6f));
 	}
 
 	IEnumerator KillAfterSeconds(float time)
