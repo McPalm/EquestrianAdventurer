@@ -4,9 +4,9 @@ using System;
 
 
 // script for an immobile Wall
+[RequireComponent(typeof(BoxCollider2D))]
 public class Wall : MonoBehaviour, IMapBlock
 {
-
 	public bool SeeThrough = false;
 
 	public bool BlockMove
@@ -33,5 +33,6 @@ public class Wall : MonoBehaviour, IMapBlock
 	void OnEnable()
 	{
 		BlockMap.Instance.Add(this, gameObject);
+		gameObject.layer = LayerMask.NameToLayer("Wall");
 	}
 }
