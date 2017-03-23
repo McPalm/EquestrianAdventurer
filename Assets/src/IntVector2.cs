@@ -2,11 +2,9 @@
 using UnityEngine;
 
 [System.Serializable]
-#pragma warning disable CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
-#pragma warning disable CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
+#pragma warning disable
 public struct IntVector2 : IEquatable<IntVector2>
-#pragma warning restore CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
-#pragma warning restore CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
+#pragma warning restore
 {
 	public int x;
 	public int y;

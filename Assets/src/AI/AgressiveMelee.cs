@@ -20,13 +20,11 @@ public class AgressiveMelee : MonoBehaviour
 	{
 		if (GetComponent<LOSCheck>().HasLOS(target.GetComponent<MapObject>()))
 		{
-			print("See");
 			ai.targetCharacter = target.GetComponent<MapCharacter>();
 			ai.targetLocation = target.GetComponent<MapObject>().RealLocation; // go to last location
 		}
 		else
 		{
-			print("No See");
 			ai.targetCharacter = null;
 			if (GetComponent<MapObject>().RealLocation == ai.targetLocation) ai.targetLocation = home; // return to home if at last known location
 		}
