@@ -4,25 +4,31 @@ using System.Collections.Generic;
 public class TurnTracker : MonoBehaviour
 {
 
+	static TurnTracker _instance;
+
 	List<SimpleBehaviour> characters;
+
+	void Awake()
+	{
+		_instance = this;
+	}
 
 	// Use this for initialization
 	void Start () {
 		characters = new List<SimpleBehaviour>(FindObjectsOfType<SimpleBehaviour>());
 	}
 
-	float timer = 1f;
-
-	// Update is called once per frame
-	void Update ()
+	public static TurnTracker Instance
 	{
-		timer -= Time.deltaTime;
-
-		if (timer < 0f)
+		get
 		{
-			foreach (SimpleBehaviour sb in characters)
-				sb.DoTurn();
-			timer = 1f;
+			return _instance;
 		}
+	}
+
+	public void NextTurn()
+	{
+		foreach (SimpleBehaviour sb in characters)
+			sb.DoTurn();
 	}
 }

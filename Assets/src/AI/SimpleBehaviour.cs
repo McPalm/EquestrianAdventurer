@@ -31,12 +31,8 @@ public class SimpleBehaviour : MonoBehaviour
 	void MoveDirection(Vector2 v2)
 	{
 		MapCharacter mc = null;
-		bool moved = GetComponent<Mobile>().MoveDirection(v2, out mc);
+		GetComponent<Mobile>().MoveDirection(v2, out mc);
 		if (mc)
 			GetComponent<MapCharacter>().Melee(mc);
-		if(!moved)
-		{
-			print("obstacle!");
-		}
 	}
 }

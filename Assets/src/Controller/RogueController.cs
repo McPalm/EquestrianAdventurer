@@ -12,9 +12,11 @@ public class RogueController : MonoBehaviour
 	float heldDuration = 0f;
 	float inputcooldown = 0f;
 
+
+
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
@@ -76,10 +78,22 @@ public class RogueController : MonoBehaviour
 	void Move(Vector2 where)
 	{
 		MapCharacter mc = null;
-		if(GetComponent<Mobile>().MoveDirection(where, out mc))
+		if (GetComponent<Mobile>().MoveDirection(where, out mc))
+		{
 			inputcooldown = 0.19f;
+			EndTurn();
+		}
 		if (mc)
+		{
 			GetComponent<MapCharacter>().Melee(mc);
+			EndTurn();
+		}
+
+	}
+
+	void EndTurn()
+	{
+		TurnTracker.Instance.NextTurn();
 	}
 
 	enum Actions
