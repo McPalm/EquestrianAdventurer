@@ -30,6 +30,7 @@ public class MapCharacter : MonoBehaviour
 		{
 			float damage = baseDamage * baseDamage / (baseDamage + target.armor);
 			target.GetComponent<HitPoints>().Hurt(new DamageData().SetDamage((int)damage));
+			HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, (int)damage);
 		}
 	}
 
