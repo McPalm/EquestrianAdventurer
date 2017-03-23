@@ -11,8 +11,6 @@ public class MapCharacter : MonoBehaviour
 	public float dodgeSkill;
 	public float armor;
 
-	public bool raycastleft = false;
-
 	// Use this for initialization
 	void Start ()
 	{
@@ -32,6 +30,9 @@ public class MapCharacter : MonoBehaviour
 			target.GetComponent<HitPoints>().Hurt(new DamageData().SetDamage((int)damage));
 			HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, (int)damage);
 		}
+
+		transform.position = (transform.position + target.transform.position) * 0.5f;
+		GetComponent<Mobile>().ForceMove((Vector2)GetComponent<MapObject>().RealLocation);
 	}
 
 	void OnHurt(int current, int max)
