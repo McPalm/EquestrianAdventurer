@@ -19,6 +19,7 @@ public class MapCharacter : MonoBehaviour
 		gameObject.layer = LayerMask.NameToLayer("Character");
 		GetComponent<CircleCollider2D>().isTrigger = true;
 		GetComponent<MapObject>().MapCharacter = this;
+		GetComponent<HitPoints>().EventChangeHealth.AddListener(OnHurt);
 		// maybe get a health bar and shit
 	}
 
@@ -30,5 +31,11 @@ public class MapCharacter : MonoBehaviour
 			float damage = baseDamage * baseDamage / (baseDamage + target.armor);
 			target.GetComponent<HitPoints>().Hurt(new DamageData().SetDamage((int)damage));
 		}
+	}
+
+	void OnHurt(int current, int max)
+	{
+		if (current <= 0)
+			Destroy(gameObject);
 	}
 }
