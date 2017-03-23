@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MapObject : MonoBehaviour
 {
-
+	MapCharacter mapCharacter;
 	IntVector2 realLocation;
 
 	/// <summary>
@@ -20,6 +20,19 @@ public class MapObject : MonoBehaviour
 		{
 			ObjectMap.Instance.Move(this, realLocation, value);
 			realLocation = value;
+		}
+	}
+
+	public MapCharacter MapCharacter
+	{
+		get
+		{
+			return mapCharacter;
+		}
+
+		set
+		{
+			mapCharacter = value;
 		}
 	}
 

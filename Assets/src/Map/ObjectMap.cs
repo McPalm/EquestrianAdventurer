@@ -9,18 +9,12 @@ public class ObjectMap : MonoBehaviour
 	{
 		get
 		{
+			if (_instance == null) _instance = FindObjectOfType<ObjectMap>();
 			return _instance;
 		}
 	}
 
 	Dictionary<IntVector2, ObjectStack> map = new Dictionary<IntVector2, ObjectStack>();
-
-
-	// Use this for initialization
-	void Awake()
-	{
-		_instance = this;
-	}
 
 	public void Add(MapObject o)
 	{
@@ -48,10 +42,24 @@ public class ObjectMap : MonoBehaviour
 		return o;
 	}
 
+	/// <summary>
+	/// Get the last MapCharacter on the stack at a given location
+	/// Null if there is no character there
+	/// </summary>
+	/// <param name="v2"></param>
+	/// <returns></returns>
+	public MapCharacter CharacterAt(IntVector2 v2)
+	{
+		foreach(MapObject o in GetStack(v2).objects)
+		{
+			if (o.MapCharacter) return o.MapCharacter;
+		}
+		return null;
+	}
 
 	class ObjectStack
 	{
-		List<MapObject> objects = new List<MapObject>(4);
+		public List<MapObject> objects = new List<MapObject>(4);
 
 		public int Count {  get { return objects.Count; } }
 

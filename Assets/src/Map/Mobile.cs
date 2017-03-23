@@ -5,6 +5,12 @@ public class Mobile : MapObject
 {
 	// Vector2 NetworkedPosition = new Vector2(999999999f, 99999999999f);
 
+		/// <summary>
+		/// Move the character in the given direction
+		/// </summary>
+		/// <param name="v2">direction of movement</param>
+		/// <param name="bump">out parameter for a character that blocks movement, nullable</param>
+		/// <returns>true if we moved, false if we could not move</returns>
 	public bool MoveDirection(Vector2 v2, out MapCharacter bump)
 	{
 		// destination of move
@@ -15,6 +21,10 @@ public class Mobile : MapObject
 		if (BlockMap.Instance.BlockMove(d)) return false;
 
 		// check for other characters
+
+		bump = ObjectMap.Instance.CharacterAt(IntVector2.RoundFrom(d));
+		if (bump) return false;
+		/*
 		RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, v2, 1f, 1 << 8);
 
 		foreach (RaycastHit2D hit in hits)
@@ -25,6 +35,7 @@ public class Mobile : MapObject
 				return false;
 			}
 		}
+		*/
 
 		// perform the movement
 		ForceMove(d);

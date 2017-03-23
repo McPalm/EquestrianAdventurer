@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(MapObject))]
+[RequireComponent(typeof(Mobile))]
 [RequireComponent(typeof(HitPoints))]
 [RequireComponent(typeof(CircleCollider2D))]
 public class MapCharacter : MonoBehaviour
@@ -18,6 +18,7 @@ public class MapCharacter : MonoBehaviour
 	{
 		gameObject.layer = LayerMask.NameToLayer("Character");
 		GetComponent<CircleCollider2D>().isTrigger = true;
+		GetComponent<MapObject>().MapCharacter = this;
 		// maybe get a health bar and shit
 	}
 
