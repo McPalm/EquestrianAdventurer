@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 /// <summary>
@@ -7,14 +8,24 @@ using System.Collections;
 [RequireComponent(typeof(MapCharacter))]
 public class SimpleBehaviour : MonoBehaviour, TurnTracker.TurnEntry
 {
-	public GameObject target;
+	public MapCharacter targetCharacter;
+	public IntVector2 targetLocation;
+
+	/// <summary>
+	/// use this to modify target and targetlocation
+	/// </summary>
+	public StartTurnEvent startTurnEvent = new StartTurnEvent();
+	public StartTurnEvent endTurnEvent = new StartTurnEvent();
 
 	/// <summary>
 	/// called when the AI is given an action
 	/// </summary>
 	public void DoTurn()
 	{
-		Vector2 delta = target.transform.position - transform.position;
+		startTurnEvent.Invoke(this);
+
+		Vector2 delta = (Vector3)targetLocation - transform.position;
+		if(targetCharacter) delta = targetCharacter.transform.position - transform.position;
 
 		if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
 		{
@@ -26,6 +37,8 @@ public class SimpleBehaviour : MonoBehaviour, TurnTracker.TurnEntry
 			if (delta.y < 0f) MoveDirection(Vector2.down);
 			else if (delta.y > 0f) MoveDirection(Vector2.up);
 		}
+
+		endTurnEvent.Invoke(this);
 	}
 
 	void MoveDirection(Vector2 v2)
@@ -39,10 +52,13 @@ public class SimpleBehaviour : MonoBehaviour, TurnTracker.TurnEntry
 	void Start()
 	{
 		TurnTracker.Instance.Add(this);
+		targetLocation = IntVector2.RoundFrom(transform.position);
 	}
 
 	void OnDestroy()
 	{
 		TurnTracker.Instance.Remove(this);
 	}
+
+	public class StartTurnEvent : UnityEvent<SimpleBehaviour> { }
 }

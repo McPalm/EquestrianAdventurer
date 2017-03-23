@@ -11,14 +11,11 @@ public class BlockMap : MonoBehaviour
 	{
 		get
 		{
+			if (!_instance) _instance = FindObjectOfType<BlockMap>();
 			return _instance;
 		}
 	}
 
-	void Awake()
-	{
-		_instance = this;
-	}
 
 	public void Add(IMapBlock b, GameObject o)
 	{
