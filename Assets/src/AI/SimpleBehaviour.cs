@@ -41,7 +41,7 @@ public class SimpleBehaviour : MonoBehaviour, TurnTracker.TurnEntry
 		TurnTracker.Instance.Add(this);
 	}
 
-	void OnDisable()
+	void OnDestroy()
 	{
 		TurnTracker.Instance.Remove(this);
 	}

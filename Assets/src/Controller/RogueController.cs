@@ -56,6 +56,8 @@ public class RogueController : MonoBehaviour
 		else
 		{
 			heldDuration = 0f;
+			if (Input.GetButtonDown("Idle"))
+				actionBuffer = Actions.idle;
 		}
 
 		
@@ -69,10 +71,24 @@ public class RogueController : MonoBehaviour
 
 	void PerformAction(Actions a)
 	{
-		if (a == Actions.moveup) Move(new Vector2(0, 1));
-		if (a == Actions.moveright) Move(new Vector2(1, 0));
-		if (a == Actions.moveleft) Move(new Vector2(-1, 0));
-		if (a == Actions.movedown) Move(new Vector2(0, -1));
+		switch (a)
+		{
+			case Actions.moveup:
+				Move(new Vector2(0, 1));
+				break;
+			case Actions.moveright:
+				Move(new Vector2(1, 0));
+				break;
+			case Actions.moveleft:
+				Move(new Vector2(-1, 0));
+				break;
+			case Actions.movedown:
+				Move(new Vector2(0, -1));
+				break;
+			case Actions.idle:
+				EndTurn();
+				break;
+		}
 	}
 
 	void Move(Vector2 where)
@@ -102,6 +118,7 @@ public class RogueController : MonoBehaviour
 		moveup,
 		movedown,
 		moveleft,
-		moveright
+		moveright,
+		idle
 	}
 }
