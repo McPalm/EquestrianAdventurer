@@ -6,16 +6,11 @@ public class TurnTracker : MonoBehaviour
 
 	static TurnTracker _instance;
 
-	List<SimpleBehaviour> characters;
+	List<TurnEntry> characters = new List<TurnEntry>();
 
 	void Awake()
 	{
 		_instance = this;
-	}
-
-	// Use this for initialization
-	void Start () {
-		characters = new List<SimpleBehaviour>(FindObjectsOfType<SimpleBehaviour>());
 	}
 
 	public static TurnTracker Instance
@@ -30,5 +25,20 @@ public class TurnTracker : MonoBehaviour
 	{
 		foreach (SimpleBehaviour sb in characters)
 			sb.DoTurn();
+	}
+
+	public void Add(TurnEntry e)
+	{
+		characters.Add(e);
+	}
+
+	public void Remove(TurnEntry e)
+	{
+		characters.Remove(e);
+	}
+	
+	public interface TurnEntry
+	{
+		void DoTurn();
 	}
 }

@@ -5,7 +5,7 @@ using System.Collections;
 /// give it a target and it will move to the target and bump it.
 /// </summary>
 [RequireComponent(typeof(MapCharacter))]
-public class SimpleBehaviour : MonoBehaviour
+public class SimpleBehaviour : MonoBehaviour, TurnTracker.TurnEntry
 {
 	public GameObject target;
 
@@ -34,5 +34,15 @@ public class SimpleBehaviour : MonoBehaviour
 		GetComponent<Mobile>().MoveDirection(v2, out mc);
 		if (mc)
 			GetComponent<MapCharacter>().Melee(mc);
+	}
+
+	void Start()
+	{
+		TurnTracker.Instance.Add(this);
+	}
+
+	void OnDisable()
+	{
+		TurnTracker.Instance.Remove(this);
 	}
 }
