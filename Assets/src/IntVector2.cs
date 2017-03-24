@@ -67,4 +67,14 @@ public struct IntVector2 : IEquatable<IntVector2>
 	{
 		return string.Format("[X = {0}; Y = {1};]", x, y);
 	}
+
+	public int DeltaSum(IntVector2 other)
+	{
+		return Math.Abs(x - other.x) + Math.Abs(y - other.y);
+	}
+
+	public int DeltaMax(IntVector2 other)
+	{
+		return Math.Max(Math.Abs(x - other.x), Math.Abs(y - other.y));
+	}
 }
