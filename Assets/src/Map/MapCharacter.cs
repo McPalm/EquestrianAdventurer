@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 [RequireComponent(typeof(Mobile))]
@@ -10,6 +11,10 @@ public class MapCharacter : MonoBehaviour
 	public float baseDamage;
 	public float dodgeSkill;
 	public float armor;
+
+	public GameObject skull;
+
+	public UnityEvent EventDeath = new UnityEvent();
 
 	// Use this for initialization
 	void Start ()
@@ -39,6 +44,10 @@ public class MapCharacter : MonoBehaviour
 	void OnHurt(int current, int max)
 	{
 		if (current <= 0)
+		{
 			Destroy(gameObject);
+			Instantiate(skull, transform.position, Quaternion.identity);
+			EventDeath.Invoke();
+		}
 	}
 }

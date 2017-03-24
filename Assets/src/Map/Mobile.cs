@@ -1,8 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class Mobile : MapObject
 {
+	/// <summary>
+	/// Event called whenever we move
+	/// param 1 is desination
+	/// param 2 is vector of movement
+	/// </summary>
+	public MovementEvent EventMovement = new MovementEvent();
+
 	// Vector2 NetworkedPosition = new Vector2(999999999f, 99999999999f);
 
 		/// <summary>
@@ -24,21 +32,9 @@ public class Mobile : MapObject
 
 		bump = ObjectMap.Instance.CharacterAt(IntVector2.RoundFrom(d));
 		if (bump) return false;
-		/*
-		RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, v2, 1f, 1 << 8);
-
-		foreach (RaycastHit2D hit in hits)
-		{
-			if (hit.collider.gameObject != gameObject)
-			{
-				bump = hit.collider.GetComponent<MapCharacter>();
-				return false;
-			}
-		}
-		*/
-
-		// perform the movement
+		
 		ForceMove(d);
+		EventMovement.Invoke(d, v2);
 
 		return true;
 	}
@@ -54,7 +50,9 @@ public class Mobile : MapObject
 	{
 		StopAllCoroutines();
 		float distance = ((Vector2)transform.position - v2).magnitude;
+		
 		StartCoroutine(Tween(transform.position, v2, distance/10f + 0.1f));
+		
 		// transform.position = v2;
 	}
 
@@ -70,5 +68,7 @@ public class Mobile : MapObject
 		}
 		transform.position = destination;
 	}
+
+	public class MovementEvent : UnityEvent<Vector2, Vector2> { };
 }
 

@@ -73,11 +73,7 @@ public class SimpleBehaviour : MonoBehaviour, TurnTracker.TurnEntry
 	{
 		TurnTracker.Instance.Add(this);
 		targetLocation = IntVector2.RoundFrom(transform.position);
-	}
-
-	void OnDestroy()
-	{
-		TurnTracker.Instance.Remove(this);
+		GetComponent<MapCharacter>().EventDeath.AddListener(delegate { TurnTracker.Instance.Remove(this); });
 	}
 
 	public class StartTurnEvent : UnityEvent<SimpleBehaviour> { }

@@ -19,6 +19,12 @@ public class AgressiveMelee : MonoBehaviour
 
 	void DoTurn(SimpleBehaviour ai)
 	{
+		if (GetComponent<MapObject>().RealLocation.DeltaMax(target.GetComponent<MapObject>().RealLocation) > 12)
+		{
+			ai.targetCharacter = null;
+			return;
+		}
+
 		if (GetComponent<LOSCheck>().HasLOS(target.GetComponent<MapObject>()))
 		{
 			ai.targetCharacter = target.GetComponent<MapCharacter>();
