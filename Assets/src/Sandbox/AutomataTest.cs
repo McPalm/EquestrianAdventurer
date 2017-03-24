@@ -5,7 +5,7 @@ public class AutomataTest : MonoBehaviour
 {
 
 	public bool generate = false;
-
+	bool nextUpdate = false;
 
 	
 
@@ -23,6 +23,12 @@ public class AutomataTest : MonoBehaviour
 			GetComponent<MapSection>().LoadFromBlueprint(generator.GetResult());
 
 			generate = false;
+			nextUpdate = true;
+		}
+		else if(nextUpdate)
+		{
+			nextUpdate = false;
+			GetComponent<CreatureSpawner>().Spawn();
 		}
 	}
 }

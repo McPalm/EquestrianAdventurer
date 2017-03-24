@@ -93,7 +93,7 @@ public class RoomChain5by5
 		
 		
 		// generate random extra rooms
-		for (int i = 0; i < roomCountDimension; i++) // passes based on size
+		for (int i = 0; i < roomCountDimension - 2; i++) // passes based on size
 		{
 			for (int x = 0; x < roomCountDimension; x++)
 			{

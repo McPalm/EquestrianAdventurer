@@ -14,6 +14,7 @@ public class AgressiveMelee : MonoBehaviour
 		GetComponent<SimpleBehaviour>().startTurnEvent.AddListener(DoTurn);
 		GetComponent<SimpleBehaviour>().endTurnEvent.AddListener(DoTurn);
 		home = GetComponent<MapObject>().RealLocation;
+		target = FindObjectOfType<RogueController>().gameObject; // wow
 	}
 
 	void DoTurn(SimpleBehaviour ai)
