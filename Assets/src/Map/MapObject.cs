@@ -52,8 +52,14 @@ public class MapObject : MonoBehaviour
 		ObjectMap.Instance.Add(this);
 	}
 
+	void OnApplicationQuit()
+	{
+		on = false;	
+	}
+
+	bool on = true;
 	void OnDisable()
 	{
-		ObjectMap.Instance.Remove(this);
+		if(on) ObjectMap.Instance.Remove(this);
 	}
 }

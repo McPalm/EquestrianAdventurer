@@ -48,6 +48,7 @@ public class MapCharacter : MonoBehaviour
 			Destroy(gameObject);
 			Instantiate(skull, transform.position, Quaternion.identity);
 			EventDeath.Invoke();
+			GetComponent<Mobile>().enabled = false;
 		}
 	}
 }

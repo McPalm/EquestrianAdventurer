@@ -29,6 +29,6 @@ public class CreatureSpawner : MonoBehaviour
 
 	void SpawnAt(int x, int y)
 	{
-		Instantiate(creatures[0], targetSection.transform.position + new Vector3(x, y), Quaternion.identity);
+		Instantiate(creatures[Random.Range(0, creatures.Length)], targetSection.transform.position + new Vector3(x, y), Quaternion.identity);
 	}
 }

@@ -25,9 +25,16 @@ public class Wall : MonoBehaviour, IMapBlock
 		}
 	}
 
+	void OnApplicationQuit()
+	{
+		on = false;
+	}
+
+	bool on = true;
+
 	void OnDisable()
 	{
-		BlockMap.Instance.Remove(gameObject);
+		if(on)BlockMap.Instance.Remove(gameObject);
 	}
 
 	void OnEnable()
