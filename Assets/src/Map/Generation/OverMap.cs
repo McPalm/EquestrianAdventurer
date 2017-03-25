@@ -12,26 +12,31 @@ public class OverMap : MonoBehaviour {
 	{
 		MapSectionContainer con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.east | CompassDirection.north | CompassDirection.west);
+		con.terrain = MapType.forest;
 		map.Add(IntVector2.zero, con);
 
 		// east
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.west);
+		con.terrain = MapType.forest;
 		map.Add(new IntVector2(1, 0), con);
 
 		//north
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.west | CompassDirection.south);
+		con.terrain = MapType.forest;
 		map.Add(new IntVector2(0, 1), con);
 
 		// west
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.east | CompassDirection.north);
+		con.terrain = MapType.forest;
 		map.Add(new IntVector2(-1, 0), con);
 
 		// northwest
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.south | CompassDirection.east);
+		con.terrain = MapType.forest;
 		map.Add(new IntVector2(-1, 1), con);
 
 
@@ -63,6 +68,7 @@ public class OverMap : MonoBehaviour {
 	{
 		public MapSection section;
 		public CompassDirection connections;
+		public MapType terrain;
 
 		bool loaded = false;
 
@@ -95,10 +101,23 @@ public class OverMap : MonoBehaviour {
 			o.transform.position = (Vector2)iv2 * MapSectionData.DIMENSIONS;
 			section = o.AddComponent<MapSection>();
 
-			RoomChain5by5 generator = new RoomChain5by5();
+			IGenerator generator;
+			int[] palete;
+			switch(terrain)
+			{
+				case MapType.forest:
+					generator = new ForestGenerator();
+					palete = new int[] { 0, 5, 6, 2 };
+					break;
+				default:
+					generator = new RoomChain5by5();
+					palete = new int[] { 0, 1 };
+					break;
+			}
+
 			generator.Generate(connections);
 
-			section.LoadFromBlueprint(generator.GetResult());
+			section.LoadFromBlueprint(generator.GetResult(), palete);
 		}
 	}
 }

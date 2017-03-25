@@ -118,7 +118,7 @@ public class MapSection : MonoBehaviour
 		data.Save();
 	}
 
-	public void LoadFromBlueprint(int[][] map, int wall = 0, int floor = 1)
+	public void LoadFromBlueprint(int[][] map, params int[] palette)
 	{
 		if(data == null)
 		{
@@ -128,8 +128,7 @@ public class MapSection : MonoBehaviour
 		{
 			for(int y = 0; y < MapSectionData.DIMENSIONS; y++)
 			{
-				if (map[x][y] == 1) data.tiles[x][y] = wall;
-				else if (map[x][y] == 0) data.tiles[x][y] = floor;
+				data.tiles[x][y] = palette[map[x][y]%palette.Length];
 			}
 		}
 		DrawAll();

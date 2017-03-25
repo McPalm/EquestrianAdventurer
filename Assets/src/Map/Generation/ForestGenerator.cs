@@ -14,11 +14,21 @@ public class ForestGenerator : IGenerator
 			map[x] = new int[MapSectionData.DIMENSIONS];
 		}
 		
+		// Stack three cellular Autoamata generations to create a natural looking type of terrain
 		CellularAutomata generator = new CellularAutomata();
+		generator.density = 0.55f;
+		generator.iterations = 2;
 		generator.Generate(0);
 		AddResults(generator.GetResult());
 		generator.Generate(0);
 		AddResults(generator.GetResult());
+		generator.density = 0.44f;
+		generator.iterations = 5;
+		generator.Generate(0);
+		AddResults(generator.GetResult());
+
+		// generate between adjacent sections
+
 
 	}
 
@@ -33,6 +43,21 @@ public class ForestGenerator : IGenerator
 			for (int y = 0; y < MapSectionData.DIMENSIONS; y++)
 			{
 				if (other[x][y] == 0) map[x][y]++;
+			}
+		}
+	}
+
+	/// <summary>
+	/// every 0 in a generated map adds one to the player map. (its wierd)
+	/// </summary>
+	/// <param name=""></param>
+	void UnionResults(int[][] other)
+	{
+		for (int x = 0; x < MapSectionData.DIMENSIONS; x++)
+		{
+			for (int y = 0; y < MapSectionData.DIMENSIONS; y++)
+			{
+				if (other[x][y] > map[x][y]) map[x][y] = other[x][y];
 			}
 		}
 	}
