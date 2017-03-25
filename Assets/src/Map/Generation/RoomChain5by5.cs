@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RoomChain5by5
+public class RoomChain5by5 : IGenerator
 {
 	int[][] map;
 
@@ -10,7 +10,7 @@ public class RoomChain5by5
 	public int roomCountDimension = 5;
 
 
-	public void Generate()
+	public void Generate(CompassDirection connections)
 	{
 		map = new int[tileDimension][];
 		for(int x = 0; x < tileDimension; x++)

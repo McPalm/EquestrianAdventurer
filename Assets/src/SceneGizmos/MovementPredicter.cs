@@ -14,7 +14,6 @@ public class MovementPredicter : MonoBehaviour
 	Vector2 backlog2;
 	Vector2 backlog3;
 
-	float lastUpdate = 0f;
 	float idle = 0f;
 	public float intensity = 1f;
 
@@ -39,8 +38,6 @@ public class MovementPredicter : MonoBehaviour
 
 		idle = 0f;
 		enabled = true;
-
-		lastUpdate = Time.realtimeSinceStartup;
 
 		transform.position = destination + (direction+ backlog1 + backlog2 + backlog3) * intensity * 0.5f;
 

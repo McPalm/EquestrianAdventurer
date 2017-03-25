@@ -9,8 +9,11 @@ public class MapSection : MonoBehaviour
 
 	void Start()
 	{
-		data = MapSectionData.Load(sectionName);
-		DrawAll();
+		if (data == null)
+		{
+			data = MapSectionData.Load(sectionName);
+			DrawAll();
+		}
 	}
 
 	public void DrawAll()
@@ -117,6 +120,10 @@ public class MapSection : MonoBehaviour
 
 	public void LoadFromBlueprint(int[][] map, int wall = 0, int floor = 1)
 	{
+		if(data == null)
+		{
+			data = new MapSectionData(name);
+		}
 		for(int x = 0; x < MapSectionData.DIMENSIONS; x++)
 		{
 			for(int y = 0; y < MapSectionData.DIMENSIONS; y++)

@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CellularAutomata
+public class CellularAutomata : IGenerator
 {
 	int[][] map;
 
 	public float density = 0.44f;
 	public int iterations = 3;
 
-	public void Generate(int dx, int dy)
+	public void Generate(CompassDirection connections)
 	{
+		int dx = MapSectionData.DIMENSIONS;
+		int dy = MapSectionData.DIMENSIONS;
 		map = new int[dx][];
 		for(int x = 0; x < dx; x++)
 		{
