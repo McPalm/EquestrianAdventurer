@@ -20,11 +20,11 @@ public class ForestGenerator : IGenerator
 		generator.iterations = 2;
 		generator.Generate(0);
 		AddResults(generator.GetResult());
-		generator.Generate(0);
+		generator.Generate(connections);
 		AddResults(generator.GetResult());
 		generator.density = 0.44f;
 		generator.iterations = 5;
-		generator.Generate(0);
+		generator.Generate(connections);
 		AddResults(generator.GetResult());
 
 		// generate between adjacent sections

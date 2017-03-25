@@ -18,7 +18,14 @@ public class CellularAutomata : IGenerator
 			map[x] = new int[dy];
 			for (int y = 0; y < dy; y++)
 			{
-				if (x == 0 || y == 0 || x == dx - 1 || y == dy - 1) map[x][y] = 1;
+				if (x == 0 && ((connections & CompassDirection.west) == 0))
+					map[x][y] = 1;
+				else if (y == 0 && ((connections & CompassDirection.south) == 0))
+					map[x][y] = 1;
+				else if (x == dx - 1 && ((connections & CompassDirection.east) == 0))
+					map[x][y] = 1;
+				else if (y == dy - 1 && ((connections & CompassDirection.north) == 0))
+					map[x][y] = 1;
 				else map[x][y] = (Random.value < density) ? 1 : 0;
 			}
 		}
