@@ -7,36 +7,38 @@ public class OverMap : MonoBehaviour {
 	Dictionary<IntVector2, MapSectionContainer> map = new Dictionary<IntVector2, MapSectionContainer>();
 
 
+	public MapType debugType;
+
 	// Use this for initialization
 	void Start ()
 	{
 		MapSectionContainer con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.east | CompassDirection.north | CompassDirection.west);
-		con.terrain = MapType.forest;
+		con.terrain = debugType;
 		map.Add(IntVector2.zero, con);
 
 		// east
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.west);
-		con.terrain = MapType.forest;
+		con.terrain = debugType;
 		map.Add(new IntVector2(1, 0), con);
 
 		//north
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.west | CompassDirection.south);
-		con.terrain = MapType.forest;
+		con.terrain = debugType;
 		map.Add(new IntVector2(0, 1), con);
 
 		// west
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.east | CompassDirection.north);
-		con.terrain = MapType.forest;
+		con.terrain = debugType;
 		map.Add(new IntVector2(-1, 0), con);
 
 		// northwest
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.south | CompassDirection.east);
-		con.terrain = MapType.forest;
+		con.terrain = debugType;
 		map.Add(new IntVector2(-1, 1), con);
 
 
@@ -108,6 +110,10 @@ public class OverMap : MonoBehaviour {
 				case MapType.forest:
 					generator = new ForestGenerator();
 					palete = new int[] { 0, 5, 6, 2, 3, 4 };
+					break;
+				case MapType.minimumPath:
+					generator = new MinimumPath();
+					palete = new int[] { 0, 1 };
 					break;
 				default:
 					generator = new RoomChain5by5();
