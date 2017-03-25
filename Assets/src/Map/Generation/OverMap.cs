@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class OverMap : MonoBehaviour {
@@ -36,10 +37,11 @@ public class OverMap : MonoBehaviour {
 
 
 		foreach (IntVector2 iv2 in map.Keys)
-			LoadSection(iv2);
+			StartCoroutine(LoadSection(iv2));
 	}
-	
-	void LoadSection(IntVector2 iv2)
+
+
+	IEnumerator LoadSection(IntVector2 iv2)
 	{
 		MapSectionContainer msc;
 
@@ -48,8 +50,12 @@ public class OverMap : MonoBehaviour {
 		if(msc.section == null)
 		{
 			msc.LoadContainer(iv2);
-			
 		}
+		yield return new WaitForSeconds(0f);
+
+		CreatureSpawner cs = GetComponent<CreatureSpawner>();
+		cs.targetSection = msc.section;
+		cs.Spawn();
 	}
 
 	[System.Serializable]
