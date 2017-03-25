@@ -42,6 +42,11 @@ public class ObjectMap : MonoBehaviour
 		return o;
 	}
 
+	public MapObject[] ObjectsAtLocation(IntVector2 v2)
+	{
+		return GetStack(v2).objects.ToArray();
+	}
+
 	/// <summary>
 	/// Get the last MapCharacter on the stack at a given location
 	/// Null if there is no character there

@@ -86,9 +86,26 @@ public class RogueController : MonoBehaviour
 				Move(new Vector2(0, -1));
 				break;
 			case Actions.idle:
+				HealOverHeart();
 				EndTurn();
 				break;
 		}
+	}
+
+	void HealOverHeart() // HACK! Remove for the love of Equestria, Celestia and everything pony.
+	{
+		// fucking dirty lol
+		// see if heart object is in square
+		foreach (MapObject m in ObjectMap.Instance.ObjectsAtLocation(IntVector2.RoundFrom(transform.position)))
+		{
+			if(m.GetComponent<Heart>())
+			{
+				Destroy(m.gameObject);
+				GetComponent<HitPoints>().Heal(new DamageData().SetDamage(10));
+			}
+		}
+
+		// if is, destroy it and heal up
 	}
 
 	void Move(Vector2 where)
