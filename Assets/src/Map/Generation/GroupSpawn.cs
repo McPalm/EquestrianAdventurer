@@ -23,6 +23,7 @@ public class GroupSpawn : MonoBehaviour
 		// spawn stuffs on these tiles
 		for(int i = 0; i < spawnthese.Length; i++)
 		{
+			if (locations.Count == 0) break; // in case we run out of spez
 			int rand = Random.Range(0, locations.Count);
 			Instantiate(spawnthese[i], (Vector2)locations[rand], Quaternion.identity);
 			locations.RemoveAt(rand);
