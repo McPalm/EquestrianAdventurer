@@ -206,6 +206,23 @@ public class RoomChain5by5 : IGenerator
 				}
 			}
 		}
+		// make external connections
+		if( (connections & CompassDirection.east) != 0)
+		{
+			map[tileDimension - 1][tileDimension / 2] = 0;
+		}
+		if ((connections & CompassDirection.north) != 0)
+		{
+			map[tileDimension / 2][tileDimension - 1] = 0;
+		}
+		if ((connections & CompassDirection.west) != 0)
+		{
+			map[0][tileDimension / 2] = 0;
+		}
+		if ((connections & CompassDirection.south) != 0)
+		{
+			map[tileDimension / 2][0] = 0;
+		}
 
 		// step four, spawn points
 	}
