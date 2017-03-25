@@ -107,7 +107,7 @@ public class OverMap : MonoBehaviour {
 			{
 				case MapType.forest:
 					generator = new ForestGenerator();
-					palete = new int[] { 0, 5, 6, 2 };
+					palete = new int[] { 0, 5, 6, 2, 3, 4 };
 					break;
 				default:
 					generator = new RoomChain5by5();
