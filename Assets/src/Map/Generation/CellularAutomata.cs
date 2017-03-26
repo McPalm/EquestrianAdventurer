@@ -10,21 +10,19 @@ public class CellularAutomata : IGenerator
 
 	public void Generate(CompassDirection connections)
 	{
-		int dx = MapSectionData.DIMENSIONS;
-		int dy = MapSectionData.DIMENSIONS;
-		map = new int[dx][];
-		for(int x = 0; x < dx; x++)
+		map = new int[MapSectionData.DIMENSIONS][];
+		for(int x = 0; x < MapSectionData.DIMENSIONS; x++)
 		{
-			map[x] = new int[dy];
-			for (int y = 0; y < dy; y++)
+			map[x] = new int[MapSectionData.DIMENSIONS];
+			for (int y = 0; y < MapSectionData.DIMENSIONS; y++)
 			{
 				if (x == 0 && ((connections & CompassDirection.west) == 0))
 					map[x][y] = 1;
 				else if (y == 0 && ((connections & CompassDirection.south) == 0))
 					map[x][y] = 1;
-				else if (x == dx - 1 && ((connections & CompassDirection.east) == 0))
+				else if (x == MapSectionData.DIMENSIONS - 1 && ((connections & CompassDirection.east) == 0))
 					map[x][y] = 1;
-				else if (y == dy - 1 && ((connections & CompassDirection.north) == 0))
+				else if (y == MapSectionData.DIMENSIONS - 1 && ((connections & CompassDirection.north) == 0))
 					map[x][y] = 1;
 				else map[x][y] = (Random.value < density) ? 1 : 0;
 			}
@@ -33,20 +31,44 @@ public class CellularAutomata : IGenerator
 
 		for(int i = 0; i < iterations; i++)
 		{
-			for (int x = 1; x < dx-1; x++)
+			smooth();
+		}
+	}
+
+	public void GenerateFrom(int[][] origin, int iterations)
+	{
+		map = new int[MapSectionData.DIMENSIONS][];
+
+		for (int x = 0; x < MapSectionData.DIMENSIONS; x++)
+		{
+			map[x] = new int[MapSectionData.DIMENSIONS];
+			for (int y = 0; y < MapSectionData.DIMENSIONS; y++)
 			{
-				for (int y = 1; y < dy-1; y++)
+				map[x][y] = (origin[x][y] == 0) ? 1 : 0;
+			}
+		}
+
+		for (int i = 0; i < iterations; i++)
+		{
+			smooth();
+		}
+	}
+
+	void smooth()
+	{
+		for (int x = 1; x < MapSectionData.DIMENSIONS - 1; x++)
+		{
+			for (int y = 1; y < MapSectionData.DIMENSIONS - 1; y++)
+			{
+				int nearwalls = 0;
+				for (int lx = x - 1; lx < x + 2; lx++)
 				{
-					int nearwalls = 0;
-					for(int lx = x-1; lx < x+2; lx++)
+					for (int ly = y - 1; ly < y + 2; ly++)
 					{
-						for (int ly = y-1; ly < y+2; ly++)
-						{
-							nearwalls += map[lx][ly];
-						}
+						nearwalls += map[lx][ly];
 					}
-					map[x][y] = (nearwalls > 4) ? 1 : 0;
 				}
+				map[x][y] = (nearwalls > 4) ? 1 : 0;
 			}
 		}
 	}

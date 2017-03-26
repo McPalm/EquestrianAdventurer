@@ -30,48 +30,21 @@ public class OverMap : MonoBehaviour {
 		con.terrain = MapType.forest;
 		map.Add(new IntVector2(-1, 2), con);
 
-		IntVector2[] forest = new IntVector2[]
-		{
-			IntVector2.zero,
-			new IntVector2(-1, 0),
-			new IntVector2(1, 0),
-			new IntVector2(-1, 1),
-			new IntVector2(0, 1),
-			new IntVector2(1, 1),
-			new IntVector2(-1, 2),
-			new IntVector2(0, 2),
-			new IntVector2(1, 2)
-		};
+		IntVector2[] forest = IntVector2Utility.GetRect(new IntVector2(-1, 0), new IntVector2(1, 2));
 
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.west);
 		con.terrain = MapType.rooms;
 		map.Add(new IntVector2(2, 2), con);
 
-		IntVector2[] castle = new IntVector2[]
-		{
-			new IntVector2(2, 2),
-			new IntVector2(2, 3),
-			new IntVector2(3, 2),
-			new IntVector2(3, 3),
-			new IntVector2(3, 4)
-		};
+		IntVector2[] castle = IntVector2Utility.GetRect(new IntVector2(2, 2), new IntVector2(3, 4));
 
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.east);
 		con.terrain = MapType.cave;
 		map.Add(new IntVector2(-2, 2), con);
 
-		IntVector2[] cave = new IntVector2[]
-		{
-			new IntVector2(-2, 2),
-			new IntVector2(-3, 2),
-			new IntVector2(-3, 1),
-			new IntVector2(-3, 3),
-			new IntVector2(-4, 2),
-			new IntVector2(-4, 1),
-			new IntVector2(-4, 3)
-		};
+		IntVector2[] cave = IntVector2Utility.GetRect(new IntVector2(-4, 1), new IntVector2(-2, 3));
 
 		InitSections(debugType, forest); // the initial biome. using debug. for testing ofc.
 		InitSections(MapType.rooms, castle);
