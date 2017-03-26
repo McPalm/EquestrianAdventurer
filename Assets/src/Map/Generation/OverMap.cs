@@ -152,6 +152,16 @@ public class OverMap : MonoBehaviour {
 		}
 	}
 
+	void PlayerMoveEvent(Vector2 destination, Vector2 direction)
+	{
+
+	} 
+
+	void LoadOnDemand()
+	{
+
+	}
+
 	IntVector2 RandomNearby(IntVector2 v2)
 	{
 		switch (Random.Range(0, 4))
@@ -193,6 +203,19 @@ public class OverMap : MonoBehaviour {
 		ret = new MapSectionContainer();
 		map.Add(v2, ret);
 		return ret;
+	}
+
+	/// <summary>
+	/// Get the mapsection at the given location, if there is no section at the given location, return null
+	/// </summary>
+	/// <param name="v2"></param>
+	/// <returns></returns>
+	public MapSection SectionAt(Vector2 v2)
+	{
+		MapSectionContainer retd = null;
+		map.TryGetValue(IntVector2.FloorFrom(v2 / MapSectionData.DIMENSIONS), out retd);
+		if (retd == null) return null;
+		return retd.section;
 	}
 
 	void Bridge(IntVector2 a, IntVector2 b)
