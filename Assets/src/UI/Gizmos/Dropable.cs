@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
@@ -8,6 +9,10 @@ using System.Collections.Generic;
 public class Dropable : Draggable
 {
 	Vector2 localStart;
+	public float sortValue;
+
+	public DropInAreaEvent EventDropInArea = new DropInAreaEvent();
+
 
 	void Start()
 	{
@@ -37,8 +42,11 @@ public class Dropable : Draggable
 			DropArea a = result.gameObject.GetComponent<DropArea>();
 			if(a)
 			{
-				target.localPosition = a.transform.localPosition; // snap into place
-				return;
+				if (a.Drop(this))
+				{
+					EventDropInArea.Invoke(this, a);
+					return;
+				}
 			}
 		}
 
@@ -56,4 +64,6 @@ public class Dropable : Draggable
 		}
 		target.localPosition = destination;
 	}
+
+	public class DropInAreaEvent : UnityEvent<Dropable, DropArea> { }
 }
