@@ -22,6 +22,7 @@ public class CaveGenerator : AbsGenerator
 
 		// ensure connectivity
 		MinimumPath path = new MinimumPath();
+		path.thickness = 1;
 		path.Generate(connections);
 
 		UnionResults(path.GetResult());

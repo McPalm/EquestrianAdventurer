@@ -6,6 +6,8 @@ public class MinimumPath : IGenerator
 {
 
 	int[][] map;
+	public int thickness = 0;
+	public int midpointradius = 5;
 
 	public void Generate(CompassDirection connections)
 	{
@@ -38,14 +40,26 @@ public class MinimumPath : IGenerator
 			}
 
 			if (connectionTiles.Count == 1)
-				connectionTiles.Add(new IntVector2(MapSectionData.DIMENSIONS / 2, MapSectionData.DIMENSIONS / 2));
+			{
+				if(midpointradius == 0)
+					connectionTiles.Add(new IntVector2(MapSectionData.DIMENSIONS / 2, MapSectionData.DIMENSIONS / 2));
+				else
+					connectionTiles.Add(new IntVector2(MapSectionData.DIMENSIONS / 2 + Random.Range(-midpointradius,midpointradius+1), MapSectionData.DIMENSIONS / 2 + Random.Range(-midpointradius, midpointradius + 1)));
+			}
 
 			// TODO randomize order
+			List<IntVector2> scrambledList = new List<IntVector2>(connectionTiles.Count);
+			while(connectionTiles.Count > 0)
+			{
+				int i = Random.Range(0, connectionTiles.Count);
+				scrambledList.Add(connectionTiles[i]);
+				connectionTiles.RemoveAt(i);
+			}
 
 			// do the path
-			for(int i = 0; i < connectionTiles.Count-1; i++)
+			for(int i = 0; i < scrambledList.Count-1; i++)
 			{
-				ImprintPath(connectionTiles[i], connectionTiles[i + 1]);
+				ImprintPath(scrambledList[i], scrambledList[i + 1]);
 			}
 			
 		}
@@ -72,7 +86,20 @@ public class MinimumPath : IGenerator
 				current = new IntVector2(current.x, current.y + System.Math.Sign(dy));
 
 			map[current.x][current.y] = 1;
+			if(thickness > 0)
+			{
+				tryDraw(current.x - thickness, current.y, 1);
+				tryDraw(current.x + thickness, current.y, 1);
+				tryDraw(current.x, current.y - thickness, 1);
+				tryDraw(current.x, current.y + thickness, 1);
+			}
 		}
+	}
+
+	public void tryDraw(int x, int y, int swatch)
+	{
+		if (x < 0 || y < 0 || x >= MapSectionData.DIMENSIONS || y >= MapSectionData.DIMENSIONS) return;
+		map[x][y] = swatch;
 	}
 
 	public int[][] GetResult()
