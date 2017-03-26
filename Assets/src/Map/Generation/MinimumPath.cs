@@ -70,6 +70,14 @@ public class MinimumPath : IGenerator
 	{
 		IntVector2 current = start;
 
+		for (int i = 1; i <= thickness; i++)
+		{
+			tryDraw(current.x - i, current.y, 1);
+			tryDraw(current.x + i, current.y, 1);
+			tryDraw(current.x, current.y - i, 1);
+			tryDraw(current.x, current.y + i, 1);
+		}
+
 		map[current.x][current.y] = 1;
 
 		while(current != end)
@@ -86,12 +94,12 @@ public class MinimumPath : IGenerator
 				current = new IntVector2(current.x, current.y + System.Math.Sign(dy));
 
 			map[current.x][current.y] = 1;
-			if(thickness > 0)
+			for(int i = 1; i <= thickness; i++)
 			{
-				tryDraw(current.x - thickness, current.y, 1);
-				tryDraw(current.x + thickness, current.y, 1);
-				tryDraw(current.x, current.y - thickness, 1);
-				tryDraw(current.x, current.y + thickness, 1);
+				tryDraw(current.x - i, current.y, 1);
+				tryDraw(current.x + i, current.y, 1);
+				tryDraw(current.x, current.y - i, 1);
+				tryDraw(current.x, current.y + i, 1);
 			}
 		}
 	}
