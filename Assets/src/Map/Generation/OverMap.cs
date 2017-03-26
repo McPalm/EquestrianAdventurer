@@ -13,40 +13,159 @@ public class OverMap : MonoBehaviour {
 	void Start ()
 	{
 		MapSectionContainer con = new MapSectionContainer();
-		con.AddConnection(CompassDirection.east | CompassDirection.north | CompassDirection.west);
-		con.terrain = debugType;
+		
+		con.AddConnection(CompassDirection.south);
+		con.terrain = MapType.forest;
 		map.Add(IntVector2.zero, con);
 
-		// east
+		con = new MapSectionContainer();
+		con.AddConnection(CompassDirection.east);
+		con.terrain = MapType.forest;
+		map.Add(new IntVector2(1, 2), con);
+
+		IntVector2[] forest = new IntVector2[]
+		{
+			IntVector2.zero,
+			new IntVector2(-1, 0),
+			new IntVector2(1, 0),
+			new IntVector2(-1, 1),
+			new IntVector2(0, 1),
+			new IntVector2(1, 1),
+			new IntVector2(-1, 2),
+			new IntVector2(0, 2),
+			new IntVector2(1, 2)
+		};
+
 		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.west);
-		con.terrain = debugType;
-		map.Add(new IntVector2(1, 0), con);
+		con.terrain = MapType.rooms;
+		map.Add(new IntVector2(2, 2), con);
 
-		//north
-		con = new MapSectionContainer();
-		con.AddConnection(CompassDirection.west | CompassDirection.south);
-		con.terrain = debugType;
-		map.Add(new IntVector2(0, 1), con);
+		IntVector2[] castle = new IntVector2[]
+		{
+			new IntVector2(2, 2),
+			new IntVector2(2, 3),
+			new IntVector2(3, 2),
+			new IntVector2(3, 3),
+			new IntVector2(3, 4)
+		};
 
-		// west
-		con = new MapSectionContainer();
-		con.AddConnection(CompassDirection.east | CompassDirection.north);
-		con.terrain = debugType;
-		map.Add(new IntVector2(-1, 0), con);
+		InitSections(MapType.forest, forest);
 
-		// northwest
-		con = new MapSectionContainer();
-		con.AddConnection(CompassDirection.south | CompassDirection.east);
-		con.terrain = debugType;
-		map.Add(new IntVector2(-1, 1), con);
+		InitSections(MapType.rooms, castle);
 
-
+		RandomizeConnections(forest);
+		RandomizeConnections(castle);
 
 		foreach (IntVector2 iv2 in map.Keys)
 			StartCoroutine(LoadSection(iv2));
 	}
 
+
+	void InitSections(MapType terrain, params IntVector2[] sections)
+	{
+		for(int i = 0; i < sections.Length; i++)
+		{
+			GetSectionAt(sections[i]).terrain = terrain;
+		}
+	}
+
+	void RandomizeConnections(params IntVector2[] sections)
+	{
+		List<IntVector2> unconnected = new List<IntVector2>();
+		List<IntVector2> connected = new List<IntVector2>();
+
+		int entrances = 0;
+
+		for(int i = 0; i < sections.Length; i++)
+		{
+			MapSectionContainer c = GetSectionAt(sections[i]);
+			if (c.connections == CompassDirection.nowhere)
+				unconnected.Add(sections[i]);
+			else
+			{
+				connected.Add(sections[i]);
+				entrances++;
+				c.GenInfo = entrances;
+			}
+		}
+
+		int attempts = 0;
+		while (unconnected.Count > 0)
+		{
+			// step 1: pick a random connected section
+			int r = Random.Range(0, connected.Count);
+			// step 2: expand into random adjacent section
+			IntVector2 into = RandomNearby(connected[r]);
+			
+			if (unconnected.Contains(into))
+			{
+				Bridge(into, connected[r]);
+				GetSectionAt(into).GenInfo = GetSectionAt(connected[r]).GenInfo;
+				connected.Add(into);
+				unconnected.Remove(into);
+			}
+			// step 3: goto step one untill all sections are connected
+			attempts++;
+			if (attempts > 10000) break;
+		}
+		print("Build Attempts: " + attempts);
+
+
+		// TODO
+		// step 4: bridge together separated sections
+		attempts = 0;
+		int connectionsMade = 0;
+		while(connectionsMade < entrances - 1)
+		{
+			int r = Random.Range(0, connected.Count);
+			while (GetSectionAt(connected[r]).GenInfo != connectionsMade + 1)
+			{
+				r = Random.Range(0, connected.Count);
+				attempts++;
+				if (attempts > 10000) break;
+			}
+			if (attempts > 10000) break;
+
+			IntVector2 into = RandomNearby(connected[r]);
+			if (connected.Contains(into) && GetSectionAt(into).GenInfo == connectionsMade + 2)
+			{
+				Bridge(into, connected[r]);
+				connectionsMade++;
+			}
+
+			attempts++;
+		}
+
+		print("Bridge Attempts: " + attempts);
+		// step 5: add a random number of extra bridges
+		// TODO (maybe)
+
+		for(int i = 0; i < 1 + Mathf.Sqrt(sections.Length); i++)
+		{
+			int r = Random.Range(0, connected.Count);
+			IntVector2 into = RandomNearby(connected[r]);
+			if (connected.Contains(into))
+			{
+				Bridge(into, connected[r]);
+			}
+		}
+	}
+
+	IntVector2 RandomNearby(IntVector2 v2)
+	{
+		switch (Random.Range(0, 4))
+		{
+			case 0:
+				return new IntVector2(v2.x - 1, v2.y);
+			case 1:
+				return new IntVector2(v2.x + 1, v2.y);
+			case 2:
+				return new IntVector2(v2.x, v2.y - 1);
+			default:
+				return new IntVector2(v2.x, v2.y + 1);
+		}
+	}
 
 	IEnumerator LoadSection(IntVector2 iv2)
 	{
@@ -65,6 +184,45 @@ public class OverMap : MonoBehaviour {
 		cs.Spawn();
 	}
 
+	MapSectionContainer GetSectionAt(IntVector2 v2)
+	{
+		MapSectionContainer ret = null;
+		map.TryGetValue(v2, out ret);
+		if (ret != null) return ret;
+
+		ret = new MapSectionContainer();
+		map.Add(v2, ret);
+		return ret;
+	}
+
+	void Bridge(IntVector2 a, IntVector2 b)
+	{
+		MapSectionContainer ac = GetSectionAt(a);
+		MapSectionContainer bc = GetSectionAt(b);
+
+		if(a.x > b.x)
+		{
+			ac.AddConnection(CompassDirection.west);
+			bc.AddConnection(CompassDirection.east);
+		}
+		if (a.x < b.x)
+		{
+			ac.AddConnection(CompassDirection.east);
+			bc.AddConnection(CompassDirection.west);
+		}
+		if (a.y < b.y)
+		{
+			ac.AddConnection(CompassDirection.north);
+			bc.AddConnection(CompassDirection.south);
+			
+		}
+		if (a.y > b.y)
+		{
+			ac.AddConnection(CompassDirection.south);
+			bc.AddConnection(CompassDirection.north);
+		}
+	}
+
 	[System.Serializable]
 	class MapSectionContainer
 	{
@@ -73,6 +231,7 @@ public class OverMap : MonoBehaviour {
 		public MapType terrain;
 
 		bool loaded = false;
+		int genInfo = 0; // temporary data storage during generation (i think)
 
 		public bool Loaded
 		{
@@ -84,6 +243,19 @@ public class OverMap : MonoBehaviour {
 			set
 			{
 				loaded = value;
+			}
+		}
+
+		public int GenInfo
+		{
+			get
+			{
+				return genInfo;
+			}
+
+			set
+			{
+				genInfo = value;
 			}
 		}
 
@@ -117,7 +289,7 @@ public class OverMap : MonoBehaviour {
 					break;
 				default:
 					generator = new RoomChain5by5();
-					palete = new int[] { 0, 1 };
+					palete = new int[] { 1, 0 };
 					break;
 			}
 
