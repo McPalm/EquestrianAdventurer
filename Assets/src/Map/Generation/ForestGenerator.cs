@@ -18,7 +18,7 @@ public class ForestGenerator : AbsGenerator
 		CellularAutomata generator = new CellularAutomata();
 		generator.density = 0.55f;
 		generator.iterations = 2;
-		generator.Generate(connections);
+		generator.Generate(0);
 		AddResults(generator.GetResult());
 		generator.Generate(0);
 		AddResults(generator.GetResult());
@@ -27,8 +27,10 @@ public class ForestGenerator : AbsGenerator
 		generator.Generate(0);
 		AddResults(generator.GetResult());
 
+
 		// Union with a minimum path o make sure we got connection to other areas
 		MinimumPath minPath = new MinimumPath();
+		minPath.thickness = 3;
 		minPath.Generate(connections);
 		UnionResults(minPath.GetResult());
 

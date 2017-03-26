@@ -25,6 +25,11 @@ public class OverMap : MonoBehaviour {
 		con.terrain = MapType.forest;
 		map.Add(new IntVector2(1, 2), con);
 
+		con = new MapSectionContainer();
+		con.AddConnection(CompassDirection.west);
+		con.terrain = MapType.forest;
+		map.Add(new IntVector2(-1, 2), con);
+
 		IntVector2[] forest = new IntVector2[]
 		{
 			IntVector2.zero,
@@ -52,12 +57,29 @@ public class OverMap : MonoBehaviour {
 			new IntVector2(3, 4)
 		};
 
-		InitSections(debugType, forest); // the initial biome. using debug. for testing ofc.
+		con = new MapSectionContainer();
+		con.AddConnection(CompassDirection.east);
+		con.terrain = MapType.cave;
+		map.Add(new IntVector2(-2, 2), con);
 
+		IntVector2[] cave = new IntVector2[]
+		{
+			new IntVector2(-2, 2),
+			new IntVector2(-3, 2),
+			new IntVector2(-3, 1),
+			new IntVector2(-3, 3),
+			new IntVector2(-4, 2),
+			new IntVector2(-4, 1),
+			new IntVector2(-4, 3)
+		};
+
+		InitSections(debugType, forest); // the initial biome. using debug. for testing ofc.
 		InitSections(MapType.rooms, castle);
+		InitSections(MapType.cave, cave);
 
 		RandomizeConnections(forest);
 		RandomizeConnections(castle);
+		RandomizeConnections(cave);
 
 		/*
 		foreach (IntVector2 iv2 in map.Keys)
