@@ -6,7 +6,7 @@ public class ForestGenerator : IGenerator
 {
 	int[][] map;
 
-	public float foilageDensity = 0.05f;
+	public float foilageDensity = 0.2f;
 
 	public void Generate(CompassDirection connections)
 	{

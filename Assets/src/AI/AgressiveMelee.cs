@@ -6,6 +6,7 @@ using System;
 public class AgressiveMelee : MonoBehaviour
 {
 	public GameObject target;
+	public int sightRadius = 10;
 
 	IntVector2 home;
 
@@ -19,7 +20,7 @@ public class AgressiveMelee : MonoBehaviour
 
 	void DoTurn(SimpleBehaviour ai)
 	{
-		if (GetComponent<MapObject>().RealLocation.DeltaMax(target.GetComponent<MapObject>().RealLocation) > 12)
+		if (GetComponent<MapObject>().RealLocation.DeltaMax(target.GetComponent<MapObject>().RealLocation) > sightRadius)
 		{
 			ai.targetCharacter = null;
 			return;

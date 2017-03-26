@@ -6,7 +6,7 @@ public class OverMap : MonoBehaviour {
 
 	Dictionary<IntVector2, MapSectionContainer> map = new Dictionary<IntVector2, MapSectionContainer>();
 
-
+	public GameObject LoadingIcon;
 	public MapType debugType;
 
 	// Use this for initialization
@@ -172,6 +172,8 @@ public class OverMap : MonoBehaviour {
 
 	IEnumerator LoadOnDemand(IntVector2 centre)
 	{
+		LoadingIcon.SetActive(true);
+
 		if (map.ContainsKey(centre) && GetSectionAt(centre).Loaded == false)
 			yield return LoadSection(centre);
 
@@ -185,6 +187,7 @@ public class OverMap : MonoBehaviour {
 					yield return LoadSection(next);
 			}
 		}
+		LoadingIcon.SetActive(false);
 	}
 
 	IntVector2 RandomNearby(IntVector2 v2)
@@ -331,7 +334,7 @@ public class OverMap : MonoBehaviour {
 			{
 				case MapType.forest:
 					generator = new ForestGenerator();
-					palete = new int[] { 0, 5, 6, 2, 3, 4 };
+					palete = new int[] { 7, 5, 6, 2, 3, 4 };
 					break;
 				case MapType.minimumPath:
 					generator = new MinimumPath();

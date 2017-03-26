@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CreatureSpawner : MonoBehaviour
 {
-
 	public GameObject[] creatures;
 	public MapSection targetSection;
 
