@@ -58,6 +58,8 @@ public class RogueController : MonoBehaviour
 			heldDuration = 0f;
 			if (Input.GetButtonDown("Idle"))
 				actionBuffer = Actions.idle;
+			if (Input.GetButtonDown("Pickup"))
+				actionBuffer = Actions.pickup;
 		}
 
 		
@@ -85,12 +87,18 @@ public class RogueController : MonoBehaviour
 			case Actions.movedown:
 				Move(new Vector2(0, -1));
 				break;
+			case Actions.pickup:
+				if (GetComponent<Inventory>().PickupFromGround())
+					EndTurn();
+				break;
 			case Actions.idle:
 				HealOverHeart();
 				EndTurn();
 				break;
 		}
 	}
+
+	
 
 	void HealOverHeart() // HACK! Remove for the love of Equestria, Celestia and everything pony.
 	{
@@ -136,6 +144,7 @@ public class RogueController : MonoBehaviour
 		movedown,
 		moveleft,
 		moveright,
-		idle
+		idle,
+		pickup
 	}
 }

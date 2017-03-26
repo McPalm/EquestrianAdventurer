@@ -31,6 +31,27 @@ public class Inventory : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Picking the first item on the ground
+	/// </summary>
+	/// <returns>true if there is an item and it can be picked up</returns>
+	public bool PickupFromGround()
+	{
+		if (!EmptySpace) return false;
+		GroundItem g = null;
+		foreach(MapObject o in ObjectMap.Instance.ObjectsAtLocation(GetComponent<MapObject>().RealLocation))
+		{
+			g = o.GetComponent<GroundItem>();
+			if (g) break;
+		}
+		if(g && AddItem(g.item))
+		{
+			Destroy(g.gameObject); // Might want to object pool this.
+			return true;
+		}
+		return false;
+	}
+
+	/// <summary>
 	/// Add an item to the inventory
 	/// </summary>
 	/// <param name="i">Item to put in inventory</param>

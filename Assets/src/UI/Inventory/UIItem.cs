@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class UIItem : Dropable
@@ -15,23 +16,16 @@ public class UIItem : Dropable
 		set
 		{
 			item = value;
+			print(GetComponent<Image>());
+			print(item.sprite);
+			GetComponent<Image>().sprite = item.sprite;
 		}
 	}
 
 	new protected void Start()
 	{
 		target = transform;
-
 		base.Start();
-
-		Equipment mock = new Equipment();
-
-		mock.displayName = "armor";
-		mock.armor = 5;
-		mock.slots = EquipmentType.body;
-
-		item = mock;
-
 	}
 
 }
