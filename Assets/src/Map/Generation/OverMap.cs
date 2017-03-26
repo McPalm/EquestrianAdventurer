@@ -12,6 +12,8 @@ public class OverMap : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+		FindObjectOfType<RogueController>().GetComponent<Mobile>().EventMovement.AddListener(PlayerMoveEvent);
+
 		MapSectionContainer con = new MapSectionContainer();
 		
 		con.AddConnection(CompassDirection.south);
@@ -57,8 +59,11 @@ public class OverMap : MonoBehaviour {
 		RandomizeConnections(forest);
 		RandomizeConnections(castle);
 
+		/*
 		foreach (IntVector2 iv2 in map.Keys)
 			StartCoroutine(LoadSection(iv2));
+			*/
+		StartCoroutine(LoadOnDemand(IntVector2.zero)); // load around the player
 	}
 
 
@@ -152,14 +157,34 @@ public class OverMap : MonoBehaviour {
 		}
 	}
 
+
+	IntVector2 lastSection = new IntVector2(-9999, -9999);
+
 	void PlayerMoveEvent(Vector2 destination, Vector2 direction)
 	{
+		IntVector2 currentSection = IntVector2.FloorFrom(destination / MapSectionData.DIMENSIONS);
+		if(lastSection != currentSection)
+		{
+			lastSection = currentSection;
+			StartCoroutine(LoadOnDemand(lastSection));
+		}
+	}
 
-	} 
-
-	void LoadOnDemand()
+	IEnumerator LoadOnDemand(IntVector2 centre)
 	{
+		if (map.ContainsKey(centre) && GetSectionAt(centre).Loaded == false)
+			yield return LoadSection(centre);
 
+		for(int x = -1; x < 2; x++)
+		{
+			for (int y = -1; y < 2; y++)
+			{
+				if (x == 0 && y == 0) continue;
+				IntVector2 next = new IntVector2(centre.x + x, centre.y + y);
+				if (map.ContainsKey(next) && GetSectionAt(next).Loaded == false)
+					yield return LoadSection(next);
+			}
+		}
 	}
 
 	IntVector2 RandomNearby(IntVector2 v2)
@@ -183,15 +208,17 @@ public class OverMap : MonoBehaviour {
 
 		map.TryGetValue(iv2, out msc);
 
-		if(msc.section == null)
+		if (msc.section == null && msc.Loaded == false)
 		{
 			msc.LoadContainer(iv2);
-		}
-		yield return new WaitForSeconds(0f);
+			msc.Loaded = true;
 
-		CreatureSpawner cs = GetComponent<CreatureSpawner>();
-		cs.targetSection = msc.section;
-		cs.Spawn();
+			yield return new WaitForSeconds(0f);
+
+			CreatureSpawner cs = GetComponent<CreatureSpawner>();
+			cs.targetSection = msc.section;
+			cs.Spawn();
+		}
 	}
 
 	MapSectionContainer GetSectionAt(IntVector2 v2)
