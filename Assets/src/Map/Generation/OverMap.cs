@@ -52,7 +52,7 @@ public class OverMap : MonoBehaviour {
 			new IntVector2(3, 4)
 		};
 
-		InitSections(MapType.forest, forest);
+		InitSections(debugType, forest); // the initial biome. using debug. for testing ofc.
 
 		InitSections(MapType.rooms, castle);
 
@@ -339,6 +339,10 @@ public class OverMap : MonoBehaviour {
 				case MapType.minimumPath:
 					generator = new MinimumPath();
 					palete = new int[] { 0, 1 };
+					break;
+				case MapType.cave:
+					generator = new CaveGenerator();
+					palete = new int[] { 7, 8, 2 };
 					break;
 				default:
 					generator = new RoomChain5by5();

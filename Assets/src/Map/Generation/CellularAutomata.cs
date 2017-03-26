@@ -65,4 +65,19 @@ public class CellularAutomata : IGenerator
 
 		return copy;
 	}
+
+	public int[][] GetInverted()
+	{
+		int[][] copy = new int[map.Length][];
+		for (int x = 0; x < copy.Length; x++)
+		{
+			copy[x] = new int[map[0].Length];
+			for (int y = 0; y < copy[0].Length; y++)
+			{
+				copy[x][y] = (map[x][y] == 1) ? 0  : 1;
+			}
+		}
+
+		return copy;
+	}
 }
