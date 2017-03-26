@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -13,6 +14,9 @@ public class DropArea : MonoBehaviour
 	public Vector2 offset;
 
 	List<Dropable> clients = new List<Dropable>();
+
+	public DropEvent EventAdd = new DropEvent();
+	public DropEvent EventRemove = new DropEvent();
 
 	void Start()
 	{
@@ -31,6 +35,7 @@ public class DropArea : MonoBehaviour
 
 		clients.Add(drop);
 		drop.EventDropInArea.AddListener(MoveItemInList);
+		EventAdd.Invoke(drop);
 
 		if (capacity > 1)
 			ArrangeList();
@@ -44,6 +49,7 @@ public class DropArea : MonoBehaviour
 		if (other == this) return;
 		clients.Remove(client);
 		client.EventDropInArea.RemoveListener(MoveItemInList);
+		EventRemove.Invoke(client);
 		if (clients.Count > 0)
 			ArrangeList();
 	}
@@ -76,4 +82,5 @@ public class DropArea : MonoBehaviour
 		return 0;
 	}
 
+	public class DropEvent : UnityEvent<Dropable> { }
 }
