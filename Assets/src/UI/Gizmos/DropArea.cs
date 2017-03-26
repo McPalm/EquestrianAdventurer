@@ -19,7 +19,12 @@ public class DropArea : MonoBehaviour
 		if (!anchor) anchor = gameObject;
 	}
 	
-	public bool Drop(Dropable drop)
+	/// <summary>
+	/// Override to add conditions to whenever or not the item can be dropped here
+	/// </summary>
+	/// <param name="drop"></param>
+	/// <returns></returns>
+	virtual public bool Drop(Dropable drop)
 	{
 		if (clients.Count >= capacity) return false;
 		if (clients.Contains(drop)) return false;

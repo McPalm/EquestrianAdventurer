@@ -14,7 +14,7 @@ public class Dropable : Draggable
 	public DropInAreaEvent EventDropInArea = new DropInAreaEvent();
 
 
-	void Start()
+	protected void Start()
 	{
 		EventStartDrag.AddListener(Pickup);
 		EventStopDrag.AddListener(Drop);
