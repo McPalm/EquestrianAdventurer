@@ -158,25 +158,23 @@ public class RoomChain5by5 : IGenerator
 					// door up
 					if (Random.value < 0.2f)
 					{
-						BuildRoomAt(rx * roomSize + 1, ry * roomSize + roomSize - 1, roomSize - 1, 3, 1);
 						// tear down wall
-						/*
-						for (int i = 0; i < roomSize - 1; i++)
-							map[rx * roomSize + 1 + i][ry * roomSize + roomSize] = 0;
-							*/
+						BuildRoomAt(rx * roomSize + 1, ry * roomSize + roomSize - 1, roomSize - 1, 3, 1);
 					}
 					else if (Random.value < 0.1f)
 					{
 						// two doors
-						map[rx * roomSize + 2][ry * roomSize + roomSize] = 0;
-						map[rx * roomSize + roomSize - 2][ry * roomSize + roomSize] = 0;
+						map[rx * roomSize + 2][ry * roomSize + roomSize] = 2;
+						map[rx * roomSize + roomSize - 2][ry * roomSize + roomSize] = 2;
 					}
 					else if (Random.value < 0.3f)
 					{
-						map[rx * roomSize + Random.Range(2, roomSize-1)][ry * roomSize + roomSize] = 0;
+						// random door placement
+						map[rx * roomSize + Random.Range(2, roomSize-1)][ry * roomSize + roomSize] = 2;
 					}
 					else
-						map[rx * roomSize + roomSize/2][ry * roomSize + roomSize] = 0;
+						// door in the middle
+						map[rx * roomSize + roomSize/2][ry * roomSize + roomSize] = 2;
 
 				}
 				if (doorgrid[rx][ry] == 1 || doorgrid[rx][ry] == 3)
@@ -186,23 +184,19 @@ public class RoomChain5by5 : IGenerator
 					{
 						// tear down wall
 						BuildRoomAt(rx * roomSize + roomSize - 1, ry * roomSize + 1, 3, roomSize - 1, 1);
-						/*
-						for (int i = 0; i < roomSize - 1; i++)
-							map[rx * roomSize + roomSize][ry * roomSize + 1 + i] = 0;
-						*/
 					}
 					else if (Random.value < 0.1f)
 					{
 						// two doors
-						map[rx * roomSize + roomSize][ry * roomSize + 2] = 0;
-						map[rx * roomSize + roomSize][ry * roomSize + roomSize - 2] = 0;
+						map[rx * roomSize + roomSize][ry * roomSize + 2] = 2;
+						map[rx * roomSize + roomSize][ry * roomSize + roomSize - 2] = 2;
 					}
 					else if (Random.value < 0.3f)
 					{
-						map[rx * roomSize + roomSize][ry * roomSize + Random.Range(2, roomSize - 1)] = 0;
+						map[rx * roomSize + roomSize][ry * roomSize + Random.Range(2, roomSize - 1)] = 2;
 					}
 					else
-						map[rx * roomSize + roomSize][ry * roomSize + roomSize/2] = 0;
+						map[rx * roomSize + roomSize][ry * roomSize + roomSize/2] = 2;
 				}
 			}
 		}
