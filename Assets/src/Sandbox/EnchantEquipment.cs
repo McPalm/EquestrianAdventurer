@@ -45,8 +45,9 @@ public class EnchantEquipment : MonoBehaviour
 
 			if (e.slots == EquipmentType.body)
 			{
-				e.dodge += 1;
+				e.dodge += 1 + plus / 2;
 				e.armor += plus;
+				e.hp += plus * 2;
 			}
 			else
 			{
