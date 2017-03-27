@@ -17,6 +17,7 @@ public class UIItem : Dropable
 		{
 			item = value;
 			sortValue = item.value;
+			GetComponent<Tooltip>().hint = item.Tooltip;
 			GetComponent<Image>().sprite = item.sprite;
 		}
 	}
