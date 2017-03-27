@@ -60,13 +60,15 @@ public class MapCharacter : MonoBehaviour
 		}
 	}
 
+	int level = 1;
+
 	void OnChangeEquipment(Inventory i)
 	{
-		hitSkill = 5;
-		baseDamage = 3;
-		dodgeSkill = 5;
+		hitSkill = 2 + level;
+		baseDamage = 2 + level / 2;
+		dodgeSkill = 2 + level;
 		armor = 0;
-		int hp = baseHP;
+		int hp = baseHP + level * 3 - 3;
 
 		foreach(Equipment e in i.GetEquipped())
 		{
@@ -81,6 +83,14 @@ public class MapCharacter : MonoBehaviour
 
 		EventUpdateStats.Invoke(this);
 	}
+
+	public void SetLevel(int i)
+	{
+		level = i;
+		OnChangeEquipment(GetComponent<Inventory>());
+		GetComponent<HitPoints>().Heal(new DamageData().SetDamage(999)); // yay, max hp on level up!
+	}
+
 
 	public class MapCharacterEvent : UnityEvent<MapCharacter> { }
 }
