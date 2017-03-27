@@ -16,6 +16,7 @@ public class UIItem : Dropable
 		set
 		{
 			item = value;
+			sortValue = item.value;
 			GetComponent<Image>().sprite = item.sprite;
 		}
 	}
