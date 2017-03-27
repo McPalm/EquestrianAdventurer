@@ -39,7 +39,7 @@ public class MovementPredicter : MonoBehaviour
 		idle = 0f;
 		enabled = true;
 
-		transform.position = destination + (direction+ backlog1 + backlog2 + backlog3) * intensity * 0.5f;
+		transform.position = destination + (direction+ backlog1 + backlog2 + backlog3) * intensity * 0.75f;
 
 		backlog3 = backlog2;
 		backlog2 = backlog1;
