@@ -16,5 +16,6 @@ public class GroundItem : MonoBehaviour
 	protected void Start()
 	{
 		GetComponent<SpriteRenderer>().sprite = item.sprite;
+		GetComponent<SpriteRenderer>().color = item.Tint;
 	}
 }
