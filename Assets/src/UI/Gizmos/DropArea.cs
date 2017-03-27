@@ -65,9 +65,12 @@ public class DropArea : MonoBehaviour
 
 	void ArrangeList()
 	{
+		
 		clients.Sort(SortFunction);
 
-		for(int i = 0; i < clients.Count; i++)
+
+		if (!enabled) return;
+		for (int i = 0; i < clients.Count; i++)
 		{
 			StartCoroutine(MoveTo(clients[i].transform, (Vector2)anchor.transform.position + new Vector2(offset.x * (i / rows), offset.y * (i % rows))));
 		}

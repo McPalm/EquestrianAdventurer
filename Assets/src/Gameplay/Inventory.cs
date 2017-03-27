@@ -88,7 +88,15 @@ public class Inventory : MonoBehaviour
 	public bool DropItem(Item i)
 	{
 		EventDropItem.Invoke(i);
-		return RemoveItem(i);
+		if(RemoveItem(i))
+		{
+			// make the item and put on ze gorund
+			GameObject o = new GameObject(i.displayName);
+			o.transform.position = (Vector3)GetComponent<MapObject>().RealLocation;
+			o.AddComponent<GroundItem>().item = i;
+			return true;
+		}
+		return false;
 	}
 
 	/// <summary>
