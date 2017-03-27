@@ -109,7 +109,7 @@ public class RogueController : MonoBehaviour
 			if(m.GetComponent<Heart>())
 			{
 				Destroy(m.gameObject);
-				GetComponent<HitPoints>().Heal(new DamageData().SetDamage(10));
+				GetComponent<HitPoints>().Heal(new DamageData().SetDamage(5));
 			}
 		}
 

@@ -23,6 +23,8 @@ public class MapCharacter : MonoBehaviour
 		gameObject.layer = LayerMask.NameToLayer("Character");
 		GetComponent<CircleCollider2D>().isTrigger = true;
 		GetComponent<MapObject>().MapCharacter = this;
+		GetComponent<HitPoints>().MaxHealth = baseHP;
+		GetComponent<HitPoints>().CurrentHealth = baseHP;
 		GetComponent<HitPoints>().EventChangeHealth.AddListener(OnHurt);
 		if(GetComponent<Inventory>()) GetComponent<Inventory>().EventChangeEquipment.AddListener(OnChangeEquipment);
 		// maybe get a health bar and shit

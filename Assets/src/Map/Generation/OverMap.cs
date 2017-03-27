@@ -9,6 +9,10 @@ public class OverMap : MonoBehaviour {
 	public GameObject LoadingIcon;
 	public MapType debugType;
 
+	public CreatureSpawner forest;
+	public CreatureSpawner cave;
+	public CreatureSpawner castle;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -213,7 +217,9 @@ public class OverMap : MonoBehaviour {
 
 			yield return new WaitForSeconds(0f);
 
-			CreatureSpawner cs = GetComponent<CreatureSpawner>();
+			CreatureSpawner cs = forest;
+			if (msc.terrain == MapType.cave) cs = cave;
+			if (msc.terrain == MapType.rooms) cs = castle;
 			cs.targetSection = msc.section;
 			cs.Spawn();
 		}

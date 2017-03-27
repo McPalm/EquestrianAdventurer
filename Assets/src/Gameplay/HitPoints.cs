@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class HitPoints : MonoBehaviour
 {
-	public int maxHealth;
+	int maxHealth;
 	int damageTaken;
 	
 	public HealthEvent EventChangeHealth;
