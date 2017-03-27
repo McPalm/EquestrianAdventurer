@@ -25,6 +25,9 @@ public class UIInventory : MonoBehaviour
 
 		WeaponSlot.EventAdd.AddListener(ViewEquip);
 		ArmorSlot.EventAdd.AddListener(ViewEquip);
+
+		WeaponSlot.EventRemove.AddListener(ViewUnEquip);
+		ArmorSlot.EventRemove.AddListener(ViewUnEquip);
 	}
 
 	/// <summary>
@@ -80,6 +83,12 @@ public class UIInventory : MonoBehaviour
 	{
 		UIItem i = d as UIItem;
 		model.EquipItem((Equipment)i.Item);
+	}
+
+	void ViewUnEquip(Draggable d)
+	{
+		UIItem i = d as UIItem;
+		model.UnEquip((Equipment)i.Item);
 	}
 		
 

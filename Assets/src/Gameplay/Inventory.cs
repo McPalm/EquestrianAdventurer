@@ -146,7 +146,7 @@ public class Inventory : MonoBehaviour
 	public bool UnEquip(EquipmentType slot, bool drop = false)
 	{
 		if (drop) throw new System.NotImplementedException("Dropping items not implemented.");
-		if (!drop && EmptySpace) return false;
+		if (!drop && !EmptySpace) return false;
 		switch (slot)
 		{
 			case EquipmentType.body:
@@ -175,8 +175,7 @@ public class Inventory : MonoBehaviour
 	/// <returns>true if the item could be removed from the inventory</returns>
 	public bool UnEquip(Equipment item, bool drop = false)
 	{
-		if (drop) throw new System.NotImplementedException("Dropping items not implemented.");
-		if (!drop && EmptySpace) return false;
+		if (!drop && !EmptySpace) return false;
 		switch (item.slots)
 		{
 			case EquipmentType.body:
@@ -185,6 +184,7 @@ public class Inventory : MonoBehaviour
 				bodySlot = null;
 				EventUnEquipItem.Invoke(item, EquipmentType.body);
 				EventChangeEquipment.Invoke(this);
+				if (drop) DropItem(item);
 				return true;
 			case EquipmentType.weapon:
 				if (weaponSlot != item) return false;
@@ -192,6 +192,7 @@ public class Inventory : MonoBehaviour
 				weaponSlot = null;
 				EventUnEquipItem.Invoke(item, EquipmentType.weapon);
 				EventChangeEquipment.Invoke(this);
+				if (drop) DropItem(item);
 				return true;
 		}
 		return false;
