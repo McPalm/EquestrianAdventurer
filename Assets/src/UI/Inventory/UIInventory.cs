@@ -73,10 +73,21 @@ public class UIInventory : MonoBehaviour
 
 	/// View Events, stuffs that is done in the UI that should update the players inventory
 	
-	void ViewDropEvent(Draggable d)
+	void ViewDropEvent(Draggable d) // when we drop something outside the Inventory
 	{
 		UIItem i = d as UIItem;
-		model.DropItem(i.Item); // change to drop
+		if (Equipment.Contains(d as Dropable))
+		{
+			model.DropItem(i.Item);
+		}
+		else if (i.Item is Equipment)
+		{
+			model.UnEquip(i.Item as Equipment, true);
+		}
+		else
+		{
+			Debug.LogWarning("Unhandled Drop Event");
+		}
 	}
 
 	void ViewEquip(Draggable d)

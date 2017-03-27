@@ -46,6 +46,11 @@ public class DropArea : MonoBehaviour
 		return true;
 	}
 
+	public bool Contains(Dropable d)
+	{
+		return clients.Contains(d);
+	}
+
 	void MoveItemInList(Dropable client, DropArea other)
 	{
 		if (other == this) return;
@@ -65,11 +70,7 @@ public class DropArea : MonoBehaviour
 
 	void ArrangeList()
 	{
-		
 		clients.Sort(SortFunction);
-
-
-		if (!enabled) return;
 		for (int i = 0; i < clients.Count; i++)
 		{
 			StartCoroutine(MoveTo(clients[i].transform, (Vector2)anchor.transform.position + new Vector2(offset.x * (i / rows), offset.y * (i % rows))));
@@ -81,10 +82,11 @@ public class DropArea : MonoBehaviour
 		Vector2 start = target.position;
 		for (float progress = 0; progress < 1f; progress += Time.deltaTime * 6f)
 		{
+			if (!target) break;
 			target.position = Vector2.Lerp(start, destination, progress);
 			yield return new WaitForSeconds(0f);
 		}
-		target.position = destination;
+		if(target)target.position = destination;
 	}
 
 	int SortFunction(Dropable a, Dropable b)

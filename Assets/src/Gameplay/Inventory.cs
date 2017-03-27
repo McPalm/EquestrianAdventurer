@@ -114,7 +114,6 @@ public class Inventory : MonoBehaviour
 	/// <returns>true if equipped succesfully</returns>
 	public bool EquipItem(Equipment e)
 	{
-		print("Try Equip " + e.displayName);
 		switch(e.slots)
 		{
 			case EquipmentType.body:
@@ -123,7 +122,6 @@ public class Inventory : MonoBehaviour
 				bodySlot = e;
 				EventChangeEquipment.Invoke(this);
 				EventEquipItem.Invoke(e, EquipmentType.body);
-				print("Equipped " + e.displayName);
 				return true;
 			case EquipmentType.weapon:
 				if (weaponSlot != null) return false;
@@ -131,7 +129,6 @@ public class Inventory : MonoBehaviour
 				weaponSlot = e;
 				EventChangeEquipment.Invoke(this);
 				EventEquipItem.Invoke(e, EquipmentType.weapon);
-				print("Equipped " + e.displayName);
 				return true;
 		}
 		return false;
