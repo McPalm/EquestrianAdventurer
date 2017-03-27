@@ -35,7 +35,8 @@ public class MapCharacter : MonoBehaviour
 		bool hit = Mathf.Min(Random.value, Random.value) < (hitSkill / (target.dodgeSkill + hitSkill));
 		if (hit)
 		{
-			float damage = (0.75f + Random.value * 0.5f) * baseDamage * baseDamage / (baseDamage + target.armor);
+			float damage = (0.75f + Random.value * 0.5f) * baseDamage * (5f + baseDamage/2f) / (5f + baseDamage/2f + target.armor);
+			if (damage < 1f) damage = 1;
 			target.GetComponent<HitPoints>().Hurt(new DamageData().SetDamage((int)damage));
 			HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, (int)damage);
 		}
@@ -59,9 +60,9 @@ public class MapCharacter : MonoBehaviour
 	void OnChangeEquipment(Inventory i)
 	{
 		hitSkill = 5;
-		baseDamage = 5;
+		baseDamage = 3;
 		dodgeSkill = 5;
-		armor = 5;
+		armor = 0;
 		int hp = baseHP;
 
 		foreach(Equipment e in i.GetEquipped())

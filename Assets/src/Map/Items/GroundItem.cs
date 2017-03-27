@@ -17,5 +17,6 @@ public class GroundItem : MonoBehaviour
 	{
 		GetComponent<SpriteRenderer>().sprite = item.sprite;
 		GetComponent<SpriteRenderer>().color = item.Tint;
+		GetComponent<SpriteRenderer>().sortingOrder = 10; 
 	}
 }
