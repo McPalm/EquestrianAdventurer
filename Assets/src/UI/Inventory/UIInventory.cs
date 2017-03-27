@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class UIInventory : MonoBehaviour
 {
-	public Inventory target; // the model
+	public Inventory model; // the players inventory class
 
 	[Space(10)] // view component
 	public DropArea Equipment;
@@ -19,9 +19,9 @@ public class UIInventory : MonoBehaviour
 
 	void Start()
 	{
-		target.EventAddItem.AddListener(ModelAddItem);
-		target.EventEquipItem.AddListener(ModelEquip);
-		target.EventDropItem.AddListener(ModelDrop);
+		model.EventAddItem.AddListener(ModelAddItem);
+		model.EventEquipItem.AddListener(ModelEquip);
+		model.EventDropItem.AddListener(ModelDrop);
 	}
 
 	/// <summary>
@@ -31,7 +31,6 @@ public class UIInventory : MonoBehaviour
 	/// <param name="i"></param>
 	void ModelAddItem(Item i)
 	{
-		print("Adding "+ i.displayName);
 		Equipment.Drop(Get(i));
 	}
 
@@ -54,7 +53,7 @@ public class UIInventory : MonoBehaviour
 
 	void ModelDrop(Item i)
 	{
-		foreach(UIItem ui in active)
+		foreach (UIItem ui in active)
 		{
 			if(ui.Item == i)
 			{
@@ -64,6 +63,16 @@ public class UIInventory : MonoBehaviour
 			}
 		}
 	}
+
+
+	/// View Events, stuffs that is done in the UI that should update the players inventory
+	
+	void ViewDropEvent(Draggable d)
+	{
+		UIItem i = d as UIItem;
+		model.DropItem(i.Item); // change to drop
+	}
+		
 
 	/// <summary>
 	/// Get the UI item for the item.
@@ -87,7 +96,8 @@ public class UIInventory : MonoBehaviour
 		active.Add(ret);
 		ret.transform.SetParent(transform);
 		ret.Item = i;
-		ret.transform.position = Camera.main.WorldToScreenPoint(target.transform.position); // make the item over the player. Should add a cool effect of it going from the ground to the inventory
+		ret.transform.position = Camera.main.WorldToScreenPoint(model.transform.position); // make the item over the player. Should add a cool effect of it going from the ground to the inventory
+		ret.EventDropOutside.AddListener(ViewDropEvent);
 		return ret;
 	}
 

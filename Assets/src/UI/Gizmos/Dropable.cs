@@ -12,7 +12,9 @@ public class Dropable : Draggable
 	public float sortValue;
 
 	public DropInAreaEvent EventDropInArea = new DropInAreaEvent();
-
+	public DropableEvent EventDropOutside = new DropableEvent(); // called when not dropping over anything
+	public DropableEvent EventDisable = new DropableEvent();
+	
 
 	protected void Start()
 	{
@@ -36,6 +38,12 @@ public class Dropable : Draggable
 		pointerData.position = Input.mousePosition;
 
 		EventSystem.current.RaycastAll(pointerData, results);
+
+		if(results.Count == 1)
+		{
+			EventDropOutside.Invoke(this);
+			return;
+		}
 
 		foreach(RaycastResult result in results)
 		{
@@ -65,5 +73,11 @@ public class Dropable : Draggable
 		target.localPosition = destination;
 	}
 
+	void OnDisable()
+	{
+		EventDisable.Invoke(this);
+	}
+
 	public class DropInAreaEvent : UnityEvent<Dropable, DropArea> { }
+	public class DropableEvent : UnityEvent<Dropable> { }
 }

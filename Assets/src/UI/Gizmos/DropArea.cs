@@ -35,7 +35,9 @@ public class DropArea : MonoBehaviour
 
 		clients.Add(drop);
 		drop.EventDropInArea.AddListener(MoveItemInList);
+		drop.EventDisable.AddListener(RemoveClient);
 		EventAdd.Invoke(drop);
+		
 
 		if (capacity > 1)
 			ArrangeList();
@@ -50,6 +52,13 @@ public class DropArea : MonoBehaviour
 		clients.Remove(client);
 		client.EventDropInArea.RemoveListener(MoveItemInList);
 		EventRemove.Invoke(client);
+		if (clients.Count > 0)
+			ArrangeList();
+	}
+
+	void RemoveClient(Dropable d) // Do not make public!
+	{
+		clients.Remove(d);
 		if (clients.Count > 0)
 			ArrangeList();
 	}

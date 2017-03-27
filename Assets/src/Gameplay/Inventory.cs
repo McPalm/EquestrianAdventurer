@@ -71,6 +71,7 @@ public class Inventory : MonoBehaviour
 	/// <returns>true if the item is in the inventory</returns>
 	public bool RemoveItem(Item i)
 	{
+		
 		if(items.Remove(i))
 		{
 			EventRemoveItem.Invoke(i);
@@ -86,7 +87,8 @@ public class Inventory : MonoBehaviour
 	/// <returns>true if we could drop it</returns>
 	public bool DropItem(Item i)
 	{
-		throw new System.NotImplementedException();
+		EventDropItem.Invoke(i);
+		return RemoveItem(i);
 	}
 
 	/// <summary>

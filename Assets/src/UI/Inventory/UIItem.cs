@@ -16,8 +16,6 @@ public class UIItem : Dropable
 		set
 		{
 			item = value;
-			print(GetComponent<Image>());
-			print(item.sprite);
 			GetComponent<Image>().sprite = item.sprite;
 		}
 	}
@@ -27,5 +25,4 @@ public class UIItem : Dropable
 		target = transform;
 		base.Start();
 	}
-
 }
