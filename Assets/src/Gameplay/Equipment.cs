@@ -12,6 +12,20 @@ public class Equipment : Item
 	public int hit;
 	public int hp;
 
+	public override int Value
+	{
+		get
+		{
+			value = armor * armor + dodge * dodge + damage * damage * 2 + hit * hit + hp * hp / 2;
+			return value;
+		}
+
+		set
+		{
+			base.Value = value;
+		}
+	}
+
 	public override string Tooltip
 	{
 		get

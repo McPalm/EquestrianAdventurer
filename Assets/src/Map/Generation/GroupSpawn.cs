@@ -28,6 +28,7 @@ public class GroupSpawn : MonoBehaviour
 			Instantiate(spawnthese[i], (Vector2)locations[rand], Quaternion.identity);
 			locations.RemoveAt(rand);
 		}
+		Destroy(gameObject);
 	}
 
 

@@ -16,7 +16,7 @@ public class UIItem : Dropable
 		set
 		{
 			item = value;
-			sortValue = item.value;
+			sortValue = item.Value;
 			GetComponent<Tooltip>().hint = item.Tooltip;
 			GetComponent<Image>().sprite = item.sprite;
 			GetComponent<Image>().color = item.Tint;

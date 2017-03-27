@@ -29,4 +29,17 @@ public class Item
 			return new Color(red, green, blue, 1f);
 		}
 	}
+
+	virtual public int Value
+	{
+		get
+		{
+			return value;
+		}
+
+		set
+		{
+			this.value = value;
+		}
+	}
 }
