@@ -10,9 +10,13 @@ public class UIEquipmentSlot : DropArea
 		UIItem i = d.GetComponent<UIItem>();
 		if (!i) return false;
 
-		if (((i.Item as Equipment).slots & slotType) == 0)
-			return false;
+		if (i.Item is Equipment)
+		{
+			if (((i.Item as Equipment).slots & slotType) == 0)
+				return false;
 
-		return base.Drop(d);
+			return base.Drop(d);
+		}
+		return false;
 	}
 }
