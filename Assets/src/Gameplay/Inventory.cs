@@ -195,6 +195,15 @@ public class Inventory : MonoBehaviour
 		return false;
 	}
 
+	public Equipment[] GetEquipped()
+	{
+		List<Equipment> ret = new List<Equipment>();
+		if (weaponSlot != null) ret.Add(weaponSlot);
+		if (bodySlot != null) ret.Add(bodySlot);
+
+		return ret.ToArray();
+	}
+
 	public void PrintInventory()
 	{
 		string printme = "<< " + name + " Inventory >>";

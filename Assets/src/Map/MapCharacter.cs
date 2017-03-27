@@ -11,6 +11,7 @@ public class MapCharacter : MonoBehaviour
 	public float baseDamage;
 	public float dodgeSkill;
 	public float armor;
+	public int baseHP = 10;
 
 	public GameObject skull;
 
@@ -23,6 +24,7 @@ public class MapCharacter : MonoBehaviour
 		GetComponent<CircleCollider2D>().isTrigger = true;
 		GetComponent<MapObject>().MapCharacter = this;
 		GetComponent<HitPoints>().EventChangeHealth.AddListener(OnHurt);
+		GetComponent<Inventory>().EventChangeEquipment.AddListener(OnChangeEquipment);
 		// maybe get a health bar and shit
 	}
 
@@ -50,5 +52,25 @@ public class MapCharacter : MonoBehaviour
 			EventDeath.Invoke();
 			GetComponent<Mobile>().enabled = false;
 		}
+	}
+
+	void OnChangeEquipment(Inventory i)
+	{
+		hitSkill = 5;
+		baseDamage = 5;
+		dodgeSkill = 5;
+		armor = 5;
+		int hp = baseHP;
+
+		foreach(Equipment e in i.GetEquipped())
+		{
+			hitSkill += e.hit;
+			baseDamage += e.damage;
+			dodgeSkill += e.dodge;
+			armor += e.armor;
+			hp += e.hp;
+		}
+
+		GetComponent<HitPoints>().MaxHealth = hp;
 	}
 }
