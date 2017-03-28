@@ -42,4 +42,19 @@ public class Item
 			this.value = value;
 		}
 	}
+
+	virtual public Item Clone()
+	{
+		Item i = new Item();
+
+		i.displayName = displayName;
+		i.sprite = sprite;
+		i.value = value;
+
+		i.red = red;
+		i.green = green;
+		i.blue = blue;
+
+		return i;
+	}
 }

@@ -33,6 +33,7 @@ public class DropArea : MonoBehaviour
 		if (clients.Count >= capacity) return false;
 		if (clients.Contains(drop)) return false;
 
+		drop.transform.SetParent(transform);
 		clients.Add(drop);
 		drop.EventDropInArea.AddListener(MoveItemInList);
 		drop.EventDisable.AddListener(RemoveClient);

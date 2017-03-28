@@ -14,7 +14,8 @@ public class Dropable : Draggable
 	public DropInAreaEvent EventDropInArea = new DropInAreaEvent();
 	public DropableEvent EventDropOutside = new DropableEvent(); // called when not dropping over anything
 	public DropableEvent EventDisable = new DropableEvent();
-	
+
+	public System.Func<bool, Dropable> DropCheck; // called when dropping this item.
 
 	protected void Start()
 	{
@@ -29,6 +30,8 @@ public class Dropable : Draggable
 
 	void Drop(GameObject o)
 	{
+		
+
 		// find if we have a dropzone underneath
 		List<RaycastResult> results = new List<RaycastResult>();
 		PointerEventData pointerData = new PointerEventData(EventSystem.current)
@@ -50,6 +53,11 @@ public class Dropable : Draggable
 			DropArea a = result.gameObject.GetComponent<DropArea>();
 			if(a)
 			{
+				if (DropCheck != null && !DropCheck(this))
+				{
+					// if false, we
+
+				}
 				if (a.Drop(this))
 				{
 					EventDropInArea.Invoke(this, a);

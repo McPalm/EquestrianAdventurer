@@ -39,4 +39,24 @@ public class Equipment : Item
 			return s;
 		}
 	}
+
+	public override Item Clone()
+	{
+		Equipment e = new Equipment();
+
+		e.displayName = displayName;
+		e.sprite = sprite;
+		e.value = value;
+		e.red = red;
+		e.green = green;
+		e.blue = blue;
+
+		e.armor = armor;
+		e.damage = damage;
+		e.dodge = dodge;
+		e.hp = hp;
+		e.hit = hit;
+
+		return e;
+	}
 }

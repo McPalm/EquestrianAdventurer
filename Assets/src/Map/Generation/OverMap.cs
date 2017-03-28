@@ -119,7 +119,6 @@ public class OverMap : MonoBehaviour {
 			attempts++;
 			if (attempts > 10000) break;
 		}
-		print("Build Attempts: " + attempts);
 
 
 		// TODO
@@ -147,7 +146,6 @@ public class OverMap : MonoBehaviour {
 			attempts++;
 		}
 
-		print("Bridge Attempts: " + attempts);
 		// step 5: add a random number of extra bridges
 		// TODO (maybe)
 
