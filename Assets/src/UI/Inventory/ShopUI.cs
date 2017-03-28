@@ -10,9 +10,12 @@ public class ShopUI : MonoBehaviour
 	public UIItem UIItemPrefab;
 	List<UIItem> active = new List<UIItem>();
 
+	Purse playerPurse; // HACK
+
 	// Use this for initialization
 	void Start ()
 	{
+		playerPurse = FindObjectOfType<Purse>();
 		BuyBack.EventAdd.AddListener(Sell);
 		Build();
 	}
@@ -23,7 +26,8 @@ public class ShopUI : MonoBehaviour
 
 		if(i)
 		{
-			print("Sold " + i.Item.displayName + ". Its worth " + i.Item.value);
+			if(i.Item.value > 0)
+				playerPurse.AddBits(1 + i.Item.value / 10);
 		}
 	}
 
