@@ -16,7 +16,8 @@ public class Equipment : Item
 	{
 		get
 		{
-			value = armor * armor * 2 + dodge * dodge + damage * damage + hit * hit + hp * hp / 3;
+			value = armor * 2 + dodge + damage * 2 + hit + hp / 3;
+			value *= value;
 			return value;
 		}
 

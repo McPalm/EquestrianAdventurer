@@ -45,6 +45,7 @@ public class Item
 
 	virtual public Item Clone()
 	{
+		Debug.Log("Not here!");
 		Item i = new Item();
 
 		i.displayName = displayName;
