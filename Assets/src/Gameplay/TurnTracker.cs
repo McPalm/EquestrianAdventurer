@@ -23,7 +23,7 @@ public class TurnTracker : MonoBehaviour
 
 	public void NextTurn()
 	{
-		foreach (SimpleBehaviour sb in characters)
+		foreach (TurnEntry sb in characters)
 			sb.DoTurn();
 	}
 

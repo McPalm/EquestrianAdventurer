@@ -79,7 +79,7 @@ public class DropArea : MonoBehaviour
 
 	IEnumerator MoveTo(Transform target, Vector2 destination)
 	{
-		Vector2 start = target.localPosition;
+		Vector2 start = target.position;
 		for (float progress = 0; progress < 1f; progress += Time.deltaTime * 6f)
 		{
 			if (!target) break;

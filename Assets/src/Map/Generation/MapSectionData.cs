@@ -35,7 +35,6 @@ public class MapSectionData
 
 	static public MapSectionData Load(string name)
 	{
-		Debug.Log("Loading " + name + "...");
 		// MapSectionData data = new MapSectionData();
 		return XmlTool.LoadFromXML<MapSectionData>(resourcePath + name);
 	}

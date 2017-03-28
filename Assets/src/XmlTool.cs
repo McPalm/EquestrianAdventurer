@@ -37,6 +37,7 @@ public static class XmlTool
 			TextWriter writer = new StreamWriter(path);
 			xml.Serialize(writer, target);
 			writer.Close();
+			Resources.UnloadUnusedAssets();
 		}
 		catch (Exception e)
 		{

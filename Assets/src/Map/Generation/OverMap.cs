@@ -349,10 +349,12 @@ public class OverMap : MonoBehaviour {
 				case MapType.forest:
 					generator = new ForestGenerator();
 					palette = new int[] { 7, 5, 6, 2, 3, 4 };
+					section.paletteName = "default";
 					break;
 				case MapType.minimumPath:
 					generator = new MinimumPath();
 					palette = new int[] { 0, 1 };
+					section.paletteName = "default";
 					break;
 				case MapType.cave:
 					generator = new CaveGenerator();
@@ -367,6 +369,7 @@ public class OverMap : MonoBehaviour {
 				default:
 					generator = new RoomChain5by5();
 					palette = new int[] { 1, 0, 2 };
+					section.paletteName = "default";
 					break;
 			}
 
