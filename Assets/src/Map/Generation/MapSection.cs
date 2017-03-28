@@ -3,11 +3,14 @@ using System.Collections.Generic;
 
 public class MapSection : MonoBehaviour
 {
-	MapSectionData data;
+	
 	public string sectionName;
 	public string paletteName;
-	Dictionary<IntVector2, GameObject> map = new Dictionary<IntVector2, GameObject>();
 
+	public bool loadSection;
+
+	Dictionary<IntVector2, GameObject> map = new Dictionary<IntVector2, GameObject>();
+	MapSectionData data;
 	TileDB tileDB;
 	
 
@@ -15,12 +18,10 @@ public class MapSection : MonoBehaviour
 	{
 		if (data == null)
 		{
-			data = MapSectionData.Load(sectionName);
-			print(data);
-			print(data.name);
-			print(data.tiles);
-			print(data.tiles.Length);
-			print(data.tiles[0][0]);
+			if (loadSection)
+				data = MapSectionData.Load(sectionName);
+			else
+				data = new MapSectionData(sectionName);
 			DrawAll();
 		}
 	}

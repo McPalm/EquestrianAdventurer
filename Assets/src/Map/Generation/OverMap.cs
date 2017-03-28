@@ -18,8 +18,14 @@ public class OverMap : MonoBehaviour {
 	{
 		FindObjectOfType<RogueController>().GetComponent<Mobile>().EventMovement.AddListener(PlayerMoveEvent);
 
-		MapSectionContainer con = new MapSectionContainer();
-		
+		MapSectionContainer con;
+
+		con = new MapSectionContainer();
+		con.terrain = MapType.pregenerated;
+		map.Add(new IntVector2(0, -1), con);
+		con.sectionName = "ponyville";
+
+		con = new MapSectionContainer();
 		con.AddConnection(CompassDirection.south);
 		con.terrain = MapType.forest;
 		map.Add(IntVector2.zero, con);
@@ -215,13 +221,18 @@ public class OverMap : MonoBehaviour {
 			msc.LoadContainer(iv2);
 			msc.Loaded = true;
 
-			yield return new WaitForSeconds(0f);
+			
 
-			CreatureSpawner cs = forest;
+			yield return new WaitForSeconds(0f);
+			CreatureSpawner cs = null;
+			if (msc.terrain == MapType.forest) cs = forest;
 			if (msc.terrain == MapType.cave) cs = cave;
 			if (msc.terrain == MapType.rooms) cs = castle;
-			cs.targetSection = msc.section;
-			cs.Spawn();
+			if (cs)
+			{
+				cs.targetSection = msc.section;
+				cs.Spawn();
+			}
 		}
 	}
 
@@ -283,6 +294,7 @@ public class OverMap : MonoBehaviour {
 		public MapSection section;
 		public CompassDirection connections;
 		public MapType terrain;
+		public string sectionName; // used for pregenerated maps
 
 		bool loaded = false;
 		int genInfo = 0; // temporary data storage during generation (i think)
@@ -328,32 +340,41 @@ public class OverMap : MonoBehaviour {
 			GameObject o = new GameObject("Map Section " + iv2.ToString());
 			o.transform.position = (Vector2)iv2 * MapSectionData.DIMENSIONS;
 			section = o.AddComponent<MapSection>();
+			section.loadSection = false;
 
 			IGenerator generator;
-			int[] palete;
+			int[] palette;
 			switch(terrain)
 			{
 				case MapType.forest:
 					generator = new ForestGenerator();
-					palete = new int[] { 7, 5, 6, 2, 3, 4 };
+					palette = new int[] { 7, 5, 6, 2, 3, 4 };
 					break;
 				case MapType.minimumPath:
 					generator = new MinimumPath();
-					palete = new int[] { 0, 1 };
+					palette = new int[] { 0, 1 };
 					break;
 				case MapType.cave:
 					generator = new CaveGenerator();
-					palete = new int[] { 7, 8, 2 };
+					palette = new int[] { 7, 8, 2 };
+					break;
+				case MapType.pregenerated:
+					generator = null;
+					section.loadSection = true;
+					palette = null;
+					section.sectionName = sectionName;
 					break;
 				default:
 					generator = new RoomChain5by5();
-					palete = new int[] { 1, 0, 2 };
+					palette = new int[] { 1, 0, 2 };
 					break;
 			}
 
-			generator.Generate(connections);
-
-			section.LoadFromBlueprint(generator.GetResult(), palete);
+			if (generator != null)
+			{
+				generator.Generate(connections);
+				section.LoadFromBlueprint(generator.GetResult(), palette);
+			}
 		}
 	}
 }

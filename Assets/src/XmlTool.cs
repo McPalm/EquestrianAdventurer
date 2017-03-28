@@ -79,7 +79,6 @@ public static class XmlTool
 
 	public static Stream GenerateStreamFromString(string s)
 	{
-		Debug.Log(s.Length);
 		MemoryStream stream = new MemoryStream();
 		StreamWriter writer = new StreamWriter(stream);
 		writer.Write(s);
