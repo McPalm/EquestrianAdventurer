@@ -41,6 +41,7 @@ public class IdleAI : MonoBehaviour, TurnTracker.TurnEntry
 	{
 		TurnTracker.Instance.Add(this);
 		home = GetComponent<MapObject>().RealLocation;
+		GetComponent<MapCharacter>().EventDeath.AddListener(delegate { TurnTracker.Instance.Remove(this); });
 	}
 
 	bool MoveDirection(Vector2 v2)
