@@ -126,8 +126,17 @@ public class RogueController : MonoBehaviour
 		}
 		if (mc)
 		{
-			GetComponent<MapCharacter>().Melee(mc);
-			EndTurn();
+			Interactable i = mc.GetComponent<Interactable>();
+			if (i)
+			{
+				if (i.Interact(GetComponent<MapObject>()))
+					EndTurn();
+			}
+			else
+			{
+				GetComponent<MapCharacter>().Melee(mc);
+				EndTurn();
+			}
 		}
 
 	}

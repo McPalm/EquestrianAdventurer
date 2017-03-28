@@ -33,7 +33,7 @@ public class CombatTextPool : MonoBehaviour
 		}
 	}
 	
-	public void PrintAt(Vector2 location, string text, Color color)
+	public void PrintAt(Vector2 location, string text, Color color, float duration = 0.75f)
 	{
 		texts[count].text = text;
 		texts[count].color = color;
@@ -41,7 +41,7 @@ public class CombatTextPool : MonoBehaviour
 		texts[count].transform.position = Camera.main.WorldToScreenPoint(location);
 
 
-		StartCoroutine(HideAfterSeconds(texts[count], 0.75f));
+		StartCoroutine(HideAfterSeconds(texts[count], duration));
 		count++;
 		count %= texts.Count;
 	}
