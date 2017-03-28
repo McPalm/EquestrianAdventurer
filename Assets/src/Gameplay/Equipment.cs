@@ -16,7 +16,7 @@ public class Equipment : Item
 	{
 		get
 		{
-			value = armor * armor + dodge * dodge + damage * damage * 2 + hit * hit + hp * hp / 2;
+			value = armor * armor * 2 + dodge * dodge + damage * damage + hit * hit + hp * hp / 3;
 			return value;
 		}
 
@@ -30,7 +30,7 @@ public class Equipment : Item
 	{
 		get
 		{
-			string s = displayName;
+			string s = base.Tooltip;
 			if (armor > 0) s += "\n Armor: " + armor;
 			if (damage > 0) s += "\n Damage: " + damage;
 			if (dodge > 0) s += "\n Dodge: " + dodge;

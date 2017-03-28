@@ -18,7 +18,7 @@ public class Item
 	{
 		get
 		{
-			return displayName;
+			return displayName + "(" + value + " bits)";
 		}
 	}
 
