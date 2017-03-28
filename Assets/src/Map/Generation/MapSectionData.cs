@@ -7,15 +7,18 @@ using UnityEngine;
 [Serializable]
 public class MapSectionData
 {
+	static string resourcePath = "XML/Maps/";
+
 	static public int DIMENSIONS = 41;
 
-	public int[][] tiles = new int[DIMENSIONS][];
+	public int[][] tiles; // = new int[DIMENSIONS][];
 	public MapSectionData() { }
 
 	public string name;
 
 	public MapSectionData(string name)
 	{
+		tiles = new int[DIMENSIONS][];
 		for (int x = 0; x < DIMENSIONS; x++)
 		{
 			tiles[x] = new int[DIMENSIONS];
@@ -27,35 +30,14 @@ public class MapSectionData
 
 	public void Save()
 	{
-		try
-		{
-			XmlSerializer xml = new XmlSerializer(typeof(MapSectionData));
-			Debug.Log("Writing to: " + Application.persistentDataPath + "/mapsections/" + name + ".xml");
-			TextWriter writer = new StreamWriter(Application.persistentDataPath + "/mapsections/" + name + ".xml");
-			xml.Serialize(writer, this);
-			writer.Close();
-		}
-		catch (Exception e)
-		{
-			Debug.LogException(e);
-		}
+		XmlTool.EditorSaveObjectAsXML(this, resourcePath + name);
 	}
 
 	static public MapSectionData Load(string name)
 	{
-		try
-		{
-			XmlSerializer xml = new XmlSerializer(typeof(MapSectionData));
-			XmlTextReader reader = new XmlTextReader(Application.persistentDataPath + "/mapsections/" + name + ".xml");
-			MapSectionData section = xml.Deserialize(reader) as MapSectionData;
-			reader.Close();
-			return section;
-		}
-		catch (Exception)
-		{
-			// Debug.LogException(e);
-		}
-		return new MapSectionData(name);
+		Debug.Log("Loading " + name + "...");
+		// MapSectionData data = new MapSectionData();
+		return XmlTool.LoadFromXML<MapSectionData>(resourcePath + name);
 	}
 
 	/*

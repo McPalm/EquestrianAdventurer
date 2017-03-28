@@ -16,6 +16,11 @@ public class MapSection : MonoBehaviour
 		if (data == null)
 		{
 			data = MapSectionData.Load(sectionName);
+			print(data);
+			print(data.name);
+			print(data.tiles);
+			print(data.tiles.Length);
+			print(data.tiles[0][0]);
 			DrawAll();
 		}
 	}
@@ -40,7 +45,6 @@ public class MapSection : MonoBehaviour
 		location = transform.InverseTransformVector(location);
 		IntVector2 v2 = IntVector2.RoundFrom(location);
 		data.tiles[v2.x][v2.y] = t;
-
 		// physical edit
 		DrawSprite(location, t);
 	}
@@ -58,9 +62,9 @@ public class MapSection : MonoBehaviour
 			int x = (int)locations[i].x;
 			int y = (int)locations[i].y;
 			if (x > 0	&! locations.Contains(new Vector2(x - 1, y))	&& data.tiles[x - 1][y] == filter) locations.Add(new Vector2(x - 1, y));
-			if (x < 31	&! locations.Contains(new Vector2(x + 1, y))	&& data.tiles[x + 1][y] == filter) locations.Add(new Vector2(x + 1, y));
+			if (x < MapSectionData.DIMENSIONS - 1 & ! locations.Contains(new Vector2(x + 1, y))	&& data.tiles[x + 1][y] == filter) locations.Add(new Vector2(x + 1, y));
 			if (y > 0	&! locations.Contains(new Vector2(x, y - 1))	&& data.tiles[x][y - 1] == filter) locations.Add(new Vector2(x, y - 1));
-			if (y < 31	&! locations.Contains(new Vector2(x, y + 1))	&& data.tiles[x][y + 1] == filter) locations.Add(new Vector2(x, y + 1));
+			if (y < MapSectionData.DIMENSIONS-1 & ! locations.Contains(new Vector2(x, y + 1))	&& data.tiles[x][y + 1] == filter) locations.Add(new Vector2(x, y + 1));
 		}
 
 		foreach(Vector2 v2 in locations)

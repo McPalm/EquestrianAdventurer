@@ -45,7 +45,6 @@ public class MapBuildController : MonoBehaviour
 
 	public void SetSwatch(int i)
 	{
-		print(i);
 		Color c = Color.white;
 		// bool flip = false;
 		if (i < 0) s = b;
