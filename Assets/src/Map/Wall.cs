@@ -34,11 +34,13 @@ public class Wall : MonoBehaviour, IMapBlock
 
 	void OnDisable()
 	{
-		if(on)BlockMap.Instance.Remove(gameObject);
+		if (MapBuildController.editing) return;
+		if (on)BlockMap.Instance.Remove(gameObject);
 	}
 
 	void OnEnable()
 	{
+		if (MapBuildController.editing) return;
 		BlockMap.Instance.Add(this, gameObject);
 		gameObject.layer = LayerMask.NameToLayer("Wall");
 	}

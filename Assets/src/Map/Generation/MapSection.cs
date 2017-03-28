@@ -5,7 +5,11 @@ public class MapSection : MonoBehaviour
 {
 	MapSectionData data;
 	public string sectionName;
-	Dictionary<IntVector2, SpriteRenderer> map = new Dictionary<IntVector2, SpriteRenderer>();
+	public string paletteName;
+	Dictionary<IntVector2, GameObject> map = new Dictionary<IntVector2, GameObject>();
+
+	TileDB tileDB;
+	
 
 	void Start()
 	{
@@ -18,6 +22,8 @@ public class MapSection : MonoBehaviour
 
 	public void DrawAll()
 	{
+		tileDB = TileDB.LoadPalette(paletteName);
+
 		for(int x = 0; x < MapSectionData.DIMENSIONS; x++)
 		{
 			for(int y = 0; y < MapSectionData.DIMENSIONS; y++)
@@ -26,6 +32,7 @@ public class MapSection : MonoBehaviour
 			}
 		}
 	}
+
 
 	public void SetTile(Vector3 location, int t)
 	{
@@ -66,8 +73,8 @@ public class MapSection : MonoBehaviour
 	// true if inside map, false if the location isoutside the bounds of the map section.
 	public bool IsInSection(Vector2 location)
 	{
-		if (location.y < transform.position.y - 0.5f || location.y > transform.position.y + MapSectionData.DIMENSIONS + 0.5f) return false;
-		if (location.x < transform.position.x - 0.5f || location.x > transform.position.x + MapSectionData.DIMENSIONS + 0.5f) return false;
+		if (location.y < transform.position.y - 0.5f || location.y > transform.position.y + MapSectionData.DIMENSIONS - 0.5f) return false;
+		if (location.x < transform.position.x - 0.5f || location.x > transform.position.x + MapSectionData.DIMENSIONS - 0.5f) return false;
 		return true;
 	}
 
@@ -78,8 +85,10 @@ public class MapSection : MonoBehaviour
 	/// <param name="i">Tile</param>
 	void DrawSprite(Vector2 v2, int t)
 	{
-		GameObject tile = Instantiate(TileDB.Instance.GetPrefab(t), transform.position + (Vector3)v2, Quaternion.identity) as GameObject;
+		EraseAt(v2);
+		GameObject tile = Instantiate(tileDB.GetPrefab(t), transform.position + (Vector3)v2, Quaternion.identity) as GameObject;
 		tile.transform.SetParent(transform);
+		map.Add(IntVector2.RoundFrom(v2), tile);
 
 		/*
 		TileAt(v2).sprite = TileDB.GetTile(t, out flip, out wall);
@@ -87,16 +96,26 @@ public class MapSection : MonoBehaviour
 		TileAt(v2).sortingLayerName = (wall) ? "Active" : "Map";
 		*/
 	}
-	
+
+
+	public void EraseAt(Vector2 location)
+	{
+		GameObject deleteme;
+		if (map.TryGetValue(IntVector2.RoundFrom(location), out deleteme))
+		{
+			Destroy(deleteme);
+			map.Remove(IntVector2.RoundFrom(location));
+		}
+	}
 
 	/// <summary>
 	/// Tile at Local Position
 	/// </summary>
 	/// <param name="v2"></param>
 	/// <returns></returns>
-	SpriteRenderer TileAt(Vector2 v2)
+	GameObject TileAt(Vector2 v2)
 	{
-		SpriteRenderer ret = null;
+		GameObject ret = null;
 		IntVector2 iv2 = IntVector2.RoundFrom(v2);
 		if (map.TryGetValue(iv2, out ret))
 		{
@@ -104,10 +123,10 @@ public class MapSection : MonoBehaviour
 		}
 
 		GameObject o = new GameObject(sectionName + " " + IntVector2.RoundFrom(v2));
-		ret = o.AddComponent<SpriteRenderer>();
+		SpriteRenderer s = o.AddComponent<SpriteRenderer>();
 		o.transform.SetParent(transform);
 		o.transform.localPosition = v2;
-		ret.sortingOrder = 1 - Mathf.RoundToInt(ret.transform.position.y * 10);
+		s.sortingOrder = 1 - Mathf.RoundToInt(ret.transform.position.y * 10);
 		map.Add(iv2, ret);
 
 		return ret;
