@@ -13,6 +13,17 @@ public class DropArea : MonoBehaviour
 	public int rows = 1;
 	public Vector2 offset;
 
+	/// <summary>
+	/// The controller in a VMC model, for refference
+	/// </summary>
+	[HideInInspector]
+	public GameObject controller;
+	/// <summary>
+	/// a string for tagging this area, utlity for controllers
+	/// </summary>
+	[HideInInspector]
+	public string nametag;
+
 	List<Dropable> clients = new List<Dropable>();
 
 	public DropEvent EventDropHere = new DropEvent();
@@ -29,7 +40,7 @@ public class DropArea : MonoBehaviour
 	/// <param name="drop">the dropable dropped here</param>
 	/// <param name="source">the source of drop</param>
 	/// <returns></returns>
-	virtual public bool Drop(Dropable drop, DropArea source)
+	public bool Drop(Dropable drop, DropArea source)
 	{
 		if (source == this)	return false;
 		if (clients.Count >= capacity) return false;
