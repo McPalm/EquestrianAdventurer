@@ -17,7 +17,8 @@ public class UIInventory : MonoBehaviour
 		
 		model.EventAddItem.AddListener(ModelAddItem);
 		model.EventEquipItem.AddListener(ModelEquip);
-		model.EventDropItem.AddListener(ModelDrop);
+		model.EventDropItem.AddListener(ModelRemove);
+		model.EventDestroyItem.AddListener(ModelRemove);
 
 		Equipment.EventDropHere.AddListener(OnDragToInventory);
 		Equipment.EventDropOutside.AddListener(OnDropOutside);
@@ -70,7 +71,7 @@ public class UIInventory : MonoBehaviour
 		}
 	}
 
-	void ModelDrop(Item i)
+	void ModelRemove(Item i)
 	{
 		UIItemPool.Instance.Deactivate(i);
 	}
@@ -87,6 +88,10 @@ public class UIInventory : MonoBehaviour
 		if(ui.Item is Equipment && (destination == WeaponSlot || destination == ArmorSlot) )
 		{
 			model.EquipItem(ui.Item as Equipment);
+		}
+		else if (source == Equipment && destination == Equipment)
+		{
+			model.Consume(ui.Item);
 		}
 	}
 

@@ -20,6 +20,10 @@ public class ConsumeableFactory
 	public Consumeable Get()
 	{
 		Consumeable c = new Consumeable();
+
+		if (effect == null) c.Use = Nothing;
+		else c.Use = effect;
+
 		c.value = worth;
 		c.displayName = label;
 		c.description = tooltip;
@@ -81,5 +85,10 @@ public class ConsumeableFactory
 	{
 		HitPoints hp = o.GetComponent<HitPoints>();
 		hp.Heal(new DamageData().SetDamage(75));
+	}
+
+	static public void Nothing(GameObject o)
+	{
+		CombatTextPool.Instance.PrintAt(o.transform.position, "But nothing happened...", Color.magenta, 1.5f);
 	}
 }
