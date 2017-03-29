@@ -39,12 +39,12 @@ public class UIInventory : MonoBehaviour
 	/// <param name="i"></param>
 	void ModelAddItem(Item i)
 	{
-		Equipment.Drop(Get(i), null);
+		Equipment.Drop(UIItemPool.Instance.Get(i), null);
 	}
 
 	void ModelEquip(Equipment e, EquipmentType s)
 	{
-		UIItem ui = Get(e);
+		UIItem ui = UIItemPool.Instance.Get(e);
 		switch(s)
 		{
 			case EquipmentType.body:
@@ -111,26 +111,7 @@ public class UIInventory : MonoBehaviour
 	/// </summary>
 	/// <param name="i"></param>
 	/// <returns></returns>
-	UIItem Get(Item i)
-	{
-		foreach(UIItem ui in active)
-		{
-			if (ui.Item == i) return ui;
-		}
-
-		return Build(i);
-	}
-
-	UIItem Build(Item i)
-	{
-		UIItem ret = Instantiate(UIItemPrefab);
-		active.Add(ret);
-		ret.transform.SetParent(transform);
-		ret.Item = i;
-		ret.transform.position = Camera.main.WorldToScreenPoint(model.transform.position); // make the item over the player. Should add a cool effect of it going from the ground to the inventory
-		ret.EventDropOutside.AddListener(ViewDropEvent);
-		return ret;
-	}
+	
 
 	public class ItemEvent : UnityEvent<Item> { }
 }

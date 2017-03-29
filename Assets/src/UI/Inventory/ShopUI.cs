@@ -7,9 +7,6 @@ public class ShopUI : MonoBehaviour
 	public DropArea Stock;
 	public ShopInventory inventory;
 
-	public UIItem UIItemPrefab;
-	List<UIItem> active = new List<UIItem>();
-
 	// Use this for initialization
 	void Start ()
 	{
@@ -20,21 +17,10 @@ public class ShopUI : MonoBehaviour
 	{
 		foreach(Item i in inventory.inventory)
 		{
-			Stock.Drop(Build(i), null);
+			print(i);
+			print(Stock);
+			Stock.Drop(UIItemPool.Instance.Get(i), null);
 		}
-	}
-
-	UIItem Build(Item i)
-	{
-		print(i.displayName);
-		UIItem ret = Instantiate(UIItemPrefab);
-		active.Add(ret);
-		ret.transform.SetParent(transform);
-		ret.Item = i;
-		ret.transform.position = transform.position; // make the item over the player. Should add a cool effect of it going from the ground to the inventory
-													 // ret.EventDropOutside.AddListener(ViewDropEvent);
-		// ret.AllowDrop = Buy;
-		return ret;
 	}
 }
 
