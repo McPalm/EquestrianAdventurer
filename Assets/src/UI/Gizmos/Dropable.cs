@@ -9,6 +9,7 @@ using System.Collections.Generic;
 public class Dropable : Draggable
 {
 	Vector2 localStart;
+	Transform parentStart;
 	public float sortValue;
 	/// <summary>
 	/// if disabled, can only move this between containers using function calls rather than dropping.
@@ -28,10 +29,13 @@ public class Dropable : Draggable
 	void Pickup(GameObject o)
 	{
 		localStart = target.localPosition;
+		parentStart = transform.parent;
+		if (DropCanvas.Canvas) transform.SetParent(DropCanvas.Canvas);
 	}
 
 	void Drop(GameObject o)
 	{
+		transform.SetParent(parentStart);
 		// find if we have a dropzone underneath
 		List<RaycastResult> results = new List<RaycastResult>();
 		PointerEventData pointerData = new PointerEventData(EventSystem.current)
