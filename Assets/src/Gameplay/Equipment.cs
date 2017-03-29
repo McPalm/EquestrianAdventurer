@@ -57,6 +57,7 @@ public class Equipment : Item
 		e.dodge = dodge;
 		e.hp = hp;
 		e.hit = hit;
+		e.slots = slots;
 
 		return e;
 	}
