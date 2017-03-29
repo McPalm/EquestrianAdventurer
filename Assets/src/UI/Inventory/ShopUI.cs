@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections.Generic;
 
 public class ShopUI : MonoBehaviour
@@ -9,14 +10,40 @@ public class ShopUI : MonoBehaviour
 
 	UIInventory playerInventory;
 
+	static public ShopUI Instance;
+
+	public GameObject OnScreenAnchor;
+
+
+	void Awake()
+	{
+		Instance = this;
+		gameObject.SetActive(false);
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
 		playerInventory = FindObjectOfType<UIInventory>();
-		Build();
+	}
 
+	public void Open(ShopInventory inventory)
+	{
+		if(model) Close();
+		gameObject.SetActive(true);
+		model = inventory;
 		model.EventPutInBuyBack.AddListener(ModelAddBuyback);
-		
+		transform.position = OnScreenAnchor.transform.position;
+		Build();
+	}
+
+	public void Close()
+	{
+
+		if (model)
+			model.EventPutInBuyBack.RemoveListener(ModelAddBuyback);
+		model = null;
+		gameObject.SetActive(false);
 	}
 
 	void Build()
