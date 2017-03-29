@@ -41,6 +41,8 @@ public class ShopUI : MonoBehaviour
 
 	public void Close()
 	{
+		foreach (UIItem i in GetComponentsInChildren<UIItem>())
+			UIItemPool.Instance.Deactivate(i.Item);
 
 		if (model)
 			model.EventPutInBuyBack.RemoveListener(ModelAddBuyback);
@@ -52,7 +54,9 @@ public class ShopUI : MonoBehaviour
 	{
 		foreach(Item i in model.inventory)
 		{
-			UIItemPool.Instance.Get(i).DropIn(Stock);
+			UIItem ui = UIItemPool.Instance.Get(i);
+			ui.transform.position = Stock.anchor.transform.position;
+			ui.DropIn(Stock);
 		}
 
 		Stock.EventMoveOut.AddListener(OnDragItemsOut);
