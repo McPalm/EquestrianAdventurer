@@ -9,8 +9,8 @@ public class UIInventory : MonoBehaviour
 
 	[Space(10)] // view component
 	public DropArea Equipment;
-	public UIEquipmentSlot WeaponSlot;
-	public UIEquipmentSlot ArmorSlot;
+	public DropArea WeaponSlot;
+	public DropArea ArmorSlot;
 
 	[Space(10)]
 	public UIItem UIItemPrefab;
@@ -23,11 +23,13 @@ public class UIInventory : MonoBehaviour
 		model.EventEquipItem.AddListener(ModelEquip);
 		model.EventDropItem.AddListener(ModelDrop);
 
+		/*
 		WeaponSlot.EventAdd.AddListener(ViewEquip);
 		ArmorSlot.EventAdd.AddListener(ViewEquip);
 
 		WeaponSlot.EventRemove.AddListener(ViewUnEquip);
 		ArmorSlot.EventRemove.AddListener(ViewUnEquip);
+		*/
 	}
 
 	/// <summary>
@@ -37,7 +39,7 @@ public class UIInventory : MonoBehaviour
 	/// <param name="i"></param>
 	void ModelAddItem(Item i)
 	{
-		Equipment.Drop(Get(i));
+		Equipment.Drop(Get(i), null);
 	}
 
 	void ModelEquip(Equipment e, EquipmentType s)
@@ -46,10 +48,10 @@ public class UIInventory : MonoBehaviour
 		switch(s)
 		{
 			case EquipmentType.body:
-				ArmorSlot.Drop(ui);
+				ArmorSlot.Drop(ui, null);
 				break;
 			case EquipmentType.weapon:
-				WeaponSlot.Drop(ui);
+				WeaponSlot.Drop(ui, null);
 				break;
 			default:
 				Debug.LogWarning("Viewer unable to equip slot: " + s.ToString());

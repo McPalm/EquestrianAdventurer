@@ -10,13 +10,9 @@ public class ShopUI : MonoBehaviour
 	public UIItem UIItemPrefab;
 	List<UIItem> active = new List<UIItem>();
 
-	Purse playerPurse; // HACK
-
 	// Use this for initialization
 	void Start ()
 	{
-		playerPurse = FindObjectOfType<Purse>();
-		// BuyBack.EventAdd.AddListener(Sell);
 		Build();
 	}
 
@@ -24,7 +20,7 @@ public class ShopUI : MonoBehaviour
 	{
 		foreach(Item i in inventory.inventory)
 		{
-			Stock.Drop(Build(i));
+			Stock.Drop(Build(i), null);
 		}
 	}
 

@@ -10,14 +10,15 @@ public class Dropable : Draggable
 {
 	Vector2 localStart;
 	public float sortValue;
+	/// <summary>
+	/// if disabled, can only move this between containers using function calls rather than dropping.
+	/// </summary>
+	public bool autoMove;
+	DropArea current;
 
 	public DropInAreaEvent EventDropInArea = new DropInAreaEvent();
 	public DropableEvent EventDropOutside = new DropableEvent(); // called when not dropping over anything
 	public DropableEvent EventDisable = new DropableEvent();
-
-	// public System.Func<bool, Dropable> AllowDrop; // called when dropping this item.
-	public delegate bool AllowDropDelegate(Dropable d);
-	public AllowDropDelegate AllowDrop;
 
 	protected void Start()
 	{
@@ -32,12 +33,6 @@ public class Dropable : Draggable
 
 	void Drop(GameObject o)
 	{
-		if (AllowDrop != null && !AllowDrop(this))
-		{
-			StartCoroutine(CenterAt(localStart));
-			return;
-		}
-
 		// find if we have a dropzone underneath
 		List<RaycastResult> results = new List<RaycastResult>();
 		PointerEventData pointerData = new PointerEventData(EventSystem.current)
@@ -45,13 +40,13 @@ public class Dropable : Draggable
 			pointerId = -1,
 		};
 		pointerData.position = Input.mousePosition;
-
 		EventSystem.current.RaycastAll(pointerData, results);
 
-		if(results.Count == 1)
+
+		if(results.Count == 1) // drop over nothing
 		{
-			EventDropOutside.Invoke(this);
-			StartCoroutine(CenterAt(localStart));
+			Return();
+			EventDropOutside.Invoke(this);			
 			return;
 		}
 
@@ -60,16 +55,32 @@ public class Dropable : Draggable
 			DropArea a = result.gameObject.GetComponent<DropArea>();
 			if(a)
 			{
-				if (a.Drop(this))
+				if (autoMove)
 				{
-					AllowDrop = null;
-					EventDropInArea.Invoke(this, a);
-					return;
+					if (!a.Drop(this, current))
+						Return();
 				}
+				else Return();
+				a.EventDropHere.Invoke(this, current, a);
+				if(current) current.EventMoveOut.Invoke(this, current, a);
+				return;
 			}
 		}
 
-		// if we dont, return
+		// if we dont, return to where we came from
+		Return();
+	}
+
+	public void MoveTo(DropArea destination, Vector2 destinationLocalPosition)
+	{
+		current = destination;
+		StopAllCoroutines();
+		target.SetParent(destination.transform);
+		StartCoroutine(CenterAt(destinationLocalPosition));
+	}
+
+	public void Return()
+	{
 		StartCoroutine(CenterAt(localStart));
 	}
 

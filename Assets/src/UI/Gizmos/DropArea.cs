@@ -15,8 +15,8 @@ public class DropArea : MonoBehaviour
 
 	List<Dropable> clients = new List<Dropable>();
 
-	public DropEvent EventAdd = new DropEvent();
-	public DropEvent EventRemove = new DropEvent();
+	public DropEvent EventDropHere = new DropEvent();
+	public DropEvent EventMoveOut = new DropEvent();
 
 	void Start()
 	{
@@ -24,26 +24,29 @@ public class DropArea : MonoBehaviour
 	}
 	
 	/// <summary>
-	/// Override to add conditions to whenever or not the item can be dropped here
+	/// Invoked when we want to move a dropable here.
 	/// </summary>
-	/// <param name="drop"></param>
+	/// <param name="drop">the dropable dropped here</param>
+	/// <param name="source">the source of drop</param>
 	/// <returns></returns>
-	virtual public bool Drop(Dropable drop)
+	virtual public bool Drop(Dropable drop, DropArea source)
 	{
+		if (source == this)	return false;
 		if (clients.Count >= capacity) return false;
 		if (clients.Contains(drop)) return false;
 
-		drop.transform.SetParent(transform);
-		clients.Add(drop);
-		drop.EventDropInArea.AddListener(MoveItemInList);
-		drop.EventDisable.AddListener(RemoveClient);
-		EventAdd.Invoke(drop);
-		
+		if (source) source.RemoveClient(drop);
 
+		
+		clients.Add(drop);
 		if (capacity > 1)
 			ArrangeList();
 		else
-			drop.transform.position = anchor.transform.position;
+		{
+			drop.Target.SetParent(anchor.transform);
+			drop.transform.position = anchor.transform.position; // snap into position in single item lists
+			drop.MoveTo(this, anchor.transform.localPosition);
+		}
 		return true;
 	}
 
@@ -57,7 +60,6 @@ public class DropArea : MonoBehaviour
 		if (other == this) return;
 		clients.Remove(client);
 		client.EventDropInArea.RemoveListener(MoveItemInList);
-		EventRemove.Invoke(client);
 		if (clients.Count > 0)
 			ArrangeList();
 	}
@@ -74,7 +76,8 @@ public class DropArea : MonoBehaviour
 		clients.Sort(SortFunction);
 		for (int i = 0; i < clients.Count; i++)
 		{
-			StartCoroutine(MoveTo(clients[i].transform, (Vector2)anchor.transform.position + new Vector2(offset.x * (i / rows), offset.y * (i % rows))));
+			clients[i].MoveTo(this, (Vector2)anchor.transform.localPosition + new Vector2(offset.x * (i / rows), offset.y * (i % rows)));
+			// StartCoroutine(MoveTo(clients[i].transform, (Vector2)anchor.transform.position + new Vector2(offset.x * (i / rows), offset.y * (i % rows))));
 		}
 	}
 
@@ -94,8 +97,15 @@ public class DropArea : MonoBehaviour
 	{
 		if (a.sortValue > b.sortValue) return -1;
 		else if (b.sortValue > a.sortValue) return 1;
-		return 0;
+		return (int)(a.transform.position.x - b.transform.position.x - a.transform.position.y / 20 + b.transform.position.y / 20);
 	}
 
-	public class DropEvent : UnityEvent<Dropable> { }
+	
+	/// <summary>
+	/// Dropable
+	/// Source
+	/// Destination
+	/// </summary>
+	[System.Serializable]
+	public class DropEvent : UnityEvent<Dropable, DropArea, DropArea> { }
 }
