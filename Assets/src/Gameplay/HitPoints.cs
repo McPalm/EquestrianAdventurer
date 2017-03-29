@@ -46,6 +46,7 @@ public class HitPoints : MonoBehaviour
 		set
 		{
 			maxHealth = value;
+			EventChangeHealth.Invoke(maxHealth - damageTaken, maxHealth);
 		}
 	}
 

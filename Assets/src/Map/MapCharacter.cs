@@ -88,7 +88,7 @@ public class MapCharacter : MonoBehaviour
 	{
 		level = i;
 		OnChangeEquipment(GetComponent<Inventory>());
-		GetComponent<HitPoints>().Heal(new DamageData().SetDamage(999)); // yay, max hp on level up!
+		// GetComponent<HitPoints>().Heal(new DamageData().SetDamage(999)); // yay, max hp on level up!
 	}
 
 

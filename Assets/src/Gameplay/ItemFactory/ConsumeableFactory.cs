@@ -50,7 +50,7 @@ public class ConsumeableFactory
 			worth += 10;
 			effect += LightHeal;	
 		}
-		else if(i == 25)
+		else if(i == 2)
 		{
 			tooltip += "\nHeals 25 hitpoints.";
 			worth *= 3;

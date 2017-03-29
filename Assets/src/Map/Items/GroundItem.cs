@@ -15,8 +15,14 @@ public class GroundItem : MonoBehaviour
 	
 	protected void Start()
 	{
+		item = CloneItem();
 		GetComponent<SpriteRenderer>().sprite = item.sprite;
 		GetComponent<SpriteRenderer>().color = item.Tint;
 		GetComponent<SpriteRenderer>().sortingOrder = 10; 
+	}
+
+	virtual public Item CloneItem()
+	{
+		return item.Clone();
 	}
 }

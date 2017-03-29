@@ -8,7 +8,6 @@ public class ShopInventory : MonoBehaviour
 	public List<Item> buyBack;
 
 	public GroundItem[] items;
-	public GroundEquipment[] equipment;
 
 	public ItemEvent EventPutInInventory = new ItemEvent();
 	public ItemEvent EventPutInBuyBack = new ItemEvent();
@@ -20,11 +19,7 @@ public class ShopInventory : MonoBehaviour
 		inventory = new List<Item>();
 		for(int i = 0; i < items.Length; i++)
 		{
-			inventory.Add(items[i].item.Clone());
-		}
-		for (int i = 0; i < equipment.Length; i++)
-		{
-			inventory.Add(equipment[i].equipment.Clone());
+			inventory.Add(items[i].CloneItem());
 		}
 	}
 
