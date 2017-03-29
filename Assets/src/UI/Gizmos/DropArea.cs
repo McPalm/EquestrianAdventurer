@@ -13,17 +13,6 @@ public class DropArea : MonoBehaviour
 	public int rows = 1;
 	public Vector2 offset;
 
-	/// <summary>
-	/// The controller in a VMC model, for refference
-	/// </summary>
-	[HideInInspector]
-	public GameObject controller;
-	/// <summary>
-	/// a string for tagging this area, utlity for controllers
-	/// </summary>
-	[HideInInspector]
-	public string nametag;
-
 	List<Dropable> clients = new List<Dropable>();
 
 	public DropEvent EventDropHere = new DropEvent();
@@ -49,7 +38,6 @@ public class DropArea : MonoBehaviour
 
 		if (source) source.RemoveClient(drop);
 
-		
 		clients.Add(drop);
 		if (capacity > 1)
 			ArrangeList();
@@ -76,7 +64,7 @@ public class DropArea : MonoBehaviour
 			ArrangeList();
 	}
 
-	void RemoveClient(Dropable d) // Do not make public!
+	internal void RemoveClient(Dropable d)
 	{
 		clients.Remove(d);
 		if (clients.Count > 0)

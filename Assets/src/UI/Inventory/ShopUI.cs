@@ -23,7 +23,7 @@ public class ShopUI : MonoBehaviour
 	{
 		foreach(Item i in model.inventory)
 		{
-			Stock.Drop(UIItemPool.Instance.Get(i), null);
+			UIItemPool.Instance.Get(i).DropIn(Stock);
 		}
 
 		Stock.EventMoveOut.AddListener(OnDragItemsOut);

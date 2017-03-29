@@ -18,7 +18,6 @@ public class Dropable : Draggable
 
 	public DropInAreaEvent EventDropInArea = new DropInAreaEvent();
 	public DropableEvent EventDropOutside = new DropableEvent(); // called when not dropping over anything
-	public DropableEvent EventDisable = new DropableEvent();
 
 	protected void Start()
 	{
@@ -109,7 +108,8 @@ public class Dropable : Draggable
 
 	void OnDisable()
 	{
-		EventDisable.Invoke(this);
+		if (current) current.RemoveClient(this);
+		current = null;
 	}
 
 	public class DropInAreaEvent : UnityEvent<Dropable, DropArea> { }
