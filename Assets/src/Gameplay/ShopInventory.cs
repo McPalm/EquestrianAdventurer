@@ -28,6 +28,11 @@ public class ShopInventory : MonoBehaviour
 		ShopUI.Instance.Open(this);
 	}
 
+	public void CloseShop()
+	{
+		ShopUI.Instance.Close(this);
+	}
+
 	public bool SellTo(Item i, Inventory customer)
 	{
 		if (buyBack.Contains(i)) return SellBack(i, customer);

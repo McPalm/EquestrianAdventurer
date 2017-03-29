@@ -50,7 +50,12 @@ public class ShopUI : MonoBehaviour
 		gameObject.SetActive(false);
 	}
 
-	void Build()
+	public void Close(ShopInventory si)
+	{
+		if (si == model) Close();
+	}
+
+		void Build()
 	{
 		foreach(Item i in model.inventory)
 		{
