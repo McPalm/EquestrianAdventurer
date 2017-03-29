@@ -9,11 +9,10 @@ public class Inventory : MonoBehaviour
 	public int inventorySize = 12;
 
 	public InventoryEvent EventChangeEquipment = new InventoryEvent();
-	public ItemEvent EventRemoveItem = new ItemEvent();
 	public ItemEvent EventDropItem = new ItemEvent();
+	public ItemEvent EventDestroyItem = new ItemEvent(); // Sssentially identical to drop. Tho this one is more definitive?
 	public ItemEvent EventAddItem = new ItemEvent();
 	public EquipEvent EventEquipItem = new EquipEvent();
-	/// may fire before or after the item is removed from the slot. Only EventChangeEquipment is guarenteed to fire after the fact.
 	public EquipEvent EventUnEquipItem = new EquipEvent();
 
 	List<Item> items = new List<Item>(6);
@@ -77,10 +76,33 @@ public class Inventory : MonoBehaviour
 	/// <returns>true if the item is in the inventory</returns>
 	public bool RemoveItem(Item i)
 	{
-		
 		if(items.Remove(i))
 		{
-			EventRemoveItem.Invoke(i);
+			return true;
+		}
+		return false;
+	}
+
+	public bool Consume(Item i)
+	{
+		if(i is Consumeable && DestroyItem(i))
+		{
+			(i as Consumeable).Use(gameObject);
+		}
+		return false;
+	}
+
+	/// <summary>
+	/// Destroys and item utterly.
+	/// Its private, use whatever function is similar to what you wish to do instead
+	/// </summary>
+	/// <param name="i"></param>
+	/// <returns></returns>
+	bool DestroyItem(Item i)
+	{
+		if (items.Remove(i))
+		{
+			EventDestroyItem.Invoke(i);
 			return true;
 		}
 		return false;
