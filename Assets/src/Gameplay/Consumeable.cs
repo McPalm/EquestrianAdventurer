@@ -9,6 +9,16 @@ public class Consumeable : Item
 	/// </summary>
 	public System.Action<GameObject> Use;
 
+	public string description;
+
+	override public string Tooltip
+	{
+		get
+		{
+			return displayName + "(" + value + " bits)" + description;
+		}
+	}
+
 	public Consumeable()
 	{
 		category = ItemCategory.consumeable;
