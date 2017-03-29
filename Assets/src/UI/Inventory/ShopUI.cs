@@ -16,19 +16,8 @@ public class ShopUI : MonoBehaviour
 	void Start ()
 	{
 		playerPurse = FindObjectOfType<Purse>();
-		BuyBack.EventAdd.AddListener(Sell);
+		// BuyBack.EventAdd.AddListener(Sell);
 		Build();
-	}
-	
-	void Sell(Dropable d)
-	{
-		UIItem i = d.GetComponent<UIItem>();
-
-		if(i)
-		{
-			if(i.Item.value > 0)
-				playerPurse.AddBits(1 + i.Item.value / 10);
-		}
 	}
 
 	void Build()
@@ -47,7 +36,8 @@ public class ShopUI : MonoBehaviour
 		ret.transform.SetParent(transform);
 		ret.Item = i;
 		ret.transform.position = transform.position; // make the item over the player. Should add a cool effect of it going from the ground to the inventory
-		// ret.EventDropOutside.AddListener(ViewDropEvent);
+													 // ret.EventDropOutside.AddListener(ViewDropEvent);
+		// ret.AllowDrop = Buy;
 		return ret;
 	}
 }
