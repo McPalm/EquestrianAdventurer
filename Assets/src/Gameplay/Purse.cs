@@ -12,6 +12,14 @@ public class Purse : MonoBehaviour
 	public PurseEvent EventGainSum;
 	public PurseStringEvent EventChangeAmmountText;
 
+
+	void Start()
+	{
+		EventChangeAmmount.Invoke(bits);
+		EventChangeAmmountText.Invoke(bits.ToString() + " bits");
+	}
+
+
 	public bool Pay(int i)
 	{
 		if (bits < i) return false;

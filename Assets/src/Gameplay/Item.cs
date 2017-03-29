@@ -12,6 +12,7 @@ public class Item
 	public float green = 1f;
 	public float blue = 1f;
 
+	public ItemCategory category;
 
 
 	virtual public string Tooltip
@@ -55,6 +56,8 @@ public class Item
 		i.red = red;
 		i.green = green;
 		i.blue = blue;
+
+		i.category = category;
 
 		return i;
 	}

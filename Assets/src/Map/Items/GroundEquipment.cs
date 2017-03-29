@@ -10,6 +10,7 @@ public class GroundEquipment : GroundItem
 
 	new void Start()
 	{
+		equipment.category = ItemCategory.equipment;
 		item = equipment;
 		base.Start();	
 	}

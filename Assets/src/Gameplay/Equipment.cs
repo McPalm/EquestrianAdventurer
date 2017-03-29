@@ -12,6 +12,11 @@ public class Equipment : Item
 	public int hit;
 	public int hp;
 
+	public Equipment()
+	{
+		category = ItemCategory.equipment;
+	}
+
 	public override int Value
 	{
 		get
@@ -51,6 +56,7 @@ public class Equipment : Item
 		e.red = red;
 		e.green = green;
 		e.blue = blue;
+		e.category = category;
 
 		e.armor = armor;
 		e.damage = damage;
@@ -58,6 +64,8 @@ public class Equipment : Item
 		e.hp = hp;
 		e.hit = hit;
 		e.slots = slots;
+
+		
 
 		return e;
 	}
