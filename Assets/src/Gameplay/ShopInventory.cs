@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections.Generic;
 
 public class ShopInventory : MonoBehaviour
@@ -9,6 +10,8 @@ public class ShopInventory : MonoBehaviour
 	public GroundItem[] items;
 	public GroundEquipment[] equipment;
 
+	public ItemEvent EventPutInInventory = new ItemEvent();
+	public ItemEvent EventPutInBuyBack = new ItemEvent();
 
 
 	// Use this for initialization
@@ -27,26 +30,28 @@ public class ShopInventory : MonoBehaviour
 
 	public bool SellTo(Item i, Inventory customer)
 	{
-		if (buyBack.Contains(i)) return BuyBack(i, customer);
+		if (buyBack.Contains(i)) return SellBack(i, customer);
 
 		if (inventory.Contains(i))
 		{
 			Purse p = customer.GetComponent<Purse>();
 			if (customer.EmptySpace && p.Pay(i.Value))
 			{
+				inventory.Remove(i);
 				return customer.AddItem(i);
 			}
 		}
 		return false;
 	}
 
-	public bool BuyBack(Item i, Inventory customer)
+	public bool SellBack(Item i, Inventory customer)
 	{
 		if (buyBack.Contains(i))
 		{
 			Purse p = customer.GetComponent<Purse>();
-			if (customer.EmptySpace && p.Pay(i.Value))
+			if (customer.EmptySpace && p.Pay(SellValue(i)))
 			{
+				buyBack.Remove(i);
 				return customer.AddItem(i);
 			}
 		}
@@ -68,6 +73,7 @@ public class ShopInventory : MonoBehaviour
 	public void Add(Item i)
 	{
 		buyBack.Add(i);
+		EventPutInBuyBack.Invoke(i);
 	}
 
 	public void Remove(Item i)
@@ -81,4 +87,6 @@ public class ShopInventory : MonoBehaviour
 		if (i.value == 0) return 0;
 		return 1 + i.value / 7;
 	}
+
+	public class ItemEvent : UnityEvent<Item> { }
 }

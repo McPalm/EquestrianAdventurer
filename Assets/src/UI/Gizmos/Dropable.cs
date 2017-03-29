@@ -71,6 +71,17 @@ public class Dropable : Draggable
 		Return();
 	}
 
+	/// <summary>
+	/// This is the way to proceduraly move an item to another drop zone. forget all else.
+	/// The code is rather spagehetti and I need to reconsider this.
+	/// If I could use namespaces I could encapulate inside and outside the namespace to make all this much better
+	/// </summary>
+	/// <param name="destination"></param>
+	public void DropIn(DropArea destination)
+	{
+		destination.Drop(this, current);
+	}
+
 	public void MoveTo(DropArea destination, Vector2 destinationLocalPosition)
 	{
 		current = destination;

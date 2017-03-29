@@ -23,6 +23,8 @@ public class UIInventory : MonoBehaviour
 		model.EventEquipItem.AddListener(ModelEquip);
 		model.EventDropItem.AddListener(ModelDrop);
 
+
+
 		/*
 		WeaponSlot.EventAdd.AddListener(ViewEquip);
 		ArmorSlot.EventAdd.AddListener(ViewEquip);
