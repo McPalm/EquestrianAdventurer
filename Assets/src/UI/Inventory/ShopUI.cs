@@ -14,6 +14,7 @@ public class ShopUI : MonoBehaviour
 
 	public GameObject OnScreenAnchor;
 
+	public UnityEvent EventOpenShopInventory;
 
 	void Awake()
 	{
@@ -35,6 +36,7 @@ public class ShopUI : MonoBehaviour
 		model.EventPutInBuyBack.AddListener(ModelAddBuyback);
 		transform.position = OnScreenAnchor.transform.position;
 		Build();
+		EventOpenShopInventory.Invoke();
 	}
 
 	public void Close()
