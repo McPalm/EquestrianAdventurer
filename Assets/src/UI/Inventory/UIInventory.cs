@@ -22,7 +22,9 @@ public class UIInventory : MonoBehaviour
 		Equipment.EventDropHere.AddListener(OnDragToInventory);
 		Equipment.EventDropOutside.AddListener(OnDropOutside);
 		Equipment.EventMoveOut.AddListener(OnDragFromInventory);
-		
+
+		WeaponSlot.EventDropOutside.AddListener(OnDropOutside);
+		ArmorSlot.EventDropOutside.AddListener(OnDropOutside);
 
 		/*
 		WeaponSlot.EventAdd.AddListener(ViewEquip);
@@ -40,7 +42,12 @@ public class UIInventory : MonoBehaviour
 	/// <param name="i"></param>
 	void ModelAddItem(Item i)
 	{
-		UIItemPool.Instance.Get(i).DropIn(Equipment);
+		UIItem ui;
+		if (UIItemPool.Instance.Get(i, out ui))
+		{
+			ui.transform.position = Camera.main.WorldToScreenPoint(model.transform.position);
+		}
+		ui.DropIn(Equipment);
 	}
 
 	void ModelEquip(Equipment e, EquipmentType s)
@@ -68,7 +75,7 @@ public class UIInventory : MonoBehaviour
 
 
 	///
-	/// Events related to the view
+	/// Events incomming from the view
 	///
 	
 	void OnDragFromInventory(Draggable d, DropArea source, DropArea destination)

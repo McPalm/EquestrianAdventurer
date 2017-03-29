@@ -22,6 +22,20 @@ public class UIItemPool : MonoBehaviour
 		_instance = this;
 	}
 
+	/// <summary>
+	/// Get the UIItem containing the given item
+	/// </summary>
+	/// <param name="i">the item</param>
+	/// <param name="b">true the item is new</param>
+	/// <returns></returns>
+	public bool Get(Item i, out UIItem uitem)
+	{
+		if (active.TryGetValue(i, out uitem))
+			return false;
+		uitem = Build(i);
+		return true;
+	}
+
 	public UIItem Get(Item i)
 	{
 		UIItem r = null;

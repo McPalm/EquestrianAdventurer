@@ -141,24 +141,15 @@ public class Inventory : MonoBehaviour
 	/// <returns>true if we succesfully removed the item from the slot</returns>
 	public bool UnEquip(EquipmentType slot, bool drop = false)
 	{
-		if (drop) throw new System.NotImplementedException("Dropping items not implemented.");
 		if (!drop && !EmptySpace) return false;
 		switch (slot)
 		{
 			case EquipmentType.body:
 				if (bodySlot == null) return false;
-				AddItem(bodySlot);
-				EventUnEquipItem.Invoke(bodySlot, EquipmentType.body);
-				bodySlot = null;
-				EventChangeEquipment.Invoke(this);
-				return true;
+				return UnEquip(bodySlot, drop);
 			case EquipmentType.weapon:
 				if (weaponSlot == null) return false;
-				AddItem(weaponSlot);
-				EventUnEquipItem.Invoke(weaponSlot, EquipmentType.weapon);
-				weaponSlot = null;
-				EventChangeEquipment.Invoke(this);
-				return true;
+				return UnEquip(weaponSlot, drop);
 		}
 		return false;
 	}
