@@ -26,6 +26,8 @@ public class UIInventory : MonoBehaviour
 		WeaponSlot.EventDropOutside.AddListener(OnDropOutside);
 		ArmorSlot.EventDropOutside.AddListener(OnDropOutside);
 
+		Equipment.capacity = model.inventorySize + 1; // we add one, its an extra slot to allow moving items around.
+
 		/*
 		WeaponSlot.EventAdd.AddListener(ViewEquip);
 		ArmorSlot.EventAdd.AddListener(ViewEquip);

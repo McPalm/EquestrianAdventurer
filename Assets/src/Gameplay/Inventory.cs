@@ -116,14 +116,16 @@ public class Inventory : MonoBehaviour
 		switch(e.slots)
 		{
 			case EquipmentType.body:
-				if (bodySlot != null) return false;
+				if (bodySlot != null)
+					if (!UnEquip(bodySlot)) return false;
 				RemoveItem(e);
 				bodySlot = e;
 				EventChangeEquipment.Invoke(this);
 				EventEquipItem.Invoke(e, EquipmentType.body);
 				return true;
 			case EquipmentType.weapon:
-				if (weaponSlot != null) return false;
+				if (weaponSlot != null)
+					if (!UnEquip(weaponSlot)) return false;
 				RemoveItem(e);
 				weaponSlot = e;
 				EventChangeEquipment.Invoke(this);
