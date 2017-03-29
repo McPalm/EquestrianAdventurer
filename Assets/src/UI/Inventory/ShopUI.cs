@@ -23,8 +23,6 @@ public class ShopUI : MonoBehaviour
 	{
 		foreach(Item i in model.inventory)
 		{
-			print(i);
-			print(Stock);
 			Stock.Drop(UIItemPool.Instance.Get(i), null);
 		}
 

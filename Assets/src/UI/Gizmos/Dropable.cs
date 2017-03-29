@@ -46,7 +46,8 @@ public class Dropable : Draggable
 		if(results.Count == 1) // drop over nothing
 		{
 			Return();
-			EventDropOutside.Invoke(this);			
+			EventDropOutside.Invoke(this);
+			if (current) current.EventDropOutside.Invoke(this, current);
 			return;
 		}
 

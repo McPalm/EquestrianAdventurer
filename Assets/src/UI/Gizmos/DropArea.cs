@@ -28,6 +28,7 @@ public class DropArea : MonoBehaviour
 
 	public DropEvent EventDropHere = new DropEvent();
 	public DropEvent EventMoveOut = new DropEvent();
+	public DropOutsideEvent EventDropOutside = new DropOutsideEvent();
 
 	void Start()
 	{
@@ -88,20 +89,7 @@ public class DropArea : MonoBehaviour
 		for (int i = 0; i < clients.Count; i++)
 		{
 			clients[i].MoveTo(this, (Vector2)anchor.transform.localPosition + new Vector2(offset.x * (i / rows), offset.y * (i % rows)));
-			// StartCoroutine(MoveTo(clients[i].transform, (Vector2)anchor.transform.position + new Vector2(offset.x * (i / rows), offset.y * (i % rows))));
 		}
-	}
-
-	IEnumerator MoveTo(Transform target, Vector2 destination)
-	{
-		Vector2 start = target.position;
-		for (float progress = 0; progress < 1f; progress += Time.deltaTime * 6f)
-		{
-			if (!target) break;
-			target.position = Vector2.Lerp(start, destination, progress);
-			yield return new WaitForSeconds(0f);
-		}
-		if(target)target.position = destination;
 	}
 
 	int SortFunction(Dropable a, Dropable b)
@@ -110,7 +98,6 @@ public class DropArea : MonoBehaviour
 		else if (b.sortValue > a.sortValue) return 1;
 		return (int)(a.transform.position.x - b.transform.position.x - a.transform.position.y / 20 + b.transform.position.y / 20);
 	}
-
 	
 	/// <summary>
 	/// Dropable
@@ -119,4 +106,9 @@ public class DropArea : MonoBehaviour
 	/// </summary>
 	[System.Serializable]
 	public class DropEvent : UnityEvent<Dropable, DropArea, DropArea> { }
+	/// <summary>
+	/// Dropable
+	/// Source
+	/// </summary>
+	public class DropOutsideEvent : UnityEvent<Dropable, DropArea> { }
 }

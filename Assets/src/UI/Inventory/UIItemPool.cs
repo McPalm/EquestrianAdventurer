@@ -3,20 +3,19 @@ using System.Collections.Generic;
 
 public class UIItemPool : MonoBehaviour
 {
-	public UIItem prefab;
-
 	static UIItemPool _instance;
-
 	public static UIItemPool Instance
 	{
 		get
 		{
 			return _instance;
-		}
+		}	
 	}
 
-	// List<UIItem> active = new List<UIItem>();
+	public UIItem prefab;
+
 	Dictionary<Item, UIItem> active = new Dictionary<Item, UIItem>();
+	public Stack<UIItem> inactive = new Stack<UIItem>();
 
 	void Awake()
 	{
@@ -33,11 +32,29 @@ public class UIItemPool : MonoBehaviour
 
 	UIItem Build(Item i)
 	{
-		UIItem ret = Instantiate(prefab);
+		UIItem ret;
+		if (inactive.Count == 0) ret = Instantiate(prefab);
+		else
+		{
+			ret = inactive.Pop();
+			ret.gameObject.SetActive(true);
+		}
 		active.Add(i, ret);
-		ret.transform.SetParent(transform);
+		// ret.transform.SetParent(transform);
 		ret.Item = i;
 		ret.transform.position = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2); // we appear in the middle of the screen. Improve this later maybe
 		return ret;
+	}
+
+	/// <summary>
+	/// Call this when we no longer need an UI item
+	/// </summary>
+	/// <param name="i"></param>
+	public void Deactivate(Item i)
+	{
+		UIItem u = Get(i);
+		active.Remove(i);
+		inactive.Push(u);
+		u.gameObject.SetActive(false);
 	}
 }

@@ -12,18 +12,17 @@ public class UIInventory : MonoBehaviour
 	public DropArea WeaponSlot;
 	public DropArea ArmorSlot;
 
-	[Space(10)]
-	public UIItem UIItemPrefab;
-
-	List<UIItem> active = new List<UIItem>();
-
 	void Start()
 	{
+		
 		model.EventAddItem.AddListener(ModelAddItem);
 		model.EventEquipItem.AddListener(ModelEquip);
 		model.EventDropItem.AddListener(ModelDrop);
 
-
+		Equipment.EventDropHere.AddListener(OnDragToInventory);
+		Equipment.EventDropOutside.AddListener(OnDropOutside);
+		Equipment.EventMoveOut.AddListener(OnDragFromInventory);
+		
 
 		/*
 		WeaponSlot.EventAdd.AddListener(ViewEquip);
@@ -41,7 +40,7 @@ public class UIInventory : MonoBehaviour
 	/// <param name="i"></param>
 	void ModelAddItem(Item i)
 	{
-		Equipment.Drop(UIItemPool.Instance.Get(i), null);
+		UIItemPool.Instance.Get(i).DropIn(Equipment);
 	}
 
 	void ModelEquip(Equipment e, EquipmentType s)
@@ -50,10 +49,11 @@ public class UIInventory : MonoBehaviour
 		switch(s)
 		{
 			case EquipmentType.body:
-				ArmorSlot.Drop(ui, null);
+				//ArmorSlot.Drop(ui, null);
+				ui.DropIn(ArmorSlot);
 				break;
 			case EquipmentType.weapon:
-				WeaponSlot.Drop(ui, null);
+				ui.DropIn(WeaponSlot);
 				break;
 			default:
 				Debug.LogWarning("Viewer unable to equip slot: " + s.ToString());
@@ -63,57 +63,43 @@ public class UIInventory : MonoBehaviour
 
 	void ModelDrop(Item i)
 	{
-		foreach (UIItem ui in active)
-		{
-			if(ui.Item == i)
-			{
-				active.Remove(ui);
-				Destroy(ui.gameObject); // we should pool
-				return;
-			}
-		}
+		UIItemPool.Instance.Deactivate(i);
 	}
 
 
-	/// View Events, stuffs that is done in the UI that should update the players inventory
+	///
+	/// Events related to the view
+	///
 	
-	void ViewDropEvent(Draggable d) // when we drop something outside the Inventory
+	void OnDragFromInventory(Draggable d, DropArea source, DropArea destination)
 	{
-		UIItem i = d as UIItem;
-		if (Equipment.Contains(d as Dropable))
+		UIItem ui = d.GetComponent<UIItem>();
+		if (!ui) return;
+		if(ui.Item is Equipment && (destination == WeaponSlot || destination == ArmorSlot) )
 		{
-			model.DropItem(i.Item);
-		}
-		else if (i.Item is Equipment)
-		{
-			model.UnEquip(i.Item as Equipment, true);
-		}
-		else
-		{
-			Debug.LogWarning("Unhandled Drop Event");
+			model.EquipItem(ui.Item as Equipment);
 		}
 	}
 
-	void ViewEquip(Draggable d)
+	void OnDragToInventory(Draggable d, DropArea source, DropArea destination)
 	{
-		UIItem i = d as UIItem;
-		model.EquipItem((Equipment)i.Item);
+		if(source == WeaponSlot)
+			model.UnEquip(EquipmentType.weapon);
+		else if(source == ArmorSlot)
+			model.UnEquip(EquipmentType.body);
 	}
 
-	void ViewUnEquip(Draggable d)
+	void OnDropOutside(Draggable d, DropArea a)
 	{
-		UIItem i = d as UIItem;
-		model.UnEquip((Equipment)i.Item);
+		UIItem ui = d.GetComponent<UIItem>();
+		if (!ui) return;
+		if (a == Equipment)
+			model.DropItem(ui.Item);
+		else if (a == WeaponSlot)
+			model.UnEquip(EquipmentType.weapon, true);
+		else if (a == ArmorSlot)
+			model.UnEquip(EquipmentType.body, true);
 	}
-		
-
-	/// <summary>
-	/// Get the UI item for the item.
-	/// Makes a new one if none exsist already
-	/// </summary>
-	/// <param name="i"></param>
-	/// <returns></returns>
-	
 
 	public class ItemEvent : UnityEvent<Item> { }
 }

@@ -16,7 +16,6 @@ public class Inventory : MonoBehaviour
 	/// may fire before or after the item is removed from the slot. Only EventChangeEquipment is guarenteed to fire after the fact.
 	public EquipEvent EventUnEquipItem = new EquipEvent();
 
-
 	List<Item> items = new List<Item>(6);
 
 	Equipment bodySlot;
