@@ -36,6 +36,9 @@ public class MapCharacter : MonoBehaviour
 
 	public void Melee(MapCharacter target)
 	{
+		transform.position = (transform.position + target.transform.position) * 0.5f;
+		GetComponent<Mobile>().ForceMove((Vector2)GetComponent<MapObject>().RealLocation);
+
 		bool hit = Mathf.Min(Random.value, Random.value) < (hitSkill / (target.dodgeSkill + hitSkill));
 		if (hit)
 		{
@@ -47,8 +50,6 @@ public class MapCharacter : MonoBehaviour
 		}
 		else
 			CombatTextPool.Instance.PrintAt((Vector3)target.GetComponent<MapObject>().RealLocation + new Vector3(0f, 0.4f), "Dodge", Color.cyan);
-		transform.position = (transform.position + target.transform.position) * 0.5f;
-		GetComponent<Mobile>().ForceMove((Vector2)GetComponent<MapObject>().RealLocation);
 	}
 
 	void OnHurt(int current, int max)
