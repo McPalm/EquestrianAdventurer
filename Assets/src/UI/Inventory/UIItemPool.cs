@@ -66,9 +66,12 @@ public class UIItemPool : MonoBehaviour
 	/// <param name="i"></param>
 	public void Deactivate(Item i)
 	{
-		UIItem u = Get(i);
-		active.Remove(i);
-		inactive.Push(u);
-		u.gameObject.SetActive(false);
+		if (active.ContainsKey(i))
+		{
+			UIItem u = Get(i);
+			active.Remove(i);
+			inactive.Push(u);
+			u.gameObject.SetActive(false);
+		}
 	}
 }

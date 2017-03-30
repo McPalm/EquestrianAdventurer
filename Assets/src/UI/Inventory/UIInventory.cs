@@ -11,6 +11,7 @@ public class UIInventory : MonoBehaviour
 	public DropArea Equipment;
 	public DropArea WeaponSlot;
 	public DropArea ArmorSlot;
+	public DropArea[] Consumables;
 
 	void Start()
 	{
@@ -19,6 +20,7 @@ public class UIInventory : MonoBehaviour
 		model.EventEquipItem.AddListener(ModelEquip);
 		model.EventDropItem.AddListener(ModelRemove);
 		model.EventDestroyItem.AddListener(ModelRemove);
+		model.EventRemoveConsumable.AddListener(ModelRemove);
 
 		Equipment.EventDropHere.AddListener(OnDragToInventory);
 		Equipment.EventDropOutside.AddListener(OnDropOutside);
@@ -26,6 +28,14 @@ public class UIInventory : MonoBehaviour
 
 		WeaponSlot.EventDropOutside.AddListener(OnDropOutside);
 		ArmorSlot.EventDropOutside.AddListener(OnDropOutside);
+
+
+		model.EventAddConsumable.AddListener(ModelAddConsumeable);
+		for (int i = 0; i < Consumables.Length; i++)
+		{
+			Consumables[i].EventDropOutside.AddListener(OnDropOutside);
+			Consumables[i].EventDropHere.AddListener(OnDragToConsumableBar);
+		}
 
 		Equipment.capacity = model.inventorySize + 1; // we add one, its an extra slot to allow moving items around.
 
@@ -76,6 +86,15 @@ public class UIInventory : MonoBehaviour
 		UIItemPool.Instance.Deactivate(i);
 	}
 
+	void ModelAddConsumeable(Item c, int slot)
+	{
+		UIItem ui = UIItemPool.Instance.Get(c);
+		if (slot < Consumables.Length)
+			ui.DropIn(Consumables[slot]);
+		else
+			Debug.LogError("Slot " + slot + " not available in inventory");
+	}
+
 
 	///
 	/// Events incomming from the view
@@ -113,6 +132,30 @@ public class UIInventory : MonoBehaviour
 			model.UnEquip(EquipmentType.weapon, true);
 		else if (a == ArmorSlot)
 			model.UnEquip(EquipmentType.body, true);
+		else
+			model.DropItem(ui.Item); // in theory, this should let us drop items from the consumable bar.
+	}
+
+	void OnDragToConsumableBar(Draggable d, DropArea source, DropArea destination)
+	{
+		UIItem ui = d.GetComponent<UIItem>();
+		if (!ui) return;
+
+		if(source == destination)
+		{
+			print("consume?");
+			model.Consume(ui.Item);
+			return;
+		}
+		
+		for (int i = 0; i < Consumables.Length; i++)
+		{
+			if (destination == Consumables[i])
+			{
+				model.AddConsumableAt(ui.Item, i);
+			}
+		}
+		
 	}
 
 	public class ItemEvent : UnityEvent<Item> { }

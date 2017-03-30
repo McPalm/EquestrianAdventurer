@@ -18,9 +18,9 @@ public class ConsumeableFactory
 		sprite = s;
 	}
 
-	public Consumeable Get()
+	public Consumable Get()
 	{
-		Consumeable c = new Consumeable();
+		Consumable c = new Consumable();
 
 		if (turns == 0)
 			tooltip += "\n using this item takes no time.";

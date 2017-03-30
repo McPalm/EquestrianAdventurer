@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class Inventory : MonoBehaviour
 {
 	public int inventorySize = 12;
+	// public int consumableSize = 8;
 
 	public InventoryEvent EventChangeEquipment = new InventoryEvent();
 	public ItemEvent EventDropItem = new ItemEvent();
@@ -14,8 +15,11 @@ public class Inventory : MonoBehaviour
 	public ItemEvent EventAddItem = new ItemEvent();
 	public EquipEvent EventEquipItem = new EquipEvent();
 	public EquipEvent EventUnEquipItem = new EquipEvent();
+	public ItemEvent EventRemoveConsumable = new ItemEvent();
+	public ConsumableEvent EventAddConsumable = new ConsumableEvent();
 
 	List<Item> items = new List<Item>(6);
+	Consumable[] consumables = new Consumable[8];
 
 	Equipment bodySlot;
 	Equipment weaponSlot;
@@ -63,10 +67,46 @@ public class Inventory : MonoBehaviour
 	/// <returns>true of the change went through</returns>
 	public bool AddItem(Item i)
 	{
+		if (i is Consumable)
+			return AddConsumable(i as Consumable);
 		if (!EmptySpace) return false;
 		items.Add(i);
 		EventAddItem.Invoke(i);
 		return true;
+	}
+
+	public bool AddConsumable(Consumable c)
+	{
+		for (int i = 0; i < consumables.Length; i++)
+		{
+			if (consumables[i] == null)
+			{
+				consumables[i] = c;
+				EventAddConsumable.Invoke(c, i);
+				return true;
+			}
+		}	
+		return false;
+	}
+
+	public bool AddConsumableAt(Item item, int slot)
+	{
+		if(item is Consumable)
+		{
+			if(consumables[slot] == null)
+			{
+				consumables[slot] = item as Consumable;
+				EventAddConsumable.Invoke(item, slot);
+				for(int i = 0; i < consumables.Length; i++)
+				{
+					if (i == slot) continue;
+					if (consumables[i] == item)
+						consumables[i] = null;
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/// <summary>
@@ -76,21 +116,52 @@ public class Inventory : MonoBehaviour
 	/// <returns>true if the item is in the inventory</returns>
 	public bool RemoveItem(Item i)
 	{
-		if(items.Remove(i))
+		if(i is Consumable)
+		{
+			return RemoveConsumable(i as Consumable);
+		}
+		else if(items.Remove(i))
 		{
 			return true;
 		}
 		return false;
 	}
 
-	public bool Consume(Item i)
+	public bool RemoveConsumable(Consumable c)
 	{
-		if(i is Consumeable && DestroyItem(i))
+		for(int i = 0; i < consumables.Length; i++)
 		{
-			int turns = (i as Consumeable).turns;
-			(i as Consumeable).Use(gameObject);
-			for(int j = 0; j < turns; j++)
-				GetComponent<CharacterActionController>().StackAction(CharacterActionController.Actions.inventoryaction);
+			if(consumables[i] == c)
+			{
+				consumables[i] = null;
+				EventRemoveConsumable.Invoke(c);
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	/// <summary>
+	/// Consumes the given item if its in the inventory
+	/// Adds item action to the characters action stack
+	/// Destroys the item
+	/// </summary>
+	/// <param name="item"></param>
+	/// <returns></returns>
+	public bool Consume(Item item)
+	{
+		if (item is Consumable)
+		{
+			if (RemoveConsumable(item as Consumable))
+			{
+				int turns = (item as Consumable).turns;
+				(item as Consumable).Use(gameObject);
+				for (int j = 0; j < turns; j++)
+					GetComponent<CharacterActionController>().StackAction(CharacterActionController.Actions.inventoryaction);
+				return true;
+			}
+			
 		}
 		return false;
 	}
@@ -235,4 +306,5 @@ public class Inventory : MonoBehaviour
 	public class InventoryEvent : UnityEvent<Inventory> { }
 	public class ItemEvent : UnityEvent<Item> { }
 	public class EquipEvent : UnityEvent<Equipment, EquipmentType> { }
+	public class ConsumableEvent : UnityEvent<Item, int> { }
 }
