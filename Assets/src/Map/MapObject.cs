@@ -44,6 +44,7 @@ public class MapObject : MonoBehaviour
 	{
 		transform.position = v2;
 		RealLocation = IntVector2.RoundFrom(v2);
+		if (this is Mobile) (this as Mobile).Stop();
 	}
 
 	void OnEnable()

@@ -56,6 +56,11 @@ public class Mobile : MapObject
 		// transform.position = v2;
 	}
 
+	public void Stop()
+	{
+		StopAllCoroutines();
+	}
+
 	IEnumerator Tween(Vector2 start, Vector2 destination, float duration)
 	{
 		if (duration > 0.4f) duration = 0.4f; // prevent slow moves
