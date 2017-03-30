@@ -214,7 +214,7 @@ public class OverMap : MonoBehaviour {
 
 		map.TryGetValue(iv2, out msc);
 
-		if (msc.section == null && msc.Loaded == false)
+		if (msc.Loaded == false)
 		{
 			msc.LoadContainer(iv2);
 			msc.Loaded = true;
@@ -376,10 +376,13 @@ public class OverMap : MonoBehaviour {
 
 		public void LoadContainer(IntVector2 iv2)
 		{
-			GameObject o = new GameObject("Map Section " + iv2.ToString());
-			o.transform.position = (Vector2)iv2 * MapSectionData.DIMENSIONS;
-			section = o.AddComponent<MapSection>();
-			section.loadSection = false;
+			if (section == null)
+			{
+				GameObject o = new GameObject("Map Section " + iv2.ToString());
+				o.transform.position = (Vector2)iv2 * MapSectionData.DIMENSIONS;
+				section = o.AddComponent<MapSection>();
+				section.loadSection = false;
+			}
 
 			IGenerator generator;
 			int[] palette;
