@@ -18,51 +18,11 @@ public class OverMap : MonoBehaviour {
 	{
 		FindObjectOfType<RogueController>().GetComponent<Mobile>().EventMovement.AddListener(PlayerMoveEvent);
 
-		MapSectionContainer con;
-
-		con = new MapSectionContainer();
+		MapSectionContainer con = GetSectionAt(new IntVector2(0, -1));
 		con.terrain = MapType.pregenerated;
-		map.Add(new IntVector2(0, -1), con);
 		con.sectionName = "ponyville";
 
-		con = new MapSectionContainer();
-		con.AddConnection(CompassDirection.south);
-		con.terrain = MapType.forest;
-		map.Add(IntVector2.zero, con);
-
-		con = new MapSectionContainer();
-		con.AddConnection(CompassDirection.east);
-		con.terrain = MapType.forest;
-		map.Add(new IntVector2(1, 2), con);
-
-		con = new MapSectionContainer();
-		con.AddConnection(CompassDirection.west);
-		con.terrain = MapType.forest;
-		map.Add(new IntVector2(-1, 2), con);
-
-		IntVector2[] forest = IntVector2Utility.GetRect(new IntVector2(-1, 0), new IntVector2(1, 2));
-
-		con = new MapSectionContainer();
-		con.AddConnection(CompassDirection.west);
-		con.terrain = MapType.rooms;
-		map.Add(new IntVector2(2, 2), con);
-
-		IntVector2[] castle = IntVector2Utility.GetRect(new IntVector2(2, 2), new IntVector2(3, 4));
-
-		con = new MapSectionContainer();
-		con.AddConnection(CompassDirection.east);
-		con.terrain = MapType.cave;
-		map.Add(new IntVector2(-2, 2), con);
-
-		IntVector2[] cave = IntVector2Utility.GetRect(new IntVector2(-4, 1), new IntVector2(-2, 3));
-
-		InitSections(debugType, forest); // the initial biome. using debug. for testing ofc.
-		InitSections(MapType.rooms, castle);
-		InitSections(MapType.cave, cave);
-
-		RandomizeConnections(forest);
-		RandomizeConnections(castle);
-		RandomizeConnections(cave);
+		GenerateOverMap();
 
 		/*
 		foreach (IntVector2 iv2 in map.Keys)
@@ -71,6 +31,62 @@ public class OverMap : MonoBehaviour {
 		StartCoroutine(LoadOnDemand(new IntVector2(0, -1))); // load around the player
 	}
 
+	/// <summary>
+	/// Randomize the connections between sections
+	/// </summary>
+	void GenerateOverMap()
+	{
+		MapSectionContainer con;
+
+		// define sections
+
+		IntVector2[] forest = IntVector2Utility.GetRect(new IntVector2(-1, 0), new IntVector2(1, 2));
+		IntVector2[] castle = IntVector2Utility.GetRect(new IntVector2(2, 2), new IntVector2(3, 4));
+		IntVector2[] cave = IntVector2Utility.GetRect(new IntVector2(-4, 1), new IntVector2(-2, 3));
+
+		// clear up connections in case we already had one
+
+		foreach (IntVector2 iv2 in forest)
+			GetSectionAt(iv2).connections = CompassDirection.nowhere;
+		foreach (IntVector2 iv2 in castle)
+			GetSectionAt(iv2).connections = CompassDirection.nowhere;
+		foreach (IntVector2 iv2 in cave)
+			GetSectionAt(iv2).connections = CompassDirection.nowhere;
+
+		// setup connections between zones
+
+		con = GetSectionAt(new IntVector2(0, 0));
+		con.AddConnection(CompassDirection.south);
+		con.terrain = MapType.forest;
+
+		con = GetSectionAt(new IntVector2(1, 2));
+		con.AddConnection(CompassDirection.east);
+		con.terrain = MapType.forest;
+
+		con = GetSectionAt(new IntVector2(-1, 2));
+		con.AddConnection(CompassDirection.west);
+		con.terrain = MapType.forest;
+
+		con = GetSectionAt(new IntVector2(2, 2));
+		con.AddConnection(CompassDirection.west);
+		con.terrain = MapType.rooms;
+		
+		con = GetSectionAt(new IntVector2(-2, 2));
+		con.AddConnection(CompassDirection.east);
+		con.terrain = MapType.cave;
+
+		// setup terrain
+
+		InitSections(debugType, forest); // the initial biome. using debug. for testing ofc.
+		InitSections(MapType.rooms, castle);
+		InitSections(MapType.cave, cave);
+
+		// roll up connections within section
+
+		RandomizeConnections(forest);
+		RandomizeConnections(castle);
+		RandomizeConnections(cave);
+	}
 
 	void InitSections(MapType terrain, params IntVector2[] sections)
 	{
@@ -252,6 +268,7 @@ public class OverMap : MonoBehaviour {
 	{
 		IntVector2[] nature = IntVector2Utility.GetRect(new IntVector2(-4, 0), new IntVector2(3, 4));
 		StartCoroutine(AsyncUnload(nature));
+		GenerateOverMap();
 		StartCoroutine(LoadOnDemand(new IntVector2(0, -1))); // load around ponyville
 	}
 
