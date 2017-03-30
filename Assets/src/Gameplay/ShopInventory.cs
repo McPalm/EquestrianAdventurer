@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 public class ShopInventory : MonoBehaviour
 {
-	public List<Item> inventory;
-	public List<Item> buyBack;
+	[HideInInspector]
+	public List<Item> inventory = new List<Item>();
+	[HideInInspector]
+	public List<Item> buyBack = new List<Item>();
 
 	public GroundItem[] items;
 
@@ -16,8 +18,15 @@ public class ShopInventory : MonoBehaviour
 	// Use this for initialization
 	void Awake()
 	{
-		inventory = new List<Item>();
-		for(int i = 0; i < items.Length; i++)
+		GenerateInventory();
+	}
+
+	public void GenerateInventory()
+	{
+		inventory.Clear();
+		buyBack.Clear();
+
+		for (int i = 0; i < items.Length; i++)
 		{
 			inventory.Add(items[i].CloneItem());
 		}
