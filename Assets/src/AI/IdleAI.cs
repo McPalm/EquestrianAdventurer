@@ -8,6 +8,7 @@ using System;
 [RequireComponent(typeof(MapCharacter))]
 public class IdleAI : MonoBehaviour, TurnTracker.TurnEntry
 {
+	CharacterActionController controller;
 
 	public int movementRadius = 3;
 	IntVector2 home;

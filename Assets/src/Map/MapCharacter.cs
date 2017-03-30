@@ -7,11 +7,19 @@ using System.Collections;
 [RequireComponent(typeof(CircleCollider2D))]
 public class MapCharacter : MonoBehaviour
 {
+	[Space(10)]
+
+	public Hostility alignment;
+
+	[Space(10)]
+
 	public float hitSkill;
 	public float baseDamage;
 	public float dodgeSkill;
 	public float armor;
 	public int baseHP = 10;
+
+	[Space(10)]
 
 	public GameObject skull;
 
@@ -32,6 +40,14 @@ public class MapCharacter : MonoBehaviour
 		if(GetComponent<Inventory>()) GetComponent<Inventory>().EventChangeEquipment.AddListener(OnChangeEquipment);
 		if (EventDeath.GetPersistentEventCount() == 0) EventDeath.AddListener(DefaultDeath);
 		// maybe get a health bar and shit
+	}
+
+	public bool HostileTowards(MapCharacter other)
+	{
+		if (alignment == Hostility.player && other.alignment == Hostility.enemies) return true;
+		if (alignment == Hostility.enemies && other.alignment == Hostility.player) return true;
+
+		return false;
 	}
 
 	public void Melee(MapCharacter target)
@@ -98,4 +114,11 @@ public class MapCharacter : MonoBehaviour
 
 	[System.Serializable]
 	public class MapCharacterEvent : UnityEvent<MapCharacter> { }
+
+	public enum Hostility
+	{
+		player = 0,
+		ally = 1,
+		enemies = 2
+	}
 }

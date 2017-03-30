@@ -40,8 +40,9 @@ public class CharacterActionController : MonoBehaviour
 		actionStack.Push(a);
 	}
 
-	public void Perform(Actions a)
+	public bool Perform(Actions a)
 	{
+		bool didathing = false;
 
 		if (HasStackedAction)
 			a = actionStack.Pop();
@@ -58,47 +59,51 @@ public class CharacterActionController : MonoBehaviour
 		switch(a)
 		{
 			case Actions.up:
-				Move(Vector2.up);
+				didathing = Move(Vector2.up);
 				break;
 			case Actions.right:
-				Move(Vector2.right);
+				didathing = Move(Vector2.right);
 				break;
 			case Actions.left:
-				Move(Vector2.left);
+				didathing = Move(Vector2.left);
 				break;
 			case Actions.down:
-				Move(Vector2.down);
+				didathing = Move(Vector2.down);
 				break;
 			case Actions.pickup:
-				inventory.PickupFromGround();
+				didathing = inventory.PickupFromGround();
 				break;
 			default:
+				didathing = true;
 				break;
 		}
 
 		EventAfterAction.Invoke(this, a);
+
+		return didathing;
 	}
 
-	void Move(Vector2 where)
+	bool Move(Vector2 where)
 	{
 		MapCharacter mc = null;
 		if (mobile.MoveDirection(where, out mc))
 		{
-			return;
+			return true;
 		}
 		else if(mc)
 		{
 			Interactable i = mc.GetComponent<Interactable>();
-			if (canInteract && i)
-			{
-				i.Interact(mobile);
-			}
-			else
+			if(mapCharacter.HostileTowards(mc))
 			{
 				mapCharacter.Melee(mc);
+				return true;
+			}
+			else if (canInteract && i)
+			{
+				return i.Interact(mobile);
 			}
 		}
-
+		return false;
 	}
 
 	[System.Serializable]
