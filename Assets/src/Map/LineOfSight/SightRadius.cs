@@ -36,8 +36,23 @@ public class SightRadius : MonoBehaviour
 
 	public bool CanSee(TileVisbility v)
 	{
-		return true;
-		// throw new System.NotImplementedException();
+		int dx = System.Math.Abs((int)v.transform.position.x - mapObject.RealLocation.x);
+		int dy = System.Math.Abs((int)v.transform.position.y - mapObject.RealLocation.y);
+
+		if(System.Math.Max(dx, dy) + System.Math.Min(dx, dy) / 2 < sightRadius)
+		{
+			RaycastHit2D[] hits = Physics2D.LinecastAll((Vector2)mapObject.RealLocation, v.transform.position, 1 << 9); // doing hits in walls
+
+			int maxHits = (v.BlockSight) ? 1 : 0;
+			foreach (RaycastHit2D hit in hits)
+			{
+				if (hit.collider.GetComponent<Wall>().BlockSight) maxHits--;
+				if (maxHits < 0) return false;
+			}
+			return true;
+		}
+
+		return false;
 	}
 
 	public void RefreshView()
