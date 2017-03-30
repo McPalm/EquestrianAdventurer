@@ -15,7 +15,8 @@ public class MapCharacter : MonoBehaviour
 
 	public GameObject skull;
 
-	public UnityEvent EventDeath = new UnityEvent();
+	[SerializeField]
+	public MapCharacterEvent EventDeath = new MapCharacterEvent();
 	public MapCharacterEvent EventUpdateStats = new MapCharacterEvent();
 	public MapCharacterEvent EventKillingBlow = new MapCharacterEvent();
 
@@ -29,6 +30,7 @@ public class MapCharacter : MonoBehaviour
 		GetComponent<HitPoints>().CurrentHealth = baseHP;
 		GetComponent<HitPoints>().EventChangeHealth.AddListener(OnHurt);
 		if(GetComponent<Inventory>()) GetComponent<Inventory>().EventChangeEquipment.AddListener(OnChangeEquipment);
+		if (EventDeath.GetPersistentEventCount() == 0) EventDeath.AddListener(DefaultDeath);
 		// maybe get a health bar and shit
 	}
 
@@ -52,12 +54,14 @@ public class MapCharacter : MonoBehaviour
 	void OnHurt(int current, int max)
 	{
 		if (current <= 0)
-		{
-			Destroy(gameObject);
-			Instantiate(skull, transform.position, Quaternion.identity);
-			EventDeath.Invoke();
-			GetComponent<Mobile>().enabled = false;
-		}
+			EventDeath.Invoke(this);
+	}
+
+	public void DefaultDeath(MapCharacter o)
+	{
+		Destroy(gameObject);
+		Instantiate(skull, transform.position, Quaternion.identity);
+		GetComponent<Mobile>().enabled = false;
 	}
 
 	int level = 1;
@@ -91,6 +95,6 @@ public class MapCharacter : MonoBehaviour
 		// GetComponent<HitPoints>().Heal(new DamageData().SetDamage(999)); // yay, max hp on level up!
 	}
 
-
+	[System.Serializable]
 	public class MapCharacterEvent : UnityEvent<MapCharacter> { }
 }
