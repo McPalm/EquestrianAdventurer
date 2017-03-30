@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnchantEquipment : MonoBehaviour
+public static class EnchantEquipment
 {
-
-	// Use this for initialization
-	void Start ()
+	/// <summary>
+	/// Accepts an item and might enchant it..   might
+	/// </summary>
+	/// <param name="e"></param>
+	static public void Enchant(Equipment e)
 	{
-		Equipment e = GetComponent<GroundEquipment>().equipment;
-
-		// chance to improve any equipment, making it better or worse.
-
 		if(Random.value < 0.2f) // poor quality
 		{
 			e.displayName = "Poor " + e.displayName;
@@ -37,7 +35,8 @@ public class EnchantEquipment : MonoBehaviour
 				e.hit += 1;
 			}
 		}
-		else if(Random.value < 0.1f) // magical
+
+		if(Random.value < 0.07f) // magical
 		{
 			int plus = Mathf.Min(Random.Range(1, 6), Random.Range(1, 6));
 
@@ -56,5 +55,4 @@ public class EnchantEquipment : MonoBehaviour
 			}
 		}
 	}
-
 }
