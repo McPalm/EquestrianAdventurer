@@ -40,6 +40,15 @@ public class CharacterActionController : MonoBehaviour
 		actionStack.Push(a);
 	}
 
+	public bool Perform(Vector2 d)
+	{
+		if (d == Vector2.right) return Perform(Actions.right);
+		if (d == Vector2.left) return Perform(Actions.left);
+		if (d == Vector2.up) return Perform(Actions.up);
+		if (d == Vector2.down) return Perform(Actions.down);
+		return false;
+	}
+
 	public bool Perform(Actions a)
 	{
 		bool didathing = false;
