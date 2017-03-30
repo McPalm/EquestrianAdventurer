@@ -29,31 +29,34 @@ public class SimpleBehaviour : MonoBehaviour, TurnTracker.TurnEntry
 		Vector2 delta = (Vector3)targetLocation - transform.position;
 		if(targetCharacter) delta = targetCharacter.transform.position - transform.position;
 
+		bool moved = true;
+
 		if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
 		{
-			bool moved = true;
 			if (delta.x < 0f) moved = controller.Perform(Vector2.left);
 			else if (delta.x > 0f) moved = controller.Perform(Vector2.right);
 			if(!moved)
 			{
-				if (delta.y < 0f) controller.Perform(Vector2.down);
-				else if (delta.y > 0f) controller.Perform(Vector2.up);
-				else controller.Perform((Random.value < 0.5f) ? Vector2.up : Vector2.down);
+				if (delta.y < 0f) moved = controller.Perform(Vector2.down);
+				else if (delta.y > 0f) moved = controller.Perform(Vector2.up);
+				else moved = controller.Perform((Random.value < 0.5f) ? Vector2.up : Vector2.down);
 			}
 
 		}
 		else if(delta.y != 0f)
 		{
-			bool moved = true;
+			
 			if (delta.y < 0f) moved = controller.Perform(Vector2.down);
 			else if (delta.y > 0f) moved = controller.Perform(Vector2.up);
 			if (!moved)
 			{
-				if (delta.x < 0f) controller.Perform(Vector2.left);
-				else if (delta.x > 0f) controller.Perform(Vector2.right);
-				else controller.Perform((Random.value < 0.5f) ? Vector2.left : Vector2.right);
+				if (delta.x < 0f) moved = controller.Perform(Vector2.left);
+				else if (delta.x > 0f) moved = controller.Perform(Vector2.right);
+				else moved = controller.Perform((Random.value < 0.5f) ? Vector2.left : Vector2.right);
 			}
 		}
+
+		if (!moved) controller.Perform(CharacterActionController.Actions.idle);
 
 		endTurnEvent.Invoke(this);
 	}
