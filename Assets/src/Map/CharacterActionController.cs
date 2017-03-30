@@ -58,8 +58,13 @@ public class CharacterActionController : MonoBehaviour
 
 		if(confusion > 0) // when confused, there is a 33% chance to do a random action instead
 		{
-			if(Random.value < 0.33f)
-				a = (Actions)Random.Range(0, 5);
+			switch(Random.Range(0, 12))
+			{
+				case 0: a = Actions.up; break;
+				case 1: a = Actions.down; break;
+				case 2: a = Actions.left; break;
+				case 3: a = Actions.right; break;
+			}
 			confusion--;
 		}
 
