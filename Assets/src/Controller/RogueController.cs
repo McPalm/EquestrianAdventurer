@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Mobile))]
+[RequireComponent(typeof(CharacterActionController))]
 public class RogueController : MonoBehaviour
 {
 
 	bool xprio = true;
 
-	Actions actionBuffer;
+	CharacterActionController.Actions actionBuffer;
 
 	float heldDuration = 0f;
 	float inputcooldown = 0f;
 
-
+	CharacterActionController controller;
 
 	// Use this for initialization
 	void Start () {
-		
+		controller = GetComponent<CharacterActionController>();
 	}
 	
 	// Update is called once per frame
@@ -31,12 +31,12 @@ public class RogueController : MonoBehaviour
 			heldDuration += Time.deltaTime;
 			float x = Input.GetAxis("Horizontal");
 			float y = Input.GetAxis("Vertical");
-			if (xprio &&  x < 0f) actionBuffer = Actions.moveleft;
-			else if (xprio && x > 0f) actionBuffer = Actions.moveright;
-			else if (y < 0f) actionBuffer = Actions.movedown;
-			else if (y > 0f) actionBuffer = Actions.moveup;
-			else if (x < 0f) actionBuffer = Actions.moveleft;
-			else if (x > 0f) actionBuffer = Actions.moveright;
+			if (xprio &&  x < 0f) actionBuffer = CharacterActionController.Actions.left;
+			else if (xprio && x > 0f) actionBuffer = CharacterActionController.Actions.right;
+			else if (y < 0f) actionBuffer = CharacterActionController.Actions.down;
+			else if (y > 0f) actionBuffer = CharacterActionController.Actions.up;
+			else if (x < 0f) actionBuffer = CharacterActionController.Actions.left;
+			else if (x > 0f) actionBuffer = CharacterActionController.Actions.right;
 		}
 		else if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
 		{
@@ -45,115 +45,38 @@ public class RogueController : MonoBehaviour
 			{
 				float x = Input.GetAxis("Horizontal");
 				float y = Input.GetAxis("Vertical");
-				if (xprio && x < 0f) actionBuffer = Actions.moveleft;
-				else if (xprio && x > 0f) actionBuffer = Actions.moveright;
-				else if (y < 0f) actionBuffer = Actions.movedown;
-				else if (y > 0f) actionBuffer = Actions.moveup;
-				else if (x < 0f) actionBuffer = Actions.moveleft;
-				else if (x > 0f) actionBuffer = Actions.moveright;
+				if (xprio && x < 0f) actionBuffer = CharacterActionController.Actions.left;
+				else if (xprio && x > 0f) actionBuffer = CharacterActionController.Actions.right;
+				else if (y < 0f) actionBuffer = CharacterActionController.Actions.down;
+				else if (y > 0f) actionBuffer = CharacterActionController.Actions.up;
+				else if (x < 0f) actionBuffer = CharacterActionController.Actions.left;
+				else if (x > 0f) actionBuffer = CharacterActionController.Actions.right;
 			}
 		}
 		else
 		{
 			heldDuration = 0f;
 			if (Input.GetButtonDown("Idle"))
-				actionBuffer = Actions.idle;
+				actionBuffer = CharacterActionController.Actions.idle;
 			if (Input.GetButtonDown("Pickup"))
-				actionBuffer = Actions.pickup;
+				actionBuffer = CharacterActionController.Actions.pickup;
 		}
 
 		
-		if (actionBuffer != Actions.none && inputcooldown < 0f)
+		if (controller.HasStackedAction || actionBuffer != CharacterActionController.Actions.none && inputcooldown < 0f)
 		{
-			PerformAction(actionBuffer);
-			actionBuffer = Actions.none;
-		}
-		
-	}
-
-	void PerformAction(Actions a)
-	{
-		switch (a)
-		{
-			case Actions.moveup:
-				Move(new Vector2(0, 1));
-				break;
-			case Actions.moveright:
-				Move(new Vector2(1, 0));
-				break;
-			case Actions.moveleft:
-				Move(new Vector2(-1, 0));
-				break;
-			case Actions.movedown:
-				Move(new Vector2(0, -1));
-				break;
-			case Actions.pickup:
-				if (GetComponent<Inventory>().PickupFromGround())
-					EndTurn();
-				break;
-			case Actions.idle:
-				HealOverHeart();
-				EndTurn();
-				break;
-		}
-	}
-
-	
-
-	void HealOverHeart() // HACK! Remove for the love of Equestria, Celestia and everything pony.
-	{
-		// fucking dirty lol
-		// see if heart object is in square
-		foreach (MapObject m in ObjectMap.Instance.ObjectsAtLocation(IntVector2.RoundFrom(transform.position)))
-		{
-			if(m.GetComponent<Heart>())
-			{
-				Destroy(m.gameObject);
-				GetComponent<HitPoints>().Heal(new DamageData().SetDamage(5));
-			}
-		}
-
-		// if is, destroy it and heal up
-	}
-
-	void Move(Vector2 where)
-	{
-		MapCharacter mc = null;
-		if (GetComponent<Mobile>().MoveDirection(where, out mc))
-		{
-			inputcooldown = 0.19f;
+			controller.Perform(actionBuffer);
+			if (actionBuffer == CharacterActionController.Actions.idle)
+				inputcooldown = 0.8f;
+			else
+				inputcooldown = 0.19f;
+			actionBuffer = CharacterActionController.Actions.none;
 			EndTurn();
 		}
-		if (mc)
-		{
-			Interactable i = mc.GetComponent<Interactable>();
-			if (i)
-			{
-				if (i.Interact(GetComponent<MapObject>()))
-					EndTurn();
-			}
-			else
-			{
-				GetComponent<MapCharacter>().Melee(mc);
-				EndTurn();
-			}
-		}
-
 	}
 
 	void EndTurn()
 	{
 		TurnTracker.Instance.NextTurn();
-	}
-
-	enum Actions
-	{
-		none = 0,
-		moveup,
-		movedown,
-		moveleft,
-		moveright,
-		idle,
-		pickup
 	}
 }
