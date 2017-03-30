@@ -10,6 +10,7 @@ public class Consumeable : Item
 	public System.Action<GameObject> Use;
 
 	public string description;
+	public int turns = 1;
 
 	override public string Tooltip
 	{

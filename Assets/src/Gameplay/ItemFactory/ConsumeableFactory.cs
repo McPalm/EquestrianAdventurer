@@ -6,6 +6,7 @@ public class ConsumeableFactory
 	string label;
 	string tooltip;
 	int worth;
+	int turns = 1;
 	Sprite sprite;
 	System.Action<GameObject> effect = null;
 	Color color = Color.white;
@@ -21,9 +22,15 @@ public class ConsumeableFactory
 	{
 		Consumeable c = new Consumeable();
 
+		if (turns == 0)
+			tooltip += "\n using this item takes no time.";
+		else if(turns > 1)
+				tooltip += "\n using this item takes " + turns + " turns.";
+
 		if (effect == null) c.Use = Nothing;
 		else c.Use = effect;
 
+		c.turns = turns;
 		c.value = worth;
 		c.displayName = label;
 		c.description = tooltip;
@@ -42,6 +49,7 @@ public class ConsumeableFactory
 
 	public ConsumeableFactory SetHeal(int i)
 	{
+		turns = 2;
 		if (i == 1)
 		{
 			tooltip += "\nHeals 10 hitpoints.";

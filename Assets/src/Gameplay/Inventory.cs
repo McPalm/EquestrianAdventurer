@@ -87,9 +87,10 @@ public class Inventory : MonoBehaviour
 	{
 		if(i is Consumeable && DestroyItem(i))
 		{
+			int turns = (i as Consumeable).turns;
 			(i as Consumeable).Use(gameObject);
-			GetComponent<CharacterActionController>().StackAction(CharacterActionController.Actions.inventoryaction);
-			GetComponent<CharacterActionController>().StackAction(CharacterActionController.Actions.inventoryaction);
+			for(int j = 0; j < turns; j++)
+				GetComponent<CharacterActionController>().StackAction(CharacterActionController.Actions.inventoryaction);
 		}
 		return false;
 	}
