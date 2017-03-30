@@ -78,4 +78,32 @@ public class ObjectMap : MonoBehaviour
 			objects.Remove(o);
 		}
 	}
+
+	/// <summary>
+	/// Get every mapobjects within specified rectangle
+	/// </summary>
+	/// <param name="minX">minx X, inclusive</param>
+	/// <param name="minY">min Y, inclusive</param>
+	/// <param name="maxX">max X, exlusive</param>
+	/// <param name="maxY">max Y, exlusve</param>
+	/// <returns></returns>
+	public MapObject[] GetRange(int minX, int minY, int maxX, int maxY)
+	{
+		List<MapObject> list = new List<MapObject>();
+		ObjectStack os = null;
+		for (int x = minX; x < maxX; x++)
+		{
+			for (int y = minY; y < maxY; y++)
+			{
+				if (map.TryGetValue(new IntVector2(x, y), out os))
+				{
+					foreach (MapObject o in os.objects)
+					{
+						list.Add(o);
+					}
+				}
+			}
+		}
+		return (list.ToArray());
+	}
 }

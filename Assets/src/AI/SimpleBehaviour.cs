@@ -76,5 +76,16 @@ public class SimpleBehaviour : MonoBehaviour, TurnTracker.TurnEntry
 		GetComponent<MapCharacter>().EventDeath.AddListener(delegate { TurnTracker.Instance.Remove(this); });
 	}
 
+	void OnApplicationQuit()
+	{
+		teardown = true;
+	}
+	bool teardown = false;
+	void OnDisable()
+	{
+		if (teardown) return;
+		TurnTracker.Instance.Remove(this);
+	}
+
 	public class StartTurnEvent : UnityEvent<SimpleBehaviour> { }
 }

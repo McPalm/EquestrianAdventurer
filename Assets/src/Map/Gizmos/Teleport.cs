@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Teleport : MonoBehaviour
 {
+
+
+	public TeleportEvent EventTeleport;
+
 	/// <summary>
 	/// teleports the given object to the target location
 	/// </summary>
@@ -14,6 +19,7 @@ public class Teleport : MonoBehaviour
 		if(o)
 		{
 			o.Put(targetLocation.transform.position);
+			EventTeleport.Invoke(o);
 		}
 	}
 
@@ -25,4 +31,7 @@ public class Teleport : MonoBehaviour
 	{
 		TeleportObject(c, gameObject);
 	}
+
+	[System.Serializable]
+	public class TeleportEvent : UnityEvent<MapObject> { }
 }

@@ -68,7 +68,7 @@ public class OverMap : MonoBehaviour {
 		foreach (IntVector2 iv2 in map.Keys)
 			StartCoroutine(LoadSection(iv2));
 			*/
-		StartCoroutine(LoadOnDemand(IntVector2.zero)); // load around the player
+		StartCoroutine(LoadOnDemand(new IntVector2(0, -1))); // load around the player
 	}
 
 
@@ -243,6 +243,47 @@ public class OverMap : MonoBehaviour {
 		ret = new MapSectionContainer();
 		map.Add(v2, ret);
 		return ret;
+	}
+
+	/// <summary>
+	/// Reset and regenerate all sections except ponyville
+	/// </summary>
+	public void Reset()
+	{
+		IntVector2[] nature = IntVector2Utility.GetRect(new IntVector2(-4, 0), new IntVector2(3, 4));
+		StartCoroutine(AsyncUnload(nature));
+		StartCoroutine(LoadOnDemand(new IntVector2(0, -1))); // load around ponyville
+	}
+
+	public IEnumerator AsyncUnload(params IntVector2[] v2s)
+	{
+		LoadingIcon.SetActive(true);
+		foreach(IntVector2 v2 in v2s)
+		{
+			Unload(v2);
+			yield return new WaitForSeconds(0f);
+		}
+		LoadingIcon.SetActive(true);
+	}
+
+	/// <summary>
+	/// Unload all sections in an array
+	/// </summary>
+	/// <param name="v2s"></param>
+	public void Unload(params IntVector2[] v2s)
+	{
+		MapSectionContainer c = null;
+		foreach (IntVector2 v2 in v2s)
+		{
+			if(map.TryGetValue(v2, out c))
+			{
+				if (c.Loaded)
+				{
+					c.section.Unload();
+					c.Loaded = false;
+				}
+			}
+		}
 	}
 
 	/// <summary>

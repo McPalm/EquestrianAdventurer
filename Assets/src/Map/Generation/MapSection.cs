@@ -26,6 +26,27 @@ public class MapSection : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Removes all tiles, 
+	/// unloads this section,
+	/// remove everyone and everything on it
+	/// </summary>
+	public void Unload()
+	{
+		print("removing " + name);
+		foreach(GameObject o in map.Values)
+		{
+			Destroy(o);
+		}
+		map.Clear();
+
+		// remove all map objects within this sections confines...  somehow
+		foreach (MapObject o in ObjectMap.Instance.GetRange((int)transform.position.x, (int)transform.position.y, (int)transform.position.x + MapSectionData.DIMENSIONS, (int)transform.position.y + MapSectionData.DIMENSIONS))
+		{
+			Destroy(o.gameObject);
+		}
+	}
+
 	public void DrawAll()
 	{
 		tileDB = TileDB.LoadPalette(paletteName);
