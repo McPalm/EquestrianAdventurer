@@ -5,9 +5,11 @@ public class Crossbow : MonoBehaviour
 {
 	public int ReloadTime = 4;
 	public int Damage = 7;
+	public int Range = 10;
 
 	MapCharacter user;
 	MapObject me;
+	LOSCheck LoS;
 
 	int reloadTimer = 0;
 
@@ -15,11 +17,12 @@ public class Crossbow : MonoBehaviour
 	{
 		user = GetComponent<MapCharacter>();
 		me = GetComponent<MapObject>();
+		LoS = GetComponent<LOSCheck>();
 	}
 	
 	public bool CanTarget(MapCharacter target)
 	{
-		return LOSCheck.HasLOS(me, target.GetComponent<MapObject>());
+		return LoS.HasLOE(target.GetComponent<MapObject>(), Range);
 	}
 
 	public bool Loaded

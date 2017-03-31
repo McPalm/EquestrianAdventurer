@@ -29,6 +29,12 @@ public class Item
 		{
 			return new Color(red, green, blue, 1f);
 		}
+		set
+		{
+			red = value.r;
+			green = value.g;
+			blue = value.b;
+		}
 	}
 
 	virtual public int Value

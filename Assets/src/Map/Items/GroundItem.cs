@@ -23,6 +23,11 @@ public class GroundItem : MonoBehaviour
 
 	virtual public Item CloneItem()
 	{
+		if (item.sprite == null)
+		{
+			item.sprite = GetComponent<SpriteRenderer>().sprite;
+			item.Tint = GetComponent<SpriteRenderer>().color;
+		}
 		return item.Clone();
 	}
 }
