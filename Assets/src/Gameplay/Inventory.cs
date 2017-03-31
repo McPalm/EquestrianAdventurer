@@ -232,16 +232,34 @@ public class Inventory : MonoBehaviour
 		switch(e.slots)
 		{
 			case EquipmentType.body:
+
 				if (bodySlot != null)
-					if (!UnEquip(bodySlot)) return false;
+				{
+					inventorySize++; // I think this is the first real hack I put into this game.
+					if (!UnEquip(bodySlot))
+					{
+						inventorySize--;
+						return false;
+					}
+					inventorySize--;
+				}
 				RemoveItem(e);
 				bodySlot = e;
 				EventChangeEquipment.Invoke(this);
 				EventEquipItem.Invoke(e, EquipmentType.body);
 				return true;
 			case EquipmentType.weapon:
+
 				if (weaponSlot != null)
-					if (!UnEquip(weaponSlot)) return false;
+				{
+					inventorySize++;
+					if (!UnEquip(weaponSlot))
+					{
+						inventorySize--;
+						return false;
+					}
+					inventorySize--;
+				}
 				RemoveItem(e);
 				weaponSlot = e;
 				EventChangeEquipment.Invoke(this);
@@ -250,6 +268,7 @@ public class Inventory : MonoBehaviour
 		}
 		return false;
 	}
+
 
 	/// <summary>
 	/// Remove the item in the given slot
