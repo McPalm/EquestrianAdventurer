@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class IntVector2Utility
+static public class IntVector2Utility
 {
 	
 
@@ -26,5 +26,20 @@ public class IntVector2Utility
 		}
 
 		return ret.ToArray();
+	}
+
+	static public int DeltaSum(IntVector2 a, IntVector2 b)
+	{
+		return Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y);
+	}
+
+	static public int DeltaMax(IntVector2 a, IntVector2 b)
+	{
+		return Math.Max(Math.Abs(a.x - b.x), Math.Abs(a.y - b.y));
+	}
+
+	static public int PFDistance(IntVector2 a, IntVector2 b)
+	{
+		return Math.Max(Math.Abs(a.x - b.x), Math.Abs(a.y - b.y)) + Math.Min(Math.Abs(a.x - b.x), Math.Abs(a.y - b.y)) / 2;
 	}
 }

@@ -20,6 +20,17 @@ public class MapObject : MonoBehaviour
 		{
 			ObjectMap.Instance.Move(this, realLocation, value);
 			realLocation = value;
+			VisibleToPlayer = SightRadius.Instance.LocationVisible(realLocation);
+
+		}
+	}
+
+	public bool VisibleToPlayer
+	{
+		set
+		{
+			foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
+				sr.enabled = value;
 		}
 	}
 
@@ -51,6 +62,8 @@ public class MapObject : MonoBehaviour
 	{
 		realLocation = IntVector2.RoundFrom(transform.position);
 		ObjectMap.Instance.Add(this);
+		if (!GetComponent<RogueController>())
+			VisibleToPlayer = false; // hide outside LOS
 	}
 
 	void OnApplicationQuit()

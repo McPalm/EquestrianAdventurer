@@ -55,17 +55,19 @@ public class SightRadius : MonoBehaviour
 		return false;
 	}
 
-	public void RefreshView()
+	public void RefreshView(int buffer = 1)
 	{
-		for(int x = mapObject.RealLocation.x - sightRadius; x < mapObject.RealLocation.x +  sightRadius; x++)
+		for(int x = mapObject.RealLocation.x - sightRadius - buffer; x < mapObject.RealLocation.x +  sightRadius + buffer; x++)
 		{
-			for (int y = mapObject.RealLocation.y - sightRadius; y < mapObject.RealLocation.y + sightRadius; y++)
+			for (int y = mapObject.RealLocation.y - sightRadius - buffer; y < mapObject.RealLocation.y + sightRadius + buffer; y++)
 			{
 				TileVisbility v = null;
 				if(allTiles.TryGetValue(new IntVector2(x, y), out v))
 				{
-					if (!v.Visible && CanSee(v))
+					if (CanSee(v))
 						v.Show();
+					else
+						v.Hide();
 				}
 			}
 		}
@@ -79,5 +81,15 @@ public class SightRadius : MonoBehaviour
 	public void RemoveTile(IntVector2 location)
 	{
 		allTiles.Remove(location);
+	}
+
+	public bool LocationVisible(IntVector2 v2)
+	{
+		TileVisbility v = null;
+		if(allTiles.TryGetValue(v2, out v))
+		{
+			return v.Visible;
+		}
+		return false;
 	}
 }
