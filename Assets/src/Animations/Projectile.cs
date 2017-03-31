@@ -4,8 +4,9 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
-	public float travelingTime = 1f;
-	public float stick = 1f;
+	public float travelingTime = 0.1f;
+	public float stick = 0.3f;
+	public bool distanceFactor = true;
 
 	public GameObject prefab;
 	public StrechBetweenTwoObjects trailPrefab;
@@ -35,13 +36,15 @@ public class Projectile : MonoBehaviour
 	public void FireAt(Component c)
 	{
 		projectile.transform.position = transform.position;
-		StartCoroutine(Animate(c.transform, projectile, travelingTime, stick));
+		float time = (distanceFactor) ? travelingTime * (c.transform.position - transform.position).magnitude : travelingTime;
+		StartCoroutine(Animate(c.transform, projectile, time, stick));
 	}
 	public void FirePast(Component c)
 	{
 		projectile.transform.position = transform.position;
 		dummy.position = c.transform.position + (c.transform.position - transform.position) * 0.75f + new Vector3(Random.value, Random.value);
-		StartCoroutine(Animate(dummy, projectile, travelingTime, stick));
+		float time = (distanceFactor) ? travelingTime * (c.transform.position - transform.position).magnitude : travelingTime;
+		StartCoroutine(Animate(dummy, projectile, time, stick));
 	}
 
 	IEnumerator Animate(Transform goal, Transform projectile, float time, float stick)
@@ -88,7 +91,7 @@ public class Projectile : MonoBehaviour
 		if (trail) trail.gameObject.SetActive(false);
 	}
 
-	void OnApplicationExit()
+	void OnApplicationQuit()
 	{
 		teardown = true;
 	}

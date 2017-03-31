@@ -23,6 +23,28 @@ public class LOSCheck : MonoBehaviour
 		return false;
 	}
 
+	/// <summary>
+	/// A special LOS that takes cover into account
+	/// If there is cover in between, sightradius is effectively halved. (rounded down)
+	/// </summary>
+	/// <param name="t"></param>
+	/// <param name="cover"></param>
+	/// <returns></returns>
+	public bool HasLOS(MapObject t, bool cover)
+	{
+		if (!cover) return HasLOS(t);
+		int distance = IntVector2Utility.PFDistance(me.RealLocation, t.RealLocation);
+		if (distance > sightRadius) return false;
+		if(HasLOS(me, t))
+		{
+			if (InCover(me, t))
+				return distance <= sightRadius / 2;
+			else
+				return true;
+		}
+		return false;
+	}
+
 	public bool HasLOE(MapObject t, int range = 0)
 	{
 		if (range == 0) range = sightRadius;
@@ -39,6 +61,13 @@ public class LOSCheck : MonoBehaviour
 			if (hit.collider.GetComponent<Wall>().BlockSight) return false;
 
 		return true;
+	}
+
+	static public bool InCover(MapObject a, MapObject b)
+	{
+		RaycastHit2D hits = Physics2D.Linecast((Vector2)a.RealLocation, (Vector2)b.RealLocation, 1 << 10);
+
+		return hits;
 	}
 
 	/// <summary>

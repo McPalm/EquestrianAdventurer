@@ -43,7 +43,7 @@ public class Crossbow : RangedAttack
 
 	void OnMiss(MapCharacter target)
 	{
-		CombatTextPool.Instance.PrintAt((Vector3)target.GetComponent<MapObject>().RealLocation + new Vector3(0f, 0.4f), "Miss", Color.cyan);
+		CombatTextPool.Instance.PrintAt(transform.position + new Vector3(0f, 0.4f), "Miss", Color.cyan);
 		reloadTimer = ReloadTime;
 	}
 

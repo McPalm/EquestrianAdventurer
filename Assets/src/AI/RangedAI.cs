@@ -20,6 +20,9 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 
 	public MapObject player;
 
+	public int alertRadius = 9;
+	public int relaxedRadius = 6;
+
 	IntVector2 lastSeenLocation;
 	bool investigate = false;
 	bool relaxed = true;
@@ -36,19 +39,21 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 
 		TurnTracker.Instance.Add(this);
 		GetComponent<MapCharacter>().EventDeath.AddListener(delegate { TurnTracker.Instance.Remove(this); });
+
+		LOS.sightRadius = relaxedRadius;
 	}
 
 	public void DoTurn()
 	{
 		bool acted = false;
-		bool sight = LOS.HasLOS(player);
+		bool sight = LOS.HasLOS(player, !investigate);
 		if (sight)
 		{
 			if(!investigate) CombatTextPool.Instance.PrintAt((Vector3)me.RealLocation + new Vector3(0f, 0.4f), "!", Color.yellow, 1.2f);
 			investigate = true;
 			lastSeenLocation = player.RealLocation;
 			relaxed = false;
-			LOS.sightRadius = 9;
+			LOS.sightRadius = alertRadius;
 		}
 		if (relaxed) return;
 		bool melee = IntVector2Utility.DeltaSum(me.RealLocation, player.RealLocation) == 1;
@@ -87,7 +92,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 			if(me.RealLocation == home)
 			{
 				relaxed = true;
-				LOS.sightRadius = 6;
+				LOS.sightRadius = relaxedRadius;
 			}
 		}
 
