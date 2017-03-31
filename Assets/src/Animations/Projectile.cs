@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class Projectile : MonoBehaviour
@@ -12,6 +13,9 @@ public class Projectile : MonoBehaviour
 	Transform projectile;
 	StrechBetweenTwoObjects trail;
 	Transform tailEnd;
+	Transform dummy;
+
+	public LocationEvent EventOnImpact = new LocationEvent();
 
 	public void Start()
 	{
@@ -25,12 +29,19 @@ public class Projectile : MonoBehaviour
 			tailEnd = new GameObject("tail end").transform;
 			trail.origin = tailEnd;
 		}
+		dummy = new GameObject("dummy").transform;
 	}
 
 	public void FireAt(Component c)
 	{
 		projectile.transform.position = transform.position;
 		StartCoroutine(Animate(c.transform, projectile, travelingTime, stick));
+	}
+	public void FirePast(Component c)
+	{
+		projectile.transform.position = transform.position;
+		dummy.position = c.transform.position + (c.transform.position - transform.position) * 0.75f + new Vector3(Random.value, Random.value);
+		StartCoroutine(Animate(dummy, projectile, travelingTime, stick));
 	}
 
 	IEnumerator Animate(Transform goal, Transform projectile, float time, float stick)
@@ -55,6 +66,7 @@ public class Projectile : MonoBehaviour
 			yield return new WaitForSeconds(0f);
 		}
 		projectile.transform.position = goal.position;
+		EventOnImpact.Invoke(projectile.transform.position);
 
 		if (stick > time)
 		{
@@ -75,4 +87,21 @@ public class Projectile : MonoBehaviour
 		projectile.gameObject.SetActive(false);
 		if (trail) trail.gameObject.SetActive(false);
 	}
+
+	void OnApplicationExit()
+	{
+		teardown = true;
+	}
+	bool teardown = false;
+	void OnDestroy()
+	{
+		if (teardown) return;
+		Destroy(projectile.gameObject);
+		Destroy(trail.gameObject);
+		Destroy(tailEnd.gameObject);
+		Destroy(dummy.gameObject);
+	}
+
+	[System.Serializable]
+	public class LocationEvent : UnityEvent<Vector2> { }
 }
