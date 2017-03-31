@@ -161,7 +161,6 @@ public class Inventory : MonoBehaviour
 					GetComponent<CharacterActionController>().StackAction(CharacterActionController.Actions.inventoryaction);
 				return true;
 			}
-			
 		}
 		return false;
 	}
@@ -189,13 +188,13 @@ public class Inventory : MonoBehaviour
 	/// <returns>true if we could drop it</returns>
 	public bool DropItem(Item i)
 	{
-		EventDropItem.Invoke(i);
 		if(RemoveItem(i))
 		{
 			// make the item and put on ze gorund
 			GameObject o = new GameObject(i.displayName);
 			o.transform.position = (Vector3)GetComponent<MapObject>().RealLocation;
 			o.AddComponent<GroundItem>().item = i;
+			EventDropItem.Invoke(i);
 			return true;
 		}
 		return false;

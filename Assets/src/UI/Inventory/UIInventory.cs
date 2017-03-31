@@ -129,7 +129,10 @@ public class UIInventory : MonoBehaviour
 		if (a == Equipment)
 			model.DropItem(ui.Item);
 		else if (a == WeaponSlot)
+		{
+			print("here");
 			model.UnEquip(EquipmentType.weapon, true);
+		}
 		else if (a == ArmorSlot)
 			model.UnEquip(EquipmentType.body, true);
 		else

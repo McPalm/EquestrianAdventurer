@@ -18,7 +18,9 @@ public class GroundItem : MonoBehaviour
 		item = CloneItem();
 		GetComponent<SpriteRenderer>().sprite = item.sprite;
 		GetComponent<SpriteRenderer>().color = item.Tint;
-		GetComponent<SpriteRenderer>().sortingOrder = 10; 
+		GetComponent<SpriteRenderer>().sortingOrder = 10;
+
+		GetComponent<MapObject>().Put(transform.position);
 	}
 
 	virtual public Item CloneItem()
