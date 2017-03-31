@@ -54,7 +54,7 @@ public class MapCharacter : MonoBehaviour
 	public void Melee(MapCharacter target)
 	{
 		transform.position = (transform.position + target.transform.position) * 0.5f;
-		GetComponent<Mobile>().ForceMove((Vector2)GetComponent<MapObject>().RealLocation);
+		GetComponent<Mobile>().ForceMove(GetComponent<MapObject>().RealLocation);
 
 		bool hit = Mathf.Min(Random.value, Random.value) < (hitSkill / (target.dodgeSkill + hitSkill));
 		if (hit)

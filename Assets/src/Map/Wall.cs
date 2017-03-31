@@ -8,6 +8,8 @@ using System;
 public class Wall : MonoBehaviour, IMapBlock
 {
 	public bool SeeThrough = false;
+	Interactable interactable;
+
 
 	virtual public bool BlockMove
 	{
@@ -22,6 +24,22 @@ public class Wall : MonoBehaviour, IMapBlock
 		get
 		{
 			return !SeeThrough;
+		}
+	}
+
+	public bool Interactable
+	{
+		get
+		{
+			return interactable;
+		}
+	}
+
+	public Interactable MyInteractable
+	{
+		get
+		{
+			return interactable;
 		}
 	}
 
@@ -43,5 +61,10 @@ public class Wall : MonoBehaviour, IMapBlock
 		if (MapBuildController.editing) return;
 		BlockMap.Instance.Add(this, gameObject);
 		gameObject.layer = LayerMask.NameToLayer("Wall");
+	}
+
+	void Start()
+	{
+		interactable = GetComponent<Interactable>();
 	}
 }

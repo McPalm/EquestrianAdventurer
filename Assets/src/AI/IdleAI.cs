@@ -48,7 +48,8 @@ public class IdleAI : MonoBehaviour, TurnTracker.TurnEntry
 	bool MoveDirection(Vector2 v2)
 	{
 		MapCharacter mc = null;
-		if (GetComponent<Mobile>().MoveDirection(v2, out mc))
+		Interactable inter = null;
+		if (GetComponent<Mobile>().MoveDirection(v2, out mc, out inter))
 			return true;
 		return false;
 	}

@@ -9,9 +9,24 @@ public class Interactable : MonoBehaviour
 	public UnityEvent EventInteract;
 	public UnityEvent EventLeaveRadius;
 
+	IntVector2 RealLocation
+	{
+		get
+		{
+			if (GetComponent<MapObject>())
+				return GetComponent<MapObject>().RealLocation;
+			return IntVector2.RoundFrom(transform.position);
+		}
+	}
+
+	void Start()
+	{
+
+	}
+
 	public bool Interact(MapObject user)
 	{
-		if(user.RealLocation.DeltaMax(GetComponent<MapObject>().RealLocation) <= Radius)
+		if(user.RealLocation.DeltaMax(RealLocation) <= Radius)
 		{
 			EventInteract.Invoke();
 			StartCoroutine(LeaveRangeCheck(user));
@@ -23,7 +38,7 @@ public class Interactable : MonoBehaviour
 
 	IEnumerator LeaveRangeCheck(MapObject user)
 	{
-		while(user.RealLocation.DeltaMax(GetComponent<MapObject>().RealLocation) <= Radius)
+		while(user.RealLocation.DeltaMax(RealLocation) <= Radius)
 		{
 			yield return new WaitForSeconds(0.1f);
 		}

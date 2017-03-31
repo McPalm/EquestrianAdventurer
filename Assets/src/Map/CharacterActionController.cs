@@ -102,22 +102,19 @@ public class CharacterActionController : MonoBehaviour
 	bool Move(Vector2 where)
 	{
 		MapCharacter mc = null;
-		if (mobile.MoveDirection(where, out mc))
+		Interactable i = null;
+		if (mobile.MoveDirection(where, out mc, out i))
 		{
 			return true;
 		}
-		else if(mc)
+		else if(mc && mapCharacter.HostileTowards(mc))
 		{
-			Interactable i = mc.GetComponent<Interactable>();
-			if(mapCharacter.HostileTowards(mc))
-			{
-				mapCharacter.Melee(mc);
-				return true;
-			}
-			else if (canInteract && i)
-			{
-				return i.Interact(mobile);
-			}
+			mapCharacter.Melee(mc);
+			return true;
+		}
+		else if (canInteract && i)
+		{
+			return i.Interact(mobile);
 		}
 		return false;
 	}

@@ -52,4 +52,16 @@ public class BlockMap : MonoBehaviour
 			return imb.BlockSight;
 		return false;
 	}
+
+	public bool BlockMove(IntVector2 v2, out Interactable bump)
+	{
+		bump = null;
+		IMapBlock imb = null;
+		if (blockage.TryGetValue(v2, out imb))
+		{
+			if (imb.Interactable) bump = imb.MyInteractable;
+			return imb.BlockMove;
+		}
+		return false;
+	}
 }

@@ -36,6 +36,8 @@ public class SightRadius : MonoBehaviour
 
 	public bool CanSee(TileVisbility v)
 	{
+		
+
 		int dx = System.Math.Abs((int)v.transform.position.x - mapObject.RealLocation.x);
 		int dy = System.Math.Abs((int)v.transform.position.y - mapObject.RealLocation.y);
 
@@ -57,7 +59,7 @@ public class SightRadius : MonoBehaviour
 
 	public void RefreshView(int buffer = 1)
 	{
-		for(int x = mapObject.RealLocation.x - sightRadius - buffer; x < mapObject.RealLocation.x +  sightRadius + buffer; x++)
+		for (int x = mapObject.RealLocation.x - sightRadius - buffer; x < mapObject.RealLocation.x +  sightRadius + buffer; x++)
 		{
 			for (int y = mapObject.RealLocation.y - sightRadius - buffer; y < mapObject.RealLocation.y + sightRadius + buffer; y++)
 			{

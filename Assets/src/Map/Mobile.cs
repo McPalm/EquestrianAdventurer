@@ -19,41 +19,42 @@ public class Mobile : MapObject
 		/// <param name="v2">direction of movement</param>
 		/// <param name="bump">out parameter for a character that blocks movement, nullable</param>
 		/// <returns>true if we moved, false if we could not move</returns>
-	public bool MoveDirection(Vector2 v2, out MapCharacter bump)
+	public bool MoveDirection(Vector2 v2, out MapCharacter bump, out Interactable iBump)
 	{
 		// destination of move
-		Vector2 d = (Vector2)RealLocation + v2;
+		IntVector2 d = RealLocation + IntVector2.RoundFrom(v2);
 		bump = null;
 
 		// figure out if we can enter
-		if (BlockMap.Instance.BlockMove(d)) return false;
+		if (BlockMap.Instance.BlockMove(d, out iBump)) return false;
 
 		// check for other characters
 
-		bump = ObjectMap.Instance.CharacterAt(IntVector2.RoundFrom(d));
-		if (bump) return false;
+		bump = ObjectMap.Instance.CharacterAt(d);
+		if (bump)
+		{
+			iBump = bump.GetComponent<Interactable>();
+			return false;
+		}
 		
 		ForceMove(d);
-		EventMovement.Invoke(d, v2);
+		EventMovement.Invoke((Vector2)d, v2);
 
 		return true;
 	}
 
-	public void ForceMove(Vector2 v2)
+	public void ForceMove(IntVector2 v2)
 	{
 		//NetworkedPosition = new Vector2(Mathf.Round(v2.x), Mathf.Round(v2.y));
 		OnMove(v2);
-		RealLocation = IntVector2.RoundFrom(v2);
+		RealLocation = v2;
 	}
 
-	void OnMove(Vector2 v2)
+	void OnMove(IntVector2 v2)
 	{
 		StopAllCoroutines();
-		float distance = ((Vector2)transform.position - v2).magnitude;
-		
-		StartCoroutine(Tween(transform.position, v2, distance/10f + 0.1f));
-		
-		// transform.position = v2;
+		float distance = ((Vector2)transform.position - (Vector2)v2).magnitude;
+		StartCoroutine(Tween(transform.position, (Vector2)v2, distance/10f + 0.1f));
 	}
 
 	public void Stop()
