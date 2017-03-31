@@ -6,6 +6,13 @@ public class FireAfterSeconds : MonoBehaviour
 {
 	public UnityEvent Event = new UnityEvent();
 
+	public bool startActive = false;
+	public float startDelay;
+
+	void Start()
+	{
+		if (startActive) FireAfter(startDelay);
+	}
 
 	public void FireAfter(float seconds)
 	{
