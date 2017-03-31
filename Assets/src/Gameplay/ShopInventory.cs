@@ -49,7 +49,7 @@ public class ShopInventory : MonoBehaviour
 		if (inventory.Contains(i))
 		{
 			Purse p = customer.GetComponent<Purse>();
-			if (customer.EmptySpace && p.Pay(i.Value))
+			if (customer.CanAccept(i) && p.Pay(i.Value))
 			{
 				inventory.Remove(i);
 				return customer.AddItem(i);
@@ -65,7 +65,7 @@ public class ShopInventory : MonoBehaviour
 		if (inventory.Contains(i))
 		{
 			Purse p = customer.GetComponent<Purse>();
-			if (customer.EmptySpace && p.Pay(i.Value))
+			if (customer.CanAccept(i) && p.Pay(i.Value))
 			{
 				inventory.Remove(i);
 				return customer.AddItem(i, slot);
@@ -79,7 +79,7 @@ public class ShopInventory : MonoBehaviour
 		if (buyBack.Contains(i))
 		{
 			Purse p = customer.GetComponent<Purse>();
-			if (customer.EmptySpace && p.Pay(SellValue(i)))
+			if (customer.CanAccept(i) && p.Pay(SellValue(i)))
 			{
 				buyBack.Remove(i);
 				return customer.AddItem(i);

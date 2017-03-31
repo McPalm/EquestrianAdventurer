@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
 	Equipment bodySlot;
 	Equipment weaponSlot;
 
-	public bool EmptySpace
+	private bool EmptySpace
 	{
 		get
 		{
@@ -37,6 +37,17 @@ public class Inventory : MonoBehaviour
 	{
 		if (debugprint) PrintInventory();
 		debugprint = false;
+	}
+
+	public bool CanAccept(Item i)
+	{
+		if(i is Consumable)
+		{
+			for (int c = 0; c < consumables.Length; c++)
+				if (consumables[c] == null) return true;
+			return false;
+		}
+		return EmptySpace;
 	}
 
 	/// <summary>
