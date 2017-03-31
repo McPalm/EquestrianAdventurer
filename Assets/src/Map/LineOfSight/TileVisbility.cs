@@ -30,15 +30,16 @@ public class TileVisbility : MonoBehaviour
 
 	void OnEnable()
 	{
+		if (MapBuildController.editing) return;
 		renderers = GetComponentsInChildren<SpriteRenderer>();
 		colours = new Color[renderers.Length];
 		for (int i = 0; i < renderers.Length; i++)
 			colours[i] = renderers[i].color;
 		visible = true;
 		Hide();
-		if (GetComponent<Wall>())
+		if (GetComponent<IMapBlock>() != null)
 		{
-			BlockSight = GetComponent<Wall>().BlockSight;
+			BlockSight = GetComponent<IMapBlock>().BlockSight;
 		}
 		
 		SightRadius.Instance.AddVisbility(this, IntVector2.RoundFrom(transform.position));
@@ -51,6 +52,7 @@ public class TileVisbility : MonoBehaviour
 	bool teardown = false;
 	void OnDisable()
 	{
+		if (MapBuildController.editing) return;
 		if (teardown) return;
 		SightRadius.Instance.RemoveTile(IntVector2.RoundFrom(transform.position));
 	}

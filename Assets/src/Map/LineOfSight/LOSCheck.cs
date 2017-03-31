@@ -64,7 +64,7 @@ public class LOSCheck : MonoBehaviour
 		RaycastHit2D[] hits = Physics2D.LinecastAll((Vector2)a.RealLocation, (Vector2)b.RealLocation, 1 << 9);
 
 		foreach (RaycastHit2D hit in hits)
-			if (hit.collider.GetComponent<Wall>().BlockSight) return false;
+			if (hit.collider.GetComponent<IMapBlock>().BlockSight) return false;
 
 		return true;
 	}
@@ -88,7 +88,7 @@ public class LOSCheck : MonoBehaviour
 		RaycastHit2D[] hits = Physics2D.LinecastAll((Vector2)a.RealLocation, (Vector2)b.RealLocation, 1 << 9);
 
 		foreach (RaycastHit2D hit in hits)
-			if (hit.collider.GetComponent<Wall>().BlockMove) return false;
+			if (hit.collider.GetComponent<IMapBlock>().BlockMove) return false;
 
 		return true;
 	}

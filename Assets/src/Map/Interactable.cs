@@ -6,8 +6,8 @@ public class Interactable : MonoBehaviour
 {
 	public int Radius;
 
-	public UnityEvent EventInteract;
-	public UnityEvent EventLeaveRadius;
+	public InteractEvent EventInteract;
+	public InteractEvent EventLeaveRadius;
 
 	IntVector2 RealLocation
 	{
@@ -28,7 +28,7 @@ public class Interactable : MonoBehaviour
 	{
 		if(user.RealLocation.DeltaMax(RealLocation) <= Radius)
 		{
-			EventInteract.Invoke();
+			EventInteract.Invoke(user);
 			StartCoroutine(LeaveRangeCheck(user));
 			return true;
 		}
@@ -42,7 +42,7 @@ public class Interactable : MonoBehaviour
 		{
 			yield return new WaitForSeconds(0.1f);
 		}
-		EventLeaveRadius.Invoke();
+		EventLeaveRadius.Invoke(user);
 	}
 
 	[System.Serializable]

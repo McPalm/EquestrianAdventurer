@@ -48,7 +48,7 @@ public class SightRadius : MonoBehaviour
 			int maxHits = (v.BlockSight) ? 1 : 0;
 			foreach (RaycastHit2D hit in hits)
 			{
-				if (hit.collider.GetComponent<Wall>().BlockSight) maxHits--;
+				if (hit.collider.GetComponent<IMapBlock>().BlockSight) maxHits--;
 				if (maxHits < 0) return false;
 			}
 			return true;
