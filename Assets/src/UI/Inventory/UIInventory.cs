@@ -8,9 +8,13 @@ public class UIInventory : MonoBehaviour
 	public Inventory model; // the players inventory class
 
 	[Space(10)] // view component
+
 	public DropArea Equipment;
 	public DropArea WeaponSlot;
 	public DropArea ArmorSlot;
+
+	[Space(10)] // view component
+
 	public DropArea[] Consumables;
 
 	void Start()
@@ -154,7 +158,7 @@ public class UIInventory : MonoBehaviour
 		{
 			if (destination == Consumables[i])
 			{
-				model.AddConsumableAt(ui.Item, i);
+				model.MoveConsumable(ui.Item, i);
 			}
 		}
 		

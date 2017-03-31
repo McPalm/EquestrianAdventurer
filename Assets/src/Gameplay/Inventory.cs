@@ -89,21 +89,22 @@ public class Inventory : MonoBehaviour
 		return false;
 	}
 
-	public bool AddConsumableAt(Item item, int slot)
+	public bool MoveConsumable(Item item, int slot)
 	{
 		if(item is Consumable)
 		{
-			if(consumables[slot] == null)
+			for (int i = 0; i < consumables.Length; i++)
 			{
-				consumables[slot] = item as Consumable;
-				EventAddConsumable.Invoke(item, slot);
-				for(int i = 0; i < consumables.Length; i++)
+				if (item == consumables[i])
 				{
-					if (i == slot) continue;
-					if (consumables[i] == item)
+					if (consumables[slot] == null)
+					{
+						consumables[slot] = item as Consumable;
+						EventAddConsumable.Invoke(item, slot);
 						consumables[i] = null;
+						return true;
+					}
 				}
-				return true;
 			}
 		}
 		return false;
