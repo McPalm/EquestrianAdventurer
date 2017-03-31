@@ -38,9 +38,51 @@ public struct IntVector2 : IEquatable<IntVector2>
 		}
 	}
 
-	static public IntVector2 operator * (IntVector2 a, int b)
+	static public IntVector2 up
+	{
+		get
+		{
+			return new IntVector2(0, 1);
+		}
+	}
+
+	static public IntVector2 right
+	{
+		get
+		{
+			return new IntVector2(1, 0);
+		}
+	}
+
+	static public IntVector2 left
+	{
+		get
+		{
+			return new IntVector2(-1, 0);
+		}
+	}
+
+	static public IntVector2 down
+	{
+		get
+		{
+			return new IntVector2(0, -1);
+		}
+	}
+
+	static public IntVector2 operator *(IntVector2 a, int b)
 	{
 		return new IntVector2(a.x * b, a.y * b);
+	}
+
+	static public IntVector2 operator +(IntVector2 a, IntVector2 b)
+	{
+		return new IntVector2(a.x + b.x, a.y + b.x);
+	}
+
+	static public IntVector2 operator -(IntVector2 a, IntVector2 b)
+	{
+		return new IntVector2(a.x - b.x, a.y - b.y);
 	}
 
 	public static explicit operator Vector2(IntVector2 a)

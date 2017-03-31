@@ -29,16 +29,26 @@ public class BlockMap : MonoBehaviour
 
 	public bool BlockMove(Vector2 v2)
 	{
-		IMapBlock imb = null;
-		if (blockage.TryGetValue(IntVector2.RoundFrom(v2), out imb))
-			return imb.BlockMove;
-		return false;
+		return BlockMove(IntVector2.RoundFrom(v2));
 	}
 
 	public bool BlockSight(Vector2 v2)
 	{
+		return BlockSight(IntVector2.RoundFrom(v2));
+	}
+
+	public bool BlockMove(IntVector2 v2)
+	{
 		IMapBlock imb = null;
-		if (blockage.TryGetValue(IntVector2.RoundFrom(v2), out imb))
+		if (blockage.TryGetValue(v2, out imb))
+			return imb.BlockMove;
+		return false;
+	}
+
+	public bool BlockSight(IntVector2 v2)
+	{
+		IMapBlock imb = null;
+		if (blockage.TryGetValue(v2, out imb))
 			return imb.BlockSight;
 		return false;
 	}

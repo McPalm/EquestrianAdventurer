@@ -27,6 +27,7 @@ public class MapCharacter : MonoBehaviour
 	public MapCharacterEvent EventDeath = new MapCharacterEvent();
 	public MapCharacterEvent EventUpdateStats = new MapCharacterEvent();
 	public MapCharacterEvent EventKillingBlow = new MapCharacterEvent();
+	public NoiseEvent EventHearNoise = new NoiseEvent();
 
 	// Use this for initialization
 	void Start ()
@@ -114,6 +115,8 @@ public class MapCharacter : MonoBehaviour
 
 	[System.Serializable]
 	public class MapCharacterEvent : UnityEvent<MapCharacter> { }
+	[System.Serializable]
+	public class NoiseEvent : UnityEvent<IntVector2, int> { }
 
 	public enum Hostility
 	{
