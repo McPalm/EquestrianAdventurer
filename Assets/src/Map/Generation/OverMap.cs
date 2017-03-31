@@ -417,7 +417,7 @@ public class OverMap : MonoBehaviour {
 					break;
 				case MapType.cave:
 					generator = new CaveGenerator();
-					palette = new int[] { 7, 8, 2 };
+					palette = new int[] { 7, 2, 8 };
 					break;
 				case MapType.pregenerated:
 					generator = null;

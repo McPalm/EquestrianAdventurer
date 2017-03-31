@@ -1,0 +1,185 @@
+fileFormatVersion: 2
+guid: 35d6011a04d8782419b17cbcc335536c
+timeCreated: 1490991808
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Shrooms_0
+    21300002: Shrooms_1
+    21300004: Shrooms_2
+    21300006: Shrooms_3
+    21300008: Shrooms_5
+    21300010: Shrooms_6
+    21300012: Shrooms_7
+    21300014: Shrooms_8
+    21300016: Shrooms_9
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 150
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Shrooms_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 150
+        width: 87
+        height: 87
+      alignment: 9
+      pivot: {x: 0.53575987, y: 0.15261823}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shrooms_1
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 150
+        width: 86
+        height: 84
+      alignment: 9
+      pivot: {x: 0.51033586, y: 0.14021175}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shrooms_2
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 216
+        width: 24
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shrooms_3
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 215
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shrooms_5
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 184
+        width: 21
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shrooms_6
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 147
+        width: 40
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shrooms_7
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 54
+        width: 37
+        height: 87
+      alignment: 9
+      pivot: {x: 0.5, y: 0.116858296}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shrooms_8
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 12
+        width: 100
+        height: 89
+      alignment: 9
+      pivot: {x: 0.47777778, y: 0.150437}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shrooms_9
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 10
+        width: 50
+        height: 114
+      alignment: 9
+      pivot: {x: 0.47333345, y: 0.10233922}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

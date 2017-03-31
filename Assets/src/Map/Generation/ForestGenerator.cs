@@ -16,7 +16,7 @@ public class ForestGenerator : AbsGenerator
 		
 		// Stack three cellular Autoamata generations to create a natural looking type of terrain
 		CellularAutomata generator = new CellularAutomata();
-		generator.density = 0.55f;
+		generator.density = 0.50f;
 		generator.iterations = 2;
 		generator.Generate(0);
 		AddResults(generator.GetResult());
