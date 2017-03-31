@@ -143,7 +143,6 @@ public class UIInventory : MonoBehaviour
 
 		if(source == destination)
 		{
-			print("consume?");
 			model.Consume(ui.Item);
 			return;
 		}

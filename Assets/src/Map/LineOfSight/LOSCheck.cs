@@ -1,11 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// this is a component for AIs
+/// But the static is for line of sight.
+/// Its...  uh.. poorly thought out I admit.
+/// </summary>
 public class LOSCheck : MonoBehaviour
 {
+	public int sightRadius = 8;
+	MapObject me;
+
+	void Start()
+	{
+		me = GetComponent<MapObject>();
+	}
+
 	public bool HasLOS(MapObject t)
 	{
-		return HasLOS(GetComponent<MapObject>(), t);
+		if (IntVector2Utility.PFDistance(me.RealLocation, t.RealLocation) <= sightRadius)
+			return HasLOS(me, t);
+		return false;
 	}
 
 	static public bool HasLOS(MapObject a, MapObject b)

@@ -92,9 +92,11 @@ public class CharacterActionController : MonoBehaviour
 				break;
 		}
 
+		if (!didathing) return false;
+
 		EventAfterAction.Invoke(this, a);
 
-		return didathing;
+		return true;
 	}
 
 	bool Move(Vector2 where)

@@ -9,6 +9,7 @@ public class AgressiveMelee : MonoBehaviour
 	public int sightRadius = 10;
 
 	IntVector2 home;
+	MapObject me;
 
 	void Start()
 	{
@@ -16,11 +17,13 @@ public class AgressiveMelee : MonoBehaviour
 		GetComponent<SimpleBehaviour>().endTurnEvent.AddListener(DoTurn);
 		home = GetComponent<MapObject>().RealLocation;
 		target = FindObjectOfType<RogueController>().gameObject; // wow
+		me = GetComponent<MapObject>();
 	}
 
 	void DoTurn(SimpleBehaviour ai)
 	{
-		if (GetComponent<MapObject>().RealLocation.DeltaMax(target.GetComponent<MapObject>().RealLocation) > sightRadius)
+		
+		if (IntVector2Utility.PFDistance(me.RealLocation, target.GetComponent<MapObject>().RealLocation) > sightRadius)
 		{
 			ai.targetCharacter = null;
 			return;
