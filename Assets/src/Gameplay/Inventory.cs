@@ -65,18 +65,27 @@ public class Inventory : MonoBehaviour
 	/// </summary>
 	/// <param name="i">Item to put in inventory</param>
 	/// <returns>true of the change went through</returns>
-	public bool AddItem(Item i)
+	public bool AddItem(Item i, int slot = -1)
 	{
 		if (i is Consumable)
-			return AddConsumable(i as Consumable);
+			return AddConsumable(i as Consumable, slot);
 		if (!EmptySpace) return false;
 		items.Add(i);
 		EventAddItem.Invoke(i);
 		return true;
 	}
 
-	public bool AddConsumable(Consumable c)
+	public bool AddConsumable(Consumable c, int slot = -1)
 	{
+		if(slot >= 0 && slot < consumables.Length)
+		{
+			if(consumables[slot] == null)
+			{
+				consumables[slot] = c;
+				EventAddConsumable.Invoke(c, slot);
+				return true;
+			}
+		}
 		for (int i = 0; i < consumables.Length; i++)
 		{
 			if (consumables[i] == null)

@@ -78,6 +78,13 @@ public class ShopUI : MonoBehaviour
 		{
 			model.SellTo(i.Item, playerInventory.model);
 		}
+		for(int c = 0; c < playerInventory.Consumables.Length; c++)
+		{
+			if(destination == playerInventory.Consumables[c])
+			{
+				model.SellTo(i.Item, playerInventory.model, c);
+			}
+		}
 	}
 
 	void OnDropInShop(Dropable d, DropArea source, DropArea destination)

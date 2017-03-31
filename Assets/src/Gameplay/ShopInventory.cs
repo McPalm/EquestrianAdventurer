@@ -58,6 +58,22 @@ public class ShopInventory : MonoBehaviour
 		return false;
 	}
 
+	public bool SellTo(Item i, Inventory customer, int slot)
+	{
+		if (buyBack.Contains(i)) return SellBack(i, customer);
+
+		if (inventory.Contains(i))
+		{
+			Purse p = customer.GetComponent<Purse>();
+			if (customer.EmptySpace && p.Pay(i.Value))
+			{
+				inventory.Remove(i);
+				return customer.AddItem(i, slot);
+			}
+		}
+		return false;
+	}
+
 	public bool SellBack(Item i, Inventory customer)
 	{
 		if (buyBack.Contains(i))
