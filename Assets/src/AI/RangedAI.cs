@@ -49,7 +49,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 	public void DoTurn()
 	{
 		bool acted = false;
-		bool sight = LOS.HasLOS(player, !investigate, true);
+		bool sight = LOS.HasLOS(player, relaxed, true);
 		if (sight)
 		{
 			if (!seenPlayer)

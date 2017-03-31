@@ -9,7 +9,7 @@ public class Wall : MonoBehaviour, IMapBlock
 {
 	public bool SeeThrough = false;
 
-	public bool BlockMove
+	virtual public bool BlockMove
 	{
 		get
 		{
