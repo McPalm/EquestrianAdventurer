@@ -26,6 +26,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 	IntVector2 lastSeenLocation;
 	bool investigate = false;
 	bool relaxed = true;
+	bool seenPlayer;
 
 	// Use this for initialization
 	void Start ()
@@ -39,8 +40,10 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 
 		TurnTracker.Instance.Add(this);
 		GetComponent<MapCharacter>().EventDeath.AddListener(delegate { TurnTracker.Instance.Remove(this); });
+		GetComponent<MapCharacter>().EventHearNoise.AddListener(OnHearNoise);
 
 		LOS.sightRadius = relaxedRadius;
+		
 	}
 
 	public void DoTurn()
@@ -49,7 +52,12 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 		bool sight = LOS.HasLOS(player, !investigate);
 		if (sight)
 		{
-			if(!investigate) CombatTextPool.Instance.PrintAt((Vector3)me.RealLocation + new Vector3(0f, 0.4f), "!", Color.yellow, 1.2f);
+			if (!seenPlayer)
+			{
+				CombatTextPool.Instance.PrintAt((Vector3)me.RealLocation + new Vector3(0f, 0.4f), "!", Color.yellow, 1.2f);
+				Yell();
+			}
+			seenPlayer = true;
 			investigate = true;
 			lastSeenLocation = player.RealLocation;
 			relaxed = false;
@@ -92,6 +100,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 			if(me.RealLocation == home)
 			{
 				relaxed = true;
+				seenPlayer = false;
 				LOS.sightRadius = relaxedRadius;
 			}
 		}
@@ -175,5 +184,20 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 	{
 		if (teardown) return;
 		TurnTracker.Instance.Remove(this);
+	}
+
+	void Yell()
+	{
+		NoiseUtility.CauseNoise(4, me.RealLocation);
+	}
+
+	void OnHearNoise(IntVector2 source, int volume)
+	{
+		if (source == me.RealLocation) return;
+		if (!investigate) CombatTextPool.Instance.PrintAt((Vector3)me.RealLocation + new Vector3(0f, 0.4f), "?", Color.yellow, 1.2f);
+		lastSeenLocation = source;
+		investigate = true;
+		relaxed = false;
+		LOS.sightRadius = alertRadius;
 	}
 }

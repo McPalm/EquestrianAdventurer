@@ -64,6 +64,7 @@ public class MapCharacter : MonoBehaviour
 			target.GetComponent<HitPoints>().Hurt(new DamageData().SetDamage((int)damage));
 			HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, (int)damage);
 			if (target.GetComponent<HitPoints>().CurrentHealth <= 0) EventKillingBlow.Invoke(target);
+			else NoiseUtility.CauseNoise(Random.Range(2, 9), target.GetComponent<MapObject>().RealLocation);
 		}
 		else
 			CombatTextPool.Instance.PrintAt((Vector3)target.GetComponent<MapObject>().RealLocation + new Vector3(0f, 0.4f), "Dodge", Color.cyan);
@@ -72,7 +73,9 @@ public class MapCharacter : MonoBehaviour
 	void OnHurt(int current, int max)
 	{
 		if (current <= 0)
+		{
 			EventDeath.Invoke(this);
+		}
 	}
 
 	public void DefaultDeath(MapCharacter o)

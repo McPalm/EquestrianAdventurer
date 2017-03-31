@@ -77,7 +77,7 @@ public struct IntVector2 : IEquatable<IntVector2>
 
 	static public IntVector2 operator +(IntVector2 a, IntVector2 b)
 	{
-		return new IntVector2(a.x + b.x, a.y + b.x);
+		return new IntVector2(a.x + b.x, a.y + b.y);
 	}
 
 	static public IntVector2 operator -(IntVector2 a, IntVector2 b)

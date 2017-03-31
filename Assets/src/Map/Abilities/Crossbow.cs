@@ -39,10 +39,12 @@ public class Crossbow : RangedAttack
 		target.GetComponent<HitPoints>().Hurt(new DamageData().SetDamage((int)damage));
 		HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, (int)damage);
 		reloadTimer = ReloadTime;
+		NoiseUtility.CauseNoise(4, GetComponent<MapObject>().RealLocation);
 	}
 
 	void OnMiss(MapCharacter target)
 	{
+		NoiseUtility.CauseNoise(4, GetComponent<MapObject>().RealLocation);
 		CombatTextPool.Instance.PrintAt(transform.position + new Vector3(0f, 0.4f), "Miss", Color.cyan);
 		reloadTimer = ReloadTime;
 	}
