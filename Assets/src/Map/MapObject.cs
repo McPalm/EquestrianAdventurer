@@ -6,6 +6,9 @@ public class MapObject : MonoBehaviour
 	MapCharacter mapCharacter;
 	IntVector2 realLocation;
 
+	private int concealment = 0;
+
+
 	/// <summary>
 	/// The objects real location as far as the game is concerned.
 	/// This does not sync with apparent position, if you wish to move the graphic, use Put(Vector2)
@@ -44,6 +47,19 @@ public class MapObject : MonoBehaviour
 		set
 		{
 			mapCharacter = value;
+		}
+	}
+
+	public int Concealment
+	{
+		get
+		{
+			return concealment;
+		}
+
+		set
+		{
+			concealment = value;
 		}
 	}
 

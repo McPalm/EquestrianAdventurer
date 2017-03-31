@@ -24,7 +24,24 @@ public class LOSCheck : MonoBehaviour
 	}
 
 	/// <summary>
-	/// A special LOS that takes cover into account
+	/// concealment without cover
+	/// </summary>
+	/// <param name="t"></param>
+	/// <param name="cover"></param>
+	/// <param name="concealment"></param>
+	/// <returns></returns>
+	public bool HasLOS(MapObject t, bool cover, bool concealment)
+	{
+		if (cover && concealment) return HasLOS(t, cover);
+		int range = sightRadius;
+		if (concealment) range -= t.Concealment;
+		if (IntVector2Utility.PFDistance(me.RealLocation, t.RealLocation) <= sightRadius)
+			return HasLOS(me, t);
+		return false;
+	}
+
+	/// <summary>
+	/// A special LOS that takes cover and concealment into account
 	/// If there is cover in between, sightradius is effectively halved. (rounded down)
 	/// </summary>
 	/// <param name="t"></param>
@@ -38,7 +55,7 @@ public class LOSCheck : MonoBehaviour
 		if(HasLOS(me, t))
 		{
 			if (InCover(me, t))
-				return distance <= sightRadius / 2;
+				return distance <= sightRadius / 2 - t.Concealment;
 			else
 				return true;
 		}

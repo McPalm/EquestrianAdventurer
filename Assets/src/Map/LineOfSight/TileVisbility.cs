@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TileVisbility : MonoBehaviour
 {
+	[HideInInspector]
 	public bool BlockSight;
 
 	bool visible;
