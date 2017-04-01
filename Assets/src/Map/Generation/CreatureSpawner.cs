@@ -8,7 +8,7 @@ public class CreatureSpawner : MonoBehaviour
 
 	public int openTilesPerCreature;
 
-	public void Spawn()
+	virtual public void Spawn()
 	{
 		int nextSpawn = Random.Range(0, openTilesPerCreature);
 		for(int x = 0; x < MapSectionData.DIMENSIONS; x++)
@@ -26,7 +26,7 @@ public class CreatureSpawner : MonoBehaviour
 		}
 	}
 
-	void SpawnAt(int x, int y)
+	protected void SpawnAt(int x, int y)
 	{
 		Instantiate(creatures[Random.Range(0, creatures.Length)], targetSection.transform.position + new Vector3(x, y), Quaternion.identity);
 	}
