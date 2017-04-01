@@ -17,6 +17,7 @@ public class UIItem : Dropable
 		{
 			item = value;
 			sortValue = item.Value;
+			if (item is Valuable) sortValue *= 7f;
 			GetComponent<Tooltip>().hint = item.Tooltip;
 			GetComponent<Image>().sprite = item.sprite;
 			GetComponent<Image>().color = item.Tint;

@@ -12,6 +12,9 @@ public class Equipment : Item
 	public int hit;
 	public int hp;
 
+	const float BasePrice = 4f;
+	const float priceGrowth = 1.07f;
+
 	public Equipment()
 	{
 		category = ItemCategory.equipment;
@@ -21,7 +24,8 @@ public class Equipment : Item
 	{
 		get
 		{
-			value = armor * 2 + dodge + damage * 2 + hit + hp / 3;
+			value = armor * 3 + dodge * 2 + damage * 3 + hit * 2 + hp - 3;
+			value = (int)(BasePrice * (Mathf.Pow(priceGrowth, value)));
 			value *= value;
 			return value;
 		}
