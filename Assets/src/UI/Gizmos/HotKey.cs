@@ -14,7 +14,7 @@ public class HotKey : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.I))
+		if (Input.GetKeyDown(key))
 		{
 			onPress.Invoke();
 		}

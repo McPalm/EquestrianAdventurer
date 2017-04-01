@@ -427,7 +427,7 @@ public class OverMap : MonoBehaviour {
 					break;
 				default:
 					generator = new RoomChain5by5();
-					palette = new int[] { 1, 0, 9};
+					palette = new int[] { 1, 0, 9, 10, 5};
 					section.paletteName = "default";
 					break;
 			}

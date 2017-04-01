@@ -15,36 +15,39 @@ public class GroupSpawn : MonoBehaviour
 		List<IntVector2> locations = new List<IntVector2>();
 		locations.Add(IntVector2.RoundFrom(transform.position));
 		
-		for(int i = 0; i < expansions; i++)
+		for(int i = 0; i < expansions && i < locations.Count; i++)
 		{
-			AddAdjacent((Vector2)locations[i], locations);
+			AddAdjacent(locations[i], locations);
 		}
 
-		if (locations.Count >= spawnthese.Length)
+		if (locations.Count < spawnthese.Length)
 		{
-			// spawn stuffs on these tiles
-			for (int i = 0; i < spawnthese.Length; i++)
-			{
-				if (locations.Count == 0) break; // in case we run out of spez
-				int rand = Random.Range(0, locations.Count);
-				Instantiate(spawnthese[i], (Vector2)locations[rand], Quaternion.identity);
-				locations.RemoveAt(rand);
-			}
+			Destroy(gameObject);
+			return;
 		}
+		
+		// spawn stuffs on these tiles
+		for (int i = 0; i < spawnthese.Length; i++)
+		{ 
+			int rand = Random.Range(0, locations.Count);
+			Instantiate(spawnthese[i], (Vector2)locations[rand], Quaternion.identity);
+			locations.RemoveAt(rand);
+		}
+
 		Destroy(gameObject);
 	}
 
 
-	void AddAdjacent(Vector2 origin, List<IntVector2> list)
+	void AddAdjacent(IntVector2 origin, List<IntVector2> list)
 	{
 		BlockMap b = BlockMap.Instance;
-		if (b.BlockMove(origin + Vector2.up) == false && list.Contains(IntVector2.RoundFrom(origin + Vector2.up)) == false)
-			list.Add(IntVector2.RoundFrom(origin + Vector2.up));
-		if (b.BlockMove(origin + Vector2.right) == false && list.Contains(IntVector2.RoundFrom(origin + Vector2.right)) == false)
-			list.Add(IntVector2.RoundFrom(origin + Vector2.right));
-		if (b.BlockMove(origin + Vector2.down) == false && list.Contains(IntVector2.RoundFrom(origin + Vector2.down)) == false)
-			list.Add(IntVector2.RoundFrom(origin + Vector2.down));
-		if (b.BlockMove(origin + Vector2.left) == false && list.Contains(IntVector2.RoundFrom(origin + Vector2.left)) == false)
-			list.Add(IntVector2.RoundFrom(origin + Vector2.left));
+		if (b.BlockMove(origin + IntVector2.up) == false && list.Contains(IntVector2.up) == false)
+			list.Add(origin + IntVector2.up);
+		if (b.BlockMove(origin + IntVector2.right) == false && list.Contains(IntVector2.right) == false)
+			list.Add(origin + IntVector2.right);
+		if (b.BlockMove(origin + IntVector2.down) == false && list.Contains(origin + IntVector2.down) == false)
+			list.Add(origin + IntVector2.down);
+		if (b.BlockMove(origin + IntVector2.left) == false && list.Contains(IntVector2.left) == false)
+			list.Add(origin + IntVector2.left);
 	}
 }

@@ -142,26 +142,29 @@ public class RoomChain5by5 : IGenerator
 				}
 			}
 		}
-		
+
 
 		// actually build map
 		for (int rx = 0; rx < roomCountDimension; rx++)
 		{
 			for (int ry = 0; ry < roomCountDimension; ry++)
 			{
-				if(roomgrid[rx][ry] != 0)
+				if (roomgrid[rx][ry] != 0)
 				{
-					BuildRoomAt(1+rx*roomSize, 1+ry* roomSize, roomSize-1, roomSize-1);
+					BuildRoomAt(1 + rx * roomSize, 1 + ry * roomSize, roomSize - 1, roomSize - 1);
 				}
+			}
+		}
+
+		// make connections
+		for (int rx = 0; rx < roomCountDimension; rx++)
+		{
+			for (int ry = 0; ry < roomCountDimension; ry++)
+			{
 				if(doorgrid[rx][ry] > 1)
 				{
 					// door up
-					if (Random.value < 0.2f)
-					{
-						// tear down wall
-						BuildRoomAt(rx * roomSize + 1, ry * roomSize + roomSize - 1, roomSize - 1, 3, 1);
-					}
-					else if (Random.value < 0.1f)
+					if (Random.value < 0.1f)
 					{
 						// two doors
 						map[rx * roomSize + 2][ry * roomSize + roomSize] = 2;
@@ -180,12 +183,7 @@ public class RoomChain5by5 : IGenerator
 				if (doorgrid[rx][ry] == 1 || doorgrid[rx][ry] == 3)
 				{
 					// door right
-					if (Random.value < 0.2f)
-					{
-						// tear down wall
-						BuildRoomAt(rx * roomSize + roomSize - 1, ry * roomSize + 1, 3, roomSize - 1, 1);
-					}
-					else if (Random.value < 0.1f)
+					if (Random.value < 0.1f)
 					{
 						// two doors
 						map[rx * roomSize + roomSize][ry * roomSize + 2] = 2;
@@ -217,24 +215,39 @@ public class RoomChain5by5 : IGenerator
 		{
 			map[tileDimension / 2][0] = 0;
 		}
-
-		// step four, spawn points
 	}
 
 	void BuildRoomAt(int cornerx, int cornery, int width, int height, int pattern = 0)
 	{
-		if (pattern == 0) pattern = System.Math.Min(Random.Range(1, 4), Random.Range(1, 4));
+		if (pattern == 0)
+		{
+			pattern = Random.Range(0, 4);
+			if(pattern == 0) // simple room
+			{
+				pattern = 1;
+			}
+			else // random pattern
+			{
+				pattern = Random.Range(2, 6);
+			}
+		}
 		// pattern 1 : regular
 		// pattern 2 : rounded corners
 		// pattern 3 : around the edges
+		// pattern 4 : corner pillars
+		// pattern 5 : grass in the middle
 
 		for (int x = 0; x < width; x++)
 		{
 			for(int y = 0; y < height; y++)
 			{
-				if (pattern == 3 && x > 1 && x < width - 2 && y > 1 && y < height - 2) continue; // dont fill center on pattern 2
-				if (pattern == 2 && ((x == 0 && y == 0) || (x == width - 1 && y == 0) || (x == 0 && y == height - 1) || (x == width - 1 && y == height - 1))) continue;
-				map[x+cornerx][y+cornery] = 0;
+				int tile = 0;
+				if (pattern == 3 && x > 1 && x < width - 2 && y > 1 && y < height - 2) tile = 1; // dont fill center on pattern 2
+				if (pattern == 2 && ((x == 0 && y == 0) || (x == width - 1 && y == 0) || (x == 0 && y == height - 1) || (x == width - 1 && y == height - 1))) tile = 1;
+				if (pattern == 4 && (x == 1 || x == width - 2) && (y == 1 || y == height - 2)) tile = 3;
+				if (pattern == 5 && (x == 1 || x == width - 2) && (y == 1 || y == height - 2)) tile = 3;
+				if (pattern == 5 && (x > 1 && x < width - 2) && (y > 1 && y < height - 2)) tile = 4;
+				map[x+cornerx][y+cornery] = tile;
 			}
 		}
 	}
