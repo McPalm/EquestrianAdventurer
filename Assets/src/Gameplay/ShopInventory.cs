@@ -115,6 +115,7 @@ public class ShopInventory : MonoBehaviour
 	public static int SellValue(Item i)
 	{
 		if (i.value == 0) return 0;
+		if (i is Valuable) return i.value;
 		return 1 + i.value / 7;
 	}
 

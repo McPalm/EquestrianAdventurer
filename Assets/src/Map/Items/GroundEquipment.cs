@@ -9,11 +9,6 @@ public class GroundEquipment : GroundItem
 	public Equipment equipment;
 	public bool randomEnchant = true;
 
-	new void Start()
-	{
-		base.Start();	
-	}
-
 	public override Item CloneItem()
 	{
 		SpriteRenderer sr = GetComponent<SpriteRenderer>();
