@@ -2,5 +2,6 @@
 {
 	key = 0,
 	equipment = 1,
-	consumeable = 2
+	consumeable = 2,
+	valuable
 }
