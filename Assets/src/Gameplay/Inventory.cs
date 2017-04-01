@@ -56,7 +56,6 @@ public class Inventory : MonoBehaviour
 	/// <returns>true if there is an item and it can be picked up</returns>
 	public bool PickupFromGround()
 	{
-		if (!EmptySpace) return false;
 		GroundItem g = null;
 		foreach(MapObject o in ObjectMap.Instance.ObjectsAtLocation(GetComponent<MapObject>().RealLocation))
 		{
