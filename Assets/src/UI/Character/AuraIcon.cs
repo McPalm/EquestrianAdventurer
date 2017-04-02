@@ -4,7 +4,7 @@ using System.Collections;
 
 public class AuraIcon : MonoBehaviour
 {
-	public Aura target;
+	Aura target;
 
 	[SerializeField]
 	Text counter;
@@ -16,11 +16,12 @@ public class AuraIcon : MonoBehaviour
 	DurationAura da;
 
 	// Use this for initialization
-	void Start ()
+	public void SetTarget(Aura target)
 	{
+		this.target = target;
 		icon.sprite = target.Icon;
 		icon.color = target.IconColor;
-		
+		tip.hint = target.Tooltip;
 	}
 	
 	// Update is called once per frame
@@ -32,7 +33,7 @@ public class AuraIcon : MonoBehaviour
 		}
 		else
 		{
-			Destroy(gameObject);
+			AuraIconManager.Instance.Deactivate(this);
 		}
 	}
 }

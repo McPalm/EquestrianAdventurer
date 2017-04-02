@@ -6,8 +6,16 @@ abstract public class Aura : MonoBehaviour
 
 	public Sprite Icon;
 	public Color IconColor = Color.white;
-	public string tooltip;
 
 	abstract public Stats Stats{ get; }
 	abstract public string IconText { get; }
+	abstract public string Tooltip { get; }
+
+	void Start()
+	{
+		if(GetComponent<RogueController>())
+		{
+			AuraIconManager.Instance.Add(this);
+		}
+	}
 }

@@ -25,6 +25,14 @@ public class DurationAura : Aura
 		}
 	}
 
+	public override string Tooltip
+	{
+		get
+		{
+			return displayName + "\n" + stats.ToString();
+		}
+	}
+
 	// Use this for initialization
 	void OnEnable()
 	{
