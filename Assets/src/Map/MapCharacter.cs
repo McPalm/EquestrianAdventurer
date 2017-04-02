@@ -21,7 +21,21 @@ public class MapCharacter : MonoBehaviour
 	{
 		get
 		{
-			return stats + equip;
+			return stats + equip + Auras;
+		}
+	}
+
+	public Stats Auras
+	{
+		get
+		{
+			Stats t = new Stats();
+			foreach (Aura a in GetComponents<Aura>())
+			{
+				if (!a.enabled) continue;
+				t += a.Stats;
+			}
+			return t;
 		}
 	}
 
@@ -116,6 +130,11 @@ public class MapCharacter : MonoBehaviour
 		level = i;
 		OnChangeEquipment(GetComponent<Inventory>());
 		// GetComponent<HitPoints>().Heal(new DamageData().SetDamage(999)); // yay, max hp on level up!
+	}
+
+	public void Refresh()
+	{
+		EventUpdateStats.Invoke(this);
 	}
 
 	[System.Serializable]

@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Aura : MonoBehaviour
+abstract public class Aura : MonoBehaviour
 {
 
-	
+	public Sprite Icon;
+	public Color IconColor = Color.white;
+
+	abstract public Stats Stats{ get; }
 }
