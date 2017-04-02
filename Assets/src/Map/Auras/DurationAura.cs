@@ -9,6 +9,14 @@ public class DurationAura : Aura
 	public int duration;
 	public Stats stats;
 
+	public override string IconText
+	{
+		get
+		{
+			return duration.ToString();
+		}
+	}
+
 	public override Stats Stats
 	{
 		get
