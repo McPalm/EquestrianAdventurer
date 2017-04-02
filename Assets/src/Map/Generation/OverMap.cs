@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -12,6 +13,9 @@ public class OverMap : MonoBehaviour {
 	public CreatureSpawner forest;
 	public CreatureSpawner cave;
 	public CreatureSpawner castle;
+
+	public MapSectionEvent EventEnterNewSection = new MapSectionEvent();
+
 
 	// Use this for initialization
 	void Start ()
@@ -186,6 +190,7 @@ public class OverMap : MonoBehaviour {
 		{
 			lastSection = currentSection;
 			StartCoroutine(LoadOnDemand(lastSection));
+			EventEnterNewSection.Invoke(GetSectionAt(lastSection).section);
 		}
 	}
 
@@ -409,6 +414,7 @@ public class OverMap : MonoBehaviour {
 					generator = new ForestGenerator();
 					palette = new int[] { 7, 5, 6, 2, 3, 4 };
 					section.paletteName = "default";
+					section.overlayTint = new Color(0.45f, 0.5f, 0.55f);
 					break;
 				case MapType.minimumPath:
 					generator = new MinimumPath();
@@ -418,12 +424,14 @@ public class OverMap : MonoBehaviour {
 				case MapType.cave:
 					generator = new CaveGenerator();
 					palette = new int[] { 7, 2, 8 };
+					section.overlayTint = new Color(0.44f, 0.44f, 0.5f);
 					break;
 				case MapType.pregenerated:
 					generator = null;
 					section.loadSection = true;
 					palette = null;
 					section.sectionName = sectionName;
+					section.overlayTint = new Color(0.6f, 0.58f, 0.5f);
 					break;
 				default:
 					generator = new RoomChain5by5();
@@ -439,4 +447,7 @@ public class OverMap : MonoBehaviour {
 			}
 		}
 	}
+
+	[System.Serializable]
+	public class MapSectionEvent : UnityEvent<MapSection> { }
 }

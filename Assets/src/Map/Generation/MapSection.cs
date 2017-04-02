@@ -6,6 +6,7 @@ public class MapSection : MonoBehaviour
 	
 	public string sectionName;
 	public string paletteName;
+	public Color overlayTint = Color.gray;
 
 	public bool loadSection;
 
