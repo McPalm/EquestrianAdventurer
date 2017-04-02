@@ -5,7 +5,7 @@ public class Crossbow : RangedAttack
 {
 	public int ReloadTime = 4;
 	public int Damage = 7;
-
+	public int ArmorPen = 7;
 
 	new protected void Start()
 	{
@@ -34,7 +34,7 @@ public class Crossbow : RangedAttack
 
 	void OnHit(MapCharacter target)
 	{
-		float damage = (0.75f + Random.value * 0.5f) * Damage * 20f / (20f + target.armor);  // hardcoding armour penetration!
+		float damage = Damage * target.Stats.DamageReduction(ArmorPen) * Random.Range(0.75f, 1.25f);
 		if (damage < 1f) damage = 1;
 		target.GetComponent<HitPoints>().Hurt(new DamageData().SetDamage((int)damage));
 		HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, (int)damage);

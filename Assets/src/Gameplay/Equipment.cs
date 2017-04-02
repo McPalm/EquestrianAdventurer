@@ -6,14 +6,10 @@ public class Equipment : Item
 {
 	public EquipmentType slots;
 
-	public int armor;
-	public int dodge;
-	public int damage;
-	public int hit;
-	public int hp;
+	public Stats stats;
 
-	const float BasePrice = 4f;
-	const float priceGrowth = 1.07f;
+	const float BasePrice = 5f;
+	const float priceGrowth = 1.05f;
 
 	public Equipment()
 	{
@@ -24,7 +20,7 @@ public class Equipment : Item
 	{
 		get
 		{
-			value = armor * 3 + dodge * 2 + damage * 3 + hit * 2 + hp - 3;
+			value = stats.armor * 3 + stats.dodge * 2 + stats.damage * 3 + stats.hit * 2 + stats.hp - 3 + stats.armorpen * 3;
 			value = (int)(BasePrice * (Mathf.Pow(priceGrowth, value)));
 			value *= value;
 			return value;
@@ -41,11 +37,12 @@ public class Equipment : Item
 		get
 		{
 			string s = base.Tooltip;
-			if (armor > 0) s += "\n Armor: " + armor;
-			if (damage > 0) s += "\n Damage: " + damage;
-			if (dodge > 0) s += "\n Dodge: " + dodge;
-			if (hp > 0) s += "\n Health: " + hp;
-			if (hit > 0) s += "\n Hit: " + hit;
+			if (stats.armor > 0) s += "\n Armor: " + stats.armor;
+			if (stats.damage > 0) s += "\n Damage: " + stats.damage;
+			if (stats.armorpen > 0) s += "\n Armor Penetration: " + stats.armorpen;
+			if (stats.dodge > 0) s += "\n Dodge: " + stats.dodge;
+			if (stats.hp > 0) s += "\n Health: " + stats.hp;
+			if (stats.hit > 0) s += "\n Hit: " + stats.hit;
 			return s;
 		}
 	}
@@ -62,11 +59,7 @@ public class Equipment : Item
 		e.blue = blue;
 		e.category = category;
 
-		e.armor = armor;
-		e.damage = damage;
-		e.dodge = dodge;
-		e.hp = hp;
-		e.hit = hit;
+		e.stats = stats;
 		e.slots = slots;
 
 		

@@ -37,7 +37,7 @@ public class RangedAttack : MonoBehaviour
 	virtual protected bool Hit(MapCharacter target)
 	{
 		int range = IntVector2Utility.PFDistance(target.GetComponent<MapObject>().RealLocation, GetComponent<MapObject>().RealLocation);
-		return Random.value < (user.hitSkill / (user.hitSkill + ((range == 1) ? target.dodgeSkill : target.dodgeSkill / 2) + range));
+		return Mathf.Min(Random.value, Random.value) < (user.Stats.HitChance(target.Stats, 0, range));
 	}
 
 	public bool Attack(MapCharacter target)

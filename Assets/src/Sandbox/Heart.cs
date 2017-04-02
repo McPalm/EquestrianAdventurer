@@ -7,7 +7,6 @@ public class Heart : MonoBehaviour
 	void Start ()
 	{
 		Stats a = new Stats();
-		Stats b = new Stats();
 
 		a.armor = 0;
 		print(a.DamageReduction(0));

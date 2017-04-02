@@ -36,7 +36,7 @@ public class Level : MonoBehaviour
 
 	int ExpWorth(MapCharacter c)
 	{
-		int sum = (int)(c.baseDamage + c.baseHP/2 + c.armor + c.hitSkill + c.dodgeSkill);
+		int sum = (int)(c.Stats.damage + c.Stats.hp/2 + c.Stats.armor + c.Stats.hit + c.Stats.dodge + c.Stats.armorpen);
 		sum /= 4;
 		sum *= sum;
 		return sum;

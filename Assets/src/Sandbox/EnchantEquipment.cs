@@ -14,13 +14,13 @@ public static class EnchantEquipment
 			e.displayName = "Poor " + e.displayName;
 			if (e.slots == EquipmentType.body)
 			{
-				e.armor = e.armor * 3 / 4;
-				e.dodge -= 2;
+				e.stats.armor = e.stats.armor * 3 / 4;
+				e.stats.dodge -= 2;
 			}
 			else
 			{
-				e.damage -= 1;
-				e.hit -= 2;
+				e.stats.damage -= 1;
+				e.stats.hit -= 2;
 			}
 		}
 		else if (Random.value < 0.2f) // fine
@@ -28,11 +28,11 @@ public static class EnchantEquipment
 			e.displayName = "Fine " + e.displayName;
 			if (e.slots == EquipmentType.body)
 			{
-				e.dodge += 1;
+				e.stats.dodge += 1;
 			}
 			else
 			{
-				e.hit += 1;
+				e.stats.hit += 1;
 			}
 		}
 
@@ -44,14 +44,14 @@ public static class EnchantEquipment
 
 			if (e.slots == EquipmentType.body)
 			{
-				e.dodge += 1 + plus / 2;
-				e.armor += plus;
-				e.hp += plus * 2;
+				e.stats.dodge += 1 + plus / 2;
+				e.stats.armor += plus;
+				e.stats.hp += plus * 2;
 			}
 			else
 			{
-				e.hit += plus;
-				e.damage += plus;
+				e.stats.hit += plus;
+				e.stats.damage += plus;
 			}
 		}
 	}

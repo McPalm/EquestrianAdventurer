@@ -13,11 +13,17 @@ public class MapCharacter : MonoBehaviour
 
 	[Space(10)]
 
-	public float hitSkill;
-	public float baseDamage;
-	public float dodgeSkill;
-	public float armor;
-	public int baseHP = 10;
+	[SerializeField]
+	Stats stats;
+	Stats equip;
+
+	public Stats Stats
+	{
+		get
+		{
+			return stats + equip;
+		}
+	}
 
 	[Space(10)]
 
@@ -35,8 +41,8 @@ public class MapCharacter : MonoBehaviour
 		gameObject.layer = LayerMask.NameToLayer("Character");
 		GetComponent<CircleCollider2D>().isTrigger = true;
 		GetComponent<MapObject>().MapCharacter = this;
-		GetComponent<HitPoints>().MaxHealth = baseHP;
-		GetComponent<HitPoints>().CurrentHealth = baseHP;
+		GetComponent<HitPoints>().MaxHealth = Stats.hp;
+		GetComponent<HitPoints>().CurrentHealth = Stats.hp;
 		GetComponent<HitPoints>().EventChangeHealth.AddListener(OnHurt);
 		if(GetComponent<Inventory>()) GetComponent<Inventory>().EventChangeEquipment.AddListener(OnChangeEquipment);
 		if (EventDeath.GetPersistentEventCount() == 0) EventDeath.AddListener(DefaultDeath);
@@ -56,15 +62,14 @@ public class MapCharacter : MonoBehaviour
 		transform.position = (transform.position + target.transform.position) * 0.5f;
 		GetComponent<Mobile>().ForceMove(GetComponent<MapObject>().RealLocation);
 
-		bool hit = Mathf.Min(Random.value, Random.value) < (hitSkill / (target.dodgeSkill + hitSkill));
+		bool hit = Mathf.Min(Random.value, Random.value) < Stats.HitChance(target.Stats); // (hitSkill / (target.dodgeSkill + hitSkill));
 		if (hit)
 		{
-			float damage = (0.75f + Random.value * 0.5f) * baseDamage * 10f / (10f + target.armor);
-			if (damage < 1f) damage = 1;
+			int damage = Stats.DamageVersus(target.Stats, Random.Range(0.75f, 1.25f), Random.value);   // (0.75f + Random.value * 0.5f) * baseDamage * 10f / (10f + target.armor);
 			target.GetComponent<HitPoints>().Hurt(new DamageData().SetDamage((int)damage));
 			HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, (int)damage);
 			if (target.GetComponent<HitPoints>().CurrentHealth <= 0) EventKillingBlow.Invoke(target);
-			else NoiseUtility.CauseNoise(Random.Range(2, 9), target.GetComponent<MapObject>().RealLocation);
+			else NoiseUtility.CauseNoise(Random.Range(4, 10), target.GetComponent<MapObject>().RealLocation);
 		}
 		else
 			CombatTextPool.Instance.PrintAt((Vector3)target.GetComponent<MapObject>().RealLocation + new Vector3(0f, 0.4f), "Dodge", Color.cyan);
@@ -89,22 +94,19 @@ public class MapCharacter : MonoBehaviour
 
 	void OnChangeEquipment(Inventory i)
 	{
-		hitSkill = 2 + level;
-		baseDamage = 2 + level / 2;
-		dodgeSkill = 2 + level;
-		armor = 0;
-		int hp = baseHP + level * 3 - 3;
+		equip.hp = level - 1;
+		equip.hit = (2 + level) / 3;
+		equip.dodge = level / 2;
+		equip.armor = 0;
+		equip.armorpen = 0;
+		equip.damage = level / 4;
 
 		foreach(Equipment e in i.GetEquipped())
 		{
-			hitSkill += e.hit;
-			baseDamage += e.damage;
-			dodgeSkill += e.dodge;
-			armor += e.armor;
-			hp += e.hp;
+			equip += e.stats;
 		}
 
-		GetComponent<HitPoints>().MaxHealth = hp;
+		GetComponent<HitPoints>().MaxHealth = Stats.hp;
 
 		EventUpdateStats.Invoke(this);
 	}

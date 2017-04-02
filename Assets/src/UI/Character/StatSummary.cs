@@ -24,9 +24,10 @@ public class StatSummary : MonoBehaviour
 		+ "\nLevel: " + level.level
 		+ "\nExperience: " + level.experience
 		+ "\nNext Level: " + level.NextLevel
-		 + "\n\nAttack: " + character.baseDamage
-		 + "\nHit: " + character.hitSkill
-		 + "\nArmor: " + character.armor + " (" + Mathf.Round(100f * (1f - 10f / (10f + character.armor))) + "%)"
-		 + "\nDodge: " + character.dodgeSkill;
+		 + "\n\nAttack: " + character.Stats.damage
+		 + "\nPen: " + character.Stats.armorpen
+		 + "\nHit: " + character.Stats.hit
+		 + "\nArmor: " + character.Stats.armor + " (" + Mathf.Round(100f * character.Stats.DamageReduction(0)) + "%)"
+		 + "\nDodge: " + character.Stats.dodge;
 	}
 }
