@@ -18,8 +18,14 @@ public class MapSection : MonoBehaviour
 	{
 		if (data == null)
 		{
+			print("banana!");
 			if (loadSection)
+			{
 				data = MapSectionData.Load(sectionName);
+				print(data);
+				if (data == null) data = new MapSectionData(sectionName);
+				print(data);
+			}
 			else
 				data = new MapSectionData(sectionName);
 			DrawAll();
@@ -75,6 +81,11 @@ public class MapSection : MonoBehaviour
 	{
 		location = transform.InverseTransformVector(location);
 		IntVector2 origin = IntVector2.RoundFrom(location);
+
+		print(data);
+		print(data.tiles);
+		print(data.tiles[origin.x][origin.y]);
+
 		int filter = data.tiles[origin.x][origin.y];
 
 		List<Vector2> locations = new List<Vector2>();

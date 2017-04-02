@@ -8,7 +8,6 @@ public class MapBuildController : MonoBehaviour
 	static public bool editing = false;
 
 	public string palette;
-	public string fileName;
 	private TileDB tileDB;
 
 	[SerializeField]
