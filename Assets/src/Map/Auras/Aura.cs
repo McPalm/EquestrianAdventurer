@@ -17,5 +17,6 @@ abstract public class Aura : MonoBehaviour
 		{
 			AuraIconManager.Instance.Add(this);
 		}
+		GetComponent<MapCharacter>().Refresh();
 	}
 }

@@ -119,10 +119,7 @@ public class MapCharacter : MonoBehaviour
 		{
 			equip += e.stats;
 		}
-
-		GetComponent<HitPoints>().MaxHealth = Stats.hp;
-
-		EventUpdateStats.Invoke(this);
+		Refresh();
 	}
 
 	public void SetLevel(int i)
@@ -134,6 +131,7 @@ public class MapCharacter : MonoBehaviour
 
 	public void Refresh()
 	{
+		GetComponent<HitPoints>().MaxHealth = Stats.hp;
 		EventUpdateStats.Invoke(this);
 	}
 

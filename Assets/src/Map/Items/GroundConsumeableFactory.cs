@@ -6,6 +6,10 @@ public class GroundConsumeableFactory : GroundItem
 	public string label;
 	public int heal = 0;
 	public int baseValue;
+	[Space(10)]
+	public int buffDuration;
+	public Stats stats;
+	
 
 	public override Item CloneItem()
 	{
@@ -13,6 +17,7 @@ public class GroundConsumeableFactory : GroundItem
 		ConsumeableFactory f = new ConsumeableFactory(label, baseValue, sr.sprite).SetColor(sr.color);
 
 		if (heal > 0) f.SetHeal(heal);
+		if (buffDuration > 0) f.SetStatBoost(stats, buffDuration);
 
 		return f.Get();
 	}

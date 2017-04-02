@@ -77,6 +77,15 @@ public class ConsumeableFactory
 		return this;
 	}
 
+	public ConsumeableFactory SetStatBoost(Stats s, int duration)
+	{
+		effect += (GameObject o) =>
+		{
+			DurationBuff(o, sprite, label, duration, s, color);
+		};
+		return this;
+	}
+
 	static public void LightHeal(GameObject o)
 	{
 		HitPoints hp = o.GetComponent<HitPoints>();
@@ -98,5 +107,14 @@ public class ConsumeableFactory
 	static public void Nothing(GameObject o)
 	{
 		CombatTextPool.Instance.PrintAt(o.transform.position, "But nothing happened...", Color.magenta, 1.5f);
+	}
+
+	static public void DurationBuff(GameObject o, Sprite s, string name, int duration, Stats stats, Color c)
+	{
+		DurationAura a = o.AddComponent<DurationAura>();
+		a.displayName = name;
+		a.duration = duration;
+		a.stats = stats;
+		a.Icon = s;
 	}
 }

@@ -2,7 +2,6 @@
 using System.Collections;
 using System;
 
-
 public class DurationAura : Aura
 {
 	public string displayName;
@@ -51,7 +50,6 @@ public class DurationAura : Aura
 	void OnEndTurn(CharacterActionController cac, CharacterActionController.Actions a)
 	{
 		duration--;
-		print(duration);
 		if (duration < 1)
 		{
 			GetComponent<CharacterActionController>().EventAfterAction.RemoveListener(OnEndTurn);
