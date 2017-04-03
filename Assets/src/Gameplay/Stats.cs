@@ -54,4 +54,21 @@ public struct Stats
 	{
 		return string.Format("hp {0}, hit {1}, dodge {2}, armor {3}, damage {4}, armorpen {5}", hp, hit, dodge, armor, damage, armorpen);
 	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="substring">put at 0 if you wish to start with a new row</param>
+	/// <returns></returns>
+	public string NeatStringSkipEmpty(int substring = 1)
+	{
+		string s = "";
+		if (damage != 0) s += "\nDamage: " + damage;
+		if (armorpen != 0) s += "\nArmor Penetration: " + armorpen;
+		if (hit != 0) s += "\nHit: " + hit;
+		if (dodge != 0) s += "\nDodge: " + dodge;
+		if (armor != 0) s += "\nArmor: " + armor;
+		if (hp != 0) s += "\nHealth: " + hp;
+		return s.Substring(substring);
+	}
 }

@@ -94,6 +94,8 @@ public class MapCharacter : MonoBehaviour
 		if (current <= 0)
 		{
 			EventDeath.Invoke(this);
+			foreach (Aura a in GetComponents<Aura>())
+				Destroy(a);
 		}
 	}
 

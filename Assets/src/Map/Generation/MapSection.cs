@@ -19,13 +19,10 @@ public class MapSection : MonoBehaviour
 	{
 		if (data == null)
 		{
-			print("banana!");
 			if (loadSection)
 			{
 				data = MapSectionData.Load(sectionName);
-				print(data);
 				if (data == null) data = new MapSectionData(sectionName);
-				print(data);
 			}
 			else
 				data = new MapSectionData(sectionName);

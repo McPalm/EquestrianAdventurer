@@ -20,7 +20,9 @@ public class GroundItem : MonoBehaviour
 		GetComponent<SpriteRenderer>().color = item.Tint;
 		GetComponent<SpriteRenderer>().sortingLayerName = "Active";
 		GetComponent<MapObject>().Put(transform.position);
-		gameObject.AddComponent<SortRenderingOrder>().startOnly = true;
+		SortRenderingOrder s = gameObject.AddComponent<SortRenderingOrder>();
+		s.startOnly = true;
+		s.mod = - 1;
 	}
 
 	virtual public Item CloneItem()

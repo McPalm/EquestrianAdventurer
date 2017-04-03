@@ -27,7 +27,7 @@ public class StatSummary : MonoBehaviour
 		 + "\n\nAttack: " + character.Stats.damage
 		 + "\nPen: " + character.Stats.armorpen
 		 + "\nHit: " + character.Stats.hit
-		 + "\nArmor: " + character.Stats.armor + " (" + Mathf.Round(100f * character.Stats.DamageReduction(0)) + "%)"
+		 + "\nArmor: " + character.Stats.armor + " (" + Mathf.Round(100f - 100f * character.Stats.DamageReduction(0)) + "%)"
 		 + "\nDodge: " + character.Stats.dodge;
 	}
 }

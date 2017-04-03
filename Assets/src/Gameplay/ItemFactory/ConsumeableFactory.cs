@@ -77,6 +77,17 @@ public class ConsumeableFactory
 		return this;
 	}
 
+	public ConsumeableFactory HealOverTime(int duration, int factor)
+	{
+		turns = 2;
+		tooltip += "\nHeals for " + (duration * factor) + " over " + duration + " turns.";
+		effect += (GameObject o) =>
+		{
+			HealOverTime(o, duration, factor, label, sprite);
+		};
+		return this;
+	}
+
 	public ConsumeableFactory SetStatBoost(Stats s, int duration)
 	{
 		effect += (GameObject o) =>
@@ -115,6 +126,15 @@ public class ConsumeableFactory
 		a.displayName = name;
 		a.duration = duration;
 		a.stats = stats;
+		a.Icon = s;
+	}
+
+	static public void HealOverTime(GameObject o, int duration, int factor, string name, Sprite s)
+	{
+		HealOverTime a = o.AddComponent<HealOverTime>();
+		a.displayName = name;
+		a.duration = duration;
+		a.healFactor = factor;
 		a.Icon = s;
 	}
 }

@@ -37,12 +37,15 @@ public class Equipment : Item
 		get
 		{
 			string s = base.Tooltip;
-			if (stats.armor > 0) s += "\n Armor: " + stats.armor;
-			if (stats.damage > 0) s += "\n Damage: " + stats.damage;
-			if (stats.armorpen > 0) s += "\n Armor Penetration: " + stats.armorpen;
-			if (stats.dodge > 0) s += "\n Dodge: " + stats.dodge;
-			if (stats.hp > 0) s += "\n Health: " + stats.hp;
-			if (stats.hit > 0) s += "\n Hit: " + stats.hit;
+			s += stats.NeatStringSkipEmpty(0);
+			/*
+			if (stats.armor != 0) s += "\n Armor: " + stats.armor;
+			if (stats.damage != 0) s += "\n Damage: " + stats.damage;
+			if (stats.armorpen != 0) s += "\n Armor Penetration: " + stats.armorpen;
+			if (stats.dodge != 0) s += "\n Dodge: " + stats.dodge;
+			if (stats.hp != 0) s += "\n Health: " + stats.hp;
+			if (stats.hit != 0) s += "\n Hit: " + stats.hit;
+			*/
 			return s;
 		}
 	}

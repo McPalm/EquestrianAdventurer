@@ -2,11 +2,11 @@
 using System.Collections;
 using System;
 
-public class DurationAura : Aura
+public class HealOverTime : Aura
 {
+	public int duration = 0;
+	public int healFactor = 1;
 	public string displayName;
-	public int duration;
-	public Stats stats;
 
 	public override string IconText
 	{
@@ -20,7 +20,7 @@ public class DurationAura : Aura
 	{
 		get
 		{
-			return stats;
+			return new Stats();
 		}
 	}
 
@@ -28,7 +28,7 @@ public class DurationAura : Aura
 	{
 		get
 		{
-			return displayName + "\n" + stats.NeatStringSkipEmpty();
+			return displayName + "\nHeals for " + healFactor + " hp per turn.";
 		}
 	}
 
@@ -36,7 +36,7 @@ public class DurationAura : Aura
 	protected void OnEnable()
 	{
 		CharacterActionController ac = GetComponent<CharacterActionController>();
-		if(ac)
+		if (ac)
 		{
 			ac.EventAfterAction.AddListener(OnEndTurn);
 		}
@@ -49,12 +49,12 @@ public class DurationAura : Aura
 
 	void OnEndTurn(CharacterActionController cac, CharacterActionController.Actions a)
 	{
+		GetComponent<HitPoints>().Heal(new DamageData().SetDamage(healFactor));
 		duration--;
 		if (duration < 1)
 		{
 			GetComponent<CharacterActionController>().EventAfterAction.RemoveListener(OnEndTurn);
 			Destroy(this);
-			GetComponent<MapCharacter>().Refresh();
 		}
 	}
 }
