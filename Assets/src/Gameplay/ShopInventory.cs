@@ -13,6 +13,7 @@ public class ShopInventory : MonoBehaviour
 
 	public ItemEvent EventPutInInventory = new ItemEvent();
 	public ItemEvent EventPutInBuyBack = new ItemEvent();
+	public ItemEvent EventDestroyItem = new ItemEvent();
 
 
 	// Use this for initialization
@@ -102,6 +103,12 @@ public class ShopInventory : MonoBehaviour
 
 	public void Add(Item i)
 	{
+		if(buyBack.Count >= 12)
+		{
+			Item i2 = buyBack[0];
+			buyBack.RemoveAt(0);
+			EventDestroyItem.Invoke(i2);
+		}
 		buyBack.Add(i);
 		EventPutInBuyBack.Invoke(i);
 	}

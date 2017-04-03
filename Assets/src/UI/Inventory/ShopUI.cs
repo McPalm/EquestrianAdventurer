@@ -34,6 +34,7 @@ public class ShopUI : MonoBehaviour
 		gameObject.SetActive(true);
 		model = inventory;
 		model.EventPutInBuyBack.AddListener(ModelAddBuyback);
+		model.EventDestroyItem.AddListener(ModelRemoveItem);
 		transform.position = OnScreenAnchor.transform.position;
 		Build();
 		EventOpenShopInventory.Invoke();
@@ -45,7 +46,10 @@ public class ShopUI : MonoBehaviour
 			UIItemPool.Instance.Deactivate(i.Item);
 
 		if (model)
+		{
 			model.EventPutInBuyBack.RemoveListener(ModelAddBuyback);
+			model.EventDestroyItem.RemoveListener(ModelRemoveItem);
+		}
 		model = null;
 		gameObject.SetActive(false);
 	}
@@ -62,6 +66,12 @@ public class ShopUI : MonoBehaviour
 			UIItem ui = UIItemPool.Instance.Get(i);
 			ui.transform.position = Stock.anchor.transform.position;
 			ui.DropIn(Stock);
+		}
+		foreach (Item i in model.buyBack)
+		{
+			UIItem ui = UIItemPool.Instance.Get(i);
+			ui.transform.position = Stock.anchor.transform.position;
+			ui.DropIn(BuyBack);
 		}
 
 		Stock.EventMoveOut.AddListener(OnDragItemsOut);
@@ -101,7 +111,11 @@ public class ShopUI : MonoBehaviour
 	{
 		UIItem ui = UIItemPool.Instance.Get(i);
 		ui.DropIn(BuyBack);
-		
+	}
+
+	void ModelRemoveItem(Item i)
+	{
+		UIItemPool.Instance.Deactivate(i);
 	}
 }
 
