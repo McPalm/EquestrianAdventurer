@@ -7,6 +7,8 @@ public class Bar : MonoBehaviour
 	Transform drag;
 	Color baseColor;
 
+	int old;
+
 	void Awake()
 	{
 		baseColor = GetComponent<SpriteRenderer>().color;
@@ -20,7 +22,11 @@ public class Bar : MonoBehaviour
 		StopAllCoroutines();
 		if (drag)
 			StartCoroutine(AnimateDrag(current / (float)max));
-		StartCoroutine(DamageFlash());
+		if(old > current)
+			StartCoroutine(DamageFlash());
+		else
+			GetComponent<SpriteRenderer>().color = baseColor;
+		old = current;
 	}
 
 	IEnumerator AnimateDrag(float targetValue)
