@@ -37,7 +37,7 @@ public class MapSection : MonoBehaviour
 	/// </summary>
 	public void Unload()
 	{
-		print("removing " + name);
+		// print("removing " + name);
 		foreach(GameObject o in map.Values)
 		{
 			Destroy(o);

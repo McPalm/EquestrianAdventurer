@@ -323,10 +323,16 @@ public class OverMap : MonoBehaviour {
 	/// </summary>
 	public void Reset()
 	{
+		StartCoroutine(UnloadLoad());
+	}
+
+	IEnumerator UnloadLoad()
+	{
 		IntVector2[] nature = IntVector2Utility.GetRect(new IntVector2(-4, 0), new IntVector2(3, 4));
-		StartCoroutine(AsyncUnload(nature));
+		yield return  AsyncUnload(nature);
 		GenerateOverMap();
-		StartCoroutine(LoadOnDemand(new IntVector2(0, -1))); // load around ponyville
+		yield return new WaitForSeconds(0f);
+		yield return LoadOnDemand(new IntVector2(0, -1)); // load around ponyville
 	}
 
 	public IEnumerator AsyncUnload(params IntVector2[] v2s)
