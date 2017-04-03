@@ -120,11 +120,12 @@ public class OverMap : MonoBehaviour {
 			}
 		}
 
+		int r; // = Random.Range(0, connected.Count);
 		int attempts = 0;
 		while (unconnected.Count > 0)
 		{
 			// step 1: pick a random connected section
-			int r = Random.Range(0, connected.Count);
+			r = Random.Range(0, connected.Count);
 			// step 2: expand into random adjacent section
 			IntVector2 into = RandomNearby(connected[r]);
 			
@@ -145,33 +146,51 @@ public class OverMap : MonoBehaviour {
 		// step 4: bridge together separated sections
 		attempts = 0;
 		int connectionsMade = 0;
-		while(connectionsMade < entrances - 1)
+		bool[] cb = new bool[entrances]; // keeps track of a section is connected to any of the conected sections.
+		for (int i = 0; i < cb.Length; i++)
+			cb[i] = false;
+		cb[0] = true;
+		r = Random.Range(0, connected.Count); // start at a random place
+		while (connectionsMade < entrances - 1)
 		{
-			int r = Random.Range(0, connected.Count);
-			while (GetSectionAt(connected[r]).GenInfo != connectionsMade + 1)
-			{
-				r = Random.Range(0, connected.Count);
-				attempts++;
-				if (attempts > 10000) break;
-			}
-			if (attempts > 10000) break;
+			// check if any of the connections from R connects an connected and an unconnected section.
+			// if it does, connect them, mark them both as connected
+			// continue till we got wanted number of connections
 
-			IntVector2 into = RandomNearby(connected[r]);
-			if (connected.Contains(into) && GetSectionAt(into).GenInfo == connectionsMade + 2)
+			foreach (IntVector2 into in AllNearbyRandomFirst(connected[r]))
 			{
-				Bridge(into, connected[r]);
-				connectionsMade++;
+				if (connected.Contains(into) && cb[GetSectionAt(connected[r]).GenInfo-1] != cb[GetSectionAt(into).GenInfo-1])
+				{
+					Bridge(into, connected[r]);
+					connectionsMade++;
+					cb[GetSectionAt(connected[r]).GenInfo-1] = true;
+					cb[GetSectionAt(into).GenInfo-1] = true;
+					r = Random.Range(0, connected.Count); // start at a new location
+					break;
+				}
 			}
+
+			r++; // = Random.Range(0, connected.Count);
+			r %= connected.Count;
 
 			attempts++;
+			if (attempts > 10000) break;
+		}
+		if (attempts > 10000)
+		{
+			Debug.LogWarning("Overmap failed to make all nececcary connetions. Made: " + connectionsMade +", wanted " + (entrances - 1));
+			foreach(IntVector2 c in connected)
+			{
+				print(c.ToString() + " " + GetSectionAt(c).GenInfo);
+			}
 		}
 
 		// step 5: add a random number of extra bridges
 		// TODO (maybe)
 
-		for(int i = 0; i < 1 + Mathf.Sqrt(sections.Length); i++)
+		for (int i = 0; i < 1 + Mathf.Sqrt(sections.Length); i++)
 		{
-			int r = Random.Range(0, connected.Count);
+			r = Random.Range(0, connected.Count);
 			IntVector2 into = RandomNearby(connected[r]);
 			if (connected.Contains(into))
 			{
@@ -219,14 +238,47 @@ public class OverMap : MonoBehaviour {
 		switch (Random.Range(0, 4))
 		{
 			case 0:
-				return new IntVector2(v2.x - 1, v2.y);
+				return v2 + IntVector2.up;
 			case 1:
-				return new IntVector2(v2.x + 1, v2.y);
+				return v2 + IntVector2.right;
 			case 2:
-				return new IntVector2(v2.x, v2.y - 1);
+				return v2 + IntVector2.down;
 			default:
-				return new IntVector2(v2.x, v2.y + 1);
+				return v2 + IntVector2.left;
 		}
+	}
+
+	IntVector2[] AllNearbyRandomFirst(IntVector2 v2)
+	{
+		IntVector2[] ret = new IntVector2[4];
+		switch (Random.Range(0, 4))
+		{
+			case 0:
+				ret[0] = v2 + IntVector2.up;
+				ret[1] = v2 + IntVector2.right;
+				ret[2] = v2 + IntVector2.down;
+				ret[3] = v2 + IntVector2.left;
+				break;
+			case 1:
+				ret[1] = v2 + IntVector2.up;
+				ret[2] = v2 + IntVector2.right;
+				ret[3] = v2 + IntVector2.down;
+				ret[0] = v2 + IntVector2.left;
+				break;
+			case 2:
+				ret[2] = v2 + IntVector2.up;
+				ret[3] = v2 + IntVector2.right;
+				ret[1] = v2 + IntVector2.down;
+				ret[0] = v2 + IntVector2.left;
+				break;
+			default:
+				ret[3] = v2 + IntVector2.up;
+				ret[0] = v2 + IntVector2.right;
+				ret[1] = v2 + IntVector2.down;
+				ret[2] = v2 + IntVector2.left;
+				break;
+		}
+		return ret;
 	}
 
 	IEnumerator LoadSection(IntVector2 iv2)
