@@ -50,10 +50,11 @@ public class ShopInventory : MonoBehaviour
 		if (inventory.Contains(i))
 		{
 			Purse p = customer.GetComponent<Purse>();
-			if (customer.CanAccept(i) && p.Pay(i.Value))
+			if (p.Pay(i.Value))
 			{
 				inventory.Remove(i);
-				return customer.AddItem(i);
+				customer.AddOrPutOnGround(i);
+				return true;
 			}
 		}
 		return false;
@@ -69,7 +70,8 @@ public class ShopInventory : MonoBehaviour
 			if (customer.CanAccept(i) && p.Pay(i.Value))
 			{
 				inventory.Remove(i);
-				return customer.AddItem(i, slot);
+				customer.AddOrPutOnGround(i, slot);
+				return true;
 			}
 		}
 		return false;
@@ -83,7 +85,8 @@ public class ShopInventory : MonoBehaviour
 			if (customer.CanAccept(i) && p.Pay(SellValue(i)))
 			{
 				buyBack.Remove(i);
-				return customer.AddItem(i);
+				customer.AddOrPutOnGround(i);
+				return true;
 			}
 		}
 		return false;

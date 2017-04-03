@@ -62,7 +62,7 @@ public class Inventory : MonoBehaviour
 			g = o.GetComponent<GroundItem>();
 			if (g) break;
 		}
-		if(g && AddItem(g.item))
+		if(g && TryAddItem(g.item))
 		{
 			Destroy(g.gameObject); // Might want to object pool this.
 			return true;
@@ -75,7 +75,7 @@ public class Inventory : MonoBehaviour
 	/// </summary>
 	/// <param name="i">Item to put in inventory</param>
 	/// <returns>true of the change went through</returns>
-	public bool AddItem(Item i, int slot = -1)
+	public bool TryAddItem(Item i, int slot = -1)
 	{
 		if (i is Consumable)
 			return AddConsumable(i as Consumable, slot);
@@ -83,6 +83,23 @@ public class Inventory : MonoBehaviour
 		items.Add(i);
 		EventAddItem.Invoke(i);
 		return true;
+	}
+
+	public void AddOrPutOnGround(Item i, int slot = -1)
+	{
+		if(TryAddItem(i, slot) == false)
+		{
+			PutOnGround(i);
+		}
+	}
+
+	void PutOnGround(Item i)
+	{
+		// make the item and put on ze gorund
+		GameObject o = new GameObject(i.displayName);
+		o.transform.position = (Vector3)GetComponent<MapObject>().RealLocation;
+		o.AddComponent<GroundItem>().item = i;
+		EventDropItem.Invoke(i);
 	}
 
 	public bool AddConsumable(Consumable c, int slot = -1)
@@ -210,11 +227,7 @@ public class Inventory : MonoBehaviour
 	{
 		if(RemoveItem(i))
 		{
-			// make the item and put on ze gorund
-			GameObject o = new GameObject(i.displayName);
-			o.transform.position = (Vector3)GetComponent<MapObject>().RealLocation;
-			o.AddComponent<GroundItem>().item = i;
-			EventDropItem.Invoke(i);
+			PutOnGround(i);
 			return true;
 		}
 		return false;
@@ -303,7 +316,7 @@ public class Inventory : MonoBehaviour
 		{
 			case EquipmentType.body:
 				if (bodySlot != item) return false;
-				AddItem(bodySlot);
+				AddOrPutOnGround(bodySlot);
 				bodySlot = null;
 				EventUnEquipItem.Invoke(item, EquipmentType.body);
 				EventChangeEquipment.Invoke(this);
@@ -311,7 +324,7 @@ public class Inventory : MonoBehaviour
 				return true;
 			case EquipmentType.weapon:
 				if (weaponSlot != item) return false;
-				AddItem(weaponSlot);
+				AddOrPutOnGround(weaponSlot);
 				weaponSlot = null;
 				EventUnEquipItem.Invoke(item, EquipmentType.weapon);
 				EventChangeEquipment.Invoke(this);
