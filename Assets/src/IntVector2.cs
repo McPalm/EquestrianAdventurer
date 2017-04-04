@@ -119,4 +119,31 @@ public struct IntVector2 : IEquatable<IntVector2>
 	{
 		return Math.Max(Math.Abs(x - other.x), Math.Abs(y - other.y));
 	}
+
+	public int MagnitudeMax
+	{
+		get
+		{
+			return Math.Max(Math.Abs(x), Math.Abs(y));
+		}
+	}
+
+	public int MagnitudeSum
+	{
+		get
+		{
+			return Math.Abs(x) + Math.Abs(y);
+		}
+	}
+
+	public int MagnitudePF
+	{
+		get
+		{
+			if(x*x > y*y)
+				return Math.Abs(x) + Math.Abs(y)/2;
+			else
+				return Math.Abs(x)/2 + Math.Abs(y);
+		}
+	}
 }

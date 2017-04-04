@@ -63,7 +63,16 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 			relaxed = false;
 			LOS.sightRadius = alertRadius;
 		}
-		if (relaxed) return;
+		if (relaxed)
+		{
+			if ((me.RealLocation - home).MagnitudePF > 2)
+			{
+				if (!MoveTowards(home)) RandomMove();
+			}
+			else if(UnityEngine.Random.value < 0.2f)
+				RandomMove();
+			return;
+		}
 		bool melee = IntVector2Utility.DeltaSum(me.RealLocation, player.RealLocation) == 1;
 		//int distance = IntVector2Utility.PFDistance(me.RealLocation, player.RealLocation);
 		if(melee)
@@ -96,8 +105,9 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 		}
 		else
 		{
-			MoveTowards(home);
-			if(me.RealLocation == home)
+			if(!MoveTowards(home))
+				RandomMove();
+			if (  (me.RealLocation - home).MagnitudePF < 2)
 			{
 				relaxed = true;
 				seenPlayer = false;
@@ -106,6 +116,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 		}
 
 	}
+
 
 	public bool MoveAway(IntVector2 destination)
 	{
@@ -199,5 +210,20 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 		investigate = true;
 		relaxed = false;
 		LOS.sightRadius = alertRadius;
+	}
+
+	void RandomMove()
+	{
+		switch (UnityEngine.Random.Range(0, 4))
+		{
+			case 0:
+				controller.Perform(Vector2.up); break;
+			case 1:
+				controller.Perform(Vector2.right); break;
+			case 2:
+				controller.Perform(Vector2.down); break;
+			case 3:
+				controller.Perform(Vector2.left); break;
+		}
 	}
 }

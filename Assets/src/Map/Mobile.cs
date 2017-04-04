@@ -50,6 +50,13 @@ public class Mobile : MapObject
 		RealLocation = v2;
 	}
 
+	public void ForceMove(IntVector2 v2, float duration)
+	{
+		StopAllCoroutines();
+		StartCoroutine(Tween(transform.position, (Vector2)v2, duration));
+		RealLocation = v2;
+	}
+
 	void OnMove(IntVector2 v2)
 	{
 		StopAllCoroutines();
