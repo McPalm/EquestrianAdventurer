@@ -118,6 +118,14 @@ public class DialogueData
 		allDialogues = list.ToArray();
 	}
 
+	public bool Initialized
+	{
+		get
+		{
+			return library != null;
+		}
+	}
+
 	[System.Serializable]
 	public struct Snippet
 	{

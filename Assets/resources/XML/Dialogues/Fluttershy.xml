@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DialogueData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <fileName>Fluttershy</fileName>
+  <allDialogues>
+    <Snippet>
+      <keyword>Hello</keyword>
+      <text>Hello!</text>
+    </Snippet>
+  </allDialogues>
+</DialogueData>
