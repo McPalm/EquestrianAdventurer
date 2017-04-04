@@ -7,9 +7,8 @@ public class Equipment : Item
 	public EquipmentType slots;
 
 	public Stats stats;
-
-	const float BasePrice = 5f;
-	const float priceGrowth = 1.05f;
+	public int enchantCost = 100;
+	
 
 	public Equipment()
 	{
@@ -20,9 +19,6 @@ public class Equipment : Item
 	{
 		get
 		{
-			value = stats.armor * 3 + stats.dodge * 2 + stats.damage * 3 + stats.hit * 2 + stats.hp - 3 + stats.armorpen * 3;
-			value = (int)(BasePrice * (Mathf.Pow(priceGrowth, value)));
-			value *= value;
 			return value;
 		}
 
@@ -64,7 +60,7 @@ public class Equipment : Item
 
 		e.stats = stats;
 		e.slots = slots;
-
+		e.enchantCost = enchantCost;
 		
 
 		return e;
