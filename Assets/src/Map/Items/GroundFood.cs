@@ -15,14 +15,29 @@ public class GroundFood : GroundItem
 		Consumable c = new Consumable();
 		c.sprite = GetComponent<SpriteRenderer>().sprite;
 		c.Tint = GetComponent<SpriteRenderer>().color;
-		c.value = value;
-		c.displayName = displayName;
-		c.description = stats.NeatStringSkipEmpty(0) + "\n" + "Recover 1 HP per " + healingRate + " turns.";
+		float modifier = Random.Range(0.75f, 1.25f);
 
-		c.Use = (GameObject o) =>
+		if(Random.value < 0.2f)
 		{
-			Consume(o, healingRate, stats, c.sprite);
-		};
+			c.value = (int)(value * 10 * modifier);
+			c.displayName = "Gourmet " + displayName;
+			c.Use = (GameObject o) =>
+			{
+				Consume(o, (int)(healingRate * 0.75f / modifier), stats + stats, c.sprite);
+			};
+			c.description = (stats + stats).NeatStringSkipEmpty(0) + "\n" + "Recover 1 HP per " + ((int)(healingRate * 0.75f / modifier)) + " turns.";
+
+		}
+		else
+		{
+			c.value = (int)(modifier * value);
+			c.displayName = displayName;
+			c.Use = (GameObject o) =>
+			{
+				Consume(o, (int)(healingRate * 1f / modifier), stats, c.sprite);
+			};
+			c.description = stats.NeatStringSkipEmpty(0) + "\n" + "Recover 1 HP per " + (int)(healingRate * 1f / modifier) + " turns.";
+		}
 
 		return c;
 	}
