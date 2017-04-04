@@ -3,12 +3,12 @@
 [System.Serializable]
 public class DialogueData
 {
-	static public string PATH = "dialogues/";
+	static public string PATH = "XML/dialogues/";
 
 	public string fileName;
 
 	Dictionary<string, string> library; // = new Dictionary<string, string>();
-	public MyContainer[] containers; // for saving and loading. Is usually null
+	public Snippet[] allDialogues; // for saving and loading. Is usually null
 
 	/// <summary>
 	/// Used by the XMLserializer, use LoadOrCreate instead
@@ -19,6 +19,7 @@ public class DialogueData
 	DialogueData(string fileName)
 	{
 		this.fileName = fileName;
+		library = new Dictionary<string, string>();
 	}
 
 	public bool TryGetText(string keyword, out string text)
@@ -31,8 +32,10 @@ public class DialogueData
 		return library.ContainsKey(keyword);
 	}
 
-	public void AddText(string keyword, string text)
+	public void Write(string keyword, string text)
 	{
+		if (library.ContainsKey(keyword))
+			library.Remove(keyword);
 		library.Add(keyword, text);
 	}
 
@@ -41,6 +44,7 @@ public class DialogueData
 		return library.Remove(keyword);
 	}
 
+	[System.Xml.Serialization.XmlIgnore]
 	public IEnumerable<string> AllKeys
 	{
 		get
@@ -53,7 +57,7 @@ public class DialogueData
 	{
 		serialize();
 		XmlTool.EditorSaveObjectAsXML(this, PATH + fileName);
-		containers = null;
+		allDialogues = null;
 	}
 
 	public void SaveAs(string fileName)
@@ -67,6 +71,7 @@ public class DialogueData
 		try
 		{
 			dialogue = XmlTool.LoadFromXML<DialogueData>(PATH + fileName);
+			dialogue.deserialize();
 		}
 		catch
 		{
@@ -80,8 +85,11 @@ public class DialogueData
 	{
 		DialogueData d;
 		if (TryLoad(fileName, out d))
+		{
+			d.deserialize();
 			return d;
-		return new DialogueData();
+		}
+		return new DialogueData(fileName);
 	}
 
 	private void deserialize()
@@ -89,30 +97,35 @@ public class DialogueData
 		if(library == null)
 		{
 			library = new Dictionary<string, string>();
-			foreach(MyContainer c in containers)
+			foreach(Snippet c in allDialogues)
 			{
-				library.Add(c.key, c.text);
+				library.Add(c.keyword, c.text);
 			}
-			containers = null;
+			allDialogues = null;
 		}
 	}
 
 	private void serialize()
 	{
-		List<MyContainer> list = new List<MyContainer>();
+		List<Snippet> list = new List<Snippet>();
 		foreach(KeyValuePair<string, string> pair in library)
 		{
-			MyContainer c = new MyContainer();
-			c.key = pair.Key;
+			Snippet c = new Snippet();
+			c.keyword = pair.Key;
 			c.text = pair.Value;
 			list.Add(c);
 		}
-		containers = list.ToArray();
+		allDialogues = list.ToArray();
 	}
 
 	[System.Serializable]
-	public class MyContainer
+	public struct Snippet
 	{
-		public string key, text;
+		public string keyword, text;
+	}
+
+	public class StringStringDictionary : Dictionary<string, string>
+	{
+
 	}
 }
