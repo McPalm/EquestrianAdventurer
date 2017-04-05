@@ -45,17 +45,17 @@ public static class XmlTool
 		}
 	}
 
-	public static T LoadFromXML<T>(string pathInResources)
+	public static T LoadFromXML<T>(string pathInResources, bool logException = true)
 	{
 		try
 		{
-			Debug.Log("Loading from: " + pathInResources);
+			// Debug.Log("Loading from: " + pathInResources);
 			TextAsset temp = Resources.Load(pathInResources) as TextAsset;
 			return LoadFromXMLString<T>(temp.text);
 		}
 		catch (Exception e)
 		{
-			Debug.LogException(e);
+			if(logException) Debug.LogException(e);
 			throw new Exception("unable to generate file.");
 		}
 	}

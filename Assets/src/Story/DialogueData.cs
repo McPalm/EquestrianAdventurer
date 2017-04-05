@@ -70,7 +70,7 @@ public class DialogueData
 	{
 		try
 		{
-			dialogue = XmlTool.LoadFromXML<DialogueData>(PATH + fileName);
+			dialogue = XmlTool.LoadFromXML<DialogueData>(PATH + fileName, false);
 			dialogue.deserialize();
 		}
 		catch

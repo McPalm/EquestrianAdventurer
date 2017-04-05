@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DialogueData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <fileName>MiCherie</fileName>
+  <allDialogues>
+    <Snippet>
+      <keyword>Hello</keyword>
+      <text>Hello There!
+	  
+My name is Mi Cherie, errant knight, monster hunter, and dancer extraordinary. Currently here in Ponyville on duty.</text>
+    </Snippet>
+	<Snippet>
+      <keyword>Knight</keyword>
+      <text>Why yes, errant knight I said. In fact a member of the royal guard if you believe it. I do travel around a lot because my speciality is to deal with monster problems. And a problem Ponyville seems to have.</text>
+    </Snippet>
+	<Snippet>
+      <keyword>Dancer</keyword>
+      <text>Yes, a Dancer. I earned my cutemark way back in Canterlot on the dance floor. Of course I joined the dance club in Canterlot high and, due to my special talent, I did really well of course.
+	  
+While most of my peers with this talent ended up doing ballet, pinning to one day join the royal Canterlot ballet, It was not for me. I could simply not sit idly by doing entertainment when there was bigger problems in the world, so naturally, I joined the royal guard. Now you might think that is an odd place for a dancer, but really, a tussle is not all that different from a dance. The clash of swords is my rhythm and the enemy is my dance partner, fighting is an art after-all, and as a dancer, my talent is performing art with my body in motion.</text>
+    </Snippet>
+	<Snippet>
+      <keyword>Problem</keyword>
+      <text>I don't know what yet. But the monster activity in the Everfree Forest is increasing. At the moment my hoofs are tied, I have to stay close to Ponyville and react to an attack would it occur, I'm hoping I could get some reinforcement soon enough so I could actually head out there and do some investigation.
+	  
+Say, I have ran into many other thrill seekers and explorers in my career and you have that eagerness to explore written all over your face. I heard that there is a Zebra living in there with the name of Zecora, surely somebody who actually live in the thick of it would have some more insight into the situation. Now I am not asking you to do my work for me, but if you would decide to explore the forest and happen upon her, would you be so kind as to ask her about the situation on my behalf.</text>
+    </Snippet>
+  </allDialogues>
+</DialogueData>
