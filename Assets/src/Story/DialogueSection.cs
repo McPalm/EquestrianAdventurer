@@ -1,15 +1,9 @@
 ﻿[System.Serializable]
 public class DialogueSection
 {
-	public string KeyWord;
 	public string body;
 	public string[] local = new string[0];
 	public string[] global = new string[0];
-
-	public DialogueSection(string key)
-	{
-		KeyWord = key;
-	}
 
 	public DialogueSection() { }
 

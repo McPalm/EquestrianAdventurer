@@ -117,4 +117,9 @@ public class UIDialogueWindow : MonoBehaviour
 		for (int i = count; i < buttons.Count; i++)
 			buttons[i].gameObject.SetActive(false);
 	}
+
+	public void AddGlobalKeyword(string keyword)
+	{
+		global.Add(keyword);
+	}
 }

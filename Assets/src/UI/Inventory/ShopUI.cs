@@ -15,6 +15,7 @@ public class ShopUI : MonoBehaviour
 	public GameObject OnScreenAnchor;
 
 	public UnityEvent EventOpenShopInventory;
+	public UnityEvent EventStartConversation;
 
 	void Awake()
 	{
@@ -116,6 +117,17 @@ public class ShopUI : MonoBehaviour
 	void ModelRemoveItem(Item i)
 	{
 		UIItemPool.Instance.Deactivate(i);
+	}
+
+	public void Talk()
+	{
+		DialogueStarter d = model.GetComponent<DialogueStarter>();
+		if (d)
+		{
+			d.StartConversation();
+			EventStartConversation.Invoke();
+			Close();
+		}
 	}
 }
 

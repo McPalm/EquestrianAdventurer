@@ -3,6 +3,15 @@ using System.Collections;
 
 public class DialogueStarter : MonoBehaviour
 {
+	public string defaultFile;
+
+
+	public void StartConversation()
+	{
+		StartConversation(defaultFile);
+	}
+
+
 	public void StartConversation(string fileName)
 	{
 		if(GetComponent<SpriteRenderer>())

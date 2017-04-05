@@ -48,7 +48,7 @@ public class DialogueData
 		}
 		else
 		{
-			d = new DialogueSection(keyword);
+			d = new DialogueSection();
 			d.body = text;
 			d.AddLocal("new local");
 			library.Add(keyword, d);

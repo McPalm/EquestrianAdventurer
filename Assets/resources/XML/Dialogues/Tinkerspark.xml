@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DialogueData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <fileName>Tinkerspark</fileName>
+  <allDialogues>
+    <Snippet>
+      <keyword>Hello</keyword>
+      <section>
+        <body>Hello Customer!
+		
+I'm Tinkerspark, potion maker and inventor. Ready to meet your alchemical needs. May I interest you in a special tail conditioner I imported from Canterlot, its all the rage right right now so I'm doing a Ponyville trial run.</body>
+        <local />
+        <global />
+      </section>
+    </Snippet>
+	
+	<Snippet>
+      <keyword>Zecora</keyword>
+      <section>
+        <body>Yes I do know Zecora. She is great at potion magic and I have learned a lot from her. She usually comes visiting Ponyville about once per week but I have not seen her in a while now.
+		
+She lives in a small hut out in the Everfree Forest, it should not be too hard to find it if you are really determined to meet her soon. But its dangerous out there, if you are going I would recommend stocking up on some bandages and a healing potion or two, Ill even give you a special deal on them!</body>
+        <local>
+		 <string>Supplies</string>
+		</local>
+        <global />
+      </section>
+    </Snippet>
+	
+	<Snippet>
+      <keyword>Supplies</keyword>
+      <section>
+        <body>Bandages are your bread and butter healing supplies. They work as long as you take your time and stand still using them without interruption.
+		
+A healing potion can be quaffed a midst a dangerous situation and may very well be the difference between being dead or alive.
+
+Furthermore I would really not knock over an iron skin potion. Iron skin does exactly what it says, whenever you can anticipate danger, its better to prevent getting hurt in the first place than heal afterwards.</body>
+        <local />
+        <global />
+      </section>
+    </Snippet>
+	
+	
+  </allDialogues>
+</DialogueData>
