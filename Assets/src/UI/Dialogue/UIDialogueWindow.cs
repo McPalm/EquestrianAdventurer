@@ -64,6 +64,8 @@ public class UIDialogueWindow : MonoBehaviour
 			textArea.text = text.body;
 			local.UnionWith(text.local);
 			global.UnionWith(text.global);
+			foreach (string s in text.flags)
+				StoryFlags.Instance.AddFlag(s);
 		}
 		else
 		{

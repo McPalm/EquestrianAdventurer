@@ -14,7 +14,10 @@ public class ShopInventory : MonoBehaviour
 	public ItemEvent EventPutInInventory = new ItemEvent();
 	public ItemEvent EventPutInBuyBack = new ItemEvent();
 	public ItemEvent EventDestroyItem = new ItemEvent();
+	public ShopEvent EventOpenShop = new ShopEvent();
 
+	[HideInInspector]
+	public float priceMultiplier = 1f;
 
 	// Use this for initialization
 	void Awake()
@@ -35,6 +38,7 @@ public class ShopInventory : MonoBehaviour
 
 	public void OpenShop()
 	{
+		EventOpenShop.Invoke(this);
 		ShopUI.Instance.Open(this);
 	}
 
@@ -50,7 +54,7 @@ public class ShopInventory : MonoBehaviour
 		if (inventory.Contains(i))
 		{
 			Purse p = customer.GetComponent<Purse>();
-			if (p.Pay(i.Value))
+			if (p.Pay(Mathf.RoundToInt(i.Value * priceMultiplier)))
 			{
 				inventory.Remove(i);
 				customer.AddOrPutOnGround(i);
@@ -67,7 +71,7 @@ public class ShopInventory : MonoBehaviour
 		if (inventory.Contains(i))
 		{
 			Purse p = customer.GetComponent<Purse>();
-			if (customer.CanAccept(i) && p.Pay(i.Value))
+			if (customer.CanAccept(i) && p.Pay(Mathf.RoundToInt(i.Value * priceMultiplier)))
 			{
 				inventory.Remove(i);
 				customer.AddOrPutOnGround(i, slot);
@@ -130,4 +134,5 @@ public class ShopInventory : MonoBehaviour
 	}
 
 	public class ItemEvent : UnityEvent<Item> { }
+	public class ShopEvent : UnityEvent<ShopInventory> { }
 }

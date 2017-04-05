@@ -23,6 +23,9 @@ She lives in a small hut out in the Everfree Forest, it should not be too hard t
 		 <string>Supplies</string>
 		</local>
         <global />
+		<flags>
+		 <string>TinkersparkDiscount1</string>
+		</flags>
       </section>
     </Snippet>
 	

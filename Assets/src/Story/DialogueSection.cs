@@ -4,6 +4,7 @@ public class DialogueSection
 	public string body;
 	public string[] local = new string[0];
 	public string[] global = new string[0];
+	public string[] flags = new string[0];
 
 	public DialogueSection() { }
 
