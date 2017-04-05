@@ -7,7 +7,7 @@ public class DialogueData
 
 	public string fileName;
 
-	Dictionary<string, string> library; // = new Dictionary<string, string>();
+	Dictionary<string, DialogueSection> library; // = new Dictionary<string, string>();
 	public Snippet[] allDialogues; // for saving and loading. Is usually null
 
 	/// <summary>
@@ -19,10 +19,10 @@ public class DialogueData
 	DialogueData(string fileName)
 	{
 		this.fileName = fileName;
-		library = new Dictionary<string, string>();
+		library = new Dictionary<string, DialogueSection>();
 	}
 
-	public bool TryGetText(string keyword, out string text)
+	public bool TryGetText(string keyword, out DialogueSection text)
 	{
 		return library.TryGetValue(keyword, out text);
 	}
@@ -32,11 +32,27 @@ public class DialogueData
 		return library.ContainsKey(keyword);
 	}
 
-	public void Write(string keyword, string text)
+	public void Write(string keyword, DialogueSection text)
 	{
 		if (library.ContainsKey(keyword))
 			library.Remove(keyword);
 		library.Add(keyword, text);
+	}
+
+	public void Write(string keyword, string text)
+	{
+		DialogueSection d;
+		if (library.TryGetValue(keyword, out d))
+		{
+			d.body = text;
+		}
+		else
+		{
+			d = new DialogueSection(keyword);
+			d.body = text;
+			d.AddLocal("new local");
+			library.Add(keyword, d);
+		}
 	}
 
 	public bool RemoveKeyword(string keyword)
@@ -96,10 +112,10 @@ public class DialogueData
 	{
 		if(library == null)
 		{
-			library = new Dictionary<string, string>();
+			library = new Dictionary<string, DialogueSection>();
 			foreach(Snippet c in allDialogues)
 			{
-				library.Add(c.keyword, c.text);
+				library.Add(c.keyword, c.section);
 			}
 			allDialogues = null;
 		}
@@ -108,11 +124,11 @@ public class DialogueData
 	private void serialize()
 	{
 		List<Snippet> list = new List<Snippet>();
-		foreach(KeyValuePair<string, string> pair in library)
+		foreach(KeyValuePair<string, DialogueSection> pair in library)
 		{
 			Snippet c = new Snippet();
 			c.keyword = pair.Key;
-			c.text = pair.Value;
+			c.section = pair.Value;
 			list.Add(c);
 		}
 		allDialogues = list.ToArray();
@@ -129,10 +145,11 @@ public class DialogueData
 	[System.Serializable]
 	public struct Snippet
 	{
-		public string keyword, text;
+		public string keyword;
+		public DialogueSection section;
 	}
 
-	public class StringStringDictionary : Dictionary<string, string>
+	public class StringStringDictionary : Dictionary<string, DialogueSection>
 	{
 
 	}

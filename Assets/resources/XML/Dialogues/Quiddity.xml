@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DialogueData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <fileName>test</fileName>
+  <fileName>Quiddity</fileName>
   <allDialogues>
     <Snippet>
       <keyword>Hello</keyword>
-      <text>Hello</text>
-    </Snippet>
-    <Snippet>
-      <keyword>Spork</keyword>
-      <text>
-A spork is a combination of a spoon and a fork. Ponies dont even use cutlery so I have no idea why anyone invented it.</text>
+      <section>
+        <KeyWord>Hello</KeyWord>
+        <body>Hello!</body>
+        <local>
+          <string>new local</string>
+        </local>
+        <global />
+      </section>
     </Snippet>
   </allDialogues>
 </DialogueData>

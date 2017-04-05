@@ -25,8 +25,12 @@ public class UIDialogueWindow : MonoBehaviour
 	DialogueData d;
 	Transform buttonAnchor;
 
+	HashSet<string> local = new HashSet<string>();
+	HashSet<string> global = new HashSet<string>();
+
 	public void Open(string fileName, string name, Sprite sprite)
 	{
+		local.Clear();
 		if(DialogueData.TryLoad(fileName, out d))
 		{
 			window.gameObject.SetActive(true);
@@ -54,10 +58,12 @@ public class UIDialogueWindow : MonoBehaviour
 
 	public void TalkAbout(string keyword)
 	{
-		string text;
+		DialogueSection text;
 		if(d.TryGetText(keyword, out text))
 		{
-			textArea.text = text;
+			textArea.text = text.body;
+			local.UnionWith(text.local);
+			global.UnionWith(text.global);
 		}
 		else
 		{
@@ -87,22 +93,26 @@ public class UIDialogueWindow : MonoBehaviour
 		int count = 0;
 		foreach(string key in d.AllKeys)
 		{
-			string capturedKey = key; // why does this matter? I thought strings were all cached and immutable
-			if(count == buttons.Count)
+			if (local.Contains(key) || global.Contains(key))
 			{
-				buttons.Add(Instantiate(askButton));
-				buttons[count].transform.SetParent(buttonAnchor);
-				buttons[count].transform.position = buttonAnchor.transform.position + new Vector3(0f, -36f) * count;
-			}
-			buttons[count].gameObject.SetActive(true);
-			buttons[count].onClick.RemoveAllListeners();
-			buttons[count].GetComponentInChildren<Text>().text = key;
-			buttons[count].onClick.AddListener(
-				delegate () { 
-					TalkAbout(capturedKey);
+				string capturedKey = key; // why does this matter? I thought strings were all cached and immutable
+				if (count == buttons.Count)
+				{
+					buttons.Add(Instantiate(askButton));
+					buttons[count].transform.SetParent(buttonAnchor);
+					buttons[count].transform.position = buttonAnchor.transform.position + new Vector3(0f, -36f) * count;
 				}
-				);
-			count++;
+				buttons[count].gameObject.SetActive(true);
+				buttons[count].onClick.RemoveAllListeners();
+				buttons[count].GetComponentInChildren<Text>().text = key;
+				buttons[count].onClick.AddListener(
+					delegate ()
+					{
+						TalkAbout(capturedKey);
+					}
+					);
+				count++;
+			}
 		}
 		for (int i = count; i < buttons.Count; i++)
 			buttons[i].gameObject.SetActive(false);

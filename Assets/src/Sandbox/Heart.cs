@@ -6,6 +6,7 @@ public class Heart : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		/*
 		DialogueData a;
 		string b;
 
@@ -89,6 +90,6 @@ public class Heart : MonoBehaviour
 		a.Write("Cheese", "Boy I do love cheese!");
 
 		a.SaveAs("WithCheese");
-
+		*/
 	}
 }

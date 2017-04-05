@@ -4,7 +4,11 @@
   <allDialogues>
     <Snippet>
       <keyword>Hello</keyword>
-      <text>Hello!</text>
+      <section>
+        <body>Hello!</body>
+        <local />
+        <global />
+      </section>
     </Snippet>
   </allDialogues>
 </DialogueData>

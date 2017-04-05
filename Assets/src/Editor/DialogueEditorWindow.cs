@@ -61,13 +61,17 @@ public class DialogueEditorWindow : EditorWindow
 
 	bool DisplayData(string key, out string s)
 	{
-		string z;
+		/*
+		DialogueSection z;
 		data.TryGetText(key, out z);
 		GUILayout.BeginHorizontal();
 		GUILayout.Label(key); // GUILayout.MaxWidth(75f)
-		s = GUILayout.TextArea(z);
+		s = GUILayout.TextArea(z.body);
 		GUILayout.EndHorizontal();
 		return s != z;
+		*/
+		s = "";
+		return false;
 	}
 	
 }
