@@ -88,9 +88,11 @@ public class OverMap : MonoBehaviour {
 
 		// setup terrain
 
-		InitSections(debugType, new MapModule[] {forestModules[Random.Range(0, forestModules.Length)], zecorasHut }, forest); // the initial biome. using debug. for testing ofc.
+		InitSections(debugType, new MapModule[] {forestModules[Random.Range(0, forestModules.Length)]}, forest); // the initial biome. using debug. for testing ofc.
 		InitSections(MapType.rooms, new MapModule[] { castleModules[Random.Range(0, forestModules.Length)] }, castle);
 		InitSections(MapType.cave, new MapModule[] { caveModules[Random.Range(0, forestModules.Length)] }, cave);
+
+		GetSectionAt(new IntVector2(-1, 1)).givenModule = zecorasHut;
 
 		// roll up connections within section
 
