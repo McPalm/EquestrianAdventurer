@@ -13,7 +13,9 @@ public class MapSection : MonoBehaviour
 	Dictionary<IntVector2, GameObject> map = new Dictionary<IntVector2, GameObject>();
 	MapSectionData data;
 	TileDB tileDB;
-	
+
+	public MapModule modulePrefab;
+	MapModule module;
 
 	void Start()
 	{
@@ -44,6 +46,9 @@ public class MapSection : MonoBehaviour
 		}
 		map.Clear();
 
+		Destroy(module.gameObject);
+		module = null;
+
 		// remove all map objects within this sections confines...  somehow
 		foreach (MapObject o in ObjectMap.Instance.GetRange((int)transform.position.x, (int)transform.position.y, (int)transform.position.x + MapSectionData.DIMENSIONS, (int)transform.position.y + MapSectionData.DIMENSIONS))
 		{
@@ -54,12 +59,32 @@ public class MapSection : MonoBehaviour
 	public void DrawAll()
 	{
 		tileDB = TileDB.LoadPalette(paletteName);
+		HashSet<IntVector2> blocked = new HashSet<IntVector2>();
+
+		// for now, assume that we always spawn the section at 20, 20
+		IntVector2 moduleAnchorLocation = new IntVector2(20, 20);
+
+		if (modulePrefab)
+		{
+			module = Instantiate(modulePrefab, transform.position + (Vector3)moduleAnchorLocation, Quaternion.identity) as MapModule;
+			module.transform.SetParent(transform);
+
+			foreach (IntVector2 iv2 in module.usedTiles)
+			{
+				blocked.Add(moduleAnchorLocation + iv2);
+			}
+			
+		}
 
 		for(int x = 0; x < MapSectionData.DIMENSIONS; x++)
 		{
 			for(int y = 0; y < MapSectionData.DIMENSIONS; y++)
 			{
-				if (data.tiles[x][y] >= 0) DrawSprite(new Vector2(x, y), data.tiles[x][y]);
+				if (blocked.Contains(new IntVector2(x, y)))
+				{
+					// do nothing I suppose?
+				}
+				else if (data.tiles[x][y] >= 0) DrawSprite(new Vector2(x, y), data.tiles[x][y]);
 			}
 		}
 	}

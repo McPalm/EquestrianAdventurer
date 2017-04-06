@@ -1,0 +1,18 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class MapModule : MonoBehaviour
+{
+	[HideInInspector]
+	public IntVector2[] usedTiles;
+
+	void Awake()
+	{
+		TileVisbility[] v = GetComponentsInChildren<TileVisbility>();
+		usedTiles = new IntVector2[v.Length];
+		for(int i = 0; i < v.Length; i++)
+		{
+			usedTiles[i] = IntVector2.RoundFrom(v[i].transform.localPosition);
+		}
+	}
+}

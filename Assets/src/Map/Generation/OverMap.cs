@@ -17,6 +17,10 @@ public class OverMap : MonoBehaviour {
 	public MapSectionEvent EventEnterNewSection = new MapSectionEvent();
 
 
+	public MapModule testModule;
+	public bool testDisableSpawn;
+
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -97,6 +101,8 @@ public class OverMap : MonoBehaviour {
 		for(int i = 0; i < sections.Length; i++)
 		{
 			GetSectionAt(sections[i]).terrain = terrain;
+			// hackz
+			GetSectionAt(sections[i]).givenModule = testModule; // much hack wow..  tho we will probably do something similar
 		}
 	}
 
@@ -299,7 +305,7 @@ public class OverMap : MonoBehaviour {
 			if (msc.terrain == MapType.forest) cs = forest;
 			if (msc.terrain == MapType.cave) cs = cave;
 			if (msc.terrain == MapType.rooms) cs = castle;
-			if (cs)
+			if (cs &! testDisableSpawn)
 			{
 				cs.targetSection = msc.section;
 				cs.Spawn();
@@ -413,6 +419,7 @@ public class OverMap : MonoBehaviour {
 		public MapSection section;
 		public CompassDirection connections;
 		public MapType terrain;
+		public MapModule givenModule;
 		public string sectionName; // used for pregenerated maps
 
 		bool loaded = false;
@@ -463,7 +470,7 @@ public class OverMap : MonoBehaviour {
 				section = o.AddComponent<MapSection>();
 				section.loadSection = false;
 			}
-
+			section.modulePrefab = givenModule;
 			IGenerator generator;
 			int[] palette;
 			switch(terrain)
