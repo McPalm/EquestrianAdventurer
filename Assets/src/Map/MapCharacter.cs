@@ -67,6 +67,8 @@ public class MapCharacter : MonoBehaviour
 	{
 		if (alignment == Hostility.player && other.alignment == Hostility.enemies) return true;
 		if (alignment == Hostility.enemies && other.alignment == Hostility.player) return true;
+		if (alignment == Hostility.guard && other.alignment == Hostility.enemies) return true;
+		if (alignment == Hostility.enemies && other.alignment == Hostility.guard) return true;
 
 		return false;
 	}
@@ -146,6 +148,7 @@ public class MapCharacter : MonoBehaviour
 	{
 		player = 0,
 		ally = 1,
-		enemies = 2
+		enemies = 2,
+		guard = 3
 	}
 }

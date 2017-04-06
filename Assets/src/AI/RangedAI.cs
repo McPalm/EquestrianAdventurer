@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System;
 
@@ -9,6 +10,7 @@ using System;
 /// </summary>
 
 [RequireComponent(typeof(LOSCheck))]
+[RequireComponent(typeof(CharacterActionController))]
 public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 {
 	LOSCheck LOS;
@@ -18,7 +20,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 
 	IntVector2 home;
 
-	public MapObject player;
+	public MapObject target;
 
 	public int alertRadius = 9;
 	public int relaxedRadius = 6;
@@ -28,6 +30,8 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 	bool relaxed = true;
 	bool seenPlayer;
 
+	public UnityEvent PreTurnEvent = new UnityEvent();
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -36,7 +40,8 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 		me = GetComponent<MapObject>();
 		controller = GetComponent<CharacterActionController>();
 		home = me.RealLocation;
-		player = FindObjectOfType<RogueController>().GetComponent<MapObject>();
+		target = FindObjectOfType<RogueController>().GetComponent<MapObject>();
+		if (GetComponent<MapCharacter>().HostileTowards(target.GetComponent<MapCharacter>()) == false) target = null;
 
 		TurnTracker.Instance.Add(this);
 		GetComponent<MapCharacter>().EventDeath.AddListener(delegate { TurnTracker.Instance.Remove(this); });
@@ -48,8 +53,10 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 
 	public void DoTurn()
 	{
+		PreTurnEvent.Invoke();
 		bool acted = false;
-		bool sight = LOS.HasLOS(player, relaxed, true);
+		bool sight = target;
+		if(target) sight = LOS.HasLOS(target, relaxed, true);
 		if (sight)
 		{
 			if (!seenPlayer)
@@ -59,7 +66,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 			}
 			seenPlayer = true;
 			investigate = true;
-			lastSeenLocation = player.RealLocation;
+			lastSeenLocation = target.RealLocation;
 			relaxed = false;
 			LOS.sightRadius = alertRadius;
 		}
@@ -73,23 +80,24 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 				RandomMove();
 			return;
 		}
-		bool melee = IntVector2Utility.DeltaSum(me.RealLocation, player.RealLocation) == 1;
+		bool melee = target;
+		if(target) melee = IntVector2Utility.DeltaSum(me.RealLocation, target.RealLocation) == 1;
 		//int distance = IntVector2Utility.PFDistance(me.RealLocation, player.RealLocation);
 		if(melee)
 		{
 			if (bow)
 			{
-				acted = MoveAway(player.RealLocation);
+				acted = MoveAway(target.RealLocation);
 				if (acted) return;
 			}
-			acted = MoveTowards(player.RealLocation); // if we fail at running. melee the player
+			acted = MoveTowards(target.RealLocation); // if we fail at running. melee the player
 			if (acted) return;
 		}
-		if (bow)
+		if (target && bow)
 		{
 			if (sight && bow.Loaded)
 			{
-				acted = bow.Attack(player.GetComponent<MapCharacter>()); // Bypasses CharacterActionController, fix this
+				acted = bow.Attack(target.GetComponent<MapCharacter>()); // Bypasses CharacterActionController, fix this
 				if (acted) return;
 			}
 			else if (!bow.Loaded)
@@ -191,6 +199,15 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 		teardown = true;
 	}
 	bool teardown = false;
+
+	public bool Relaxed
+	{
+		get
+		{
+			return relaxed;
+		}
+	}
+
 	void OnDisable()
 	{
 		if (teardown) return;

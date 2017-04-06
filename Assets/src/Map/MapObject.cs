@@ -18,6 +18,7 @@ public class MapObject : MonoBehaviour
 		}
 		set
 		{
+			if (!enabled) return;
 			ObjectMap.Instance.Move(this, realLocation, value);
 			realLocation = value;
 			VisibleToPlayer = SightRadius.Instance.LocationVisible(realLocation);
@@ -82,6 +83,10 @@ public class MapObject : MonoBehaviour
 	bool on = true;
 	void OnDisable()
 	{
-		if(on) ObjectMap.Instance.Remove(this);
+		if (on)
+		{
+			print("Destroying " + name);
+			ObjectMap.Instance.Remove(this);
+		}
 	}
 }

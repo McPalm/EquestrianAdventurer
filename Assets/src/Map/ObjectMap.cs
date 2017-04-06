@@ -29,6 +29,7 @@ public class ObjectMap : MonoBehaviour
 
 	public void Remove(MapObject o)
 	{
+		//print(o);
 		GetStack(o.RealLocation).Remove(o);
 	}
 
@@ -75,6 +76,8 @@ public class ObjectMap : MonoBehaviour
 
 		public void Remove(MapObject o)
 		{
+			//print(o);
+			//print(objects.Count);
 			objects.Remove(o);
 		}
 	}
