@@ -9,11 +9,13 @@ public class RoomChain5by5 : IGenerator
 	public int roomSize = 8; // including wall
 	public int roomCountDimension = 5;
 
+	IntVector2 moduleAnchor;
+
 	public IntVector2 ModuleAnchor
 	{
 		get
 		{
-			return new IntVector2(21, 21); // TODO
+			return moduleAnchor;
 		}
 	}
 
@@ -161,6 +163,25 @@ public class RoomChain5by5 : IGenerator
 					BuildRoomAt(1 + rx * roomSize, 1 + ry * roomSize, roomSize - 1, roomSize - 1);
 				}
 			}
+		}
+
+		// pick a random room to serve as the module. The anchor is in the middle of the room.
+		if(module)
+		{
+			IntVector2 rv2 = new IntVector2(Random.Range(1, roomCountDimension-1), Random.Range(1, roomCountDimension-1));
+			int failsafe = 0;
+			while (roomgrid[rv2.x][rv2.y] == 0) // reroll location till we get somewhere we can actually place stuffs down at.
+			{
+				failsafe++;
+				rv2 = new IntVector2(Random.Range(1, roomCountDimension - 1), Random.Range(1, roomCountDimension - 1));
+				if(failsafe >= 100)
+				{
+					rv2 = new IntVector2(1, 1);
+					break;
+				}
+			}
+
+			moduleAnchor = new IntVector2(rv2.x * roomSize + roomSize / 2, rv2.y * roomSize + roomSize / 2);
 		}
 
 		// make connections
