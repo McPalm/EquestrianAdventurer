@@ -33,6 +33,14 @@ public class OverMap : MonoBehaviour {
 		con.terrain = MapType.pregenerated;
 		con.sectionName = "ponyville";
 
+		con = GetSectionAt(new IntVector2(-4, 3));
+		con.terrain = MapType.pregenerated;
+		con.sectionName = "ursalair";
+
+		con = GetSectionAt(new IntVector2(3, 4));
+		con.terrain = MapType.pregenerated;
+		con.sectionName = "castleboss";
+
 		GenerateOverMap();
 
 		/*
@@ -52,8 +60,12 @@ public class OverMap : MonoBehaviour {
 		// define sections
 
 		IntVector2[] forest = IntVector2Utility.GetRect(new IntVector2(-1, 0), new IntVector2(1, 2));
-		IntVector2[] castle = IntVector2Utility.GetRect(new IntVector2(2, 2), new IntVector2(3, 4));
-		IntVector2[] cave = IntVector2Utility.GetRect(new IntVector2(-4, 1), new IntVector2(-2, 3));
+		IntVector2[] castle = IntVector2Utility.GetRect(new IntVector2(2, 2), new IntVector2(4, 3));
+		List<IntVector2> build = new List<IntVector2>();
+		build.AddRange(IntVector2Utility.GetRect(new IntVector2(-4, 1), new IntVector2(-2, 2)));
+		build.Add(new IntVector2(-3, 3));
+		build.Add(new IntVector2(-2, 3));
+		IntVector2[] cave = build.ToArray();
 
 		// clear up connections in case we already had one
 
@@ -84,6 +96,14 @@ public class OverMap : MonoBehaviour {
 		
 		con = GetSectionAt(new IntVector2(-2, 2));
 		con.AddConnection(CompassDirection.east);
+		con.terrain = MapType.cave;
+
+		con = GetSectionAt(new IntVector2(-4, 2));
+		con.AddConnection(CompassDirection.north);
+		con.terrain = MapType.cave;
+
+		con = GetSectionAt(new IntVector2(3, 3));
+		con.AddConnection(CompassDirection.north);
 		con.terrain = MapType.cave;
 
 		// setup terrain
