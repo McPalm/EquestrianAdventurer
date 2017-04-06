@@ -507,8 +507,8 @@ public class OverMap : MonoBehaviour {
 
 			if (generator != null)
 			{
-				generator.Generate(connections);
-				section.LoadFromBlueprint(generator.GetResult(), palette);
+				generator.Generate(connections, givenModule != null);
+				section.LoadFromBlueprint(generator.GetResult(), generator.ModuleAnchor, palette);
 			}
 		}
 	}

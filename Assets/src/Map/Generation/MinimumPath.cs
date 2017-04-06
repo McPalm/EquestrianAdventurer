@@ -1,20 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-
 public class MinimumPath : IGenerator
 {
 
 	int[][] map;
 	public int thickness = 0;
 	public int midpointradius = 5;
+	IntVector2 moduleAnchor;
 
-	public void Generate(CompassDirection connections)
+	public IntVector2 ModuleAnchor
+	{
+		get
+		{
+			return moduleAnchor;
+		}
+	}
+
+	public void Generate(CompassDirection connections, bool module)
 	{
 		map = new int[MapSectionData.DIMENSIONS][];
 		for (int x = 0; x < MapSectionData.DIMENSIONS; x++)
 		{
 			map[x] = new int[MapSectionData.DIMENSIONS];
+		}
+		if(module)
+		{
+			moduleAnchor = new IntVector2(Random.Range(MapSectionData.DIMENSIONS/2 - midpointradius, MapSectionData.DIMENSIONS/2 + midpointradius), Random.Range(MapSectionData.DIMENSIONS/2 - midpointradius, MapSectionData.DIMENSIONS / 2 + midpointradius));
 		}
 
 		// connect all external connections
@@ -37,6 +49,10 @@ public class MinimumPath : IGenerator
 			if ((connections & CompassDirection.south) != 0)
 			{
 				connectionTiles.Add(new IntVector2(MapSectionData.DIMENSIONS / 2, 0));
+			}
+			if(module)
+			{
+				connectionTiles.Add(moduleAnchor);
 			}
 
 			if (connectionTiles.Count == 1)

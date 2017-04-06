@@ -5,8 +5,17 @@ using System;
 public class ForestGenerator : AbsGenerator
 {
 	public float foilageDensity = 0.2f;
+	IntVector2 moduleAnchor;
 
-	public override void Generate(CompassDirection connections)
+	public override IntVector2 ModuleAnchor
+	{
+		get
+		{
+			return moduleAnchor;
+		}
+	}
+
+	public override void Generate(CompassDirection connections, bool module)
 	{
 		map = new int[MapSectionData.DIMENSIONS][];
 		for(int x = 0; x < MapSectionData.DIMENSIONS; x++)
@@ -18,20 +27,22 @@ public class ForestGenerator : AbsGenerator
 		CellularAutomata generator = new CellularAutomata();
 		generator.density = 0.50f;
 		generator.iterations = 2;
-		generator.Generate(0);
+		generator.Generate(0, false);
 		AddResults(generator.GetResult());
-		generator.Generate(0);
+		generator.Generate(0, false);
 		AddResults(generator.GetResult());
 		generator.density = 0.45f;
 		generator.iterations = 5;
-		generator.Generate(0);
+		generator.Generate(0, false);
 		AddResults(generator.GetResult());
 
 
 		// Union with a minimum path o make sure we got connection to other areas
 		MinimumPath minPath = new MinimumPath();
 		minPath.thickness = 3;
-		minPath.Generate(connections);
+		minPath.midpointradius = MapSectionData.DIMENSIONS / 4;
+		minPath.Generate(connections, module);
+		moduleAnchor = minPath.ModuleAnchor;
 		UnionResults(minPath.GetResult());
 
 		// scatter a few walls around that will be turned into trees and rocks in the next step

@@ -8,7 +8,15 @@ public class CellularAutomata : IGenerator
 	public float density = 0.44f;
 	public int iterations = 3;
 
-	public void Generate(CompassDirection connections)
+	public IntVector2 ModuleAnchor
+	{
+		get
+		{
+			return new IntVector2(21, 21);
+		}
+	}
+
+	public void Generate(CompassDirection connections, bool module)
 	{
 		map = new int[MapSectionData.DIMENSIONS][];
 		for(int x = 0; x < MapSectionData.DIMENSIONS; x++)

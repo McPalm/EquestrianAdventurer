@@ -9,8 +9,15 @@ public class RoomChain5by5 : IGenerator
 	public int roomSize = 8; // including wall
 	public int roomCountDimension = 5;
 
+	public IntVector2 ModuleAnchor
+	{
+		get
+		{
+			return new IntVector2(21, 21); // TODO
+		}
+	}
 
-	public void Generate(CompassDirection connections)
+	public void Generate(CompassDirection connections, bool module)
 	{
 		map = new int[tileDimension][];
 		for(int x = 0; x < tileDimension; x++)

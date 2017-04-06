@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public abstract class AbsGenerator : IGenerator
 {
 	protected int[][] map;
 
-	public abstract void Generate(CompassDirection connections);
+	virtual public IntVector2 ModuleAnchor
+	{
+		get
+		{
+			return new IntVector2(21, 21);
+		}
+	}
+
+	public abstract void Generate(CompassDirection connections, bool module);
 
 
 	/// <summary>

@@ -62,7 +62,7 @@ public class MapSection : MonoBehaviour
 		HashSet<IntVector2> blocked = new HashSet<IntVector2>();
 
 		// for now, assume that we always spawn the section at 20, 20
-		IntVector2 moduleAnchorLocation = new IntVector2(20, 20);
+		IntVector2 moduleAnchorLocation = data.moduleAnchor;
 
 		if (modulePrefab)
 		{
@@ -197,13 +197,14 @@ public class MapSection : MonoBehaviour
 		data.Save();
 	}
 
-	public void LoadFromBlueprint(int[][] map, params int[] palette)
+	public void LoadFromBlueprint(int[][] map, IntVector2 moduleLocation, params int[] palette)
 	{
 		if(data == null)
 		{
 			data = new MapSectionData(name);
 		}
-		for(int x = 0; x < MapSectionData.DIMENSIONS; x++)
+		data.moduleAnchor = moduleLocation;
+		for (int x = 0; x < MapSectionData.DIMENSIONS; x++)
 		{
 			for(int y = 0; y < MapSectionData.DIMENSIONS; y++)
 			{

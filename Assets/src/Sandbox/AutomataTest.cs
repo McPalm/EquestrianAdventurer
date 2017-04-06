@@ -18,9 +18,9 @@ public class AutomataTest : MonoBehaviour
 
 			RoomChain5by5 generator = new RoomChain5by5();
 
-			generator.Generate(0);
+			generator.Generate(0, false);
 
-			GetComponent<MapSection>().LoadFromBlueprint(generator.GetResult());
+			GetComponent<MapSection>().LoadFromBlueprint(generator.GetResult(), IntVector2.zero);
 
 			generate = false;
 			nextUpdate = true;

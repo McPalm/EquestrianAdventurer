@@ -13,6 +13,7 @@ public class MapSectionData
 
 	public int[][] tiles; // = new int[DIMENSIONS][];
 	public MapSectionData() { }
+	public IntVector2 moduleAnchor = new IntVector2(21, 21);
 
 	public string name;
 
