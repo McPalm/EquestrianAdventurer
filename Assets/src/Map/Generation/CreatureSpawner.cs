@@ -19,15 +19,15 @@ public class CreatureSpawner : MonoBehaviour
 				nextSpawn--;
 				if (nextSpawn < 0)
 				{
-					SpawnAt(x, y);
+					SpawnAt(creatures[Random.Range(0, creatures.Length)], x, y);
 					nextSpawn = Random.Range(0, openTilesPerCreature) + Random.Range(0, openTilesPerCreature);
 				}
 			}
 		}
 	}
 
-	protected void SpawnAt(int x, int y)
+	protected void SpawnAt(GameObject o, int x, int y)
 	{
-		Instantiate(creatures[Random.Range(0, creatures.Length)], targetSection.transform.position + new Vector3(x, y), Quaternion.identity);
+		Instantiate(o, targetSection.transform.position + new Vector3(x, y), Quaternion.identity);
 	}
 }

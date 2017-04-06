@@ -20,10 +20,10 @@ public class CastleSpawner : CreatureSpawner
 			}
 		}
 
-		for(int i = 0; i < spawnLocations.Count; i++) // spawn stuffs into half of the rooms. rounded down...  tho to be fair it might be a good idea to do 100% spawn chance, but have like non combat encounters a plenty. Spawn other stuffs than just eneimes and loot
+		for (int i = 0; i < spawnLocations.Count; i++) // spawn stuffs into half of the rooms. rounded down...  tho to be fair it might be a good idea to do 100% spawn chance, but have like non combat encounters a plenty. Spawn other stuffs than just eneimes and loot
 		{
 			int r = Random.Range(0, spawnLocations.Count);
-			SpawnAt(spawnLocations[r].x, spawnLocations[r].y);
+			SpawnAt(creatures[Random.Range(0, creatures.Length)], spawnLocations[r].x, spawnLocations[r].y);
 			spawnLocations.RemoveAt(r);
 		}
 	}
