@@ -17,7 +17,10 @@ public class OverMap : MonoBehaviour {
 	public MapSectionEvent EventEnterNewSection = new MapSectionEvent();
 
 
-	public MapModule testModule;
+	public MapModule[] forestModules;
+	public MapModule[] caveModules;
+	public MapModule[] castleModules;
+	public MapModule zecorasHut;
 	public bool testDisableSpawn;
 
 
@@ -85,9 +88,9 @@ public class OverMap : MonoBehaviour {
 
 		// setup terrain
 
-		InitSections(debugType, forest); // the initial biome. using debug. for testing ofc.
-		InitSections(MapType.rooms, castle);
-		InitSections(MapType.cave, cave);
+		InitSections(debugType, new MapModule[] {forestModules[Random.Range(0, forestModules.Length)], zecorasHut }, forest); // the initial biome. using debug. for testing ofc.
+		InitSections(MapType.rooms, new MapModule[] { castleModules[Random.Range(0, forestModules.Length)] }, castle);
+		InitSections(MapType.cave, new MapModule[] { caveModules[Random.Range(0, forestModules.Length)] }, cave);
 
 		// roll up connections within section
 
@@ -96,13 +99,25 @@ public class OverMap : MonoBehaviour {
 		RandomizeConnections(cave);
 	}
 
-	void InitSections(MapType terrain, params IntVector2[] sections)
+	void InitSections(MapType terrain, MapModule[] modules, params IntVector2[] sections)
 	{
 		for(int i = 0; i < sections.Length; i++)
 		{
 			GetSectionAt(sections[i]).terrain = terrain;
-			// hackz
-			GetSectionAt(sections[i]).givenModule = testModule; // much hack wow..  tho we will probably do something similar
+			GetSectionAt(sections[i]).givenModule = null;
+		}
+		for(int i = 0; i < modules.Length; i++)
+		{
+			int random = Random.Range(0, sections.Length);
+			for(int j = 0; j < sections.Length; j++)
+			{
+				MapSectionContainer c = GetSectionAt(sections[(random + j) % sections.Length]);
+				if (c.givenModule == null)
+				{
+					c.givenModule = modules[i];
+					break;
+				}
+			}
 		}
 	}
 
