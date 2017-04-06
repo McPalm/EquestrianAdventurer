@@ -40,7 +40,7 @@ public class IdleAI : MonoBehaviour, TurnTracker.TurnEntry
 	// Use this for initialization
 	void Start ()
 	{
-		TurnTracker.Instance.Add(this);
+		
 		home = GetComponent<MapObject>().RealLocation;
 		GetComponent<MapCharacter>().EventDeath.AddListener(delegate { TurnTracker.Instance.Remove(this); });
 	}
@@ -52,5 +52,21 @@ public class IdleAI : MonoBehaviour, TurnTracker.TurnEntry
 		if (GetComponent<Mobile>().MoveDirection(v2, out mc, out inter))
 			return true;
 		return false;
+	}
+
+	
+	bool teardown = false;
+	void OnEnable()
+	{
+		TurnTracker.Instance.Add(this);
+	}
+	void OnDisable()
+	{
+		if (teardown) return;
+		TurnTracker.Instance.Remove(this);
+	}
+	void OnApplicationQuit()
+	{
+		teardown = true;
 	}
 }

@@ -342,6 +342,7 @@ public class OverMap : MonoBehaviour {
 			if (msc.terrain == MapType.forest) cs = forest;
 			if (msc.terrain == MapType.cave) cs = cave;
 			if (msc.terrain == MapType.rooms) cs = castle;
+			if (msc.terrain == MapType.pregenerated) cs = PremadeSpawner.Get(msc.sectionName);
 			if (cs &! testDisableSpawn)
 			{
 				cs.targetSection = msc.section;
@@ -371,7 +372,7 @@ public class OverMap : MonoBehaviour {
 
 	IEnumerator UnloadLoad()
 	{
-		IntVector2[] nature = IntVector2Utility.GetRect(new IntVector2(-4, 0), new IntVector2(3, 4));
+		IntVector2[] nature = IntVector2Utility.GetRect(new IntVector2(-4, 0), new IntVector2(4, 5));
 		yield return  AsyncUnload(nature);
 		GenerateOverMap();
 		yield return new WaitForSeconds(0f);

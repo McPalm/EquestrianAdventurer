@@ -47,7 +47,7 @@ public class MapSection : MonoBehaviour
 		}
 		map.Clear();
 
-		Destroy(module.gameObject);
+		if(module) Destroy(module.gameObject);
 		module = null;
 
 		// remove all map objects within this sections confines...  somehow
