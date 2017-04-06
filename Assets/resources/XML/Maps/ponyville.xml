@@ -1766,4 +1766,5 @@
     </ArrayOfInt>
   </tiles>
   <name>ponyville</name>
+	<palette>default</palette>
 </MapSectionData>

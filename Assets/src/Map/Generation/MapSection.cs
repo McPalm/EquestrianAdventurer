@@ -24,6 +24,7 @@ public class MapSection : MonoBehaviour
 			if (loadSection)
 			{
 				data = MapSectionData.Load(sectionName);
+				paletteName = data.palette;
 				if (data == null) data = new MapSectionData(sectionName);
 			}
 			else
@@ -104,10 +105,6 @@ public class MapSection : MonoBehaviour
 	{
 		location = transform.InverseTransformVector(location);
 		IntVector2 origin = IntVector2.RoundFrom(location);
-
-		print(data);
-		print(data.tiles);
-		print(data.tiles[origin.x][origin.y]);
 
 		int filter = data.tiles[origin.x][origin.y];
 
@@ -194,6 +191,7 @@ public class MapSection : MonoBehaviour
 
 	public void Save()
 	{
+		data.palette = paletteName;
 		data.Save();
 	}
 

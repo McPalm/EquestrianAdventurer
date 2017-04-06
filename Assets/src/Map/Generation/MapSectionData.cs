@@ -17,6 +17,8 @@ public class MapSectionData
 
 	public string name;
 
+	public string palette = "";
+
 	public MapSectionData(string name)
 	{
 		tiles = new int[DIMENSIONS][];
