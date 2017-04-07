@@ -14,7 +14,7 @@ using System;
 public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 {
 	LOSCheck LOS;
-	Crossbow bow;
+	RangedAttack rangedAttack;
 	MapObject me;
 	CharacterActionController controller;
 
@@ -24,6 +24,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 
 	public int alertRadius = 9;
 	public int relaxedRadius = 6;
+	public bool scrimisher;
 
 	IntVector2 lastSeenLocation;
 	bool investigate = false;
@@ -36,7 +37,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 	void Start ()
 	{
 		LOS = GetComponent<LOSCheck>();
-		bow = GetComponent<Crossbow>();
+		rangedAttack = GetComponent<RangedAttack>();
 		me = GetComponent<MapObject>();
 		controller = GetComponent<CharacterActionController>();
 		home = me.RealLocation;
@@ -85,7 +86,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 		//int distance = IntVector2Utility.PFDistance(me.RealLocation, player.RealLocation);
 		if(melee)
 		{
-			if (bow)
+			if (rangedAttack && scrimisher)
 			{
 				acted = MoveAway(target.RealLocation);
 				if (acted) return;
@@ -93,16 +94,16 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 			acted = MoveTowards(target.RealLocation); // if we fail at running. melee the player
 			if (acted) return;
 		}
-		if (target && bow)
+		if (target && rangedAttack)
 		{
-			if (sight && bow.Loaded)
+			if (sight && rangedAttack.Useable)
 			{
-				acted = bow.Attack(target.GetComponent<MapCharacter>()); // Bypasses CharacterActionController, fix this
+				acted = rangedAttack.Attack(target.GetComponent<MapCharacter>()); // Bypasses CharacterActionController, fix this
 				if (acted) return;
 			}
-			else if (!bow.Loaded)
+			else if (rangedAttack is Crossbow && !rangedAttack.Useable)
 			{
-				bow.Reload();
+				(rangedAttack as Crossbow).Reload();
 				return;
 			}
 		}
@@ -244,3 +245,4 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 		}
 	}
 }
+

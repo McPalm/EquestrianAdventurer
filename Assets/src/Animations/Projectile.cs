@@ -64,7 +64,7 @@ public class Projectile : MonoBehaviour
 
 		for (float t = 0; t < time; t += Time.deltaTime)
 		{
-			if (t > stick) tailEnd.position = Vector3.Lerp(start, goal.position, (t - stick) / time);
+			if (t > stick && trail) tailEnd.position = Vector3.Lerp(start, goal.position, (t - stick) / time);
 			projectile.position = Vector3.Lerp(start, goal.position, t / time);
 			yield return new WaitForSeconds(0f);
 		}
@@ -76,7 +76,7 @@ public class Projectile : MonoBehaviour
 			yield return new WaitForSeconds(stick - time);
 			stick -= time;
 		}
-		start = tailEnd.position;
+		if(trail) start = tailEnd.position;
 
 		if(trail && stick > 0f)
 			for (float t = 0f; t < stick; t += Time.deltaTime)
@@ -100,8 +100,8 @@ public class Projectile : MonoBehaviour
 	{
 		if (teardown) return;
 		Destroy(projectile.gameObject);
-		Destroy(trail.gameObject);
-		Destroy(tailEnd.gameObject);
+		if(trail) Destroy(trail.gameObject);
+		if(tailEnd)Destroy(tailEnd.gameObject);
 		Destroy(dummy.gameObject);
 	}
 
