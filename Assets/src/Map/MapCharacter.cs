@@ -48,6 +48,8 @@ public class MapCharacter : MonoBehaviour
 	public MapCharacterEvent EventUpdateStats = new MapCharacterEvent();
 	public MapCharacterEvent EventKillingBlow = new MapCharacterEvent();
 	public NoiseEvent EventHearNoise = new NoiseEvent();
+	public GameobjectEvent EventHit = new GameobjectEvent();
+	public GameobjectEvent EventMiss = new GameobjectEvent();
 
 	// Use this for initialization
 	void Start ()
@@ -82,6 +84,7 @@ public class MapCharacter : MonoBehaviour
 		bool hit = Mathf.Min(Random.value, Random.value) < Stats.HitChance(target.Stats); // (hitSkill / (target.dodgeSkill + hitSkill));
 		if (hit)
 		{
+			EventHit.Invoke(target.gameObject);
 			DamageData data = new DamageData()
 				.SetDamage(Stats.damage * Random.Range(0.75f, 1.25f))
 				.SetArmorPen(Stats.armorpen)
@@ -92,7 +95,10 @@ public class MapCharacter : MonoBehaviour
 			else NoiseUtility.CauseNoise(Random.Range(4, 10), target.GetComponent<MapObject>().RealLocation);
 		}
 		else
+		{
 			CombatTextPool.Instance.PrintAt((Vector3)target.GetComponent<MapObject>().RealLocation + new Vector3(0f, 0.4f), "Dodge", Color.cyan);
+			EventMiss.Invoke(target.gameObject);
+		}
 	}
 
 	void OnHurt(DamageData d)
@@ -152,6 +158,8 @@ public class MapCharacter : MonoBehaviour
 	public class MapCharacterEvent : UnityEvent<MapCharacter> { }
 	[System.Serializable]
 	public class NoiseEvent : UnityEvent<IntVector2, int> { }
+	[System.Serializable]
+	public class GameobjectEvent : UnityEvent<GameObject> { }
 
 	public enum Hostility
 	{
