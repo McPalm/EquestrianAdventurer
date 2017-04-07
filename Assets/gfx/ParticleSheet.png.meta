@@ -1,0 +1,479 @@
+fileFormatVersion: 2
+guid: 05d5c7601634cdb41b30298e6bd12739
+timeCreated: 1491566712
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ParticleSheet_0
+    21300002: ParticleSheet_1
+    21300004: ParticleSheet_2
+    21300006: ParticleSheet_3
+    21300008: ParticleSheet_4
+    21300010: ParticleSheet_5
+    21300012: ParticleSheet_6
+    21300014: ParticleSheet_7
+    21300016: ParticleSheet_8
+    21300018: ParticleSheet_9
+    21300020: ParticleSheet_10
+    21300022: ParticleSheet_11
+    21300024: ParticleSheet_12
+    21300026: ParticleSheet_13
+    21300028: ParticleSheet_14
+    21300030: ParticleSheet_15
+    21300032: ParticleSheet_16
+    21300034: ParticleSheet_17
+    21300036: ParticleSheet_18
+    21300038: ParticleSheet_19
+    21300040: ParticleSheet_20
+    21300042: ParticleSheet_21
+    21300044: ParticleSheet_22
+    21300046: ParticleSheet_23
+    21300048: ParticleSheet_24
+    21300050: ParticleSheet_25
+    21300052: ParticleSheet_26
+    21300054: ParticleSheet_27
+    21300056: ParticleSheet_28
+    21300058: ParticleSheet_29
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ParticleSheet_0
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 426
+        width: 31
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_1
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 427
+        width: 35
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_2
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 421
+        width: 21
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_3
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 422
+        width: 21
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_4
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 441
+        width: 53
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_5
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 460
+        width: 4
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_6
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 438
+        width: 13
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_7
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 468
+        width: 10
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_8
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 446
+        width: 12
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_9
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 469
+        width: 11
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_10
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 440
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_11
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 375
+        width: 51
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_12
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 362
+        width: 60
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_13
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 398
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_14
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 391
+        width: 86
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_15
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 304
+        width: 49
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_16
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 305
+        width: 56
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_17
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 307
+        width: 53
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_18
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 307
+        width: 32
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_19
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 238
+        width: 58
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_20
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 265
+        width: 45
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_21
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 264
+        width: 99
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_22
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 229
+        width: 117
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_23
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 229
+        width: 8
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_24
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 193
+        width: 143
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_25
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 196
+        width: 57
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_26
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 190
+        width: 38
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_27
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 155
+        width: 90
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_28
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 148
+        width: 27
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ParticleSheet_29
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 138
+        width: 32
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

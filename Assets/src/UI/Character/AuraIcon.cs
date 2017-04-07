@@ -30,6 +30,7 @@ public class AuraIcon : MonoBehaviour
 		if (target)
 		{
 			counter.text = target.IconText;
+			tip.hint = target.Tooltip;
 		}
 		else
 		{

@@ -103,7 +103,7 @@ public class MapCharacter : MonoBehaviour
 
 	void OnHurt(DamageData d)
 	{
-		d.multiplier *= stats.DamageReduction(d.armorPenetration);
+		if (d.HasAnyType(DamageTypes.physical | DamageTypes.piercing | DamageTypes.slashing | DamageTypes.bludgeoning)) d.multiplier *= stats.DamageReduction(d.armorPenetration);
 	}
 
 	void OnHurt(int current, int max)
