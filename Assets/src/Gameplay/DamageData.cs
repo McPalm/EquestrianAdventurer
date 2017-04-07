@@ -26,6 +26,11 @@ public class DamageData
 		damage = d;
 		return this;
 	}
+	public DamageData SetDamage(float d)
+	{
+		damage = Mathf.RoundToInt(d);
+		return this;
+	}
 	public DamageData SetArmorPen(int ap)
 	{
 		armorPenetration = ap;

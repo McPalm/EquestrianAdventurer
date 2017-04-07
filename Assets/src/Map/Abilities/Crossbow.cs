@@ -34,7 +34,9 @@ public class Crossbow : RangedAttack
 
 	void OnHit(MapCharacter target)
 	{
-		DamageData data = new DamageData().SetDamage((int)(Damage * Random.Range(0.75f, 1.25f))).SetArmorPen(ArmorPen);
+		DamageData data = new DamageData()
+			.SetDamage(Damage * Random.Range(0.75f, 1.25f))
+			.SetArmorPen(ArmorPen);
 		target.GetComponent<HitPoints>().Hurt(data);
 		HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, data.TotalDamage);
 		reloadTimer = ReloadTime;
