@@ -1,4 +1,4 @@
-﻿Shader "Sprites/Overlay"
+﻿Shader "Sprites/GhostShader"
 {
 	Properties
 	{
@@ -20,7 +20,9 @@
 		Lighting Off
 		ZWrite Off
 		Fog{ Mode Off }
-		Blend One OneMinusSrcAlpha
+		Blend SrcAlpha OneMinusSrcAlpha
+
+		GrabPass{}
 
 		Pass
 		{
@@ -29,6 +31,8 @@
 			#pragma fragment frag
 			#pragma multi_compile DUMMY PIXELSNAP_ON
 			#include "UnityCG.cginc"
+
+			
 
 			struct appdata_t
 			{
@@ -42,6 +46,7 @@
 				float4 vertex   : SV_POSITION;
 				fixed4 color : COLOR;
 				half2 texcoord  : TEXCOORD0;
+				float4 projPos : TEXCOORD1;
 			};
 
 			v2f vert(appdata_t IN)
@@ -50,6 +55,8 @@
 				OUT.vertex = mul(UNITY_MATRIX_MVP, IN.vertex);
 				OUT.texcoord = IN.texcoord;
 				OUT.color = IN.color;
+				OUT.projPos = ComputeScreenPos(OUT.vertex);
+
 		
 				#ifdef PIXELSNAP_ON
 				OUT.vertex = UnityPixelSnap(OUT.vertex);
@@ -59,15 +66,21 @@
 			}
 
 			sampler2D _MainTex;
+			sampler2D _GrabTexture;
 
 			fixed4 frag(v2f IN) : SV_Target
 			{
-				fixed4 c = tex2D(_MainTex, IN.texcoord);
+				fixed4 c = tex2D(_MainTex, IN.texcoord) * IN.color;
+				fixed4 base = tex2D(_GrabTexture, float2(IN.projPos.xy));
 					
-				fixed4 r = c < .5 ? 2.0 * c * IN.color : 1.0 - 2.0 * (1.0 - c) * (1.0 - IN.color);
-				r.a = c.a * IN.color.a;
-				if (c.a = 0) discard;
-				return r;
+				//float lumin = c.r * 0.33 + c.g * 0.33 + c.g * 0.33;
+				// fixed4 r = c * base; // 1.0 - 2.0 * (1.0 - c);
+				fixed4 r;
+				r.rgb = 1.0 - 2.0 * (1.0 - c.rgb) * (1.0 - base.rgb);
+
+				r.a = c.a; // *(0.2 - 0.2 * lumin);
+				return r; // *lumin + c * (1 - lumin);
+
 			}
 			ENDCG
 		}
