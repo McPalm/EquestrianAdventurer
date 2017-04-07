@@ -25,7 +25,7 @@ public class MapCharacter : MonoBehaviour
 	{
 		get
 		{
-			return baseAttributes.Stats + stats + equip + Auras;
+			return Attributes.Stats + stats + equip + Auras;
 		}
 	}
 
@@ -139,10 +139,12 @@ public class MapCharacter : MonoBehaviour
 	void OnChangeEquipment(Inventory i)
 	{
 		equip = new Stats();
+		equipAttributes = new BaseAttributes();
 
-		foreach(Equipment e in i.GetEquipped())
+		foreach (Equipment e in i.GetEquipped())
 		{
 			equip += e.stats;
+			equipAttributes += e.attributes;
 		}
 		Refresh();
 	}

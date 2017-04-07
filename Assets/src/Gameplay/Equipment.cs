@@ -7,6 +7,7 @@ public class Equipment : Item
 	public EquipmentType slots;
 
 	public Stats stats;
+	public BaseAttributes attributes;
 	public int enchantCost = 100;
 	
 
@@ -33,7 +34,7 @@ public class Equipment : Item
 		get
 		{
 			string s = base.Tooltip;
-			s += stats.NeatStringSkipEmpty(0);
+			s += stats.NeatStringSkipEmpty(0) + attributes.NeatStringSkipEmpty(0);
 			/*
 			if (stats.armor != 0) s += "\n Armor: " + stats.armor;
 			if (stats.damage != 0) s += "\n Damage: " + stats.damage;
@@ -59,6 +60,7 @@ public class Equipment : Item
 		e.category = category;
 
 		e.stats = stats;
+		e.attributes = attributes;
 		e.slots = slots;
 		e.enchantCost = enchantCost;
 		
