@@ -10,8 +10,9 @@ public struct Stats
 	public int armor;
 	public int damage;
 	public int armorpen;
+	public DamageTypes damageTypes;
 
-	public Stats(int hp, int hit, int dodge, int armor, int damage, int armorpen)
+	public Stats(int hp, int hit, int dodge, int armor, int damage, int armorpen, DamageTypes damageTypes)
 	{
 		this.hp = hp;
 		this.hit = hit;
@@ -19,6 +20,7 @@ public struct Stats
 		this.armor = armor;
 		this.damage = damage;
 		this.armorpen = armorpen;
+		this.damageTypes = damageTypes;
 	}
 
 	public float HitChance(Stats target)
@@ -47,12 +49,12 @@ public struct Stats
 
 	static public Stats operator + (Stats a, Stats b)
 	{
-		return new Stats(a.hp + b.hp, a.hit + b.hit, a.dodge + b.dodge, a.armor + b.armor, a.damage + b.damage, a.armorpen + b.armorpen);
+		return new Stats(a.hp + b.hp, a.hit + b.hit, a.dodge + b.dodge, a.armor + b.armor, a.damage + b.damage, a.armorpen + b.armorpen, a.damageTypes | b.damageTypes);
 	}
 
 	public override string ToString()
 	{
-		return string.Format("hp {0}, hit {1}, dodge {2}, armor {3}, damage {4}, armorpen {5}", hp, hit, dodge, armor, damage, armorpen);
+		return string.Format("hp {0}, hit {1}, dodge {2}, armor {3}, damage {4}, armorpen {5}, damageTypes{6}", hp, hit, dodge, armor, damage, armorpen, damageTypes);
 	}
 
 	/// <summary>

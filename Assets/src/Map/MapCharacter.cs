@@ -84,7 +84,8 @@ public class MapCharacter : MonoBehaviour
 		{
 			DamageData data = new DamageData()
 				.SetDamage(Stats.damage * Random.Range(0.75f, 1.25f))
-				.SetArmorPen(Stats.armorpen);
+				.SetArmorPen(Stats.armorpen)
+				.AddType(Stats.damageTypes);
 			target.GetComponent<HitPoints>().Hurt(data);
 			HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, data.TotalDamage);
 			if (target.GetComponent<HitPoints>().CurrentHealth <= 0) EventKillingBlow.Invoke(target);
