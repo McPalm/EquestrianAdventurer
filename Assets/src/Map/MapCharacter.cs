@@ -58,7 +58,8 @@ public class MapCharacter : MonoBehaviour
 		GetComponent<HitPoints>().MaxHealth = Stats.hp;
 		GetComponent<HitPoints>().CurrentHealth = Stats.hp;
 		GetComponent<HitPoints>().EventChangeHealth.AddListener(OnHurt);
-		if(GetComponent<Inventory>()) GetComponent<Inventory>().EventChangeEquipment.AddListener(OnChangeEquipment);
+		GetComponent<HitPoints>().EventBeforeHurt.AddListener(OnHurt);
+		if (GetComponent<Inventory>()) GetComponent<Inventory>().EventChangeEquipment.AddListener(OnChangeEquipment);
 		if (EventDeath.GetPersistentEventCount() == 0) EventDeath.AddListener(DefaultDeath);
 		// maybe get a health bar and shit
 	}
@@ -81,14 +82,20 @@ public class MapCharacter : MonoBehaviour
 		bool hit = Mathf.Min(Random.value, Random.value) < Stats.HitChance(target.Stats); // (hitSkill / (target.dodgeSkill + hitSkill));
 		if (hit)
 		{
-			int damage = Stats.DamageVersus(target.Stats, Random.Range(0.75f, 1.25f), Random.value);   // (0.75f + Random.value * 0.5f) * baseDamage * 10f / (10f + target.armor);
-			target.GetComponent<HitPoints>().Hurt(new DamageData().SetDamage((int)damage));
-			HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, (int)damage);
+			DamageData data = new DamageData();
+			data.damage = (int)(Stats.damage * Random.Range(0.75f, 1.25f));
+			target.GetComponent<HitPoints>().Hurt(data);
+			HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, data.TotalDamage);
 			if (target.GetComponent<HitPoints>().CurrentHealth <= 0) EventKillingBlow.Invoke(target);
 			else NoiseUtility.CauseNoise(Random.Range(4, 10), target.GetComponent<MapObject>().RealLocation);
 		}
 		else
 			CombatTextPool.Instance.PrintAt((Vector3)target.GetComponent<MapObject>().RealLocation + new Vector3(0f, 0.4f), "Dodge", Color.cyan);
+	}
+
+	void OnHurt(DamageData d)
+	{
+		d.multiplier *= stats.DamageReduction(d.armorPenetration);
 	}
 
 	void OnHurt(int current, int max)

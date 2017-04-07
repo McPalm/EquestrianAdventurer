@@ -85,7 +85,6 @@ public class MapObject : MonoBehaviour
 	{
 		if (on)
 		{
-			print("Destroying " + name);
 			ObjectMap.Instance.Remove(this);
 		}
 	}

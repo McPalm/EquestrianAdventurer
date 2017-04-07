@@ -11,8 +11,7 @@ public class DamageData
 	public int damage = 0;
 
 	public float multiplier = 1f;
-
-	public bool ghostTouch = false;
+	public int armorPenetration = 0;
 
 	public int TotalDamage
 	{
@@ -27,7 +26,11 @@ public class DamageData
 		damage = d;
 		return this;
 	}
-
+	public DamageData SetArmorPen(int ap)
+	{
+		armorPenetration = ap;
+		return this;
+	}
 
 	public DamageData AddType(DamageTypes dt)
 	{
