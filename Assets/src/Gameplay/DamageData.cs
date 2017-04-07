@@ -1,4 +1,7 @@
-﻿[System.Serializable]
+﻿using UnityEngine;
+using UnityEngine.Events;
+
+[System.Serializable]
 public class DamageData
 {
 
@@ -6,14 +9,16 @@ public class DamageData
 
 	// all fields need to be public in order to be serialized and sent over the network.
 	public int damage = 0;
-	public int precision = 0;
-	public int critical = 0;
+
+	public float multiplier = 1f;
+
+	public bool ghostTouch = false;
 
 	public int TotalDamage
 	{
 		get
 		{
-			return damage + precision;
+			return Mathf.RoundToInt(damage * multiplier);
 		}
 	}
 
@@ -23,17 +28,6 @@ public class DamageData
 		return this;
 	}
 
-	public DamageData SetPrecision(int d)
-	{
-		precision = d;
-		return this;
-	}
-
-	public DamageData SetCritical(int d)
-	{
-		critical = d;
-		return this;
-	}
 
 	public DamageData AddType(DamageTypes dt)
 	{
@@ -54,4 +48,7 @@ public class DamageData
 		if (dt == 0) return dt == damageType;
 		return (damageType & dt) != 0;
 	}
+
+	[System.Serializable]
+	public class DamageEvent : UnityEvent<DamageData> { }
 }

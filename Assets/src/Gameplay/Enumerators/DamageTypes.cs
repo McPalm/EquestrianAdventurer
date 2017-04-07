@@ -17,5 +17,6 @@ public enum DamageTypes
 	cold = 0x200,
 	electric = 0x400,
 	acid = 0x800,
-	sonic = 0x1000
+	sonic = 0x1000,
+	ghostTouch = 0x2000
 }
