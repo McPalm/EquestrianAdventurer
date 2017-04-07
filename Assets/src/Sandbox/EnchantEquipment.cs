@@ -34,13 +34,23 @@ public static class EnchantEquipment
 			e.value /= 2;
 			return;
 		}
+
+		if (e.slots == EquipmentType.hooves || e.slots == EquipmentType.trinket)
+		{
+			e.attributes += RandomAttribute();
+			e.value += 24;
+		}
+
 		
 		if(Random.value < 0.25f)
 		{
 			if (e.slots == EquipmentType.body)
 				MundaneArmorQuality(e);
-			else
+			else if (e.slots == EquipmentType.weapon)
 				MundaneWeaponQuality(e);
+			else
+				e.attributes += RandomAttribute();
+				
 		}
 		if(Random.value < 0.1f)
 			MagicEnchant(e);
@@ -137,13 +147,45 @@ public static class EnchantEquipment
 				e.stats.hp += plus * 3;
 			}
 		}
-		else
+		else if(e.slots == EquipmentType.weapon)
 		{
 			e.stats.hit += plus;
 			e.stats.damage += plus;
 			e.stats.armorpen += plus;
 		}
+		else
+		{
+			for(int i = 0; i < plus; i++)
+			{
+				e.attributes += RandomAttribute();
+			}
+		}
+		int divineBonus = 0;
+		if (Random.value < 0.2f)
+		{
+			divineBonus = Random.Range(1, 4);
+			for (int i = 0; i < divineBonus; i++)
+				e.attributes += RandomAttribute();
+		}
+		plus += divineBonus;
+
 
 		e.value += e.enchantCost * plus * plus;
+		if (plus + divineBonus > 5)
+			e.displayName = "Alicorn " + e.displayName;
+	}
+
+	static public BaseAttributes RandomAttribute()
+	{
+		BaseAttributes r = new BaseAttributes();
+		switch(Random.Range(0, 5))
+		{
+			case 0: r.Strenght = 1; break;
+			case 1: r.Dexterity = 1; break;
+			case 2: r.Agility = 1; break;
+			case 3: r.Endurance = 1; break;
+			case 4: r.Tenacity = 1; break;
+		}
+		return r;
 	}
 }

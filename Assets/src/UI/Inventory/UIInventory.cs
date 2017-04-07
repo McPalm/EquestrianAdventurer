@@ -12,6 +12,8 @@ public class UIInventory : MonoBehaviour
 	public DropArea Equipment;
 	public DropArea WeaponSlot;
 	public DropArea ArmorSlot;
+	public DropArea TrinketSlot;
+	public DropArea HoovesSlot;
 
 	[Space(10)] // view component
 
@@ -32,6 +34,8 @@ public class UIInventory : MonoBehaviour
 
 		WeaponSlot.EventDropOutside.AddListener(OnDropOutside);
 		ArmorSlot.EventDropOutside.AddListener(OnDropOutside);
+		TrinketSlot.EventDropOutside.AddListener(OnDropOutside);
+		HoovesSlot.EventDropOutside.AddListener(OnDropOutside);
 
 
 		model.EventAddConsumable.AddListener(ModelAddConsumeable);
@@ -79,6 +83,12 @@ public class UIInventory : MonoBehaviour
 			case EquipmentType.weapon:
 				ui.DropIn(WeaponSlot);
 				break;
+			case EquipmentType.trinket:
+				ui.DropIn(TrinketSlot);
+				break;
+			case EquipmentType.hooves:
+				ui.DropIn(HoovesSlot);
+				break;
 			default:
 				Debug.LogWarning("Viewer unable to equip slot: " + s.ToString());
 				break;
@@ -108,7 +118,7 @@ public class UIInventory : MonoBehaviour
 	{
 		UIItem ui = d.GetComponent<UIItem>();
 		if (!ui) return;
-		if(ui.Item is Equipment && (destination == WeaponSlot || destination == ArmorSlot) )
+		if(ui.Item is Equipment && (destination == WeaponSlot || destination == ArmorSlot || destination == TrinketSlot || destination == HoovesSlot) )
 		{
 			model.EquipItem(ui.Item as Equipment);
 		}
@@ -122,8 +132,12 @@ public class UIInventory : MonoBehaviour
 	{
 		if(source == WeaponSlot)
 			model.UnEquip(EquipmentType.weapon);
-		else if(source == ArmorSlot)
+		if(source == ArmorSlot)
 			model.UnEquip(EquipmentType.body);
+		if (source == TrinketSlot)
+			model.UnEquip(EquipmentType.trinket);
+		else if (source == HoovesSlot)
+			model.UnEquip(EquipmentType.hooves);
 	}
 
 	void OnDropOutside(Draggable d, DropArea a)
@@ -133,12 +147,13 @@ public class UIInventory : MonoBehaviour
 		if (a == Equipment)
 			model.DropItem(ui.Item);
 		else if (a == WeaponSlot)
-		{
-			print("here");
 			model.UnEquip(EquipmentType.weapon, true);
-		}
 		else if (a == ArmorSlot)
 			model.UnEquip(EquipmentType.body, true);
+		else if (a == TrinketSlot)
+			model.UnEquip(EquipmentType.trinket, true);
+		else if (a == HoovesSlot)
+			model.UnEquip(EquipmentType.hooves, true);
 		else
 			model.DropItem(ui.Item); // in theory, this should let us drop items from the consumable bar.
 	}
