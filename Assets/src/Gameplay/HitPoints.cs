@@ -7,6 +7,8 @@ public class HitPoints : MonoBehaviour
 	int damageTaken;
 	
 	public HealthEvent EventChangeHealth;
+	public DamageData.DamageEvent EventBeforeHurt;
+	public DamageData.DamageEvent EventBeforeHeal;
 
 	void Start()
 	{
@@ -52,12 +54,14 @@ public class HitPoints : MonoBehaviour
 
 	public void Hurt(DamageData d)
 	{
+		EventBeforeHurt.Invoke(d);
 		damageTaken += d.TotalDamage;
 		EventChangeHealth.Invoke(maxHealth - damageTaken, maxHealth);
 	}
 	
 	public void Heal(DamageData d)
 	{
+		EventBeforeHeal.Invoke(d);
 		CurrentHealth += d.TotalDamage;	
 	}
 
@@ -68,4 +72,5 @@ public class HitPoints : MonoBehaviour
 
 	[System.Serializable]
 	public class HealthEvent : UnityEvent<int, int> { }
+	
 }
