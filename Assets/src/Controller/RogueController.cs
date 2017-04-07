@@ -62,8 +62,8 @@ public class RogueController : MonoBehaviour
 				actionBuffer = CharacterActionController.Actions.pickup;
 		}
 
-		
-		if (controller.HasStackedAction || actionBuffer != CharacterActionController.Actions.none && inputcooldown < 0f)
+		if (controller.HasStackedAction && inputcooldown > 0.08f) inputcooldown = 0.08f;
+		if ((controller.HasStackedAction || actionBuffer != CharacterActionController.Actions.none) && inputcooldown < 0f)
 		{
 			if (controller.Perform(actionBuffer))
 			{
