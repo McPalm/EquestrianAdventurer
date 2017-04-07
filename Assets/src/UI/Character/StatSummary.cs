@@ -19,12 +19,9 @@ public class StatSummary : MonoBehaviour
 	
 	void CalcStats (MapCharacter character)
 	{
-		Level level = character.GetComponent<Level>();
-		text.text = "Max HP: " + character.GetComponent<HitPoints>().MaxHealth
-		+ "\nLevel: " + level.level
-		+ "\nExperience: " + level.experience
-		+ "\nNext Level: " + level.NextLevel
-		 + "\n\nAttack: " + character.Stats.damage
+		text.text = character.Attributes.NeatString()
+		 + "\n\nMax HP: " + character.GetComponent<HitPoints>().MaxHealth
+		 + "\nAttack: " + character.Stats.damage
 		 + "\nPen: " + character.Stats.armorpen
 		 + "\nHit: " + character.Stats.hit
 		 + "\nArmor: " + character.Stats.armor + " (" + Mathf.Round(100f - 100f * character.Stats.DamageReduction(0)) + "%)"

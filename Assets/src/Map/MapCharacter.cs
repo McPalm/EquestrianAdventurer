@@ -14,6 +14,10 @@ public class MapCharacter : MonoBehaviour
 	[Space(10)]
 
 	[SerializeField]
+	BaseAttributes baseAttributes;
+	BaseAttributes equipAttributes;
+
+	[SerializeField]
 	Stats stats;
 	Stats equip;
 
@@ -21,7 +25,15 @@ public class MapCharacter : MonoBehaviour
 	{
 		get
 		{
-			return stats + equip + Auras;
+			return baseAttributes.Stats + stats + equip + Auras;
+		}
+	}
+
+	public BaseAttributes Attributes
+	{
+		get
+		{
+			return baseAttributes + equipAttributes;
 		}
 	}
 
@@ -64,6 +76,7 @@ public class MapCharacter : MonoBehaviour
 		if (GetComponent<Inventory>()) GetComponent<Inventory>().EventChangeEquipment.AddListener(OnChangeEquipment);
 		if (EventDeath.GetPersistentEventCount() == 0) EventDeath.AddListener(DefaultDeath);
 		// maybe get a health bar and shit
+		Refresh();
 	}
 
 	public bool HostileTowards(MapCharacter other)
@@ -123,29 +136,15 @@ public class MapCharacter : MonoBehaviour
 		GetComponent<Mobile>().enabled = false;
 	}
 
-	int level = 1;
-
 	void OnChangeEquipment(Inventory i)
 	{
-		equip.hp = level - 1;
-		equip.hit = (2 + level) / 3;
-		equip.dodge = level / 2;
-		equip.armor = 0;
-		equip.armorpen = 0;
-		equip.damage = level / 4;
+		equip = new Stats();
 
 		foreach(Equipment e in i.GetEquipped())
 		{
 			equip += e.stats;
 		}
 		Refresh();
-	}
-
-	public void SetLevel(int i)
-	{
-		level = i;
-		OnChangeEquipment(GetComponent<Inventory>());
-		// GetComponent<HitPoints>().Heal(new DamageData().SetDamage(999)); // yay, max hp on level up!
 	}
 
 	public void Refresh()

@@ -31,7 +31,7 @@ public class Level : MonoBehaviour
 	void LevelUp()
 	{
 		level++;
-		GetComponent<MapCharacter>().SetLevel(level);
+		// GetComponent<MapCharacter>().SetLevel(level);
 	}
 
 	int ExpWorth(MapCharacter c)
