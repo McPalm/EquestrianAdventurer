@@ -5,6 +5,8 @@ public class MapObject : MonoBehaviour
 {
 	MapCharacter mapCharacter;
 	IntVector2 realLocation;
+	bool visibleToPlayer;
+	public string displayName;
 
 	/// <summary>
 	/// The objects real location as far as the game is concerned.
@@ -30,8 +32,13 @@ public class MapObject : MonoBehaviour
 	{
 		set
 		{
+			visibleToPlayer = value;
 			foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
 				sr.enabled = value;
+		}
+		get
+		{
+			return visibleToPlayer;
 		}
 	}
 
