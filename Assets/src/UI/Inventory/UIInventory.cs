@@ -14,6 +14,7 @@ public class UIInventory : MonoBehaviour
 	public DropArea ArmorSlot;
 	public DropArea TrinketSlot;
 	public DropArea HoovesSlot;
+	public DropArea HeadSlot;
 
 	[Space(10)] // view component
 
@@ -36,7 +37,7 @@ public class UIInventory : MonoBehaviour
 		ArmorSlot.EventDropOutside.AddListener(OnDropOutside);
 		TrinketSlot.EventDropOutside.AddListener(OnDropOutside);
 		HoovesSlot.EventDropOutside.AddListener(OnDropOutside);
-
+		HeadSlot.EventDropOutside.AddListener(OnDropOutside);
 
 		model.EventAddConsumable.AddListener(ModelAddConsumeable);
 		for (int i = 0; i < Consumables.Length; i++)
@@ -89,6 +90,9 @@ public class UIInventory : MonoBehaviour
 			case EquipmentType.hooves:
 				ui.DropIn(HoovesSlot);
 				break;
+			case EquipmentType.head:
+				ui.DropIn(HeadSlot);
+				break;
 			default:
 				Debug.LogWarning("Viewer unable to equip slot: " + s.ToString());
 				break;
@@ -118,7 +122,7 @@ public class UIInventory : MonoBehaviour
 	{
 		UIItem ui = d.GetComponent<UIItem>();
 		if (!ui) return;
-		if(ui.Item is Equipment && (destination == WeaponSlot || destination == ArmorSlot || destination == TrinketSlot || destination == HoovesSlot) )
+		if(ui.Item is Equipment && (destination == WeaponSlot || destination == ArmorSlot || destination == TrinketSlot || destination == HoovesSlot || destination == HeadSlot) )
 		{
 			model.EquipItem(ui.Item as Equipment);
 		}
@@ -136,6 +140,8 @@ public class UIInventory : MonoBehaviour
 			model.UnEquip(EquipmentType.body);
 		if (source == TrinketSlot)
 			model.UnEquip(EquipmentType.trinket);
+		if (source == HeadSlot)
+			model.UnEquip(EquipmentType.head);
 		else if (source == HoovesSlot)
 			model.UnEquip(EquipmentType.hooves);
 	}
@@ -154,6 +160,8 @@ public class UIInventory : MonoBehaviour
 			model.UnEquip(EquipmentType.trinket, true);
 		else if (a == HoovesSlot)
 			model.UnEquip(EquipmentType.hooves, true);
+		else if (a == HeadSlot)
+			model.UnEquip(EquipmentType.head, true);
 		else
 			model.DropItem(ui.Item); // in theory, this should let us drop items from the consumable bar.
 	}

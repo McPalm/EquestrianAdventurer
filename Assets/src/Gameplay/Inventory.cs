@@ -25,6 +25,7 @@ public class Inventory : MonoBehaviour
 	Equipment weaponSlot;
 	Equipment trinketSlot;
 	Equipment hoovesSlot;
+	Equipment headSlot;
 
 	private bool EmptySpace
 	{
@@ -313,6 +314,23 @@ public class Inventory : MonoBehaviour
 				EventChangeEquipment.Invoke(this);
 				EventEquipItem.Invoke(e, EquipmentType.hooves);
 				return true;
+			case EquipmentType.head:
+
+				if (headSlot != null)
+				{
+					inventorySize++;
+					if (!UnEquip(headSlot))
+					{
+						inventorySize--;
+						return false;
+					}
+					inventorySize--;
+				}
+				RemoveItem(e);
+				headSlot = e;
+				EventChangeEquipment.Invoke(this);
+				EventEquipItem.Invoke(e, EquipmentType.head);
+				return true;
 		}
 		return false;
 	}
@@ -341,6 +359,9 @@ public class Inventory : MonoBehaviour
 			case EquipmentType.hooves:
 				if (hoovesSlot == null) return false;
 				return UnEquip(hoovesSlot, drop);
+			case EquipmentType.head:
+				if (headSlot == null) return false;
+				return UnEquip(headSlot, drop);
 		}
 		return false;
 	}
@@ -388,6 +409,14 @@ public class Inventory : MonoBehaviour
 				EventChangeEquipment.Invoke(this);
 				if (drop) DropItem(item);
 				return true;
+			case EquipmentType.head:
+				if (headSlot != item) return false;
+				AddOrPutOnGround(headSlot);
+				headSlot = null;
+				EventUnEquipItem.Invoke(item, EquipmentType.head);
+				EventChangeEquipment.Invoke(this);
+				if (drop) DropItem(item);
+				return true;
 		}
 		return false;
 	}
@@ -399,6 +428,7 @@ public class Inventory : MonoBehaviour
 		if (bodySlot != null) ret.Add(bodySlot);
 		if (trinketSlot != null) ret.Add(trinketSlot);
 		if (hoovesSlot != null) ret.Add(hoovesSlot);
+		if (headSlot != null) ret.Add(headSlot);
 
 		return ret.ToArray();
 	}
