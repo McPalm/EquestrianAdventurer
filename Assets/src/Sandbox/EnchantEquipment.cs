@@ -21,7 +21,7 @@ public static class EnchantEquipment
 				e.displayName = "Toy " + e.displayName;
 			else
 				e.displayName = "Anchient " + e.displayName;
-			if (e.slots == EquipmentType.body)
+			if (e.slots == EquipmentType.body || e.slots == EquipmentType.hooves)
 			{
 				e.stats.armor = e.stats.armor * 3 / 4;
 				e.stats.dodge -= 2;
@@ -44,7 +44,7 @@ public static class EnchantEquipment
 		
 		if(Random.value < 0.25f)
 		{
-			if (e.slots == EquipmentType.body)
+			if (e.slots == EquipmentType.body || e.slots == EquipmentType.hooves)
 				MundaneArmorQuality(e);
 			else if (e.slots == EquipmentType.weapon)
 				MundaneWeaponQuality(e);
@@ -116,8 +116,9 @@ public static class EnchantEquipment
 				else
 				{
 					e.displayName = "Lovely " + e.displayName;
-					e.stats.dodge -= (1 + e.stats.dodge / 2);
 					e.stats.hit += (1 + e.stats.dodge / 2);
+					e.stats.dodge -= (1 + e.stats.dodge / 2);
+					
 				}
 				break;
 			case 4:
@@ -129,7 +130,7 @@ public static class EnchantEquipment
 
 	public static void MagicEnchant(Equipment e)
 	{
-		int plus = Mathf.Min(Random.Range(1, 6), Random.Range(1, 6));
+		int plus = Mathf.Min(Random.Range(1, 7), Random.Range(1, 7));
 
 		e.displayName = e.displayName + " +" + plus;
 
@@ -152,6 +153,23 @@ public static class EnchantEquipment
 			e.stats.hit += plus;
 			e.stats.damage += plus;
 			e.stats.armorpen += plus;
+		}
+		else if(e.slots == EquipmentType.hooves)
+		{
+			if(e.stats.armor > e.stats.dodge)
+			{
+				e.stats.armor += plus;
+				e.stats.dodge += plus / 2;
+			}
+			else
+			{
+				e.stats.dodge += plus;
+				e.stats.armor += plus / 2;
+			}
+			for (int i = 0; i < (1 + plus) / 2; i++)
+			{
+				e.attributes += RandomAttribute();
+			}
 		}
 		else
 		{

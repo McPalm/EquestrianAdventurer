@@ -12,12 +12,14 @@ public class DamageData
 
 	public float multiplier = 1f;
 	public int armorPenetration = 0;
+	public bool critical = false;
 
 	public int TotalDamage
 	{
 		get
 		{
-			return Mathf.RoundToInt(damage * multiplier);
+			if(critical) return Mathf.RoundToInt(damage * multiplier * 2f);
+			else return Mathf.RoundToInt(damage * multiplier);
 		}
 	}
 
@@ -34,6 +36,11 @@ public class DamageData
 	public DamageData SetArmorPen(int ap)
 	{
 		armorPenetration = ap;
+		return this;
+	}
+	public DamageData SetCritical(bool crit)
+	{
+		critical = crit;
 		return this;
 	}
 

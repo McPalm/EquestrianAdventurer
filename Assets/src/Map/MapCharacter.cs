@@ -101,9 +101,11 @@ public class MapCharacter : MonoBehaviour
 			DamageData data = new DamageData()
 				.SetDamage(Stats.damage * Random.Range(0.75f, 1.25f))
 				.SetArmorPen(Stats.armorpen)
-				.AddType(Stats.damageTypes);
+				.AddType(Stats.damageTypes)
+				.SetCritical(Random.value < Stats.CritChance(target.Stats));
 			target.GetComponent<HitPoints>().Hurt(data);
 			HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, data.TotalDamage);
+			if (data.critical) CombatTextPool.Instance.PrintAt((Vector3)target.GetComponent<MapObject>().RealLocation + new Vector3(0f, 0.4f), "Crit!", new Color(1f, 0.5f, 0f));
 			if (target.GetComponent<HitPoints>().CurrentHealth <= 0) EventKillingBlow.Invoke(target);
 			else NoiseUtility.CauseNoise(Random.Range(4, 10), target.GetComponent<MapObject>().RealLocation);
 		}
