@@ -23,6 +23,7 @@ public class GroundItem : MonoBehaviour
 		SortRenderingOrder s = gameObject.AddComponent<SortRenderingOrder>();
 		s.startOnly = true;
 		s.mod = - 1;
+		GetComponent<MapObject>().displayName = item.displayName;
 	}
 
 	virtual public Item CloneItem()
