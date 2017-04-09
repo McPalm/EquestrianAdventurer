@@ -37,6 +37,6 @@ public class FoodAura : DurationAura
 	{
 		tick++;
 		tick %= healRate;
-		if (tick == 0) GetComponent<HitPoints>().Heal(new DamageData().SetDamage(1));
+		if (tick == 0) GetComponent<HitPoints>().Heal(new DamageData(gameObject).SetDamage(1));
 	}
 }

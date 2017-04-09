@@ -83,7 +83,7 @@ public class Poison : Aura
 		damagebuildup += damageperround;
 		if(damagebuildup >= 1f)
 		{
-			GetComponent<HitPoints>().Hurt(new DamageData().SetDamage(1).AddType(DamageTypes.poison));
+			GetComponent<HitPoints>().Hurt(new DamageData(gameObject).SetDamage(1).AddType(DamageTypes.poison));
 			outstandingDamage--;
 			damagebuildup -= 1f;
 			CombatTextPool.Instance.PrintAt(transform.position, "-1", Color.green);

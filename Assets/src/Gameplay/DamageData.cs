@@ -13,6 +13,7 @@ public class DamageData
 	public float multiplier = 1f;
 	public int armorPenetration = 0;
 	public bool critical = false;
+	public GameObject source;
 
 	public int TotalDamage
 	{
@@ -21,6 +22,11 @@ public class DamageData
 			if(critical) return Mathf.RoundToInt(damage * multiplier * 2f);
 			else return Mathf.RoundToInt(damage * multiplier);
 		}
+	}
+
+	public DamageData(GameObject source)
+	{
+		this.source = source;
 	}
 
 	public DamageData SetDamage(int d)

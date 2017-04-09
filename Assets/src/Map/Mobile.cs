@@ -45,6 +45,28 @@ public class Mobile : MapObject
 		return true;
 	}
 
+	public bool MoveDirection(IntVector2 v2)
+	{
+		// destination of move
+		IntVector2 d = RealLocation + v2;
+
+		// figure out if we can enter
+		if (BlockMap.Instance.BlockMove(d)) return false;
+
+		// check for other characters
+
+		MapCharacter bump = ObjectMap.Instance.CharacterAt(d);
+		if (bump)
+		{
+			return false;
+		}
+
+		ForceMove(d);
+		// EventMovement.Invoke((Vector2)d, (Vector2)v2);
+
+		return true;
+	}
+
 	/// <summary>
 	/// Check if there is a character or interactable in the given direction.
 	/// </summary>

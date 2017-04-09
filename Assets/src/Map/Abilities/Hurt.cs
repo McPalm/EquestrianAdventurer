@@ -12,7 +12,7 @@ public class Hurt : MonoBehaviour
 		DamageTypes d = DamageTypes.untyped;
 		foreach (DamageTypes dd in damageType)
 			d |= dd;
-		DamageData data = new DamageData()
+		DamageData data = new DamageData(gameObject)
 			.AddType(d)
 			.SetDamage(damage * Random.Range(0.75f, 1.25f));
 		target.GetComponent<HitPoints>().Hurt(data);

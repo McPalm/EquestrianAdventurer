@@ -100,19 +100,19 @@ public class ConsumeableFactory
 	static public void LightHeal(GameObject o)
 	{
 		HitPoints hp = o.GetComponent<HitPoints>();
-		hp.Heal(new DamageData().SetDamage(10));
+		hp.Heal(new DamageData(o).SetDamage(10));
 	}
 
 	static public void MediumHeal(GameObject o)
 	{
 		HitPoints hp = o.GetComponent<HitPoints>();
-		hp.Heal(new DamageData().SetDamage(25));
+		hp.Heal(new DamageData(o).SetDamage(25));
 	}
 
 	static public void BigHeal(GameObject o)
 	{
 		HitPoints hp = o.GetComponent<HitPoints>();
-		hp.Heal(new DamageData().SetDamage(75));
+		hp.Heal(new DamageData(o).SetDamage(75));
 	}
 
 	static public void Nothing(GameObject o)

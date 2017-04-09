@@ -49,7 +49,7 @@ public class HealOverTime : Aura
 
 	void OnEndTurn(CharacterActionController cac, CharacterActionController.Actions a)
 	{
-		GetComponent<HitPoints>().Heal(new DamageData().SetDamage(healFactor));
+		GetComponent<HitPoints>().Heal(new DamageData(gameObject).SetDamage(healFactor));
 		duration--;
 		if (duration < 1)
 		{
