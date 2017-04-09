@@ -67,6 +67,8 @@ public class StaminaPoints : MonoBehaviour
 		{
 			cac.EventAfterAction.AddListener(OnEndTurn);
 		}
+		EventChangeMaxStamina.Invoke(max);
+		EventChangeStamina.Invoke(CurrentStamina);
 	}
 
 	void OnEndTurn(CharacterActionController cac, CharacterActionController.Actions a)

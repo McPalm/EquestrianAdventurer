@@ -19,6 +19,7 @@ public class GUIBar : MonoBehaviour
 	Color baseColor;
 
 	int old;
+	int oldMax;
 	float maxSize;
 
 	void Awake()
@@ -31,8 +32,6 @@ public class GUIBar : MonoBehaviour
 	{
 		if (max == 0) max = 1; // divide by zero
 		if (current < 0) current = 0;
-		// transform.localScale = new Vector3(current / (float)max, 1f, 1f);
-		// Bar.SetSizeWithCurrentAnchors(Anchor, maxSize * current / max);
 		Bar.SetInsetAndSizeFromParentEdge(Anchor, 0f, maxSize * current / max);
 		StopAllCoroutines();
 		if (Drag)
@@ -42,6 +41,33 @@ public class GUIBar : MonoBehaviour
 		old = current;
 
 		text.text = current + "/" + max;
+	}
+
+	public void SetCurrent(int current)
+	{
+		if (oldMax == 0) return;
+		if (current < 0) current = 0;
+		Bar.SetInsetAndSizeFromParentEdge(Anchor, 0f, maxSize * current / oldMax);
+		StopAllCoroutines();
+		if (Drag)
+			StartCoroutine(AnimateDrag(current / (float)oldMax));
+		if (old > current) StartCoroutine(DamageFlash());
+		else Flash.color = baseColor;
+		old = current;
+
+		text.text = current + "/" + oldMax;
+	}
+
+	public void Setmax(int max)
+	{
+		oldMax = max;
+		if (max == 0) max = 1; // divide by zero
+		Bar.SetInsetAndSizeFromParentEdge(Anchor, 0f, maxSize * old / oldMax);
+		StopAllCoroutines();
+		if (Drag)
+			StartCoroutine(AnimateDrag(old / (float)oldMax));
+
+		text.text = old + "/" + oldMax;
 	}
 
 	IEnumerator AnimateDrag(float targetValue)
