@@ -154,6 +154,11 @@ public class MapCharacter : MonoBehaviour
 	public void Refresh()
 	{
 		GetComponent<HitPoints>().MaxHealth = Stats.hp;
+		if (GetComponent<StaminaPoints>())
+		{
+			GetComponent<StaminaPoints>().MaxStamina = Attributes.Endurance + 3;
+			GetComponent<StaminaPoints>().StaminaPerTurn = Attributes.Endurance / 20f;
+		}
 		EventUpdateStats.Invoke(this);
 	}
 

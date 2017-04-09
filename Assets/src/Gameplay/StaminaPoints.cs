@@ -7,9 +7,10 @@ public class StaminaPoints : MonoBehaviour
 	public IntEvent EventChangeStamina = new IntEvent();
 	public IntEvent EventChangeMaxStamina = new IntEvent();
 
-	public int lost = 0;
-	public int max = 0;
-
+	int current = 0;
+	int max = 0;
+	float staminaPerTurn;
+	float recharge = 0f;
 
 	public int MaxStamina
 	{
@@ -23,6 +24,12 @@ public class StaminaPoints : MonoBehaviour
 			{
 				max = value;
 				EventChangeMaxStamina.Invoke(max);
+				if (max < current)
+				{
+					current = max;
+					EventChangeStamina.Invoke(current);
+				}
+
 			}
 		}
 	}
@@ -31,17 +38,31 @@ public class StaminaPoints : MonoBehaviour
 	{
 		get
 		{
-			return max - lost;
+			return current;
 		}
 		private set
 		{
 			if (value < 0) value = 0;
 			if (value > max) value = max;
-			if (max - lost != value)
+			if (current != value)
 			{
-				lost = max - value;
+				current = value;
 				EventChangeStamina.Invoke(CurrentStamina);
 			}
+		}
+	}
+
+	public float StaminaPerTurn
+	{
+		get
+		{
+			return staminaPerTurn;
+		}
+
+		set
+		{
+			if (value < 0f) return;
+			staminaPerTurn = value;
 		}
 	}
 
@@ -50,7 +71,7 @@ public class StaminaPoints : MonoBehaviour
 		if (cost > CurrentStamina)
 			return false;
 		
-		lost += cost;
+		current -= cost;
 		EventChangeStamina.Invoke(CurrentStamina);
 		return true;
 	}
@@ -73,8 +94,17 @@ public class StaminaPoints : MonoBehaviour
 
 	void OnEndTurn(CharacterActionController cac, CharacterActionController.Actions a)
 	{
-		if (a == CharacterActionController.Actions.idle && 0 < lost)
+		if (a == CharacterActionController.Actions.idle && current < max)
 			CurrentStamina++;
+		else
+		{
+			recharge += staminaPerTurn;
+			if (recharge >= 1f)
+			{
+				CurrentStamina++;
+				recharge -= 1f;
+			}
+		}
 	}
 
 	[System.Serializable]
