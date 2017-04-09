@@ -59,9 +59,30 @@ public class LOSCheck : MonoBehaviour
 		return false;
 	}
 
+	public bool HasLOE(IntVector2 t, int range = 0)
+	{
+		
+		if (range == 0) range = sightRadius;
+		if (IntVector2Utility.PFDistance(me.RealLocation, t) <= range)
+		{
+			return HasLOS(me.RealLocation, t);
+		}
+		return false;
+	}
+
 	static public bool HasLOS(MapObject a, MapObject b)
 	{
 		RaycastHit2D[] hits = Physics2D.LinecastAll((Vector2)a.RealLocation, (Vector2)b.RealLocation, 1 << 9);
+
+		foreach (RaycastHit2D hit in hits)
+			if (hit.collider.GetComponent<IMapBlock>().BlockSight) return false;
+
+		return true;
+	}
+
+	static public bool HasLOS(IntVector2 a, IntVector2 b)
+	{
+		RaycastHit2D[] hits = Physics2D.LinecastAll((Vector2)a, (Vector2)b, 1 << 9);
 
 		foreach (RaycastHit2D hit in hits)
 			if (hit.collider.GetComponent<IMapBlock>().BlockSight) return false;

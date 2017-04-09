@@ -76,15 +76,23 @@ public class CharacterActionController : MonoBehaviour
 		{
 			case Actions.up:
 				didathing = Move(Vector2.up, out moveAction);
+				if (moveAction != Actions.movement)
+					a = moveAction;
 				break;
 			case Actions.right:
 				didathing = Move(Vector2.right, out moveAction);
+				if (moveAction != Actions.movement)
+					a = moveAction;
 				break;
 			case Actions.left:
 				didathing = Move(Vector2.left, out moveAction);
+				if (moveAction != Actions.movement)
+					a = moveAction;
 				break;
 			case Actions.down:
 				didathing = Move(Vector2.down, out moveAction);
+				if (moveAction != Actions.movement)
+					a = moveAction;
 				break;
 			case Actions.pickup:
 				didathing = inventory.PickupFromGround();
@@ -97,11 +105,6 @@ public class CharacterActionController : MonoBehaviour
 		if (!didathing) return false;
 
 		if (root > 0) root--;
-
-		if (moveAction != Actions.movement)
-		{
-			a = moveAction;
-		}
 
 		EventAfterAction.Invoke(this, a);
 

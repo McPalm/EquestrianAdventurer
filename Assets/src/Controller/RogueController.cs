@@ -14,6 +14,8 @@ public class RogueController : MonoBehaviour
 
 	CharacterActionController controller;
 
+	public AActiveAbility SelectedAbility;
+
 	// Use this for initialization
 	void Start () {
 		controller = GetComponent<CharacterActionController>();
@@ -76,6 +78,18 @@ public class RogueController : MonoBehaviour
 			}
 			else
 				inputcooldown = 0.1f;
+		}
+		else if(inputcooldown < 0f && Input.GetMouseButtonDown(1))
+		{
+			if (SelectedAbility)
+			{
+				IntVector2 location = IntVector2.RoundFrom(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+				if (SelectedAbility.TryUseAt(location))
+				{
+					controller.Perform(CharacterActionController.Actions.none); // TODO maybe. I dont know.
+					EndTurn();
+				}
+			}
 		}
 	}
 

@@ -7,8 +7,8 @@ public class StaminaPoints : MonoBehaviour
 	public IntEvent EventChangeStamina = new IntEvent();
 	public IntEvent EventChangeMaxStamina = new IntEvent();
 
-	int lost = 0;
-	int max = 0;
+	public int lost = 0;
+	public int max = 0;
 
 
 	public int MaxStamina
@@ -58,6 +58,21 @@ public class StaminaPoints : MonoBehaviour
 	public void ForcePay(int cost)
 	{
 		CurrentStamina -= cost;
+	}
+
+	void Start()
+	{
+		CharacterActionController cac = GetComponent<CharacterActionController>();
+		if(cac)
+		{
+			cac.EventAfterAction.AddListener(OnEndTurn);
+		}
+	}
+
+	void OnEndTurn(CharacterActionController cac, CharacterActionController.Actions a)
+	{
+		if (a == CharacterActionController.Actions.idle && 0 < lost)
+			CurrentStamina++;
 	}
 
 	[System.Serializable]

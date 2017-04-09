@@ -111,6 +111,13 @@ public class Mobile : MapObject
 		RealLocation = v2;
 	}
 
+	public bool CanEnter(IntVector2 v2)
+	{
+		if (BlockMap.Instance.BlockMove(v2)) return false;
+		if (ObjectMap.Instance.CharacterAt(v2)) return false;
+		return true;
+	}
+
 	void OnMove(IntVector2 v2)
 	{
 		StopAllCoroutines();
