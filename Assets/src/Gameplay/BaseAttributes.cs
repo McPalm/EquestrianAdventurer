@@ -25,13 +25,18 @@ public struct BaseAttributes
 	{
 		get
 		{
-			return new Stats(Strenght + Dexterity + Agility + Endurance + Tenacity*3 + Luck, Dexterity, Agility, 0, Strenght, 0, 0, Luck, Luck + Agility);
+			return new Stats(Strenght + Dexterity + Agility + Endurance + Tenacity*3 + Luck, Dexterity, Agility, 0, Strenght, 0, 0, Luck, Luck);
 		}
 	}
 
 	static public BaseAttributes operator + (BaseAttributes a, BaseAttributes b)
 	{
 		return new BaseAttributes(a.Strenght + b.Strenght, a.Dexterity + b.Dexterity, a.Agility + b.Agility, a.Endurance + b.Endurance, a.Tenacity + b.Tenacity, a.Luck + b.Luck);
+	}
+
+	static public BaseAttributes operator -(BaseAttributes a, BaseAttributes b)
+	{
+		return new BaseAttributes(a.Strenght - b.Strenght, a.Dexterity - b.Dexterity, a.Agility - b.Agility, a.Endurance - b.Endurance, a.Tenacity - b.Tenacity, a.Luck - b.Luck);
 	}
 
 	/// <summary>

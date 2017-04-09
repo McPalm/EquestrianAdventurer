@@ -13,12 +13,14 @@ public class Mobile : MapObject
 
 	// Vector2 NetworkedPosition = new Vector2(999999999f, 99999999999f);
 
-		/// <summary>
-		/// Move the character in the given direction
-		/// </summary>
-		/// <param name="v2">direction of movement</param>
-		/// <param name="bump">out parameter for a character that blocks movement, nullable</param>
-		/// <returns>true if we moved, false if we could not move</returns>
+	/// <summary>
+	/// Move the character in the given direction
+	/// </summary>
+	/// <param name="v2">direction of movement</param>
+	/// <param name="bump">out parameter for a character that blocks movement, nullable</param>
+	/// <param name="iBump">out parameter for the interactiable component on what were walking into, nullable</param>
+	/// <param name="bumpOnly">if true, will only attempt a bump in that direction, but will not move</param>
+	/// <returns>true if we moved, false if we could not move</returns>
 	public bool MoveDirection(Vector2 v2, out MapCharacter bump, out Interactable iBump)
 	{
 		// destination of move
@@ -36,11 +38,41 @@ public class Mobile : MapObject
 			iBump = bump.GetComponent<Interactable>();
 			return false;
 		}
-		
+
 		ForceMove(d);
 		EventMovement.Invoke((Vector2)d, v2);
 
 		return true;
+	}
+
+	/// <summary>
+	/// Check if there is a character or interactable in the given direction.
+	/// </summary>
+	/// <param name="directon"></param>
+	/// <param name="bump"></param>
+	/// <param name="iBump"></param>
+	/// <returns></returns>
+	public bool BumpDirection(IntVector2 directon, out MapCharacter bump, out Interactable iBump)
+	{
+		// target location
+		IntVector2 d = RealLocation + directon;
+		bump = null;
+
+		// check for interactable walls
+		if (BlockMap.Instance.BlockMove(d, out iBump))
+		{
+			if (iBump) return true;
+			return false;
+		}
+
+		// check for other characters
+		bump = ObjectMap.Instance.CharacterAt(d);
+		if (bump)
+		{
+			iBump = bump.GetComponent<Interactable>();
+			return true;
+		}
+		return false;
 	}
 
 	public void ForceMove(IntVector2 v2)

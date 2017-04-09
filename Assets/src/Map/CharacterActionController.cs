@@ -9,10 +9,10 @@ public class CharacterActionController : MonoBehaviour
 	Stack<Actions> actionStack = new Stack<Actions>();
 
 	public int confusion = 0;
+	public int root = 0;
 
 	public CharacterActionControllerEvent EventBeforeAction = new CharacterActionControllerEvent();
 	public CharacterActionControllerEvent EventAfterAction = new CharacterActionControllerEvent();
-
 
 	Mobile mobile;
 	MapCharacter mapCharacter;
@@ -70,19 +70,21 @@ public class CharacterActionController : MonoBehaviour
 
 		EventBeforeAction.Invoke(this, a);
 
+		Actions moveAction = Actions.none;
+
 		switch(a)
 		{
 			case Actions.up:
-				didathing = Move(Vector2.up);
+				didathing = Move(Vector2.up, out moveAction);
 				break;
 			case Actions.right:
-				didathing = Move(Vector2.right);
+				didathing = Move(Vector2.right, out moveAction);
 				break;
 			case Actions.left:
-				didathing = Move(Vector2.left);
+				didathing = Move(Vector2.left, out moveAction);
 				break;
 			case Actions.down:
-				didathing = Move(Vector2.down);
+				didathing = Move(Vector2.down, out moveAction);
 				break;
 			case Actions.pickup:
 				didathing = inventory.PickupFromGround();
@@ -94,27 +96,42 @@ public class CharacterActionController : MonoBehaviour
 
 		if (!didathing) return false;
 
+		if (root > 0) root--;
+
+		if (moveAction != Actions.movement)
+		{
+			a = moveAction;
+		}
+
 		EventAfterAction.Invoke(this, a);
 
 		return true;
 	}
 
-	bool Move(Vector2 where)
+	bool Move(Vector2 where, out Actions a)
 	{
 		MapCharacter mc = null;
 		Interactable i = null;
-		if (mobile.MoveDirection(where, out mc, out i))
+		a = Actions.none;
+		if ((root > 0) ? !mobile.BumpDirection(IntVector2.RoundFrom(where), out mc, out i) : mobile.MoveDirection(where, out mc, out i))
 		{
+			if (root == 0) a = Actions.movement;
 			return true;
 		}
 		else if(mc && mapCharacter.HostileTowards(mc))
 		{
 			mapCharacter.Melee(mc);
+			a = Actions.attack;
 			return true;
 		}
 		else if (canInteract && i)
 		{
-			return i.Interact(mobile);
+			
+			if(i.Interact(mobile))
+			{
+				a = Actions.interact;
+				return true;
+			}
 		}
 		return false;
 	}
@@ -132,6 +149,8 @@ public class CharacterActionController : MonoBehaviour
 		right = 0x10,
 		movement = 0x1E, // 2 + 4 + 8 + 16 = 30 = 1E
 		pickup = 0x20,
-		inventoryaction = 0x40
+		inventoryaction = 0x40,
+		attack = 0x80,
+		interact = 0x100,
 	}
 }

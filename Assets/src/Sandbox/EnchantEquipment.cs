@@ -35,25 +35,85 @@ public static class EnchantEquipment
 			return;
 		}
 
-		if (e.slots == EquipmentType.hooves || e.slots == EquipmentType.trinket)
-		{
-			e.attributes += RandomAttribute();
-			e.value += 24;
-		}
-
 		
 		if(Random.value < 0.25f)
 		{
-			if (e.slots == EquipmentType.body || e.slots == EquipmentType.hooves)
+			if (e.slots == EquipmentType.body)
 				MundaneArmorQuality(e);
 			else if (e.slots == EquipmentType.weapon)
 				MundaneWeaponQuality(e);
-			else
+			else if(e.slots == EquipmentType.trinket)
+			{
+				if(Random.value < 0.4f) e.displayName = "Quirky " + e.displayName;
+				else if (Random.value < 0.66f) e.displayName = "Strange " + e.displayName;
+				else if(Random.value < 0.5f) e.displayName = "Peculiar " + e.displayName;
+				else e.displayName = "Perplexing " + e.displayName;
 				e.attributes += RandomAttribute();
+				e.attributes -= RandomAttribute();
+				if (Random.value < 0.4f)
+				{
+					e.attributes += RandomAttribute();
+					e.attributes -= RandomAttribute();
+					if (Random.value < 0.4f)
+					{
+						e.attributes += RandomAttribute();
+						e.attributes -= RandomAttribute();
+						e.value += e.enchantCost;
+					}
+					e.value += e.enchantCost / 2;
+				}
+				e.value += e.enchantCost / 4;
+			}
+			else
+			{
+				MundaneSecondaryArmorEquality(e);
+			}
 				
 		}
 		if(Random.value < 0.1f)
 			MagicEnchant(e);
+	}
+
+	static public void MundaneSecondaryArmorEquality(Equipment e)
+	{
+		switch (Random.Range(0, 5))
+		{
+			case 1:
+				e.displayName = "Sturdy " + e.displayName;
+				e.stats.armor += 1;
+				e.stats.dodge -= 1;
+				e.value += 7;
+				break;
+			case 2:
+				e.displayName = "Quirky " + e.displayName;
+				e.attributes += RandomAttribute();
+				e.attributes -= RandomAttribute();
+				e.value += e.enchantCost / 4;
+				break;
+			case 3:
+				e.displayName = "Lithe " + e.displayName;
+				e.stats.dodge += 1;
+				break;
+			case 4:
+				if(e.stats.armor > 0)
+				{
+					e.displayName = "Bulky " + e.displayName;
+					e.stats.armor += 2;
+					e.stats.dodge -= 1;
+					e.attributes -= RandomAttribute();
+					e.value += e.enchantCost;
+				}
+				else
+				{
+					e.displayName = "Dancers " + e.displayName;
+					e.attributes.Agility += 2;
+					e.stats.hit -= 1;
+					e.attributes -= RandomAttribute();
+					e.value += e.enchantCost;
+				}
+				
+				break;
+		}
 	}
 
 	public static void MundaneWeaponQuality(Equipment e)
@@ -171,6 +231,16 @@ public static class EnchantEquipment
 				e.attributes += RandomAttribute();
 			}
 		}
+		else if (e.slots == EquipmentType.head)
+		{
+			e.stats.armor += plus / 2;
+			e.stats.critAvoid += plus;
+			
+			for (int i = 0; i < (1 + plus) / 2; i++)
+			{
+				e.attributes += RandomAttribute();
+			}
+		}
 		else
 		{
 			for(int i = 0; i < plus; i++)
@@ -178,20 +248,22 @@ public static class EnchantEquipment
 				e.attributes += RandomAttribute();
 			}
 		}
-		int divineBonus = 0;
+		int epic = 0;
 		if (Random.value < 0.2f)
 		{
-			divineBonus = Random.Range(1, 4);
-			for (int i = 0; i < divineBonus; i++)
+			epic = Random.Range(1, 4);
+			for (int i = 0; i < epic; i++)
 				e.attributes += RandomAttribute();
 		}
-		plus += divineBonus;
 
-
+		plus += epic;
 		e.value += e.enchantCost * plus * plus;
-		if (plus + divineBonus > 5)
-			e.displayName = "Alicorn " + e.displayName;
+		if (plus > 7)
+			e.displayName = "Harmonys " + e.displayName;
+		else if (plus > 5)
+			e.displayName = "Alicorns " + e.displayName;
 	}
+
 
 	static public BaseAttributes RandomAttribute()
 	{
