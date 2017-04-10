@@ -34,9 +34,9 @@ public class StoryTriggerComponent : MonoBehaviour
 			InvokeTrigger(st);
 	}
 
-	public void Gift(Item i)
+	public bool Gift(Item i)
 	{
-		if (giftTriggers.Count == 0) return;
+		if (giftTriggers.Count == 0) return false;
 		foreach(StoryTriggersData.StoryTrigger st in giftTriggers)
 		{
 			foreach(string s in st.Keywords)
@@ -44,11 +44,11 @@ public class StoryTriggerComponent : MonoBehaviour
 				if(s.ToLower() == i.displayName.ToLower())
 				{
 					InvokeTrigger(st);
-					return;
+					return true;
 				}
 			}
 		}
-		
+		return false;
 	}
 
 	void InvokeTrigger(StoryTriggersData.StoryTrigger st)

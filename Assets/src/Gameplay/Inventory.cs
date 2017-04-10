@@ -53,16 +53,28 @@ public class Inventory : MonoBehaviour
 		return EmptySpace;
 	}
 
-	public void Gift(GameObject target, Item gift)
+	public bool Contains(Item item)
 	{
-		if (DestroyItem(gift) || RemoveItem(gift))
+		if (items.Contains(item)) return true;
+		for (int i = 0; i < consumables.Length; i++)
+			if (consumables[i] == item) return true;
+		return false;
+	}
+
+	public bool Gift(GameObject target, Item gift)
+	{
+		if (target == gameObject) return false;
+		if (Contains(gift))
 		{
 			StoryTriggerComponent c = target.GetComponent<StoryTriggerComponent>();
-			if(c)
+			if(c && c.Gift(gift))
 			{
-				c.Gift(gift);	
+				DestroyItem(gift);
+				RemoveItem(gift);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	/// <summary>

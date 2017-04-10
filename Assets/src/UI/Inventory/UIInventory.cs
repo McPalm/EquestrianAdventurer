@@ -160,7 +160,10 @@ public class UIInventory : MonoBehaviour
 		UIItem ui = d.GetComponent<UIItem>();
 		if (!ui) return;
 		if (a == Equipment)
-			model.DropItem(ui.Item);
+		{
+			if (!TryGiftUnderMouse(ui))
+				model.DropItem(ui.Item);
+		}
 		else if (a == WeaponSlot)
 			model.UnEquip(EquipmentType.weapon, true);
 		else if (a == ArmorSlot)
@@ -172,7 +175,21 @@ public class UIInventory : MonoBehaviour
 		else if (a == HeadSlot)
 			model.UnEquip(EquipmentType.head, true);
 		else
-			model.DropItem(ui.Item); // in theory, this should let us drop items from the consumable bar.
+		{
+			if(TryGiftUnderMouse(ui))
+				model.DropItem(ui.Item); // in theory, this should let us drop items from the consumable bar.
+		}
+	}
+
+	bool TryGiftUnderMouse(UIItem ui)
+	{
+		MapCharacter c = ObjectMap.Instance.CharacterAt(IntVector2.RoundFrom(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+		if(c)
+		{
+			model.Gift(c.gameObject, ui.Item);
+			return true;
+		}
+		return false;
 	}
 
 	void OnDragToConsumableBar(Draggable d, DropArea source, DropArea destination)
