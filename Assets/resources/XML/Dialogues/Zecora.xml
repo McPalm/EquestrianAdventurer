@@ -5,13 +5,54 @@
     <Snippet>
       <keyword>Hello</keyword>
       <section>
-        <body>Hello!</body>
+        <body>Welcome my little pony
+Please step right into my tree.</body>
         <local>
-          <string>new local</string>
+          <string>Are you okay?</string>
         </local>
         <global />
         <flags />
       </section>
     </Snippet>
+	
+	 <Snippet>
+      <keyword>Are you okay?</keyword>
+      <section>
+        <body>I assure you I am just fine,
+tho you did come at an inopportune time.
+The forest appear to be haunted,
+rending me quite daunted.</body>
+        <local/>
+        <global>
+		 <string>Ghost</string>
+		</global>
+        <flags />
+      </section>
+    </Snippet>
+	
+	<Snippet>
+      <keyword>Ghost</keyword>
+      <section>
+        <body>Ghosts...</body>
+        <local/>
+        <global>
+		 <string>Ghost are a hassle to fight,
+Weapons are weak against this blight.
+You would need a special weapon or a charm,
+to stand any chance to do them any harm.
+
+I could make one of the latter,
+if I had some Ursa Minor Fur.
+You can find some of that in the cave to the north west,
+Just be graceful in this test.
+
+Avoiding the best would be the wisest measure,
+just sneak past it and claim your treasure.</string>
+		</global>
+        <flags />
+      </section>
+    </Snippet>
+	
+	
   </allDialogues>
 </DialogueData>
