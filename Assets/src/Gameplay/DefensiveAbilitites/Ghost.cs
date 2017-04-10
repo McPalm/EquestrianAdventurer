@@ -27,6 +27,6 @@ public class Ghost : MyBehaviour
 	
 	void OnHurt(DamageData d)
 	{
-		if(!d.HasAnyType(DamageTypes.ghostTouch)) d.multiplier *= 0.5f;
+		if(!d.HasAnyType(DamageTypes.ghostTouch)) d.multiplier *= 0.35f;
 	}
 }
