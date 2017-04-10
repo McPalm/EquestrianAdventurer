@@ -39,7 +39,7 @@ public struct Stats
 	{
 		if (critChance < 1) return 0f;
 		if (target.critAvoid < 0) return 0.25f;
-		return critChance / (critChance + target.critAvoid + 1) * 0.25f;
+		return (float)critChance / (critChance + target.critAvoid + 1) * 0.25f;
 
 	}
 
