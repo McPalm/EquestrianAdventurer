@@ -21,11 +21,33 @@ public struct BaseAttributes
 		this.Luck = Luck;
 	}
 
+	public float RecoveryRate
+	{
+		get
+		{
+			if(Endurance < 10f) // soft cappin at 10
+			{
+				return 0.05f + Endurance * 0.01f;
+			}
+			return 0.14f + Endurance * 0.001f;
+		}
+	}
+
+	public int Level
+	{
+		get
+		{
+			return Strenght + Dexterity + Agility + Endurance + Tenacity + Luck;
+		}
+
+	}
+
+	
 	public Stats Stats
 	{
 		get
 		{
-			return new Stats(Strenght + Dexterity + Agility + Endurance + Tenacity*3 + Luck, Dexterity, Agility, 0, Strenght, 0, 0, Luck, Luck);
+			return new Stats(/*HP*/Level + Tenacity*2, /*Hit*/Dexterity, /*Dodge*/Agility, /*Armor*/ 0, /*Damage*/Strenght, /*ArmorPen*/0, /*DamageType*/0, /*Crit*/Luck, /*CritAvoid*/Luck);
 		}
 	}
 

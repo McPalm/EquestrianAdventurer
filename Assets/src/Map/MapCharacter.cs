@@ -157,7 +157,7 @@ public class MapCharacter : MonoBehaviour
 		if (GetComponent<StaminaPoints>())
 		{
 			GetComponent<StaminaPoints>().MaxStamina = Attributes.Endurance + 3;
-			GetComponent<StaminaPoints>().StaminaPerTurn = Attributes.Endurance / 20f;
+			GetComponent<StaminaPoints>().StaminaPerTurn = Attributes.RecoveryRate;
 		}
 		EventUpdateStats.Invoke(this);
 	}
