@@ -14,7 +14,6 @@ public class Discount : MonoBehaviour
 
 	void OnOpenShop(ShopInventory i)
 	{
-		print("Opening inventory");
 		float totalDiscount = 1f;
 		foreach(string s in flags)
 		{

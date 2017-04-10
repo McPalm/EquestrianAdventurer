@@ -53,6 +53,18 @@ public class Inventory : MonoBehaviour
 		return EmptySpace;
 	}
 
+	public void Gift(GameObject target, Item gift)
+	{
+		if (DestroyItem(gift) || RemoveItem(gift))
+		{
+			StoryTriggerComponent c = target.GetComponent<StoryTriggerComponent>();
+			if(c)
+			{
+				c.Gift(gift);	
+			}
+		}
+	}
+
 	/// <summary>
 	/// Picking the first item on the ground
 	/// </summary>

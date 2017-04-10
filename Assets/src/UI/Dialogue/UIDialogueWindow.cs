@@ -20,6 +20,8 @@ public class UIDialogueWindow : MonoBehaviour
 	[SerializeField]
 	Button askButton;
 
+	public GameObject client;
+
 
 	List<Button> buttons = new List<Button>();
 	DialogueData d;
@@ -28,8 +30,9 @@ public class UIDialogueWindow : MonoBehaviour
 	HashSet<string> local = new HashSet<string>();
 	HashSet<string> global = new HashSet<string>();
 
-	public void Open(string fileName, string name, Sprite sprite)
+	public void Open(string fileName, string name, Sprite sprite, GameObject client)
 	{
+		this.client = client;
 		local.Clear();
 		if(DialogueData.TryLoad(fileName, out d))
 		{

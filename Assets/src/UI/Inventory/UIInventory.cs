@@ -20,6 +20,10 @@ public class UIInventory : MonoBehaviour
 
 	public DropArea[] Consumables;
 
+	[Space(10)] // view component
+
+	public DropArea DialogueDrop;
+
 	void Start()
 	{
 		
@@ -44,6 +48,7 @@ public class UIInventory : MonoBehaviour
 		{
 			Consumables[i].EventDropOutside.AddListener(OnDropOutside);
 			Consumables[i].EventDropHere.AddListener(OnDragToConsumableBar);
+			Consumables[i].EventMoveOut.AddListener(OnDragFromInventory);
 		}
 
 		Equipment.capacity = model.inventorySize + 1; // we add one, its an extra slot to allow moving items around.
@@ -129,6 +134,10 @@ public class UIInventory : MonoBehaviour
 		else if (source == Equipment && destination == Equipment)
 		{
 			model.Consume(ui.Item);
+		}
+		else if(destination == DialogueDrop)
+		{
+			model.Gift(FindObjectOfType<UIDialogueWindow>().client, ui.Item);
 		}
 	}
 

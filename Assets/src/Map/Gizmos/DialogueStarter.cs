@@ -15,9 +15,9 @@ public class DialogueStarter : MonoBehaviour
 	public void StartConversation(string fileName)
 	{
 		if(GetComponent<SpriteRenderer>())
-			UIDialogueWindow.Instance.Open(fileName, name, GetComponent<SpriteRenderer>().sprite);
+			UIDialogueWindow.Instance.Open(fileName, name, GetComponent<SpriteRenderer>().sprite, gameObject);
 		else
-			UIDialogueWindow.Instance.Open(fileName, name, null);
+			UIDialogueWindow.Instance.Open(fileName, name, null, gameObject);
 	}
 
 	public void Close()
