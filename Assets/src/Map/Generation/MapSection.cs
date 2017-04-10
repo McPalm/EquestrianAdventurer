@@ -23,13 +23,14 @@ public class MapSection : MonoBehaviour
 		{
 			if (loadSection)
 			{
-				data = MapSectionData.Load(sectionName);
-				paletteName = data.palette;
-				if (data == null) data = new MapSectionData(sectionName);
+				LoadFromFilename(sectionName);
+
 			}
 			else
+			{
 				data = new MapSectionData(sectionName);
-			DrawAll();
+				DrawAll();
+			}
 		}
 	}
 
@@ -209,6 +210,15 @@ public class MapSection : MonoBehaviour
 				data.tiles[x][y] = palette[map[x][y]%palette.Length];
 			}
 		}
+		DrawAll();
+	}
+
+	public void LoadFromFilename(string filename)
+	{
+		sectionName = filename;
+		data = MapSectionData.Load(sectionName);
+		paletteName = data.palette;
+		if (data == null) data = new MapSectionData(sectionName);
 		DrawAll();
 	}
 

@@ -531,9 +531,10 @@ public class OverMap : MonoBehaviour {
 					break;
 				case MapType.pregenerated:
 					generator = null;
-					section.loadSection = true;
+					section.loadSection = false;
 					palette = null;
-					section.sectionName = sectionName;
+					section.LoadFromFilename(sectionName);
+					//section.sectionName = sectionName;
 					section.overlayTint = new Color(0.6f, 0.58f, 0.5f);
 					break;
 				default:
