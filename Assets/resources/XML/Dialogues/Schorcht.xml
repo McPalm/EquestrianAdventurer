@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DialogueData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <fileName>Schorcht</fileName>
+  <allDialogues>
+  
+    <Snippet>
+      <keyword>Hello</keyword>
+      <section>
+        <body>*The pony grunts in response.*
+		
+..Hello, I'm Schorcht, blacksmith, look at my wares or leave me to my work.</body>
+        <local/>
+        <global />
+        <flags />
+      </section>
+    </Snippet>
+	
+	    <Snippet>
+      <keyword>Ghosts</keyword>
+      <section>
+        <body>You have fought ghosts?
+		
+You should talk with Tinkerspark. But if you bring me some obsidian I can craft you a dagger to deal with them.
+
+If you are lucky, you can find that in the cavern deep forest. Its dangerous to go there alone, you should buy a sword.</body>
+        <local/>
+        <global />
+        <flags />
+      </section>
+    </Snippet>
+	
+  </allDialogues>
+</DialogueData>

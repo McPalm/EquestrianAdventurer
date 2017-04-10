@@ -24,14 +24,14 @@ The forest appear to be haunted,
 rending me quite daunted.</body>
         <local/>
         <global>
-		 <string>Ghost</string>
+		 <string>Ghosts</string>
 		</global>
         <flags />
       </section>
     </Snippet>
 	
 	<Snippet>
-      <keyword>Ghost</keyword>
+      <keyword>Ghosts</keyword>
       <section>
         <body>Ghosts...</body>
         <local/>

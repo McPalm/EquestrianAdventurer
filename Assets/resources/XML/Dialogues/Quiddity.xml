@@ -6,7 +6,9 @@
       <keyword>Hello</keyword>
       <section>
         <KeyWord>Hello</KeyWord>
-        <body>Hello!</body>
+        <body>Welcome to Flank-Lovers Café!
+		
+Please have a seat and tell me when you are ready to order something. Or if you would rather take away I'll get what you need right away!</body>
         <local>
           <string>new local</string>
         </local>
