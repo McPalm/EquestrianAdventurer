@@ -20,12 +20,12 @@ public class StoryFlags
 
 	public void AddFlag(string s)
 	{
-		if (flags.Add(s))
+		if (flags.Add(s.ToLower()))
 			Debug.Log("Adding story flag " + s);
 	}
 
 	public bool HasFlag(string s)
 	{
-		return flags.Contains(s);
+		return flags.Contains(s.ToLower());
 	}
 }

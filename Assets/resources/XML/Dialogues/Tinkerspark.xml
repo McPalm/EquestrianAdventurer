@@ -43,5 +43,19 @@ Furthermore I would really not knock over an iron skin potion. Iron skin does ex
     </Snippet>
 	
 	
+	<Snippet>
+      <keyword>Ghosts</keyword>
+      <section>
+        <body>Dealing with incorporeal enemies you say? Well you have come to the right place!
+		
+I got just what you need! Well, at least if you give me a day and I'll brew up some bottled sunlight for you! If you drink it you should turn into the bane of all ghosts existence for a brief moment.</body>
+        <local />
+        <global>
+		 <string>unlocksunlight</string>
+		</global>
+      </section>
+    </Snippet>
+	
+	
   </allDialogues>
 </DialogueData>

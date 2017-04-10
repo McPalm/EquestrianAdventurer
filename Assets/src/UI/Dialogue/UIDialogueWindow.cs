@@ -28,7 +28,6 @@ public class UIDialogueWindow : MonoBehaviour
 	Transform buttonAnchor;
 
 	HashSet<string> local = new HashSet<string>();
-	HashSet<string> global = new HashSet<string>();
 
 	public void Open(string fileName, string name, Sprite sprite, GameObject client)
 	{
@@ -66,8 +65,7 @@ public class UIDialogueWindow : MonoBehaviour
 		{
 			textArea.text = text.body;
 			local.UnionWith(text.local);
-			global.UnionWith(text.global);
-			foreach (string s in text.flags)
+			foreach (string s in text.global)
 				StoryFlags.Instance.AddFlag(s);
 		}
 		else
@@ -96,9 +94,9 @@ public class UIDialogueWindow : MonoBehaviour
 	public void BuildQuestions()
 	{
 		int count = 0;
-		foreach(string key in d.AllKeys)
+		foreach (string key in d.AllKeys)
 		{
-			if (local.Contains(key) || global.Contains(key))
+			if (local.Contains(key) || StoryFlags.Instance.HasFlag(key))
 			{
 				string capturedKey = key; // why does this matter? I thought strings were all cached and immutable
 				if (count == buttons.Count)
@@ -121,10 +119,5 @@ public class UIDialogueWindow : MonoBehaviour
 		}
 		for (int i = count; i < buttons.Count; i++)
 			buttons[i].gameObject.SetActive(false);
-	}
-
-	public void AddGlobalKeyword(string keyword)
-	{
-		global.Add(keyword);
 	}
 }

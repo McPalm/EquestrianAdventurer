@@ -15,6 +15,8 @@ public class ShopInventory : MonoBehaviour
 	public ItemEvent EventPutInBuyBack = new ItemEvent();
 	public ItemEvent EventDestroyItem = new ItemEvent();
 	public ShopEvent EventOpenShop = new ShopEvent();
+	public ShopEvent EventGenerateInventory = new ShopEvent();
+		 
 
 	[HideInInspector]
 	public float priceMultiplier = 1f;
@@ -29,6 +31,8 @@ public class ShopInventory : MonoBehaviour
 	{
 		inventory.Clear();
 		buyBack.Clear();
+
+		EventGenerateInventory.Invoke(this);
 
 		for (int i = 0; i < items.Length; i++)
 		{
@@ -125,6 +129,13 @@ public class ShopInventory : MonoBehaviour
 		inventory.Remove(i);
 		buyBack.Remove(i);
 	}
+
+	public void AddToStock(Item i)
+	{
+		print("Adding " + i.displayName);
+		inventory.Add(i);
+	}
+		 
 
 	public static int SellValue(Item i)
 	{
