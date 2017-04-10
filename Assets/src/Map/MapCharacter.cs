@@ -33,7 +33,7 @@ public class MapCharacter : MonoBehaviour
 	{
 		get
 		{
-			return baseAttributes + equipAttributes;
+			return baseAttributes + equipAttributes + Auras2;
 		}
 	}
 
@@ -46,6 +46,20 @@ public class MapCharacter : MonoBehaviour
 			{
 				if (!a.enabled) continue;
 				t += a.Stats;
+			}
+			return t;
+		}
+	}
+
+	public BaseAttributes Auras2
+	{
+		get
+		{
+			BaseAttributes t = new BaseAttributes();
+			foreach (Aura a in GetComponents<Aura>())
+			{
+				if (!a.enabled) continue;
+				t += a.Attributes;
 			}
 			return t;
 		}

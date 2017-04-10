@@ -48,6 +48,7 @@ public class DurationAura : Aura
 		if(ac)
 		{
 			ac.EventAfterAction.AddListener(OnEndTurn);
+			GetComponent<MapCharacter>().Refresh();
 		}
 		else
 		{

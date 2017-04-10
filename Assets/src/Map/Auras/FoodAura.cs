@@ -31,6 +31,7 @@ public class FoodAura : DurationAura
 			ac.EventAfterAction.AddListener(OnEndTurn);
 		}
 		base.OnEnable();
+		GetComponent<MapCharacter>().Refresh();
 	}
 
 	void OnEndTurn(CharacterActionController cac, CharacterActionController.Actions a)
