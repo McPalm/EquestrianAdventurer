@@ -5,6 +5,7 @@ public class GroundFood : GroundItem
 {
 	[Space(10)]
 	public Stats stats;
+	public BaseAttributes attributes;
 	public int healingRate = 20;
 	public int value;
 	public string displayName;
@@ -23,9 +24,9 @@ public class GroundFood : GroundItem
 			c.displayName = "Gourmet " + displayName;
 			c.Use = (GameObject o) =>
 			{
-				Consume(o, (int)(healingRate * 0.75f / modifier), stats + stats, c.sprite);
+				Consume(o, (int)(healingRate * 0.75f / modifier), stats + stats, attributes + attributes, c.sprite);
 			};
-			c.description = (stats + stats).NeatStringSkipEmpty(0) + "\n" + "Recover 1 HP per " + ((int)(healingRate * 0.75f / modifier)) + " turns.";
+			c.description = (stats + stats).NeatStringSkipEmpty(0) + (attributes + attributes).NeatStringSkipEmpty(0) + "\n" + "Recover 1 HP per " + ((int)(healingRate * 0.75f / modifier)) + " turns.";
 
 		}
 		else
@@ -34,20 +35,21 @@ public class GroundFood : GroundItem
 			c.displayName = displayName;
 			c.Use = (GameObject o) =>
 			{
-				Consume(o, (int)(healingRate * 1f / modifier), stats, c.sprite);
+				Consume(o, (int)(healingRate * 1f / modifier), stats, attributes, c.sprite);
 			};
-			c.description = stats.NeatStringSkipEmpty(0) + "\n" + "Recover 1 HP per " + (int)(healingRate * 1f / modifier) + " turns.";
+			c.description = stats.NeatStringSkipEmpty(0) + attributes.NeatStringSkipEmpty(0) + "\n" + "Recover 1 HP per " + (int)(healingRate * 1f / modifier) + " turns.";
 		}
 
 		return c;
 	}
 
 
-	static void Consume(GameObject o, int healingrate, Stats stats, Sprite s)
+	static void Consume(GameObject o, int healingrate, Stats stats, BaseAttributes b, Sprite s)
 	{
 		FoodAura f = o.AddComponent<FoodAura>();
 		f.healRate = healingrate;
 		f.stats = stats;
+		f.attributes = b;
 		f.Icon = s;
 		f.duration = 1600;
 	}

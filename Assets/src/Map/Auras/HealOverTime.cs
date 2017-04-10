@@ -32,6 +32,14 @@ public class HealOverTime : Aura
 		}
 	}
 
+	public override BaseAttributes Attributes
+	{
+		get
+		{
+			return new BaseAttributes();
+		}
+	}
+
 	// Use this for initialization
 	protected void OnEnable()
 	{

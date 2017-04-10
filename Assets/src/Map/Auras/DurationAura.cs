@@ -7,6 +7,15 @@ public class DurationAura : Aura
 	public string displayName;
 	public int duration;
 	public Stats stats;
+	public BaseAttributes attributes;
+
+	public override BaseAttributes Attributes
+	{
+		get
+		{
+			return attributes;
+		}
+	}
 
 	public override string IconText
 	{
@@ -28,7 +37,7 @@ public class DurationAura : Aura
 	{
 		get
 		{
-			return displayName + "\n" + stats.NeatStringSkipEmpty();
+			return displayName + stats.NeatStringSkipEmpty(0) + attributes.NeatStringSkipEmpty(0);
 		}
 	}
 

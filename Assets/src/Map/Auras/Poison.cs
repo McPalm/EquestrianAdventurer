@@ -5,6 +5,7 @@ using System;
 public class Poison : Aura
 {
 	Stats stats;
+	BaseAttributes attributes;
 
 	int duration;
 	int outstandingDamage;
@@ -38,6 +39,14 @@ public class Poison : Aura
 		}
 	}
 
+	public override BaseAttributes Attributes
+	{
+		get
+		{
+			return attributes;
+		}
+	}
+
 	static public void StackPoison(GameObject target, int duration, int damage, Sprite s)
 	{
 		Poison p = target.GetComponent<Poison>();
@@ -59,7 +68,8 @@ public class Poison : Aura
 	{
 		stats.hit = -1 - (outstandingDamage / 6);
 		stats.dodge = -1 - (outstandingDamage / 6);
-		stats.hp = -1 - (outstandingDamage / 3);
+		stats.hp = -1 - (outstandingDamage / 2);
+		attributes.Endurance = -1 - (outstandingDamage / 3);
 		GetComponent<MapCharacter>().Refresh();
 	}
 

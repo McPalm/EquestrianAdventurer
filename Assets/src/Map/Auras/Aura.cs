@@ -8,6 +8,7 @@ abstract public class Aura : MonoBehaviour
 	public Color IconColor = Color.white;
 
 	abstract public Stats Stats{ get; }
+	abstract public BaseAttributes Attributes { get; }
 	abstract public string IconText { get; }
 	abstract public string Tooltip { get; }
 
