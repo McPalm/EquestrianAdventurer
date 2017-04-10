@@ -60,6 +60,11 @@ public class UIInventory : MonoBehaviour
 		WeaponSlot.EventRemove.AddListener(ViewUnEquip);
 		ArmorSlot.EventRemove.AddListener(ViewUnEquip);
 		*/
+
+		foreach(Item i in model.EquipmentEnumerator)
+		{
+			ModelAddItem(i);
+		}
 	}
 
 	/// <summary>

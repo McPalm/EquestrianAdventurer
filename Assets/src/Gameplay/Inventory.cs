@@ -468,6 +468,14 @@ public class Inventory : MonoBehaviour
 		Debug.Log(printme);
 	}
 
+	public IEnumerable<Item> EquipmentEnumerator
+	{
+		get
+		{
+			return items;
+		}
+	}
+
 	public class InventoryEvent : UnityEvent<Inventory> { }
 	public class ItemEvent : UnityEvent<Item> { }
 	public class EquipEvent : UnityEvent<Equipment, EquipmentType> { }

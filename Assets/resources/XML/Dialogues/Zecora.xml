@@ -33,10 +33,7 @@ rending me quite daunted.</body>
 	<Snippet>
       <keyword>Ghosts</keyword>
       <section>
-        <body>Ghosts...</body>
-        <local/>
-        <global>
-		 <string>Ghost are a hassle to fight,
+        <body>Ghost are a hassle to fight,
 Weapons are weak against this blight.
 You would need a special weapon or a charm,
 to stand any chance to do them any harm.
@@ -47,11 +44,14 @@ You can find some of that in the cave to the north west,
 Just be graceful in this test.
 
 Avoiding the best would be the wisest measure,
-just sneak past it and claim your treasure.</string>
-		</global>
+just sneak past it and claim your treasure.</body>
+        <local/>
+        <global/>
         <flags />
       </section>
     </Snippet>
+	
+	
 	
 	
   </allDialogues>
