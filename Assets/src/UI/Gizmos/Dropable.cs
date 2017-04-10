@@ -34,6 +34,8 @@ public class Dropable : Draggable
 	{
 		localStart = target.localPosition;
 		parentStart = transform.parent;
+
+		// put at an overlay canvass
 		if (DropCanvas.Canvas) transform.SetParent(DropCanvas.Canvas);
 		pickupMousePosition = Input.mousePosition;
 		pickupTime = Time.time;
@@ -41,7 +43,10 @@ public class Dropable : Draggable
 
 	void Drop(GameObject o)
 	{
-		if((Input.mousePosition - pickupMousePosition).magnitude < 10f)
+		// return to the right canvass
+		transform.SetParent(parentStart);
+
+		if ((Input.mousePosition - pickupMousePosition).magnitude < 10f)
 		{
 			Return();
 			if (Time.time - pickupTime < 0.2f)
@@ -51,9 +56,6 @@ public class Dropable : Draggable
 			}
 			return;
 		}
-
-
-		transform.SetParent(parentStart);
 		// find if we have a dropzone underneath
 		List<RaycastResult> results = new List<RaycastResult>();
 		PointerEventData pointerData = new PointerEventData(EventSystem.current)

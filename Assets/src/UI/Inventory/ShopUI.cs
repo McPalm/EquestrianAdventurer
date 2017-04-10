@@ -27,7 +27,17 @@ public class ShopUI : MonoBehaviour
 	void Start ()
 	{
 		playerInventory = FindObjectOfType<UIInventory>();
+
+		playerInventory.EventSellItem.AddListener(OnPlayerInventorySellItem);
+
+		Stock.EventMoveOut.AddListener(OnDragItemsOut);
+		BuyBack.EventMoveOut.AddListener(OnDragItemsOut);
+		Stock.EventDropHere.AddListener(OnDropInShop);
+		BuyBack.EventDropHere.AddListener(OnDropInShop);
+		Stock.EventClick.AddListener(OnShiftClickItemInShop);
+		BuyBack.EventClick.AddListener(OnShiftClickItemInShop);
 	}
+
 
 	public void Open(ShopInventory inventory)
 	{
@@ -60,7 +70,7 @@ public class ShopUI : MonoBehaviour
 		if (si == model) Close();
 	}
 
-		void Build()
+	void Build()
 	{
 		foreach(Item i in model.inventory)
 		{
@@ -74,11 +84,6 @@ public class ShopUI : MonoBehaviour
 			ui.transform.position = Stock.anchor.transform.position;
 			ui.DropIn(BuyBack);
 		}
-
-		Stock.EventMoveOut.AddListener(OnDragItemsOut);
-		BuyBack.EventMoveOut.AddListener(OnDragItemsOut);
-		Stock.EventDropHere.AddListener(OnDropInShop);
-		BuyBack.EventDropHere.AddListener(OnDropInShop);
 	}
 
 	void OnDragItemsOut(Dropable d, DropArea source, DropArea destination)
@@ -100,12 +105,34 @@ public class ShopUI : MonoBehaviour
 
 	void OnDropInShop(Dropable d, DropArea source, DropArea destination)
 	{
-		UIItem i = d.GetComponent<UIItem>();
-		if (!i) return;
+		UIItem ui = d.GetComponent<UIItem>();
+		if (!ui) return;
 		if (source == playerInventory.Equipment)
 		{
-			model.BuyFrom(i.Item, playerInventory.model);
+			model.BuyFrom(ui.Item, playerInventory.model);
 		}
+		for(int i = 0; i < playerInventory.Consumables.Length; i++)
+		{
+			if(source == playerInventory.Consumables[i])
+			{
+				model.BuyFrom(ui.Item, playerInventory.model);
+			}
+		}
+	}
+
+	void OnPlayerInventorySellItem(Item i)
+	{
+		if (!gameObject.activeSelf) return;
+
+		model.BuyFrom(i, playerInventory.model);
+	}
+
+	void OnShiftClickItemInShop(Dropable d)
+	{
+		UIItem ui = d.GetComponent<UIItem>();
+		if (!ui) return;
+		if(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+			model.SellTo(ui.Item, playerInventory.model);
 	}
 
 	void ModelAddBuyback(Item i)

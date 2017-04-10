@@ -24,6 +24,9 @@ public class UIInventory : MonoBehaviour
 
 	public DropArea DialogueDrop;
 
+	public ItemEvent EventSellItem = new ItemEvent();
+		 
+
 	void Start()
 	{
 		
@@ -36,6 +39,7 @@ public class UIInventory : MonoBehaviour
 		Equipment.EventDropHere.AddListener(OnDragToInventory);
 		Equipment.EventDropOutside.AddListener(OnDropOutside);
 		Equipment.EventMoveOut.AddListener(OnDragFromInventory);
+		Equipment.EventClick.AddListener(OnClickInventory);
 
 		WeaponSlot.EventDropOutside.AddListener(OnDropOutside);
 		ArmorSlot.EventDropOutside.AddListener(OnDropOutside);
@@ -128,6 +132,20 @@ public class UIInventory : MonoBehaviour
 	///
 	/// Events incomming from the view
 	///
+
+	void OnClickInventory(Draggable d)
+	{
+		UIItem ui = d.GetComponent<UIItem>();
+		if (!ui) return;
+		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift))
+		{
+			EventSellItem.Invoke(ui.Item);
+		}
+		else if (ui.Item is Equipment)
+		{
+			model.EquipItem(ui.Item as Equipment);
+		}
+	}
 	
 	void OnDragFromInventory(Draggable d, DropArea source, DropArea destination)
 	{
@@ -136,10 +154,6 @@ public class UIInventory : MonoBehaviour
 		if(ui.Item is Equipment && (destination == WeaponSlot || destination == ArmorSlot || destination == TrinketSlot || destination == HoovesSlot || destination == HeadSlot) )
 		{
 			model.EquipItem(ui.Item as Equipment);
-		}
-		else if (source == Equipment && destination == Equipment)
-		{
-			model.Consume(ui.Item);
 		}
 		else if(destination == DialogueDrop)
 		{
@@ -224,7 +238,11 @@ public class UIInventory : MonoBehaviour
 	void OnClickConsumeable(Dropable d)
 	{
 		UIItem ui = d.GetComponent<UIItem>();
-		model.Consume(ui.Item);
+		if (!ui) return;
+		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift))
+			EventSellItem.Invoke(ui.Item);
+		else
+			model.Consume(ui.Item);
 	}
 
 	public class ItemEvent : UnityEvent<Item> { }
