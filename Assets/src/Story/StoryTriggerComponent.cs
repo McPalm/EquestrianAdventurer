@@ -53,6 +53,17 @@ public class StoryTriggerComponent : MonoBehaviour
 
 	void InvokeTrigger(StoryTriggersData.StoryTrigger st)
 	{
-		print("Trigger successfully triggered!");
+		print("Trigger conditions met");
+		switch(st.Action)
+		{
+			case StoryAction.createItem:
+				Inventory playerInventory = FindObjectOfType<RogueController>().GetComponent<Inventory>();
+				Item item = null;
+				if (CreateItem.Instance.TryGet(st.String, out item))
+					playerInventory.AddOrPutOnGround(item);
+				else
+					Debug.LogError("Unable to find " + st.String + " in Item Database");
+				break;
+		}
 	}
 }
