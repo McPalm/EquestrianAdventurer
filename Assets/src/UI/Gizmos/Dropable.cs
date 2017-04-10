@@ -16,9 +16,13 @@ public class Dropable : Draggable
 	/// </summary>
 	public bool autoMove;
 	DropArea current;
+	Vector3 pickupMousePosition;
+	float pickupTime;
+	
 
 	public DropInAreaEvent EventDropInArea = new DropInAreaEvent();
 	public DropableEvent EventDropOutside = new DropableEvent(); // called when not dropping over anything
+	public DropableEvent EventClick = new DropableEvent(); // called if we recognize a click instead of a drop.
 
 	protected void Start()
 	{
@@ -31,10 +35,24 @@ public class Dropable : Draggable
 		localStart = target.localPosition;
 		parentStart = transform.parent;
 		if (DropCanvas.Canvas) transform.SetParent(DropCanvas.Canvas);
+		pickupMousePosition = Input.mousePosition;
+		pickupTime = Time.time;
 	}
 
 	void Drop(GameObject o)
 	{
+		if((Input.mousePosition - pickupMousePosition).magnitude < 10f)
+		{
+			Return();
+			if (Time.time - pickupTime < 0.2f)
+			{
+				if (current) current.EventClick.Invoke(this);
+				EventClick.Invoke(this);
+			}
+			return;
+		}
+
+
 		transform.SetParent(parentStart);
 		// find if we have a dropzone underneath
 		List<RaycastResult> results = new List<RaycastResult>();

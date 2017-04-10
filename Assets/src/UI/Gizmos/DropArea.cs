@@ -18,6 +18,7 @@ public class DropArea : MonoBehaviour
 	public DropEvent EventDropHere = new DropEvent();
 	public DropEvent EventMoveOut = new DropEvent();
 	public DropOutsideEvent EventDropOutside = new DropOutsideEvent();
+	public DropableEvent EventClick = new DropableEvent();
 
 	void Start()
 	{
@@ -99,4 +100,5 @@ public class DropArea : MonoBehaviour
 	/// Source
 	/// </summary>
 	public class DropOutsideEvent : UnityEvent<Dropable, DropArea> { }
+	public class DropableEvent : UnityEvent<Dropable> { }
 }

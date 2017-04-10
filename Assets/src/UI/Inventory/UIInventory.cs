@@ -49,6 +49,7 @@ public class UIInventory : MonoBehaviour
 			Consumables[i].EventDropOutside.AddListener(OnDropOutside);
 			Consumables[i].EventDropHere.AddListener(OnDragToConsumableBar);
 			Consumables[i].EventMoveOut.AddListener(OnDragFromInventory);
+			Consumables[i].EventClick.AddListener(OnClickConsumeable);
 		}
 
 		Equipment.capacity = model.inventorySize + 1; // we add one, its an extra slot to allow moving items around.
@@ -202,11 +203,13 @@ public class UIInventory : MonoBehaviour
 		UIItem ui = d.GetComponent<UIItem>();
 		if (!ui) return;
 
+		/*
 		if(source == destination)
 		{
 			model.Consume(ui.Item);
 			return;
 		}
+		*/
 		
 		for (int i = 0; i < Consumables.Length; i++)
 		{
@@ -216,6 +219,12 @@ public class UIInventory : MonoBehaviour
 			}
 		}
 		
+	}
+
+	void OnClickConsumeable(Dropable d)
+	{
+		UIItem ui = d.GetComponent<UIItem>();
+		model.Consume(ui.Item);
 	}
 
 	public class ItemEvent : UnityEvent<Item> { }
