@@ -37,7 +37,14 @@ public class CaveGenerator : AbsGenerator
 		path.Generate(connections, module);
 		moduleAnchor = path.ModuleAnchor;
 
+		ScatterSingleForbidSorround(3, 0, 0.01f, 1, 2, 0.65f); // scatter a bunch of pillars sorrounded with mushrooms
+		ScatterSingle(3, 1, 0.01f, 1); // scatter a bunch of pillars in open areas
+
 		UnionResults(path.GetResult());
 
 	}
+
+	
+
+
 }

@@ -526,8 +526,9 @@ public class OverMap : MonoBehaviour {
 					break;
 				case MapType.cave:
 					generator = new CaveGenerator();
-					palette = new int[] { 7, 2, 8 };
-					section.overlayTint = new Color(0.44f, 0.44f, 0.5f);
+					section.paletteName = "cave";
+					palette = new int[] { 0, 1, 2, 3 };
+					section.overlayTint = new Color(0.31f, 0.44f, 0.5f);
 					break;
 				case MapType.pregenerated:
 					generator = null;
