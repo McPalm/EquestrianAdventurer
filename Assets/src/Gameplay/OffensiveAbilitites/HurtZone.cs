@@ -10,6 +10,7 @@ public class HurtZone : MyBehaviour, TurnTracker.TurnEntry
 
 	public bool scale = true;
 	public float startSize;
+	public string stackTag = "";
 
 	public void DoTurn()
 	{
@@ -36,6 +37,25 @@ public class HurtZone : MyBehaviour, TurnTracker.TurnEntry
 	// Use this for initialization
 	void Start()
 	{
+		if(stackTag != "")
+		{
+			foreach(MapObject o in ObjectMap.Instance.ObjectsAtLocation(IntVector2.RoundFrom(transform.position)))
+			{
+				HurtZone other = o.GetComponent<HurtZone>();
+				if (other && other != this)
+				{
+					if(other.stackTag == stackTag)
+					{
+						if (other.duration < duration)
+							other.duration = duration;
+						Destroy(gameObject);
+						return;
+					}
+				}
+			}
+		}
+
+
 		TurnTracker.Instance.Add(this);
 		EventDestroy.AddListener(MyDisable);
 		if(scale)
