@@ -33,6 +33,21 @@ public class Projectile : MonoBehaviour
 		dummy = new GameObject("dummy").transform;
 	}
 
+	public void FireAt(GameObject o)
+	{
+		projectile.transform.position = transform.position;
+		float time = (distanceFactor) ? travelingTime * (o.transform.position - transform.position).magnitude : travelingTime;
+		StartCoroutine(Animate(o.transform, projectile, time, stick));
+	}
+
+	public void FirePast(GameObject o)
+	{
+		projectile.transform.position = transform.position;
+		dummy.position = o.transform.position + (o.transform.position - transform.position) * 0.75f + new Vector3(Random.value, Random.value);
+		float time = (distanceFactor) ? travelingTime * (o.transform.position - transform.position).magnitude : travelingTime;
+		StartCoroutine(Animate(dummy, projectile, time, stick));
+	}
+
 	public void FireAt(Component c)
 	{
 		projectile.transform.position = transform.position;
@@ -65,27 +80,31 @@ public class Projectile : MonoBehaviour
 		for (float t = 0; t < time; t += Time.deltaTime)
 		{
 			if (t > stick && trail) tailEnd.position = Vector3.Lerp(start, goal.position, (t - stick) / time);
+			if (!goal) break;
 			projectile.position = Vector3.Lerp(start, goal.position, t / time);
 			yield return new WaitForSeconds(0f);
 		}
-		projectile.transform.position = goal.position;
-		EventOnImpact.Invoke(projectile.transform.position);
-
-		if (stick > time)
+		if (goal)
 		{
-			yield return new WaitForSeconds(stick - time);
-			stick -= time;
-		}
-		if(trail) start = tailEnd.position;
+			projectile.transform.position = goal.position;
+			EventOnImpact.Invoke(projectile.transform.position);
 
-		if(trail && stick > 0f)
-			for (float t = 0f; t < stick; t += Time.deltaTime)
+			if (stick > time)
 			{
-				tailEnd.position = Vector3.Lerp(start, projectile.position, t / stick);
-				yield return new WaitForSeconds(0f);
+				yield return new WaitForSeconds(stick - time);
+				stick -= time;
 			}
-		else if(stick > 0f)
-			yield return new WaitForSeconds(stick);
+			if (trail) start = tailEnd.position;
+
+			if (trail && stick > 0f)
+				for (float t = 0f; t < stick; t += Time.deltaTime)
+				{
+					tailEnd.position = Vector3.Lerp(start, projectile.position, t / stick);
+					yield return new WaitForSeconds(0f);
+				}
+			else if (stick > 0f)
+				yield return new WaitForSeconds(stick);
+		}
 		
 		projectile.gameObject.SetActive(false);
 		if (trail) trail.gameObject.SetActive(false);
