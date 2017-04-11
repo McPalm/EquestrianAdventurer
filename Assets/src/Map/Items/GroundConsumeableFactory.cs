@@ -12,6 +12,7 @@ public class GroundConsumeableFactory : GroundItem
 	[Space(10)]
 	public int healovertime;
 	public int healfactor;
+	public bool idleOnly;
 
 	public override Item CloneItem()
 	{
@@ -20,7 +21,7 @@ public class GroundConsumeableFactory : GroundItem
 
 		if (healovertime > 0)
 		{
-			f.HealOverTime(healovertime, healfactor);
+			f.HealOverTime(healovertime, healfactor, idleOnly);
 		}
 		if (heal > 0) f.SetHeal(heal);
 		if (buffDuration > 0) f.SetStatBoost(stats, buffDuration);

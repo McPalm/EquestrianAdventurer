@@ -7,6 +7,8 @@ public class HealOverTime : Aura
 	public int duration = 0;
 	public int healFactor = 1;
 	public string displayName;
+	public bool idleOnly = false;
+	bool interrupt = false;
 
 	public override string IconText
 	{
@@ -47,6 +49,8 @@ public class HealOverTime : Aura
 		if (ac)
 		{
 			ac.EventAfterAction.AddListener(OnEndTurn);
+			GetComponent<HitPoints>().EventBeforeHurt.AddListener(OnHurt);
+			
 		}
 		else
 		{
@@ -57,12 +61,36 @@ public class HealOverTime : Aura
 
 	void OnEndTurn(CharacterActionController cac, CharacterActionController.Actions a)
 	{
-		GetComponent<HitPoints>().Heal(new DamageData(gameObject).SetDamage(healFactor));
+		HitPoints hp = GetComponent<HitPoints>();
+		hp.Heal(new DamageData(gameObject).SetDamage(healFactor));
 		duration--;
-		if (duration < 1)
+		if (idleOnly && hp.CurrentHealth == hp.MaxHealth) interrupt = true;
+		if (interrupt || duration < 1)
 		{
 			GetComponent<CharacterActionController>().EventAfterAction.RemoveListener(OnEndTurn);
 			Destroy(this);
+			if (idleOnly)
+			{
+				GetComponent<HitPoints>().EventBeforeHurt.RemoveListener(OnHurt);
+			}
+		}
+		else if(idleOnly)
+		{
+			cac.StackAction(CharacterActionController.Actions.idle);
+		}
+	}
+
+	void OnHurt(DamageData d)
+	{
+		if (!idleOnly) return;
+		if(d.damageType == DamageTypes.poison)
+		{
+			// nothing
+		}
+		else
+		{
+			print("hurt, interrupt!");
+			interrupt = true;
 		}
 	}
 }

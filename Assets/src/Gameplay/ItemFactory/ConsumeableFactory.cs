@@ -49,7 +49,6 @@ public class ConsumeableFactory
 
 	public ConsumeableFactory SetHeal(int i)
 	{
-		turns = 2;
 		if (i == 1)
 		{
 			tooltip += "\nHeals 10 hitpoints.";
@@ -77,13 +76,12 @@ public class ConsumeableFactory
 		return this;
 	}
 
-	public ConsumeableFactory HealOverTime(int duration, int factor)
+	public ConsumeableFactory HealOverTime(int duration, int factor, bool idleOnly)
 	{
-		turns = 2;
 		tooltip += "\nHeals for " + (duration * factor) + " over " + duration + " turns.";
 		effect += (GameObject o) =>
 		{
-			HealOverTime(o, duration, factor, label, sprite);
+			HealOverTime(o, duration, factor, label, sprite, idleOnly);
 		};
 		return this;
 	}
@@ -129,12 +127,13 @@ public class ConsumeableFactory
 		a.Icon = s;
 	}
 
-	static public void HealOverTime(GameObject o, int duration, int factor, string name, Sprite s)
+	static public void HealOverTime(GameObject o, int duration, int factor, string name, Sprite s, bool idleOnly)
 	{
 		HealOverTime a = o.AddComponent<HealOverTime>();
 		a.displayName = name;
 		a.duration = duration;
 		a.healFactor = factor;
 		a.Icon = s;
+		a.idleOnly = idleOnly;
 	}
 }
