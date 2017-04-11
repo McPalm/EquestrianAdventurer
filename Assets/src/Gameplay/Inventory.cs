@@ -47,6 +47,7 @@ public class Inventory : MonoBehaviour
 
 	public bool CanAccept(Item i)
 	{
+		if (i.category == ItemCategory.gold) return true;
 		if(i is Consumable)
 		{
 			for (int c = 0; c < SLOTS; c++)
@@ -107,6 +108,11 @@ public class Inventory : MonoBehaviour
 	/// <returns>true of the change went through</returns>
 	public bool TryAddItem(Item i, int slot = -1)
 	{
+		if(i.category == ItemCategory.gold)
+		{
+			GetComponent<Purse>().AddBits(i.value);
+			return true;
+		}
 		if (i is Consumable)
 			return AddConsumable(i as Consumable, slot);
 		if (!EmptySpace) return false;
