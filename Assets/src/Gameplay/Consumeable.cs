@@ -25,6 +25,11 @@ public class Consumable : Item
 		category = ItemCategory.consumeable;
 	}
 
+	public bool StacksWith(Consumable other)
+	{
+		return other.value == value && other.displayName == displayName;
+	}
+
 	override public Item Clone()
 	{
 		Consumable i = new Consumable();

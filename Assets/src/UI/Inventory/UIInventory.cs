@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ public class UIInventory : MonoBehaviour
 	[Space(10)] // view component
 
 	public DropArea[] Consumables;
+	public Text[] StackCounters;
 
 	[Space(10)] // view component
 
@@ -70,6 +72,7 @@ public class UIInventory : MonoBehaviour
 		{
 			ModelAddItem(i);
 		}
+		RefreshStacks();
 	}
 
 	/// <summary>
@@ -117,17 +120,37 @@ public class UIInventory : MonoBehaviour
 	void ModelRemove(Item i)
 	{
 		UIItemPool.Instance.Deactivate(i);
+		RefreshStacks();
 	}
 
-	void ModelAddConsumeable(Item c, int slot)
+	void ModelAddConsumeable(Item c, int slot, int stack)
 	{
-		UIItem ui = UIItemPool.Instance.Get(c);
-		if (slot < Consumables.Length)
-			ui.DropIn(Consumables[slot]);
+		if (stack > 0)
+			UIItemPool.Instance.Deactivate(c);
 		else
-			Debug.LogError("Slot " + slot + " not available in inventory");
+		{
+			UIItem ui = UIItemPool.Instance.Get(c);
+		
+			if (slot < Consumables.Length)
+				ui.DropIn(Consumables[slot]);
+			else
+				Debug.LogError("Slot " + slot + " not available in inventory");
+		}
+		RefreshStacks();
 	}
 
+
+	void RefreshStacks()
+	{
+		for (int i = 0; i < Consumables.Length; i++)
+		{
+			int s = model.StacksInSlot(i);
+			if (s < 2)
+				StackCounters[i].text = "";
+			else
+				StackCounters[i].text = "x" + s;
+		}
+	}
 
 	///
 	/// Events incomming from the view
@@ -196,8 +219,8 @@ public class UIInventory : MonoBehaviour
 			model.UnEquip(EquipmentType.head, true);
 		else
 		{
-			if(TryGiftUnderMouse(ui))
-				model.DropItem(ui.Item); // in theory, this should let us drop items from the consumable bar.
+			TryGiftUnderMouse(ui);
+			model.DropItem(ui.Item); // in theory, this should let us drop items from the consumable bar.
 		}
 	}
 

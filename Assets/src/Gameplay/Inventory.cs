@@ -19,7 +19,10 @@ public class Inventory : MonoBehaviour
 	public ConsumableEvent EventAddConsumable = new ConsumableEvent();
 
 	List<Item> items = new List<Item>(6);
-	Consumable[] consumables = new Consumable[8];
+
+	const int SLOTS = 8;
+	const int STACKS = 4;
+	Consumable[,] consumables = new Consumable[SLOTS,STACKS];
 
 	Equipment bodySlot;
 	Equipment weaponSlot;
@@ -46,8 +49,8 @@ public class Inventory : MonoBehaviour
 	{
 		if(i is Consumable)
 		{
-			for (int c = 0; c < consumables.Length; c++)
-				if (consumables[c] == null) return true;
+			for (int c = 0; c < SLOTS; c++)
+				if (consumables[c, 0] == null) return true;
 			return false;
 		}
 		return EmptySpace;
@@ -56,8 +59,8 @@ public class Inventory : MonoBehaviour
 	public bool Contains(Item item)
 	{
 		if (items.Contains(item)) return true;
-		for (int i = 0; i < consumables.Length; i++)
-			if (consumables[i] == item) return true;
+		for (int i = 0; i < SLOTS; i++)
+			if (consumables[i, 0] == item) return true;
 		return false;
 	}
 
@@ -131,40 +134,94 @@ public class Inventory : MonoBehaviour
 
 	public bool AddConsumable(Consumable c, int slot = -1)
 	{
-		if(slot >= 0 && slot < consumables.Length)
+		if(slot >= 0 && slot < SLOTS)
 		{
-			if(consumables[slot] == null)
+			if (StackInSlot(c, slot))
+				return true;
+		}
+		for (int i = 0; i < SLOTS; i++) // try stack pass
+		{
+			if (consumables[i, 0] != null && StackInSlot(c, i))
 			{
-				consumables[slot] = c;
-				EventAddConsumable.Invoke(c, slot);
 				return true;
 			}
 		}
-		for (int i = 0; i < consumables.Length; i++)
+		for (int i = 0; i < SLOTS; i++) // put in empty pass
 		{
-			if (consumables[i] == null)
+			if (StackInSlot(c, i))
 			{
-				consumables[i] = c;
-				EventAddConsumable.Invoke(c, i);
 				return true;
 			}
 		}	
 		return false;
 	}
 
+	public int StacksInSlot(int slot)
+	{
+		for(int i = 0; i < STACKS; i++)
+		{
+			if (consumables[slot, i] == null) return i;
+		}
+		return 4;
+	}
+
+	bool StackInSlot(Consumable c, int slot)
+	{
+		if(consumables[slot, 0] == null || consumables[slot, 0].StacksWith(c))
+		{
+			for(int i = 0; i < STACKS; i++)
+			{
+				if(consumables[slot, i] == null)
+				{
+					consumables[slot, i] = c;
+					EventAddConsumable.Invoke(c, slot, i);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/// <summary>
+	/// call after we remove an item from a consumable slot. Will shift all items in their right place
+	/// </summary>
+	/// <param name="slot"></param>
+	void ShiftSlot(int slot)
+	{
+		for(int i = 0; i < 3; i++)
+		{
+			for (int off = 1; off < STACKS - i; off++)
+			{
+				if (consumables[slot, i] == null)
+				{
+					if (consumables[slot, i + off] != null)
+					{
+						consumables[slot, i] = consumables[slot, i + off];
+						consumables[slot, i + off] = null;
+						EventAddConsumable.Invoke(consumables[slot, i], slot, i);
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	public bool MoveConsumable(Item item, int slot)
 	{
 		if(item is Consumable)
 		{
-			for (int i = 0; i < consumables.Length; i++)
+			for (int oSlot = 0; oSlot < SLOTS; oSlot++)
 			{
-				if (item == consumables[i])
+				if (item == consumables[oSlot, 0])
 				{
-					if (consumables[slot] == null)
+					if (consumables[slot, 0] == null)
 					{
-						consumables[slot] = item as Consumable;
-						EventAddConsumable.Invoke(item, slot);
-						consumables[i] = null;
+						for (int stack = 0; stack < STACKS; stack++)
+						{
+							consumables[slot, stack] = consumables[oSlot, stack];
+							EventAddConsumable.Invoke(consumables[slot, stack], slot, stack);
+							consumables[oSlot, stack] = null;
+						}
 						return true;
 					}
 				}
@@ -193,13 +250,17 @@ public class Inventory : MonoBehaviour
 
 	public bool RemoveConsumable(Consumable c)
 	{
-		for(int i = 0; i < consumables.Length; i++)
+		for(int i = 0; i < SLOTS; i++)
 		{
-			if(consumables[i] == c)
+			for (int stack = 0; stack < STACKS; stack++)
 			{
-				consumables[i] = null;
-				EventRemoveConsumable.Invoke(c);
-				return true;
+				if (consumables[i, stack] == c)
+				{
+					consumables[i, stack] = null;
+					EventRemoveConsumable.Invoke(c);
+					ShiftSlot(i);
+					return true;
+				}
 			}
 		}
 		return false;
@@ -479,5 +540,5 @@ public class Inventory : MonoBehaviour
 	public class InventoryEvent : UnityEvent<Inventory> { }
 	public class ItemEvent : UnityEvent<Item> { }
 	public class EquipEvent : UnityEvent<Equipment, EquipmentType> { }
-	public class ConsumableEvent : UnityEvent<Item, int> { }
+	public class ConsumableEvent : UnityEvent<Item, int, int> { }
 }
