@@ -82,6 +82,11 @@ public class MapObject : MonoBehaviour
 			VisibleToPlayer = false; // hide outside LOS
 	}
 
+	void Start()
+	{
+		VisibleToPlayer = SightRadius.Instance.LocationVisible(realLocation);
+	}
+
 	void OnApplicationQuit()
 	{
 		on = false;	
