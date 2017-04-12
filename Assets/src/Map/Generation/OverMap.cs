@@ -21,7 +21,10 @@ public class OverMap : MonoBehaviour {
 	public MapModule[] caveModules;
 	public MapModule[] castleModules;
 	public MapModule zecorasHut;
+
+	[Space(10)]
 	public bool testDisableSpawn;
+	public MapModule testModule;
 
 
 	// Use this for initialization
@@ -126,7 +129,12 @@ public class OverMap : MonoBehaviour {
 		for(int i = 0; i < sections.Length; i++)
 		{
 			GetSectionAt(sections[i]).terrain = terrain;
-			GetSectionAt(sections[i]).givenModule = null;
+			if (testModule)
+			{
+				GetSectionAt(sections[i]).givenModule = testModule;
+			}
+			else GetSectionAt(sections[i]).givenModule = null;
+			
 		}
 		for(int i = 0; i < modules.Length; i++)
 		{

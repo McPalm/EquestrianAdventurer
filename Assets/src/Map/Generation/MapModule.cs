@@ -6,6 +6,8 @@ public class MapModule : MonoBehaviour
 	[HideInInspector]
 	public IntVector2[] usedTiles;
 
+	public bool blockSpawn;
+
 	void Awake()
 	{
 		TileVisbility[] v = GetComponentsInChildren<TileVisbility>();
