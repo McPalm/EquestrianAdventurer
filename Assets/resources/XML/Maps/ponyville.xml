@@ -1767,4 +1767,10 @@
   </tiles>
   <name>ponyville</name>
 	<palette>default</palette>
+	<tint>
+    <r>0.6</r>
+    <g>0.58</g>
+    <b>0.5</b>
+    <a>1</a>
+  </tint>
 </MapSectionData>

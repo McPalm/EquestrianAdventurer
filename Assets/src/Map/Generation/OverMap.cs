@@ -536,7 +536,7 @@ public class OverMap : MonoBehaviour {
 					palette = null;
 					section.LoadFromFilename(sectionName);
 					//section.sectionName = sectionName;
-					section.overlayTint = new Color(0.6f, 0.58f, 0.5f);
+					// section.overlayTint = new Color(0.6f, 0.58f, 0.5f);
 					break;
 				default:
 					generator = new RoomChain5by5();

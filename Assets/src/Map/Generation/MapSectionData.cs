@@ -18,6 +18,7 @@ public class MapSectionData
 	public string name;
 
 	public string palette = "";
+	public SerializedColor tint = new SerializedColor(0.5f, 0.5f, 0.5f, 1f);
 
 	public MapSectionData(string name)
 	{

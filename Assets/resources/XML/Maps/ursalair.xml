@@ -671,7 +671,7 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>0</int>
+      <int>3</int>
       <int>1</int>
       <int>1</int>
       <int>1</int>
@@ -697,9 +697,9 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
+      <int>2</int>
+      <int>2</int>
+      <int>2</int>
       <int>1</int>
       <int>1</int>
       <int>1</int>
@@ -741,10 +741,10 @@
       <int>0</int>
       <int>0</int>
       <int>0</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
+      <int>2</int>
+      <int>2</int>
+      <int>2</int>
+      <int>2</int>
       <int>1</int>
       <int>1</int>
       <int>1</int>
@@ -785,8 +785,8 @@
       <int>0</int>
       <int>1</int>
       <int>1</int>
-      <int>1</int>
-      <int>1</int>
+      <int>2</int>
+      <int>2</int>
       <int>0</int>
       <int>1</int>
       <int>1</int>
@@ -807,7 +807,7 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>0</int>
+      <int>3</int>
       <int>2</int>
       <int>1</int>
       <int>1</int>
@@ -827,7 +827,7 @@
       <int>0</int>
       <int>0</int>
       <int>1</int>
-      <int>1</int>
+      <int>3</int>
       <int>1</int>
       <int>1</int>
       <int>0</int>
@@ -1024,49 +1024,6 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-    </ArrayOfInt>
-    <ArrayOfInt>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>0</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>1</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>0</int>
-      <int>1</int>
-      <int>2</int>
-      <int>2</int>
       <int>0</int>
       <int>0</int>
       <int>0</int>
@@ -1098,8 +1055,51 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
+      <int>0</int>
+      <int>1</int>
+      <int>1</int>
+      <int>1</int>
       <int>1</int>
       <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>1</int>
+      <int>2</int>
+      <int>2</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+    </ArrayOfInt>
+    <ArrayOfInt>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>1</int>
+      <int>1</int>
+      <int>1</int>
+      <int>1</int>
+      <int>1</int>
+      <int>1</int>
+      <int>1</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+      <int>1</int>
+      <int>1</int>
+      <int>1</int>
+      <int>1</int>
+      <int>1</int>
+      <int>3</int>
       <int>1</int>
       <int>1</int>
       <int>0</int>
@@ -1771,4 +1771,10 @@
   </moduleAnchor>
   <name>ursalair</name>
   <palette>cave</palette>
+  <tint>
+    <r>0.31</r>
+    <g>0.44</g>
+    <b>0.5</b>
+    <a>1</a>
+  </tint>
 </MapSectionData>

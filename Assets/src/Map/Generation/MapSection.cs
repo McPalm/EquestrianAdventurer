@@ -209,6 +209,7 @@ public class MapSection : MonoBehaviour
 	public void Save()
 	{
 		data.palette = paletteName;
+		data.tint = overlayTint;
 		data.Save();
 	}
 
@@ -234,6 +235,7 @@ public class MapSection : MonoBehaviour
 		sectionName = filename;
 		data = MapSectionData.Load(sectionName);
 		paletteName = data.palette;
+		overlayTint = data.tint;
 		if (data == null) data = new MapSectionData(sectionName);
 		DrawAll();
 	}
