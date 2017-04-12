@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.Events;
 
 public class HurtZone : MyBehaviour, TurnTracker.TurnEntry
 {
@@ -12,6 +12,8 @@ public class HurtZone : MyBehaviour, TurnTracker.TurnEntry
 	public float startSize;
 	public string stackTag = "";
 
+	public UnityEvent EventHurtMC = new UnityEvent();
+
 	public void DoTurn()
 	{
 		MapCharacter mc = ObjectMap.Instance.CharacterAt(GetComponent<MapObject>().RealLocation);
@@ -22,6 +24,7 @@ public class HurtZone : MyBehaviour, TurnTracker.TurnEntry
 				.AddType(damageType)
 				.SetDamage(currentDamage * Random.Range(0.75f, 1.25f));
 			mc.GetComponent<HitPoints>().Hurt(d);
+			if(mc.GetComponent<RogueController>()) EventHurtMC.Invoke();
 		}
 		if (duration > 0)
 		{

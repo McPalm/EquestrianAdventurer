@@ -7,6 +7,8 @@ public class SpawnOnMove : MyBehaviour
 
 	public GameObject Prefab;
 
+	public UnityEvent EventMove = new UnityEvent();
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -18,6 +20,7 @@ public class SpawnOnMove : MyBehaviour
 		if((a & CharacterActionController.Actions.movement) != 0)
 		{
 			Instantiate(Prefab, (Vector3)GetComponent<MapObject>().RealLocation, Quaternion.identity);
+			EventMove.Invoke();
 		}
 	}
 
