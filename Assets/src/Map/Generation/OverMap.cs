@@ -110,7 +110,7 @@ public class OverMap : MonoBehaviour {
 
 		InitSections(debugType, new MapModule[] {forestModules[Random.Range(0, forestModules.Length)]}, forest); // the initial biome. using debug. for testing ofc.
 		InitSections(MapType.rooms, new MapModule[] { castleModules[Random.Range(0, forestModules.Length)] }, castle);
-		InitSections(MapType.cave, new MapModule[] { caveModules[Random.Range(0, forestModules.Length)] }, cave);
+		InitSections(MapType.cave, new MapModule[] { caveModules[Random.Range(0, caveModules.Length/2)], caveModules[Random.Range(caveModules.Length / 2, caveModules.Length)] }, cave);
 
 		GetSectionAt(new IntVector2(-1, 1)).givenModule = zecorasHut;
 
