@@ -17,6 +17,22 @@ public class MapSection : MonoBehaviour
 	public MapModule modulePrefab;
 	MapModule module;
 
+	public IntVector2 ModuleLocation
+	{
+		get
+		{
+			return data.moduleAnchor;
+		}
+	}
+
+	public bool HasModule
+	{
+		get
+		{
+			return modulePrefab;
+		}
+	}
+
 	void Start()
 	{
 		if (data == null)
