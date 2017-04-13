@@ -9,10 +9,13 @@ public class GroundConsumeableFactory : GroundItem
 	[Space(10)]
 	public int buffDuration;
 	public Stats stats;
+	public BaseAttributes attributes;
 	[Space(10)]
 	public int healovertime;
 	public int healfactor;
 	public bool idleOnly;
+	[Space(10)]
+	public bool returnScroll;
 
 	public override Item CloneItem()
 	{
@@ -24,7 +27,8 @@ public class GroundConsumeableFactory : GroundItem
 			f.HealOverTime(healovertime, healfactor, idleOnly);
 		}
 		if (heal > 0) f.SetHeal(heal);
-		if (buffDuration > 0) f.SetStatBoost(stats, buffDuration);
+		if (buffDuration > 0) f.SetStatBoost(stats, buffDuration, attributes);
+		if (returnScroll) f.Return();
 
 		return f.Get();
 	}

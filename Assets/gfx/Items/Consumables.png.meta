@@ -1,12 +1,13 @@
 fileFormatVersion: 2
 guid: e8fcc96304f6a1540bd1a0417572eef2
-timeCreated: 1491159847
+timeCreated: 1492081620
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Consumables_Bandage
     21300002: Consumables_Medkit
     21300004: Consumables_Potion
+    21300006: Consumables_Scroll
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -89,6 +90,19 @@ TextureImporter:
         y: 257
         width: 95
         height: 124
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Consumables_Scroll
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 258
+        width: 108
+        height: 102
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

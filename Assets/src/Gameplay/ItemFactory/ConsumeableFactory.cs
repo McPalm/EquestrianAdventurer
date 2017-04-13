@@ -86,11 +86,22 @@ public class ConsumeableFactory
 		return this;
 	}
 
-	public ConsumeableFactory SetStatBoost(Stats s, int duration)
+	public ConsumeableFactory SetStatBoost(Stats s, int duration, BaseAttributes b)
 	{
 		effect += (GameObject o) =>
 		{
-			DurationBuff(o, sprite, label, duration, s, color);
+			DurationBuff(o, sprite, label, duration, s, color, b);
+		};
+		return this;
+	}
+
+	public ConsumeableFactory Return()
+	{
+		tooltip += "\nReturns home after a short delay.";
+		effect += (GameObject o) =>
+		{
+			Return r = o.GetComponent<Return>();
+			if (r) r.ReturnTimer(Random.Range(10, 20));
 		};
 		return this;
 	}
@@ -118,13 +129,14 @@ public class ConsumeableFactory
 		CombatTextPool.Instance.PrintAt(o.transform.position, "But nothing happened...", Color.magenta, 1.5f);
 	}
 
-	static public void DurationBuff(GameObject o, Sprite s, string name, int duration, Stats stats, Color c)
+	static public void DurationBuff(GameObject o, Sprite s, string name, int duration, Stats stats, Color c, BaseAttributes b)
 	{
 		DurationAura a = o.AddComponent<DurationAura>();
 		a.displayName = name;
 		a.duration = duration;
 		a.stats = stats;
 		a.Icon = s;
+		a.attributes = b;
 	}
 
 	static public void HealOverTime(GameObject o, int duration, int factor, string name, Sprite s, bool idleOnly)
