@@ -142,6 +142,7 @@ public class MapCharacter : MonoBehaviour
 			EventDeath.Invoke(this);
 			foreach (Aura a in GetComponents<Aura>())
 				Destroy(a);
+			Refresh();
 		}
 	}
 
