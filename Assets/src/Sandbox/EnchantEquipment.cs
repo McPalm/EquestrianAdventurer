@@ -21,10 +21,14 @@ public static class EnchantEquipment
 				e.displayName = "Toy " + e.displayName;
 			else
 				e.displayName = "Anchient " + e.displayName;
-			if (e.slots == EquipmentType.body || e.slots == EquipmentType.hooves)
+			if (e.slots == EquipmentType.body)
 			{
 				e.stats.armor = e.stats.armor * 3 / 4;
 				e.stats.dodge -= 2;
+			}
+			else if(e.slots == EquipmentType.trinket || e.slots == EquipmentType.head || e.slots == EquipmentType.hooves)
+			{
+				e.attributes -= RandomAttribute();
 			}
 			else
 			{
@@ -48,21 +52,10 @@ public static class EnchantEquipment
 				else if (Random.value < 0.66f) e.displayName = "Strange " + e.displayName;
 				else if(Random.value < 0.5f) e.displayName = "Peculiar " + e.displayName;
 				else e.displayName = "Perplexing " + e.displayName;
-				e.attributes += RandomAttribute();
-				e.attributes -= RandomAttribute();
-				if (Random.value < 0.4f)
-				{
-					e.attributes += RandomAttribute();
-					e.attributes -= RandomAttribute();
-					if (Random.value < 0.4f)
-					{
-						e.attributes += RandomAttribute();
-						e.attributes -= RandomAttribute();
-						e.value += e.enchantCost;
-					}
-					e.value += e.enchantCost / 2;
-				}
-				e.value += e.enchantCost / 4;
+
+				int level = Random.Range(1, Random.Range(1, 4));
+				e.attributes += PlusMinus(level);
+				e.value += level * e.enchantCost / 4;
 			}
 			else
 			{
@@ -86,8 +79,7 @@ public static class EnchantEquipment
 				break;
 			case 2:
 				e.displayName = "Quirky " + e.displayName;
-				e.attributes += RandomAttribute();
-				e.attributes -= RandomAttribute();
+				e.attributes += PlusMinus(Random.Range(1, 4));
 				e.value += e.enchantCost / 4;
 				break;
 			case 3:
@@ -194,19 +186,20 @@ public static class EnchantEquipment
 
 		e.displayName = e.displayName + " +" + plus;
 
+		int stats = 0;
+
 		if (e.slots == EquipmentType.body)
 		{
-			e.stats.armor += plus;
 			if (e.stats.dodge > e.stats.armor)
 			{
 				e.stats.dodge += plus;
-				e.stats.hp += plus;
 			}
 			else
 			{
-				e.stats.dodge += plus / 2;
-				e.stats.hp += plus * 3;
+				e.stats.critAvoid += plus;
 			}
+			stats += plus;
+			e.attributes += RandomAttributes(plus);
 		}
 		else if(e.slots == EquipmentType.weapon)
 		{
@@ -226,35 +219,27 @@ public static class EnchantEquipment
 				e.stats.dodge += plus;
 				e.stats.armor += plus / 2;
 			}
-			for (int i = 0; i < (1 + plus) / 2; i++)
-			{
-				e.attributes += RandomAttribute();
-			}
+
+			stats += (1 + plus) / 2 ;
 		}
 		else if (e.slots == EquipmentType.head)
 		{
 			e.stats.armor += plus / 2;
 			e.stats.critAvoid += plus;
-			
-			for (int i = 0; i < (1 + plus) / 2; i++)
-			{
-				e.attributes += RandomAttribute();
-			}
+
+			stats += (1 + plus) / 2;
 		}
 		else
 		{
-			for(int i = 0; i < plus; i++)
-			{
-				e.attributes += RandomAttribute();
-			}
+			stats += plus;
 		}
 		int epic = 0;
 		if (Random.value < 0.2f)
 		{
 			epic = Random.Range(1, 4);
-			for (int i = 0; i < epic; i++)
-				e.attributes += RandomAttribute();
 		}
+		if((epic + stats) > 0)
+			e.attributes += RandomAttributes(epic + stats);
 
 		plus += epic;
 		e.value += e.enchantCost * plus * plus;
@@ -277,5 +262,39 @@ public static class EnchantEquipment
 			case 4: r.Tenacity = 1; break;
 		}
 		return r;
+	}
+
+	static public BaseAttributes RandomAttributes(int level)
+	{
+		if (level == 1) return RandomAttribute();
+		BaseAttributes a = RandomAttribute();
+		BaseAttributes b = RandomAttribute();
+		BaseAttributes ret = new BaseAttributes();
+		for(int i = 0; i < level; i++)
+		{
+			ret += (Random.value < 0.5f) ? a : b;
+		}
+		return ret;
+	}
+
+	static public BaseAttributes PlusMinus(int level)
+	{
+		BaseAttributes plus = RandomAttribute();
+		BaseAttributes minus = RandomAttribute();
+		while (plus == minus) minus = RandomAttribute();
+		if (level == 1) return plus - minus;
+
+		BaseAttributes plus2 = RandomAttribute();
+		BaseAttributes minus2 = RandomAttribute();
+		while (plus2 == minus) plus2 = RandomAttribute();
+		while (minus2 == plus2 || minus2 == plus) minus2 = RandomAttribute();
+
+		BaseAttributes ret = new BaseAttributes();
+		for (int i = 0; i < level; i++)
+		{
+			ret += (Random.value < 0.5f) ? plus : minus;
+			ret -= (Random.value < 0.5f) ? plus2 : minus2;
+		}
+		return ret;
 	}
 }
