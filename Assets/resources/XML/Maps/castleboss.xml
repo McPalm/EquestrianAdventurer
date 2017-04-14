@@ -225,14 +225,14 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>1</int>
+      <int>8</int>
       <int>1</int>
       <int>0</int>
       <int>1</int>
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>1</int>
+      <int>8</int>
       <int>0</int>
       <int>1</int>
       <int>1</int>
@@ -310,20 +310,20 @@
       <int>0</int>
       <int>1</int>
       <int>1</int>
+      <int>8</int>
       <int>1</int>
-      <int>1</int>
-      <int>1</int>
+      <int>8</int>
       <int>0</int>
       <int>1</int>
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>1</int>
+      <int>8</int>
       <int>0</int>
       <int>3</int>
       <int>3</int>
-      <int>3</int>
-      <int>3</int>
+      <int>9</int>
+      <int>9</int>
       <int>3</int>
       <int>3</int>
       <int>3</int>
@@ -353,9 +353,9 @@
       <int>0</int>
       <int>0</int>
       <int>1</int>
+      <int>8</int>
       <int>1</int>
-      <int>1</int>
-      <int>1</int>
+      <int>8</int>
       <int>0</int>
       <int>1</int>
       <int>1</int>
@@ -366,9 +366,9 @@
       <int>3</int>
       <int>3</int>
       <int>3</int>
-      <int>3</int>
-      <int>3</int>
-      <int>3</int>
+      <int>9</int>
+      <int>9</int>
+      <int>9</int>
       <int>3</int>
       <int>1</int>
       <int>1</int>
@@ -411,7 +411,7 @@
       <int>3</int>
       <int>3</int>
       <int>3</int>
-      <int>3</int>
+      <int>9</int>
       <int>3</int>
       <int>2</int>
       <int>1</int>
@@ -439,9 +439,9 @@
       <int>0</int>
       <int>1</int>
       <int>1</int>
+      <int>8</int>
       <int>1</int>
-      <int>1</int>
-      <int>1</int>
+      <int>8</int>
       <int>0</int>
       <int>1</int>
       <int>1</int>
@@ -453,7 +453,7 @@
       <int>3</int>
       <int>3</int>
       <int>3</int>
-      <int>3</int>
+      <int>9</int>
       <int>3</int>
       <int>3</int>
       <int>1</int>
@@ -493,11 +493,11 @@
       <int>1</int>
       <int>0</int>
       <int>3</int>
+      <int>9</int>
+      <int>9</int>
       <int>3</int>
       <int>3</int>
-      <int>3</int>
-      <int>3</int>
-      <int>3</int>
+      <int>9</int>
       <int>3</int>
       <int>1</int>
       <int>1</int>
@@ -540,8 +540,8 @@
       <int>3</int>
       <int>3</int>
       <int>2</int>
-      <int>3</int>
-      <int>3</int>
+      <int>9</int>
+      <int>9</int>
       <int>2</int>
       <int>1</int>
       <int>0</int>
@@ -578,13 +578,13 @@
       <int>1</int>
       <int>1</int>
       <int>0</int>
+      <int>9</int>
+      <int>9</int>
       <int>3</int>
       <int>3</int>
       <int>3</int>
       <int>3</int>
-      <int>3</int>
-      <int>3</int>
-      <int>3</int>
+      <int>9</int>
       <int>1</int>
       <int>1</int>
       <int>0</int>
@@ -1136,8 +1136,8 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>0</int>
-      <int>0</int>
+      <int>6</int>
+      <int>6</int>
       <int>1</int>
       <int>1</int>
       <int>0</int>
@@ -1179,9 +1179,9 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>4</int>
       <int>1</int>
       <int>1</int>
+      <int>6</int>
       <int>1</int>
       <int>0</int>
       <int>1</int>
@@ -1222,7 +1222,7 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>4</int>
+      <int>6</int>
       <int>1</int>
       <int>1</int>
       <int>1</int>
@@ -1264,8 +1264,8 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>1</int>
-      <int>0</int>
+      <int>6</int>
+      <int>6</int>
       <int>0</int>
       <int>0</int>
       <int>0</int>
@@ -1307,7 +1307,7 @@
       <int>1</int>
       <int>1</int>
       <int>1</int>
-      <int>1</int>
+      <int>6</int>
       <int>0</int>
       <int>0</int>
       <int>0</int>
@@ -1771,4 +1771,10 @@
   </moduleAnchor>
   <name>castleboss</name>
   <palette>castle</palette>
+  <tint>
+    <r>0.5</r>
+    <g>0.5</g>
+    <b>0.5</b>
+    <a>1</a>
+  </tint>
 </MapSectionData>
