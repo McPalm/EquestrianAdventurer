@@ -10,6 +10,9 @@ public class AddNumberDisplay : MonoBehaviour {
 	public GameObject frame;
 	public Text text;
 
+	public Color positiveColor = Color.white;
+	public Color negativeColor = Color.white;
+
 	int currentSum;
 
 	public void Add(int i)
@@ -18,6 +21,7 @@ public class AddNumberDisplay : MonoBehaviour {
 		frame.SetActive(true);
 		if(currentSum > 0) text.text = "+" + currentSum.ToString() +  suffix;
 		else text.text = currentSum.ToString() + suffix;
+		text.color = (currentSum < 0) ? negativeColor : positiveColor;
 		StopAllCoroutines();
 		StartCoroutine(ResetIn(TimeOut));
 	}
