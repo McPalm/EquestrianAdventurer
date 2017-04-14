@@ -26,6 +26,7 @@ public class Interactable : MonoBehaviour
 
 	public bool Interact(MapObject user)
 	{
+		if (!enabled) return false;
 		if(user.RealLocation.DeltaMax(RealLocation) <= Radius)
 		{
 			EventInteract.Invoke(user);
