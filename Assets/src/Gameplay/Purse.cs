@@ -38,6 +38,14 @@ public class Purse : MonoBehaviour
 		EventGainSum.Invoke(i);
 	}
 
+	public void Tax(float tax)
+	{
+		if (tax > 1f) tax = 1f;
+		if (tax < 0f) return;
+		int lose = (int)(bits * tax);
+		Pay(lose);
+	}
+
 	[System.Serializable]
 	public class PurseEvent : UnityEvent<int> { }
 	[System.Serializable]
