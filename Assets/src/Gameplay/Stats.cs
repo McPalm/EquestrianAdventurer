@@ -2,7 +2,9 @@
 using System.Collections;
 
 [System.Serializable]
+#pragma warning disable
 public struct Stats
+#pragma warning restore
 {
 	public int hp;
 	public int hit;
@@ -89,5 +91,23 @@ public struct Stats
 		if (armor != 0) s += "\nArmor: " + armor;
 		if (hp != 0) s += "\nHealth: " + hp;
 		return s.Substring(substring);
+	}
+
+	static public bool operator ==(Stats a, Stats b)
+	{
+		return a.damage == b.damage
+			&& a.armorpen == b.armorpen
+			&& a.critAvoid == b.critAvoid
+			&& a.critChance == b.critChance
+			&& a.armor == b.armor
+			&& a.damageTypes == b.damageTypes
+			&& a.dodge == b.dodge
+			&& a.hit == b.hit
+			&& a.hp == b.hp;
+	}
+
+	static public bool operator !=(Stats a, Stats b)
+	{
+		return !(a == b);
 	}
 }

@@ -48,13 +48,44 @@ public class DurationAura : Aura
 		if(ac)
 		{
 			ac.EventAfterAction.AddListener(OnEndTurn);
-			GetComponent<MapCharacter>().Refresh();
 		}
 		else
 		{
 			enabled = false;
 			Destroy(this);
 		}
+	}
+
+	static public DurationAura StackOn(GameObject target, int duration, Stats stats, BaseAttributes attributes, string displayName)
+	{
+		if(!target.GetComponent<MapCharacter>())
+		{
+			return null;
+		}
+
+		foreach(DurationAura da in target.GetComponents<DurationAura>())
+		{
+			if(da.SameAs(displayName, stats, attributes))
+			{
+				da.duration += duration;
+				return da;
+			}
+		}
+
+		DurationAura aura = target.AddComponent<DurationAura>();
+		aura.duration = duration;
+		aura.stats = stats;
+		aura.attributes = attributes;
+		aura.displayName = displayName;
+		target.GetComponent<MapCharacter>().Refresh();
+		return aura;
+	}
+
+	public bool SameAs(string displayName, Stats stats, BaseAttributes attributes)
+	{
+		return displayName == this.displayName
+			&& stats.Equals(this.stats)
+			&& attributes.Equals(this.attributes);
 	}
 
 	void OnEndTurn(CharacterActionController cac, CharacterActionController.Actions a)

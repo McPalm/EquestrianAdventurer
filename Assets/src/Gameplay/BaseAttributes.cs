@@ -2,7 +2,9 @@
 using System.Collections;
 
 [System.Serializable]
+#pragma warning disable
 public struct BaseAttributes
+#pragma warning restore
 {
 	public int Strenght;
 	public int Dexterity;
@@ -89,4 +91,20 @@ public struct BaseAttributes
 			"\nLuck: " + Luck
 			;
 	}
+
+	static public bool operator == (BaseAttributes a, BaseAttributes b)
+	{
+		return a.Strenght == b.Strenght
+			&& a.Dexterity == b.Dexterity
+			&& a.Agility == b.Agility
+			&& a.Endurance == b.Endurance
+			&& a.Tenacity == b.Tenacity
+			&& a.Luck == b.Luck;
+	}
+
+	static public bool operator !=(BaseAttributes a, BaseAttributes b)
+	{
+		return !(a == b);
+	}
+
 }

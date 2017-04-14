@@ -131,12 +131,9 @@ public class ConsumeableFactory
 
 	static public void DurationBuff(GameObject o, Sprite s, string name, int duration, Stats stats, Color c, BaseAttributes b)
 	{
-		DurationAura a = o.AddComponent<DurationAura>();
-		a.displayName = name;
-		a.duration = duration;
-		a.stats = stats;
+		DurationAura a = DurationAura.StackOn(o, duration, stats, b, name);
 		a.Icon = s;
-		a.attributes = b;
+		a.IconColor = c;
 	}
 
 	static public void HealOverTime(GameObject o, int duration, int factor, string name, Sprite s, bool idleOnly)
