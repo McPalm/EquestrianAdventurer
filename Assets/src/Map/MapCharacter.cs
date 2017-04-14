@@ -166,15 +166,22 @@ public class MapCharacter : MonoBehaviour
 		Refresh();
 	}
 
+	bool refreshing = false;
+
 	public void Refresh()
 	{
-		GetComponent<HitPoints>().MaxHealth = Stats.hp;
-		if (GetComponent<StaminaPoints>())
+		if (!refreshing)
 		{
-			GetComponent<StaminaPoints>().MaxStamina = Attributes.Endurance + 3;
-			GetComponent<StaminaPoints>().StaminaPerTurn = Attributes.RecoveryRate;
+			refreshing = true;
+			GetComponent<HitPoints>().MaxHealth = Stats.hp;
+			if (GetComponent<StaminaPoints>())
+			{
+				GetComponent<StaminaPoints>().MaxStamina = Attributes.Endurance + 3;
+				GetComponent<StaminaPoints>().StaminaPerTurn = Attributes.RecoveryRate;
+			}
+			EventUpdateStats.Invoke(this);
+			refreshing = false;
 		}
-		EventUpdateStats.Invoke(this);
 	}
 
 	[System.Serializable]

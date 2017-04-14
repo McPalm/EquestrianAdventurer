@@ -66,6 +66,7 @@ public class UIItemPool : MonoBehaviour
 	/// <param name="i"></param>
 	public void Deactivate(Item i)
 	{
+		if (i == null) return;
 		if (active.ContainsKey(i))
 		{
 			UIItem u = Get(i);
