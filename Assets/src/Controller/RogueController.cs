@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CharacterActionController))]
 public class RogueController : MonoBehaviour
@@ -79,7 +80,7 @@ public class RogueController : MonoBehaviour
 			else
 				inputcooldown = 0.1f;
 		}
-		else if(inputcooldown < 0f && Input.GetMouseButtonDown(1))
+		else if(inputcooldown < 0f && Input.GetMouseButtonDown(1) &! EventSystem.current.IsPointerOverGameObject())
 		{
 			if (SelectedAbility)
 			{
