@@ -57,11 +57,11 @@ public struct Stats
 
 	public float DamageReduction(int armorpen)
 	{
-		if(armorpen < -8)
+		if(armorpen < -6)
 		{
-			armorpen = -8;
+			armorpen = -6;
 		}
-		return (10f + armorpen) / (10f + armorpen + armor);
+		return (7f + armorpen) / (7f + armorpen + armor);
 	}
 
 	static public Stats operator + (Stats a, Stats b)
