@@ -6,6 +6,8 @@ public class Dash : AActiveAbility
 {
 	public int cost;
 	public int range;
+	[SerializeField]
+	Sprite icon;
 
 	public override bool CanUse
 	{
@@ -14,6 +16,14 @@ public class Dash : AActiveAbility
 			if(cost > 0 && GetComponent<StaminaPoints>())
 				return GetComponent<StaminaPoints>().CurrentStamina >= cost;
 			return true;
+		}
+	}
+
+	public override Sprite Icon
+	{
+		get
+		{
+			return icon;
 		}
 	}
 

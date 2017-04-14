@@ -19,4 +19,12 @@ public abstract class AActiveAbility : MonoBehaviour
 	/// if we meet all the conditions to use the ability
 	/// </summary>
 	abstract public bool CanUse { get; }
+	/// <summary>
+	/// if we meet all the conditions to use the ability
+	/// </summary>
+	abstract public Sprite Icon { get; }
+
+	public string AbilityName;
+	[TextArea]
+	public string Description;
 }
