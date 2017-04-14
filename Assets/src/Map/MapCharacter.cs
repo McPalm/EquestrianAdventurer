@@ -135,14 +135,17 @@ public class MapCharacter : MonoBehaviour
 		if (d.HasAnyType(DamageTypes.physical | DamageTypes.piercing | DamageTypes.slashing | DamageTypes.bludgeoning)) d.multiplier *= stats.DamageReduction(d.armorPenetration);
 	}
 
+	bool death = false;
 	void OnHurt(int current, int max)
 	{
-		if (current <= 0)
+		if (current <= 0 && !death)
 		{
+			death = true;
 			EventDeath.Invoke(this);
 			foreach (Aura a in GetComponents<Aura>())
 				Destroy(a);
 			Refresh();
+			death = false;
 		}
 	}
 
