@@ -22,7 +22,11 @@ public class CreatureSpawner : MonoBehaviour
 		List<IntVector2> ret = new List<IntVector2>();
 		HashSet<IntVector2> used = new HashSet<IntVector2>();
 		if (section.HasModule)
+		{
+			if (!section.modulePrefab.blockSpawn)
+				ret.Add(section.ModuleLocation);
 			used.Add(section.ModuleLocation);
+		}
 
 		System.Func<IntVector2, bool> ValidSpot = (where) =>
 		{
