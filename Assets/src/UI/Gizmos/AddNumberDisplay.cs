@@ -22,6 +22,11 @@ public class AddNumberDisplay : MonoBehaviour {
 		StartCoroutine(ResetIn(TimeOut));
 	}
 
+	public void Substract(int i)
+	{
+		Add(-i);
+	}
+
 	IEnumerator ResetIn(float seconds)
 	{
 		yield return new WaitForSeconds(seconds);
