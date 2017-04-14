@@ -37,7 +37,9 @@ public static class XmlTool
 			TextWriter writer = new StreamWriter(path);
 			xml.Serialize(writer, target);
 			writer.Close();
+#if UNITY_EDITOR
 			UnityEditor.AssetDatabase.Refresh();
+#endif
 		}
 		catch (Exception e)
 		{
