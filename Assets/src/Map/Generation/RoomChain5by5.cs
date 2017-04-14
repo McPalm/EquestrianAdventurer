@@ -192,7 +192,12 @@ public class RoomChain5by5 : IGenerator
 				if(doorgrid[rx][ry] > 1)
 				{
 					// door up
-					if (Random.value < 0.1f)
+					if (Random.value < 0.1f) // change to non debyug value.
+					{
+						// knock down wall
+						BuildRoomAt(rx * roomSize + 1, ry * roomSize + roomSize - 1, roomSize - 1, 3, 0, 0.5f);
+					}
+					else if (Random.value < 0.1f)
 					{
 						// two doors
 						map[rx * roomSize + 2][ry * roomSize + roomSize] = 2;
@@ -211,7 +216,12 @@ public class RoomChain5by5 : IGenerator
 				if (doorgrid[rx][ry] == 1 || doorgrid[rx][ry] == 3)
 				{
 					// door right
-					if (Random.value < 0.1f)
+					if (Random.value < 0.1f) // change to non debyug value.
+					{
+						// knock down wall
+						BuildRoomAt(rx * roomSize + roomSize - 1, ry * roomSize + 1, 3, roomSize - 1, 0, 0.5f);
+					}
+					else if (Random.value < 0.1f)
 					{
 						// two doors
 						map[rx * roomSize + roomSize][ry * roomSize + 2] = 2;
@@ -245,7 +255,7 @@ public class RoomChain5by5 : IGenerator
 		}
 	}
 
-	void BuildRoomAt(int cornerx, int cornery, int width, int height, int pattern = 0)
+	void BuildRoomAt(int cornerx, int cornery, int width, int height, int pattern = 0, float ruin = -1f)
 	{
 		if (pattern == 0)
 		{
@@ -266,7 +276,12 @@ public class RoomChain5by5 : IGenerator
 		// pattern 5 : grass in the middle
 		// pattern 6 : book cases
 
-		float ruin = Random.Range(0f, Random.Range(0.1f, 0.35f));
+
+		if (ruin < 0f)
+		{
+			ruin = Random.Range(0f, 0.03f);
+			if (Random.value < 0.15f) ruin = Random.Range(0.03f, 0.35f);
+		}
 
 		for (int x = 0; x < width; x++)
 		{
