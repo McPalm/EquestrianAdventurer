@@ -288,8 +288,7 @@ public class Inventory : MonoBehaviour
 			{
 				int turns = (item as Consumable).turns;
 				(item as Consumable).Use(gameObject);
-				for (int j = 0; j < turns; j++)
-					GetComponent<CharacterActionController>().StackAction(CharacterActionController.Actions.inventoryaction);
+				UseAction(turns);
 				return true;
 			}
 		}
@@ -322,6 +321,7 @@ public class Inventory : MonoBehaviour
 		if(RemoveItem(i))
 		{
 			PutOnGround(i);
+			UseAction(1);
 			return true;
 		}
 		return false;
@@ -353,6 +353,7 @@ public class Inventory : MonoBehaviour
 				bodySlot = e;
 				EventChangeEquipment.Invoke(this);
 				EventEquipItem.Invoke(e, EquipmentType.body);
+				UseAction(5);
 				return true;
 			case EquipmentType.weapon:
 
@@ -370,6 +371,7 @@ public class Inventory : MonoBehaviour
 				weaponSlot = e;
 				EventChangeEquipment.Invoke(this);
 				EventEquipItem.Invoke(e, EquipmentType.weapon);
+				UseAction(1);
 				return true;
 			case EquipmentType.trinket:
 
@@ -387,6 +389,7 @@ public class Inventory : MonoBehaviour
 				trinketSlot = e;
 				EventChangeEquipment.Invoke(this);
 				EventEquipItem.Invoke(e, EquipmentType.trinket);
+				UseAction(2);
 				return true;
 			case EquipmentType.hooves:
 
@@ -404,6 +407,7 @@ public class Inventory : MonoBehaviour
 				hoovesSlot = e;
 				EventChangeEquipment.Invoke(this);
 				EventEquipItem.Invoke(e, EquipmentType.hooves);
+				UseAction(2);
 				return true;
 			case EquipmentType.head:
 
@@ -421,6 +425,7 @@ public class Inventory : MonoBehaviour
 				headSlot = e;
 				EventChangeEquipment.Invoke(this);
 				EventEquipItem.Invoke(e, EquipmentType.head);
+				UseAction(2);
 				return true;
 		}
 		return false;
@@ -541,6 +546,12 @@ public class Inventory : MonoBehaviour
 		{
 			return items;
 		}
+	}
+
+	void UseAction(int turns)
+	{
+		for (int j = 0; j < turns; j++)
+			GetComponent<CharacterActionController>().StackAction(CharacterActionController.Actions.inventoryaction);
 	}
 
 	public class InventoryEvent : UnityEvent<Inventory> { }
