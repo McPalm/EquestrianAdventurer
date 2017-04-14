@@ -256,7 +256,7 @@ public class RoomChain5by5 : IGenerator
 			}
 			else // random pattern
 			{
-				pattern = Random.Range(2, 6);
+				pattern = Random.Range(2, 7);
 			}
 		}
 		// pattern 1 : regular
@@ -264,6 +264,9 @@ public class RoomChain5by5 : IGenerator
 		// pattern 3 : around the edges
 		// pattern 4 : corner pillars
 		// pattern 5 : grass in the middle
+		// pattern 6 : book cases
+
+		float ruin = Random.Range(0f, Random.Range(0.1f, 0.35f));
 
 		for (int x = 0; x < width; x++)
 		{
@@ -274,7 +277,9 @@ public class RoomChain5by5 : IGenerator
 				if (pattern == 2 && ((x == 0 && y == 0) || (x == width - 1 && y == 0) || (x == 0 && y == height - 1) || (x == width - 1 && y == height - 1))) tile = 1;
 				if (pattern == 4 && (x == 1 || x == width - 2) && (y == 1 || y == height - 2)) tile = 3;
 				if (pattern == 5 && (x == 1 || x == width - 2) && (y == 1 || y == height - 2)) tile = 3;
-				if (pattern == 5 && (x > 1 && x < width - 2) && (y > 1 && y < height - 2)) tile = 4;
+				if (pattern == 5 && (x > 1 && x < width - 2) && (y > 1 && y < height - 2)) tile = (Random.value < 0.3f) ? 6 : 4; // grass
+				if (pattern == 6 && (y == 2 || y == height - 2) && x > 0 && x < width - 1 && Random.value < 0.35f) tile = 5;
+				if (x > 0 && x < width - 1 && y > 0 && y < height - 1 && Random.value < ruin) tile = 7;
 				map[x+cornerx][y+cornery] = tile;
 			}
 		}
