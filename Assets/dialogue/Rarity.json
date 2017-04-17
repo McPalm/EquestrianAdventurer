@@ -1,0 +1,12 @@
+[
+	{
+		"title": "Start",
+		"tags": "",
+		"body": "<<if flag.rarity.visited>>\nOh welcome back dear! How can I help you today?\n<<else>>\nHello and welcome to carousele boutique. I am rarity, fashion designer and seamstress. How can I be of service?\n<<set flag.rarity.visited to true>>\n<<endif>>\n-> I would like to browse your inventory\n    <<Open Shop>>\n-> Uh, nothing.\n    If you say so dear. But if you ever have the need to dress up proper do come back.",
+		"position": {
+			"x": 540,
+			"y": 258
+		},
+		"colorID": 0
+	}
+]

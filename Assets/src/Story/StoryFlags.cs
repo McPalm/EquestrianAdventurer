@@ -28,4 +28,9 @@ public class StoryFlags
 	{
 		return flags.Contains(s.ToLower());
 	}
+
+	public void RemoveFlag(string s)
+	{
+		flags.Remove(s);
+	}
 }
