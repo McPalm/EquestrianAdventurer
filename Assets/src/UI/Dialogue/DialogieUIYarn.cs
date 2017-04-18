@@ -21,8 +21,7 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 
 	public override IEnumerator RunCommand(Command command)
 	{
-		print(command.text);
-		yield break;
+		yield return CommandParser.Instance.RunCommand(command.text);
 	}
 
 	public override IEnumerator RunLine(Line line)

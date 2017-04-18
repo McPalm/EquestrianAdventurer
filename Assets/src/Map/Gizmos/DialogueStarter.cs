@@ -14,14 +14,10 @@ public class DialogueStarter : MonoBehaviour
 
 	public void StartConversation(TextAsset file)
 	{
-		/*
-		if(GetComponent<SpriteRenderer>())
-			UIDialogueWindow.Instance.Open(fileName, name, GetComponent<SpriteRenderer>().sprite, gameObject);
-		else
-			UIDialogueWindow.Instance.Open(fileName, name, null, gameObject);
-			*/
+		CommandParser.Instance.talkTo = gameObject;
+
 		Yarn.Unity.DialogueRunner d = FindObjectOfType<Yarn.Unity.DialogueRunner>();
-		//d.sourceText = new TextAsset[]{ file };
+		
 		d.Clear();
 		d.AddScript(file);
 		d.StartDialogue();
