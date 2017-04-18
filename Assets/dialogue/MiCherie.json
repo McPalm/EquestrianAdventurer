@@ -1,0 +1,52 @@
+[
+	{
+		"title": "Start",
+		"tags": "",
+		"body": "<<if $flag.micherie.help is true>>\nHello again!\n[[Problem]]\n<<elseif $flag.micherie.visited is false>>\nThe pony does an exagerated bow and starts talking.\nMi Cherie, knight errant, dancer and monster hunter extraordinaire, at your service.\n<<set $flag.micherie.visited to true>>\n<<else>>\nHello again! How can I be of help.\n<<endif>>\n-> Monster Hunter?\n    [[Monster Hunter]]\n-> Knight Errant?\n    [[Knight]]\n-> Dancer?\n    [[Dancer]]\n-> Good Bye\n    Take care",
+		"position": {
+			"x": 152,
+			"y": -127
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Knight",
+		"tags": "",
+		"body": "Indeed, knight errant. Well, maybe not that errant, but it sounds more romantic that way. I am in fact a member of the royal guard, Captain Cherie at your service.\r\nBut it is not wholly incorrect, my position have me travelling around a lot, I take initiative to start my own investigations and keep myself useful for Equestria and the Princesses.\r\nTho currently I am commissioned with a problem here in Ponyville.\r\n-> Something going on here in Ponyville?\r\n    [[Problem]]",
+		"position": {
+			"x": -110,
+			"y": 182
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Problem",
+		"tags": "",
+		"body": "<<if $flag.micherie.help is false>>\r\nI don't know what yet. But the monster activity in the Everfree Forest is increasing.\r\nAt the moment my hoofs are tied, I have to stay close to Ponyville and react in case of a monster attack.\r\nI'm hoping I could get some reinforcement soon enough so I could actually head out there and do some investigation.\r\nSay, I have ran into many other thrill seekers and explorers in my career and you have that eagerness to explore written all over your face.\r\nI heard that there is a Zebra living in there with the name of Zecora, surely somebody who actually live in the thick of it would have some more insight into the situation.\r\nNow I am not asking you to do my work for me, but if you would decide to explore the forest and happen upon her, would you be so kind as to ask her about the situation on my behalf.\r\n-> Yes\r\n    Brilliant! But please don't get in over yourhead on my behalf. It's always important to stay safe.\r\n    <<set $flag.micherie.help to true>>\r\n-> No\r\n    No matter, as a guard I should not ask you to expose yourself to danger.\r\n<<set $flag.zecora to true>>\r\n<<else>>\r\nHad any suceess?\r\n-> Working on it.\r\n    Thank you for taking your service, but please don't get in over yourhead on my behalf. It's always important to stay safe.\r\n-> I met up with Zecora, she said something about ghosts.<<if $flag.zecora.talked>>\r\n    Oh, Ghosts. That would explain a lot. Ghosts are incredibly dangerous to fight without the proper equipment.\r\n    Thank you for that information.\r\n<<endif>>",
+		"position": {
+			"x": 115,
+			"y": 509
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Dancer",
+		"tags": "",
+		"body": "Yes, a Dancer. I earned my cutemark way back in Canterlot on the dance floor.\r\nOf course I joined the dance club in Canterlot high and I did really well.\r\nI would have made it a dancer like most of my peers but it did not stay entirely right with me.\r\nI had my true calling elsewhere so to say. A cutiemark is just a talent after all, the weapon, not the warrior or her quest.\r\nOne thing led to another and I joined the royal guard.\r\nNow you might think that is an odd place for a dancer, but really, a tussle is not all that different from a dance.\r\nThe clash of swords is my rhythm and the enemy is my dance partner.\r\n-> And now you are an \"Errant Knight\"?\r\n    [[Knight]]",
+		"position": {
+			"x": 229,
+			"y": 168
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Monster Hunter",
+		"tags": "",
+		"body": "Keeping ponies safe in the name of the Royal Crown!\nNot as glorious job as one could think. Whenever there is some big fancy threat the princesses or the elements of Harmony tends to be on place.\nBut there is plenty of monstrous problems to go around. So whenever a manticore or cragadile causes problems ponies like me are there to manage the situation.\n-> Is that why you are here in ponyville?\n    Sharp one are you not? Yes there is something going on here.\n    [[Problem]]\n-> How does that relate to being a dancer?\n    [[Dancer]]",
+		"position": {
+			"x": 511,
+			"y": 135
+		},
+		"colorID": 0
+	}
+]

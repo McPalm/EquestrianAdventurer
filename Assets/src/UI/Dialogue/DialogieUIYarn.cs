@@ -81,6 +81,7 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 	public override IEnumerator DialogueStarted()
 	{
 		gameObject.SetActive(true);
-		yield return new WaitForSeconds(0f);
+		text.text = "";
+		yield break;
 	}
 }

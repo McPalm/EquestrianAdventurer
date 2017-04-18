@@ -1,0 +1,52 @@
+[
+	{
+		"title": "Start",
+		"tags": "",
+		"body": "<<if $flag.tinkerspark.visited is true>>\nHello again, need something?\n<<else>>\n<<set $flag.tinkerspark.visited to true>>\nOh, a new face!\nI'm Tinkerspark, potion maker and inventor. Ready to meet your alchemical needs.\nMay I interest you in a special tail conditioner I imported from Canterlot, its all the rage right right now so I'm doing a Ponyville trial run.\n-> Uh, maybe later.\n-> did you say potion maker?\n    Yes, potions. All kinds of useful concotions. Anything in mind?\n        -> As in healing potions?\n            Oh, yeah, got a few of those. Not exactly flying of the shelves but I always keep some around in case of an emergency.\n        -> Maybe, can I have a look?\n            [[Shop]]\n-> Im more of the adventuring type than the prissy manegrooming type.\n    Oh, oh oh!\n    Then you came to EXACTLY the right place. I've been on my fair share of adventures too, you and I will become the best of friends! I got so many supplies.\n    -> Tell me more.\n        [[Supplies]]\n    -> Care to show me?\n        [[Shop]]\n<<endif>>\n[[AskShop]]",
+		"position": {
+			"x": 304,
+			"y": -75
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Shop",
+		"tags": "",
+		"body": "Please have a look.\n<<Open Shop>>",
+		"position": {
+			"x": 626,
+			"y": 15
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Zecora",
+		"tags": "",
+		"body": "<<if $flag.tinkerspark.talkedaboutzecora is false>>\nI do know Zecora. She is a great potion maker, I have learned a lot from her. She usually comes visisting Ponyville about once per week. But it has been a while since last visit.\nYou looking for her?\n-> Yes\n    She lives a small distance to the northwest of the entrance to the everfree forest. If you see her say hello from me.\n    If you need any supplies for the journey I am happy to give you a discount.\n    <<set $flag.tinkersparkdiscount1 to true>>\n-> No\n<<elseif $flag.tinkerspark.knowsZecoraIsSafe is false>>\nHave you seen her yet?\n-> Yes, she is safe. <<if $flag.zecora.visited is true>>\n    Thats good to hear! Not that I ever had any doubt.\n    <<set $flag.tinkerspark.knowsZecoraIsSafe to true>>\n-> No. \n    Oh, okay.\n<<endif>>",
+		"position": {
+			"x": -80,
+			"y": -41
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Supplies",
+		"tags": "",
+		"body": "For adventuring. I got healing potions, ironskin potions, bandages, medkits and more.\n-> Ironskin Potion?\n    Iron skin does exactly what it says, whenever you can anticipate danger, its better to prevent getting hurt in the first place than heal afterwards.\n    They used to have a problem where it felt like if they worked, but really they just made you overconfident.\n    Sometimes you need the confidence boost more than anything else tho, so in a way they really did help you face tougher challenges.\n-> Healing Potion?\n    Heals you instantly, can be the difference between life and death when in a tight spot.\n-> Banages & Medkits?\n    Bandages and Medkits should be your bread and butter healing supplies. obviously you need some time and peace to use them.\n-> Thats all.\n    Anything else?\n    [[AskShop]]\n[[Supplies]]",
+		"position": {
+			"x": -64,
+			"y": 249
+		},
+		"colorID": 0
+	},
+	{
+		"title": "AskShop",
+		"tags": "",
+		"body": "-> Yes. (Shop)\n    [[Shop]]\n-> No. (Leave)\n    Stay safe.\n-> Supplies.\n    [[Supplies]]\n-> Zecora. <<if $flag.tinkerspark.knowsZecoraIsSafe is false and $flag.zecora is true>>\n    [[Zecora]]\n-> Ghosts <<if $flag.ghost is true and $flag.tinkerspark.unlocksunlight is false>>\n    Dealing with incorporeal enemies you say? Well you have come to the right place!\n\tI got just what you need! Well, at least if you give me a day and I'll brew up some bottled sunlight for you!\n    When you drink it, you turn into the bane of all ghosts existence for a brief moment.\n    Come back tomorrow and I'll have some ready.\n    <<set $flag.tinkerspark.unlocksunlight to true>>\n    Need something else?\n    [[AskShop]]",
+		"position": {
+			"x": 296,
+			"y": 181
+		},
+		"colorID": 0
+	}
+]
