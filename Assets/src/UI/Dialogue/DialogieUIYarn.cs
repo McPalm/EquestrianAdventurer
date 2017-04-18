@@ -18,6 +18,7 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 
 	float currentLineTime = 0f;
 	OptionChooser currentChooser;
+	RogueController player;
 
 	public override IEnumerator RunCommand(Command command)
 	{
@@ -74,6 +75,7 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 	public override IEnumerator DialogueComplete()
 	{
 		gameObject.SetActive(false);
+		player.enabled = true;
 		yield return new WaitForSeconds(0f);
 	}
 
@@ -81,6 +83,9 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 	{
 		gameObject.SetActive(true);
 		text.text = "";
+		player = FindObjectOfType<RogueController>();
+		player.enabled = false;
+		
 		yield break;
 	}
 }

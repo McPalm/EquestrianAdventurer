@@ -554,6 +554,44 @@ public class Inventory : MonoBehaviour
 			GetComponent<CharacterActionController>().StackAction(CharacterActionController.Actions.inventoryaction);
 	}
 
+	public bool Contains(string s)
+	{
+		foreach(Item i in items)
+		{
+			if (i.displayName.ToLower() == s.ToLower())
+				return true;
+		}
+		for(int i = 0; i < SLOTS; i++)
+		{
+			if(consumables[i, 0] != null)
+			{
+				if (consumables[i, 0].displayName.ToLower() == s.ToLower())
+					return true;
+			}
+		}
+		return false;
+	}
+
+	public bool RemoveItem(string s)
+	{
+		foreach (Item i in items)
+		{
+			if (i.displayName.ToLower() == s.ToLower())
+			{
+				return DestroyItem(i);
+			}
+		}
+		for (int i = 0; i < SLOTS; i++)
+		{
+			if (consumables[i, 0] != null)
+			{
+				if (consumables[i, 0].displayName.ToLower() == s.ToLower())
+					return DestroyItem(consumables[i, 0]);
+			}
+		}
+		return false;
+	}
+
 	public class InventoryEvent : UnityEvent<Inventory> { }
 	public class ItemEvent : UnityEvent<Item> { }
 	public class EquipEvent : UnityEvent<Equipment, EquipmentType> { }

@@ -1,0 +1,42 @@
+[
+	{
+		"title": "Start",
+		"tags": "",
+		"body": "<<if $flag.schorcht.visited is false>>\nThe pony grunts in response\n..Hello, I'm Schorcht, blacksmith, look at my wares or leave me to my work.\n<<set $flag.schorcht.visited to true>>\n<<else>>\n...\n<<endif>>\n-> Browse (Shop)\n    [[Shop]]\n-> Know anything about Ghosts? <<if $flag.ghost is true>>\n    [[Ghost]]\n-> I found some Obsidian. (Give Obsidian) <<if $inventory.valuable.obsidian is true and $flag.schorcht.talkedAboutObsidian is true>>\n    [[MakeGhostWeapon]]\n-> Nevermind.",
+		"position": {
+			"x": 300,
+			"y": 225
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Shop",
+		"tags": "",
+		"body": "*grunt*\n<<Open Shop>>",
+		"position": {
+			"x": 657,
+			"y": 300
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Ghost",
+		"tags": "",
+		"body": "<<if $flag.schorcht.talkedAboutObsidian is false>>\r\nYou have fought ghosts?\r\nYou should talk with Tinkerspark. But if you bring me some obsidian I can craft you a dagger to deal with them.\r\n<<set $flag.schorcht.talkedAboutObsidian to true>>\r\n<<else>>\r\nHad any luck finding Obsidian? When you do, just talk with me and I can make you a weapon for you.\r\n<<endif>>\r\n-> Where can I find Obsidian?\r\n    If you are lucky, you can find that in the cavern deep forest. Its dangerous to go there alone, you should buy a sword.\r\n    [[Start]]\r\n-> I got some already. (Give Obsidian) <<if $inventory.valuable.obsidian is true>>\r\n    [[MakeGhostWeapon]]\r\n-> Got it.\r\n    [[Start]]",
+		"position": {
+			"x": 378,
+			"y": 539
+		},
+		"colorID": 0
+	},
+	{
+		"title": "MakeGhostWeapon",
+		"tags": "",
+		"body": "Ill get right to it.\n<<if $inventory.divine_obsidian>>\n<<Take Divine Obsidian>>\n<<Give GhostBane+5>>\nThere we go, I'm really proud of this one, it should serve you well.\n<<elseif $inventory.pristine_obsidian>>\n<<Take Pristine Obsidian>>\n<<Give GhostBane+3>>\nIf you come across some Divine Obsidian, I can make an even better weapon for you.\n<<else>>\n<<Take Obsidian>>\n<<Give GhostBane>>\nIf you come across some Divine or Pristine Obsidian, I can make an even better weapon for you.\n<<endif>>",
+		"position": {
+			"x": 72,
+			"y": 709
+		},
+		"colorID": 0
+	}
+]

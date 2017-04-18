@@ -23,17 +23,35 @@ public class CommandParser : MonoBehaviour
 
 	public IEnumerator RunCommand(string s)
 	{
-		switch(s.ToLower())
+		if(s.ToLower() == "open shop")
+		{ 
+			ShopInventory shop = null;
+			if (talkTo)
+				shop = talkTo.GetComponent<ShopInventory>();
+			if (shop)
+				shop.OpenShop();
+			yield break;
+		}
+		string string4 = s.Substring(0, 4).ToLower();
+		switch(string4)
 		{
-			case "open shop":
-				ShopInventory shop = null;
-				if (talkTo)
-					shop = talkTo.GetComponent<ShopInventory>();
-				if (shop)
-					shop.OpenShop();
+			case "give":
+				string itemName = s.Substring(5);
+				Item item = null;
+				if (CreateItem.Instance.TryGet(itemName.ToLower(), out item))
+					player.GetComponent<Inventory>().AddOrPutOnGround(item);
+				else
+					Debug.LogError("Unable to find " + itemName + " in Item Database");
+				// string item 
 				yield break;
+			case "take":
+				if (!player.GetComponent<Inventory>().RemoveItem(s.Substring(5)))
+					Debug.LogError("Failed to remove item " + s.Substring(5));
+				yield break;
+
 		}
 
 
+		yield break;
 	}
 }
