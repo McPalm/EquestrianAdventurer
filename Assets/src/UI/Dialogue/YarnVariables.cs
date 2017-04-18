@@ -20,9 +20,9 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 
 	public override Value GetValue(string variableName)
 	{
-		if(variableName.Length > 5 && variableName.Substring(0, 5) == "flag.")
+		if(variableName.Length > 6 && variableName.Substring(0, 6) == "$flag.")
 		{
-			bool f = StoryFlags.Instance.HasFlag(variableName.Substring(5));
+			bool f = StoryFlags.Instance.HasFlag(variableName.Substring(6));
 			return new Value(f);
 		}
 		Value r;
@@ -33,12 +33,12 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 
 	public override void SetValue(string variableName, Value value)
 	{
-		if (variableName.Length > 5 && variableName.Substring(0, 5) == "flag.")
+		if (variableName.Length > 6 && variableName.Substring(0, 6) == "$flag.")
 		{
 			if (value.AsBool)
-				StoryFlags.Instance.AddFlag(variableName.Substring(5));
+				StoryFlags.Instance.AddFlag(variableName.Substring(6));
 			else
-				StoryFlags.Instance.RemoveFlag(variableName.Substring(5));
+				StoryFlags.Instance.RemoveFlag(variableName.Substring(6));
 			return;
 		}
 		if(data.ContainsKey(variableName))
