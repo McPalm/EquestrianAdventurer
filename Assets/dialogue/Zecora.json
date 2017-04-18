@@ -1,0 +1,52 @@
+[
+	{
+		"title": "Start",
+		"tags": "",
+		"body": "Welcome my little pony, Please step right into my tree.\n<<if $flag.zecora.visited is false>>\n<<set $flag.zecora.visited to true>>\n-> Are you okay?\n    I assure you I am just fine, tho you did come at an inopportune time. The forest appear to be haunted, rending me quite daunted.\n-> haunted?\n    [[Haunted]]\n-> Tinkerspark was worried. <<if $flag.tinkerspark.talkedaboutzecora and $flag.zecora.tinkersparkmessage is false>>\n    The zebra smiles.\n    Her concern warms my heart.\n    <<set $flag.zecora.tinkersparkmessage to true>>\n<<endif>>\n[[Main]]",
+		"position": {
+			"x": 692,
+			"y": 64
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Ghosts",
+		"tags": "",
+		"body": "Ghost are quite the hassle to fight, Weapons are weak against this blight. You would need a special weapon or a charm, to stand any chance to do them any harm. I could make one of the latter, if I had some Ursa Minor Fur.\n-> Where can I find this fur?\nYou can find some of that in the cave to the north west, Just be graceful in this test. Avoiding the best would be the wisest measure, just sneak past it and claim your treasure.\n<<set $flag.ghost to true>>\n<<set $flag.zecora.talkedAboutCharm to true>>\n[[Main]]",
+		"position": {
+			"x": 949,
+			"y": 641
+		},
+		"colorID": 0
+	},
+	{
+		"title": "MakeCharm",
+		"tags": "",
+		"body": "<<Take ursa minor fur>>\n<<give ghostcharm>>\nThis should be done in the blink of an eye.\n[[Main]]",
+		"position": {
+			"x": 691,
+			"y": 761
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Haunted",
+		"tags": "",
+		"body": "The woods are facing an infestation, ghost force animals into migration.\n-> How can I fight these ghosts?\n    [[Ghosts]]",
+		"position": {
+			"x": 949,
+			"y": 199
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Main",
+		"tags": "",
+		"body": "-> I found some ursa minor fur <<if $inventory.ursa_minor_fur is true>>\n    [[MakeCharm]]\n-> Can you help me with the ghosts?\n    [[Ghosts]]\n-> Tinkerspark was worried. <<if $flag.tinkerspark.talkedaboutzecora and $flag.zecora.tinkersparkmessage is false>>\n    The zebra smiles.\n    Her concern warms my heart.\n    <<set $flag.zecora.tinkersparkmessage to true>>\n-> Do you have anything for sale? (Shop)\n    <<open store>>\n-> Good Bye (Leave)\n    Farewell!",
+		"position": {
+			"x": 661,
+			"y": 488
+		},
+		"colorID": 0
+	}
+]
