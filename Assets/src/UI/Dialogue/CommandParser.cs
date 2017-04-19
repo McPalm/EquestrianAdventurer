@@ -23,15 +23,22 @@ public class CommandParser : MonoBehaviour
 
 	public IEnumerator RunCommand(string s)
 	{
-		if(s.ToLower() == "open shop")
-		{ 
-			ShopInventory shop = null;
-			if (talkTo)
-				shop = talkTo.GetComponent<ShopInventory>();
-			if (shop)
-				shop.OpenShop();
-			yield break;
+		switch (s.ToLower())
+		{
+			case "open shop":
+				ShopInventory shop = null;
+				if (talkTo)
+					shop = talkTo.GetComponent<ShopInventory>();
+				if (shop)
+					shop.OpenShop();
+				yield break;
+			case "sleep":
+				FindObjectOfType<TimeAndDay>().NewDay();
+				player.GetComponent<HitPoints>().CurrentHealth = 999;
+				yield break;
 		}
+
+
 		string string4 = s.Substring(0, 4).ToLower();
 		switch(string4)
 		{

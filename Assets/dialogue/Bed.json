@@ -1,0 +1,12 @@
+[
+	{
+		"title": "Start",
+		"tags": "",
+		"body": "Go to bed?\n-> Yes\n    <<Sleep>>\n-> No",
+		"position": {
+			"x": 540,
+			"y": 260
+		},
+		"colorID": 0
+	}
+]
