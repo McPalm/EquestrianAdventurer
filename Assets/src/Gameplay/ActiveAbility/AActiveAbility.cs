@@ -3,6 +3,35 @@ using System.Collections;
 
 public abstract class AActiveAbility : MonoBehaviour
 {
+	protected MapCharacter User
+	{
+		get
+		{
+			return GetComponentInParent<MapCharacter>();
+		}
+	}
+	protected Mobile Me
+	{
+		get
+		{
+			return GetComponentInParent<Mobile>();
+		}
+	}
+	protected StaminaPoints Stamina
+	{
+		get
+		{
+			return GetComponentInParent<StaminaPoints>();
+		}
+	}
+	protected LOSCheck LOS
+	{
+		get
+		{
+			return GetComponentInParent<LOSCheck>();
+		}
+	}
+
 	/// <summary>
 	/// if the target location is viable to use the skill at
 	/// </summary>

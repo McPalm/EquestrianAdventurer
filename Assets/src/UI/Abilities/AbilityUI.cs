@@ -37,7 +37,7 @@ public class AbilityUI : MonoBehaviour
 
 	void Build()
 	{
-		AActiveAbility[] a = character.GetComponents<AActiveAbility>();
+		AActiveAbility[] a = character.Abilities;
 		for (int i = 0; i < a.Length; i++)
 		{
 			SetButton(i, a[i]);

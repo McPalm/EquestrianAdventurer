@@ -13,8 +13,8 @@ public class Dash : AActiveAbility
 	{
 		get
 		{
-			if(cost > 0 && GetComponent<StaminaPoints>())
-				return GetComponent<StaminaPoints>().CurrentStamina >= cost;
+			if(cost > 0 && Stamina)
+				return Stamina.CurrentStamina >= cost;
 			return true;
 		}
 	}
@@ -29,23 +29,23 @@ public class Dash : AActiveAbility
 
 	public override bool CanUseAt(IntVector2 targetLocation)
 	{
-		return CanUse && GetComponent<LOSCheck>().HasLOE(targetLocation, range);	
+		return CanUse && LOS.HasLOE(targetLocation, range);	
 	}
 
 	public override bool TryUseAt(IntVector2 targetLocation)
 	{
 		if(CanUseAt(targetLocation))
 		{
-			if (GetComponent<Mobile>().CanEnter(targetLocation))
+			if (Me.CanEnter(targetLocation))
 			{
-				StaminaPoints s = GetComponent<StaminaPoints>();
-				if (s)
+				
+				if (Stamina)
 				{
-					if (!s.TryPay(cost)) return false;
+					if (!Stamina.TryPay(cost)) return false;
 				}
-				GetComponent<Mobile>().ForceMove(targetLocation, 0.1f);
-				if (GetComponent<SightRadius>())
-					GetComponent<SightRadius>().RefreshView(range);
+				Me.ForceMove(targetLocation, 0.1f);
+				if (User.GetComponent<SightRadius>())
+					User.GetComponent<SightRadius>().RefreshView(range);
 				return true;
 			}
 		}

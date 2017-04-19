@@ -155,5 +155,6 @@ public class CharacterActionController : MonoBehaviour
 		inventoryaction = 0x40,
 		attack = 0x80,
 		interact = 0x100,
+		ability = 0x200,
 	}
 }
