@@ -26,7 +26,22 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 
 	public override IEnumerator RunCommand(Command command)
 	{
-		yield return CommandParser.Instance.RunCommand(command.text);
+		switch (command.text.ToLower())
+		{
+			case "wait":
+				do
+				{
+					yield return null;
+				}
+				while (!Input.anyKeyDown);
+				yield break;
+			case "clear":
+					log = "";
+				yield break;
+			default: 
+				yield return CommandParser.Instance.RunCommand(command.text);
+				yield break;
+		}
 	}
 
 	public override IEnumerator RunLine(Line line)
