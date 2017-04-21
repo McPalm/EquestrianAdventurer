@@ -23,17 +23,15 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 	RogueController player;
 	string log;
 	bool runLine;
+	bool waiting = true;
 
 	public override IEnumerator RunCommand(Command command)
 	{
 		switch (command.text.ToLower())
 		{
 			case "wait":
-				do
-				{
-					yield return null;
-				}
-				while (!Input.anyKeyDown);
+				optionButtons[0].GetComponentInChildren<Text>().text = "...";
+				yield return Wait();
 				yield break;
 			case "clear":
 					log = "";
@@ -93,24 +91,28 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 
 	public void ChoseOption(int i)
 	{
-		currentChooser(i);
-		foreach (Button b in optionButtons)
-			b.gameObject.SetActive(false);
+		if (currentChooser == null)
+		{
+			waiting = false;
+		}
+		else
+		{
+			currentChooser(i);
+			foreach (Button b in optionButtons)
+				b.gameObject.SetActive(false);
 
-		log = "";
+			log = "";
 
-		currentChooser = null;
+			currentChooser = null;
+		}
 	}
 
 	public override IEnumerator DialogueComplete()
 	{
 		if(runLine)
 		{
-			do
-			{
-				yield return null;
-			}
-			while (!Input.anyKeyDown);
+			optionButtons[0].GetComponentInChildren<Text>().text = "end";
+			yield return Wait();
 		}
 
 		gameObject.SetActive(false);
@@ -126,5 +128,18 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 		player.enabled = false;
 		log = "";
 		yield break;
+	}
+
+	private IEnumerator Wait()
+	{
+		buttonAnchor.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, text.preferredHeight + bodyOptionPadding, 35);
+		optionButtons[0].gameObject.SetActive(true);
+		waiting = true;
+		do
+		{
+			yield return null;
+		}
+		while (waiting);
+		optionButtons[0].gameObject.SetActive(false);
 	}
 }
