@@ -29,6 +29,13 @@ public class UIDialogueWindow : MonoBehaviour
 
 	HashSet<string> local = new HashSet<string>();
 
+	public void Setup(string name, Sprite sprite)
+	{
+		portrait.gameObject.SetActive(sprite != null);
+		portrait.sprite = sprite;
+		characterName.text = name;
+	}
+
 	public void Open(string fileName, string name, Sprite sprite, GameObject client)
 	{
 		this.client = client;

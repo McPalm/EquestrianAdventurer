@@ -15,6 +15,8 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 	[Space(10)]
 	[SerializeField]
 	float lettersPerSecond = 60f;
+	[SerializeField]
+	float bodyOptionPadding = 12f;
 
 	float currentLineTime = 0f;
 	OptionChooser currentChooser;
@@ -61,7 +63,7 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 		runLine = false;
 		yield return new WaitForSeconds(0.25f);
 
-		buttonAnchor.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, text.preferredHeight + 12f, 35);
+		buttonAnchor.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, text.preferredHeight + bodyOptionPadding, 35);
 
 		for (int i = 0; i < optionsCollection.options.Count; i++)
 		{

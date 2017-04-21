@@ -17,7 +17,15 @@ public class DialogueStarter : MonoBehaviour
 		CommandParser.Instance.talkTo = gameObject;
 
 		Yarn.Unity.DialogueRunner d = FindObjectOfType<Yarn.Unity.DialogueRunner>();
+
+		MapObject o = GetComponent<MapObject>();
+		SpriteRenderer sr = GetComponent<SpriteRenderer>();
+		UIDialogueWindow.Instance.Setup(
+			(o) ? o.displayName : name,
+			(sr) ? sr.sprite : null
+			);
 		
+
 		d.Clear();
 		d.AddScript(file);
 		d.StartDialogue();
