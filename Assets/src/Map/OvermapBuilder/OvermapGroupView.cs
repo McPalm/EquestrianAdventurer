@@ -91,6 +91,6 @@ public class OvermapGroupView : MonoBehaviour
 
 	void OnHueSlider(float f)
 	{
-		data.SetGroupColor(group, Color.HSVToRGB(f, 0.8f, 0.95f));
+		data.SetGroupColor(group, Color.HSVToRGB(f, 0.5f, 0.95f));
 	}
 }

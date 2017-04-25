@@ -21,30 +21,58 @@ public class OvermapData
 		return ret;
 	}
 
-	public void SetSectionGenerator(IntVector2 iv2, MapType type, string name, bool inherit)
+	public void SetSectionGenerator(IntVector2 iv2, MapType type)
 	{
 		SectionContainer sc = null;
 		if (sections.TryGetValue(iv2, out sc))
 		{
 			sc.generator = type;
-			sc.inheritGenerator = inherit;
+
+			EventEditSection.Invoke(iv2, sc);
+		}
+	}
+
+	public void SetSectionPregeneratedName(IntVector2 iv2, string name)
+	{
+		SectionContainer sc = null;
+		if (sections.TryGetValue(iv2, out sc))
+		{
 			sc.pregeneratedName = name;
 
 			EventEditSection.Invoke(iv2, sc);
 		}
 	}
 
-	public void SetSectionSpawntable(IntVector2 iv2, string table, bool inherit)
+	public void SetSectionGeneratorInherit(IntVector2 iv2, bool inherit)
+	{
+		SectionContainer sc = null;
+		if (sections.TryGetValue(iv2, out sc))
+		{
+			sc.inheritGenerator = inherit;
+			EventEditSection.Invoke(iv2, sc);
+		}
+	}
+
+	public void SetSectionSpawntable(IntVector2 iv2, string table)
 	{
 		SectionContainer sc = null;
 		if (sections.TryGetValue(iv2, out sc))
 		{
 			sc.spawntable = table;
-			sc.inheritSpawnTable = inherit;
-
 			EventEditSection.Invoke(iv2, sc);
 		}
 	}
+
+	public void SetSectionSpawnInherit(IntVector2 iv2, bool inherit)
+	{
+		SectionContainer sc = null;
+		if (sections.TryGetValue(iv2, out sc))
+		{
+			sc.inheritSpawnTable = inherit;
+			EventEditSection.Invoke(iv2, sc);
+		}
+	}
+
 
 	public void SetSectionColor(IntVector2 iv2, Color c)
 	{
@@ -169,6 +197,16 @@ public class OvermapData
 		EventEditGroup.Invoke(group);
 	}
 
+	public SectionGroupData GroupOf(IntVector2 section)
+	{
+		foreach(SectionGroupData group in groups)
+		{
+			if (group.members.Contains(section))
+				return group;
+		}
+		return null;
+	}
+
 	[System.Serializable]
 	public class SectionContainer
 	{
@@ -186,6 +224,8 @@ public class OvermapData
 	[System.Serializable]
 	public class SectionGroupData
 	{
+		public string groupName;
+
 		public List<IntVector2> members;
 
 		public MapType generator;
