@@ -7,6 +7,8 @@ public class OvermapGroupView : MonoBehaviour
 	[SerializeField]
 	Slider hue;
 	[SerializeField]
+	InputField groupName;
+	[SerializeField]
 	Image colorDisplay;
 	[SerializeField]
 	Dropdown generator;
@@ -28,6 +30,8 @@ public class OvermapGroupView : MonoBehaviour
 		spawner.onEndEdit.AddListener(OnSpawnerEdit);
 
 		hue.onValueChanged.AddListener(OnHueSlider);
+
+		groupName.onEndEdit.AddListener(OnChangeName);
 	}
 
 	public void Show(OvermapData data, OvermapData.SectionGroupData group)
@@ -58,6 +62,8 @@ public class OvermapGroupView : MonoBehaviour
 	{
 		ignoreEvents = true;
 
+		groupName.text = group.groupName;
+
 		float h;
 		float s;
 		float v;
@@ -72,6 +78,12 @@ public class OvermapGroupView : MonoBehaviour
 		spawnNameValidator.color = (CreatureSpawner.HasSpawner(group.spawntable)) ? new Color(0.7f, 1f, 0.7f) : new Color(1f, 0.7f, 0.7f);
 
 		ignoreEvents = false;
+	}
+
+
+	void OnChangeName(string n)
+	{
+		data.SetGroupName(group, n);
 	}
 
 	void OnDropdown(int i)

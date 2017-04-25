@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class OvermapSectioneditorView : MonoBehaviour
 {
 	[SerializeField]
+	Text groupName;
+	[SerializeField]
 	Button InheritGeneratorButton;
 	[SerializeField]
 	GameObject InheritGeneratorEnabledIcon;
@@ -105,6 +107,13 @@ public class OvermapSectioneditorView : MonoBehaviour
 	void Refresh(OvermapData.SectionContainer section)
 	{
 		ignoreEvents = true;
+
+		OvermapData.SectionGroupData group = data.GroupOf(location);
+		if (group == null)
+			groupName.text = "Not in a group.";
+		else
+			groupName.text = "Group: " + group.groupName;
+
 		InheritGeneratorEnabledIcon.SetActive(section.inheritGenerator);
 		GeneratorDropdown.interactable = !section.inheritGenerator;
 		GeneratorDropdown.value = (int)section.generator;

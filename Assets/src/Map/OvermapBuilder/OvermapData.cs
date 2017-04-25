@@ -49,6 +49,11 @@ public class OvermapData
 		if (sections.TryGetValue(iv2, out sc))
 		{
 			sc.inheritGenerator = inherit;
+
+			SectionGroupData group = GroupOf(iv2);
+			if (inherit && group != null)
+				sc.generator = group.generator;
+
 			EventEditSection.Invoke(iv2, sc);
 		}
 	}
@@ -69,6 +74,11 @@ public class OvermapData
 		if (sections.TryGetValue(iv2, out sc))
 		{
 			sc.inheritSpawnTable = inherit;
+
+			SectionGroupData group = GroupOf(iv2);
+			if (inherit && group != null)
+				sc.spawntable = group.spawntable;
+
 			EventEditSection.Invoke(iv2, sc);
 		}
 	}
@@ -197,6 +207,24 @@ public class OvermapData
 		EventEditGroup.Invoke(group);
 	}
 
+	public void SetGroupName(SectionGroupData group, string name)
+	{
+		if (groups.Contains(group) == false) return;
+
+		group.groupName = name;
+
+		foreach (IntVector2 iv2 in group.members)
+		{
+			SectionContainer container = null;
+			if (sections.TryGetValue(iv2, out container))
+			{
+				EventEditSection.Invoke(iv2, container);
+			}
+		}
+
+		EventEditGroup.Invoke(group);
+	}
+
 	public SectionGroupData GroupOf(IntVector2 section)
 	{
 		foreach(SectionGroupData group in groups)
@@ -224,7 +252,7 @@ public class OvermapData
 	[System.Serializable]
 	public class SectionGroupData
 	{
-		public string groupName;
+		public string groupName = "new group";
 
 		public List<IntVector2> members;
 
