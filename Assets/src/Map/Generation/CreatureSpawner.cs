@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class CreatureSpawner : MonoBehaviour
 {
+	const string PATH = "spawn/";
+
 	public GameObject[] creatures;
 	public MapSection targetSection;
 
@@ -51,6 +53,13 @@ public class CreatureSpawner : MonoBehaviour
 		}
 		Debug.LogWarning("Could not find enough spawnpoints at " + targetSection + " after 10000 tries");
 		return ret;
+	}
+
+	static public CreatureSpawner Get(string name)
+	{
+		PremadeSpawner ps = Resources.Load<PremadeSpawner>(PATH + name);
+		if (!ps) Debug.LogWarning("Cannot creature spawning file for " + name);
+		return ps;
 	}
 
 	protected void SpawnAt(GameObject o, int x, int y)

@@ -350,7 +350,7 @@ public class OverMap : MonoBehaviour {
 			if (msc.terrain == MapType.forest) cs = forest;
 			if (msc.terrain == MapType.cave) cs = cave;
 			if (msc.terrain == MapType.rooms) cs = castle;
-			if (msc.terrain == MapType.pregenerated) cs = PremadeSpawner.Get(msc.sectionName);
+			if (msc.terrain == MapType.pregenerated) cs = CreatureSpawner.Get(msc.sectionName);
 			if (cs &! testDisableSpawn)
 			{
 				cs.targetSection = msc.section;

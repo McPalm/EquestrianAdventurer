@@ -116,6 +116,59 @@ public class OvermapData
 		}
 	}
 
+	public void SetGroupSpawner(SectionGroupData group, string spawntable)
+	{
+		if (groups.Contains(group) == false) return;
+
+		group.spawntable = spawntable;
+		foreach(IntVector2 iv2 in group.members)
+		{
+			SectionContainer container = null;
+			if(sections.TryGetValue(iv2, out container))
+			{
+				if (container.inheritSpawnTable)
+				{
+					container.spawntable = spawntable;
+					EventEditSection.Invoke(iv2, container);
+				}
+			}
+		}
+		EventEditGroup.Invoke(group);
+	}
+
+	public void SetGroupGenerator(SectionGroupData group, MapType terrain)
+	{
+		if (groups.Contains(group) == false) return;
+
+		group.generator = terrain;
+		foreach (IntVector2 iv2 in group.members)
+		{
+			SectionContainer container = null;
+			if (sections.TryGetValue(iv2, out container))
+			{
+				if (container.inheritGenerator)
+				{
+					container.generator = terrain;
+					EventEditSection.Invoke(iv2, container);
+				}
+			}
+		}
+		EventEditGroup.Invoke(group);
+	}
+
+	public void SetGroupColor(SectionGroupData group, Color color)
+	{
+		if (groups.Contains(group) == false) return;
+
+		group.color = color;
+		foreach (IntVector2 iv2 in group.members)
+		{
+			if (sections.ContainsKey(iv2))
+				SetSectionColor(iv2, color);
+		}
+		EventEditGroup.Invoke(group);
+	}
+
 	[System.Serializable]
 	public class SectionContainer
 	{

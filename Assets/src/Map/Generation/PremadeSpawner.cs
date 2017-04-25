@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PremadeSpawner : CreatureSpawner
 {
-	const string PATH = "spawn/";
+	
 
 	public SpawnContainer[] spawnlist;
 
@@ -15,12 +15,7 @@ public class PremadeSpawner : CreatureSpawner
 		}
 	}
 
-	static public PremadeSpawner Get(string name)
-	{
-		PremadeSpawner ps = Resources.Load<PremadeSpawner>(PATH + name);
-		if (!ps) Debug.LogWarning("Cannot creature spawning file for " + name);
-		return ps;
-	}
+	
 
 	[System.Serializable]
 	public struct SpawnContainer

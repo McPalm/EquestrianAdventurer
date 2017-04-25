@@ -5,6 +5,8 @@ public class OvermapEditorView : MonoBehaviour
 {
 	[SerializeField]
 	SpriteRenderer sectionIconPrefab;
+	[SerializeField]
+	OvermapGroupView groupView;
 
 
 	OvermapData model;
@@ -25,8 +27,14 @@ public class OvermapEditorView : MonoBehaviour
 		model.EventEditGroup.AddListener(OnEditGroup);
 
 		model.AddSection(new IntVector2(0, 1));
+		model.AddSection(new IntVector2(1, 1));
+		model.AddSection(new IntVector2(1, 0));
 
 		model.SetSectionColor(IntVector2.zero, Color.white);
+
+		model.AddGroup(IntVector2.zero, new IntVector2(0, 1));
+
+		groupView.Show(model, model.groups[0]);
 	}
 	
 	// Update is called once per frame

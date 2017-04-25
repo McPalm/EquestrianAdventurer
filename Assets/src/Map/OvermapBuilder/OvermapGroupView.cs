@@ -7,9 +7,14 @@ public class OvermapGroupView : MonoBehaviour
 	[SerializeField]
 	Slider hue;
 	[SerializeField]
+	Image colorDisplay;
+	[SerializeField]
 	Dropdown generator;
 	[SerializeField]
 	InputField spawner;
+	[SerializeField]
+	Image spawnNameValidator;
+	
 
 
 	OvermapData data;
@@ -22,19 +27,26 @@ public class OvermapGroupView : MonoBehaviour
 		generator.onValueChanged.AddListener(OnDropdown);
 
 		spawner.onEndEdit.AddListener(OnSpawnerEdit);
+
+		hue.onValueChanged.AddListener(OnHueSlider);
 	}
 
-	void Show(OvermapData data, OvermapData.SectionGroupData group)
+	public void Show(OvermapData data, OvermapData.SectionGroupData group)
 	{
-		this.data.EventEditGroup.RemoveListener(OnChange);
+		if(this.data != null) this.data.EventEditGroup.RemoveListener(OnChange);
 
 		this.group = group;
 		this.data = data;
 
 		gameObject.SetActive(true);
-		data.EventEditGroup.AddListener(OnChange);	
+		data.EventEditGroup.AddListener(OnChange);
 
 		Refresh();
+	}
+
+	public void Hide()
+	{
+		gameObject.SetActive(false);
 	}
 
 	public void OnChange(OvermapData.SectionGroupData group)
@@ -51,18 +63,34 @@ public class OvermapGroupView : MonoBehaviour
 		Color.RGBToHSV(group.color, out h, out s, out v);
 		hue.value = h;
 
+		colorDisplay.color = group.color;
+
 		generator.value = (int)group.generator;
 
 		spawner.text = group.spawntable;
+
+		
 	}
 
 	void OnDropdown(int i)
 	{
-		print(((MapType)i).ToString());
+		// print(((MapType)i).ToString());
+
+		data.SetGroupGenerator(group, (MapType)i);
 	}
 
 	void OnSpawnerEdit(string s)
 	{
-		print(s);
+		if (CreatureSpawner.Get(s) == null)
+			spawnNameValidator.color = new Color(1f, 0.7f, 0.7f);
+		else
+			spawnNameValidator.color = new Color(0.7f, 1f, 0.7f);
+
+		data.SetGroupSpawner(group, s);
+	}
+
+	void OnHueSlider(float f)
+	{
+		data.SetGroupColor(group, Color.HSVToRGB(f, 0.8f, 0.95f));
 	}
 }
