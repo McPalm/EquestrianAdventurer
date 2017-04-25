@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class OvermapEditorView : MonoBehaviour
 {
 	[SerializeField]
-	SpriteRenderer sectionIconPrefab;
+	SectionMapIcon sectionIconPrefab;
 	[SerializeField]
 	OvermapGroupView groupView;
 	[SerializeField]
@@ -12,7 +12,7 @@ public class OvermapEditorView : MonoBehaviour
 
 
 	OvermapData model;
-	Dictionary<IntVector2, SpriteRenderer> tiles = new Dictionary<IntVector2, SpriteRenderer>();
+	Dictionary<IntVector2, SectionMapIcon> tiles = new Dictionary<IntVector2, SectionMapIcon>();
 
 	// Use this for initialization
 	void Start ()
@@ -57,8 +57,10 @@ public class OvermapEditorView : MonoBehaviour
 
 	void OnEditSection(IntVector2 location, OvermapData.SectionContainer section)
 	{
-		SpriteRenderer render = GetOrBuildAt(location);
-		render.color = section.color;
+		SectionMapIcon render = GetOrBuildAt(location);
+
+		render.Color = section.color;
+		render.SetConnections = section.connections;
 	}
 
 	void OnEditGroup(OvermapData.SectionGroupData group)
@@ -71,12 +73,12 @@ public class OvermapEditorView : MonoBehaviour
 		}
 	}
 
-	SpriteRenderer GetOrBuildAt(IntVector2 location)
+	SectionMapIcon GetOrBuildAt(IntVector2 location)
 	{
-		SpriteRenderer render = null;
+		SectionMapIcon render = null;
 		tiles.TryGetValue(location, out render);
 		if (render) return render;
-		render = Instantiate(sectionIconPrefab, (Vector3)location, Quaternion.identity) as SpriteRenderer;
+		render = Instantiate(sectionIconPrefab, (Vector3)location, Quaternion.identity) as SectionMapIcon;
 		tiles.Add(location, render);
 		return render;
 	}
