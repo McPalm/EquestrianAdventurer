@@ -55,6 +55,13 @@ public class CreatureSpawner : MonoBehaviour
 		return ret;
 	}
 
+	
+
+	protected void SpawnAt(GameObject o, int x, int y)
+	{
+		Instantiate(o, targetSection.transform.position + new Vector3(x, y), Quaternion.identity);
+	}
+
 	static public CreatureSpawner Get(string name)
 	{
 		PremadeSpawner ps = Resources.Load<PremadeSpawner>(PATH + name);
@@ -62,8 +69,8 @@ public class CreatureSpawner : MonoBehaviour
 		return ps;
 	}
 
-	protected void SpawnAt(GameObject o, int x, int y)
+	static public bool HasSpawner(string name)
 	{
-		Instantiate(o, targetSection.transform.position + new Vector3(x, y), Quaternion.identity);
+		return Resources.Load(PATH + name) != null;
 	}
 }

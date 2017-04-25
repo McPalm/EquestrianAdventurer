@@ -48,6 +48,8 @@ public class OvermapSectioneditorView : MonoBehaviour
 	OvermapData data;
 	IntVector2 location;
 
+	bool ignoreEvents = false; // Unity UI breaks the VMC contract and acts as if player change the value on a view update. This is a workaround to ignore events during the refresh.
+
 	void Start()
 	{
 		List<string> options = new List<string>(System.Enum.GetNames(typeof(MapType)));
@@ -100,9 +102,9 @@ public class OvermapSectioneditorView : MonoBehaviour
 			Refresh(container);
 	}
 
-
 	void Refresh(OvermapData.SectionContainer section)
 	{
+		ignoreEvents = true;
 		InheritGeneratorEnabledIcon.SetActive(section.inheritGenerator);
 		GeneratorDropdown.interactable = !section.inheritGenerator;
 		GeneratorDropdown.value = (int)section.generator;
@@ -119,65 +121,93 @@ public class OvermapSectioneditorView : MonoBehaviour
 
 		InheritSpawntableEnabledIcon.SetActive(section.inheritSpawnTable);
 		SpawntableInput.interactable = !section.inheritSpawnTable;
-
+		SpawntableInput.text = section.spawntable;
+		
+		SpawntableInput.GetComponent<Image>().color = (CreatureSpawner.HasSpawner(section.spawntable)) ? new Color(0.7f, 1f, 0.7f) : new Color(1f, 0.7f, 0.7f);
+	
 		NorthConnectionIcon.SetActive((section.connections & CompassDirection.north) == CompassDirection.north);
 		EastConnectionIcon.SetActive((section.connections & CompassDirection.east) == CompassDirection.east);
 		SouthConnectionIcon.SetActive((section.connections & CompassDirection.south) == CompassDirection.south);
 		WestConnectionIcon.SetActive((section.connections & CompassDirection.west) == CompassDirection.west);
+
+		float h, s, v;
+		Color.RGBToHSV(section.color, out h, out s, out v);
+		colorSlider.value = h;
+		colorSlider.handleRect.GetComponent<Image>().color = section.color;
+
+		ignoreEvents = false;
 	}
+
+
+
+
+	/////////////////////////
+	// Incomming Events from the view
+	//
 
 	void OnColorSlider(float f)
 	{
+		if (ignoreEvents) return;
 		data.SetSectionColor(location, Color.HSVToRGB(f, 0.9f, 0.95f));
 	}
 
 	void OnSpawnInput(string s)
 	{
+		if (ignoreEvents) return;
 		data.SetSectionSpawntable(location, s);
 	}
 
 	void OnGeneratorInput(int i)
 	{
+		if (ignoreEvents) return;
 		data.SetSectionGenerator(location, (MapType)i);
 	}
 
 	void OnInheritSpawn()
 	{
+		if (ignoreEvents) return;
 		data.SetSectionSpawnInherit(location, !InheritSpawntableEnabledIcon.activeSelf);
 	}
 
 	void OnInheritGenerator()
 	{
+		if (ignoreEvents) return;
 		data.SetSectionGeneratorInherit(location, !InheritGeneratorEnabledIcon.activeSelf);
 	}
 
 	void OnPremadeSectionInput(string s)
 	{
+		if (ignoreEvents) return;
 		data.SetSectionPregeneratedName(location, s);
 	}
 
 	void OnNorthConnection()
 	{
+		if (ignoreEvents) return;
 		ToggleConnection(CompassDirection.north);
 	}
 
 	void OnEastConnection()
 	{
+		if (ignoreEvents) return;
 		ToggleConnection(CompassDirection.east);
 	}
 
 	void OnWestConnection()
 	{
+		if (ignoreEvents) return;
 		ToggleConnection(CompassDirection.west);
 	}
 
 	void OnSouthConnection()
 	{
+		if (ignoreEvents) return;
 		ToggleConnection(CompassDirection.south);
 	}
 
 	void ToggleConnection(CompassDirection direction)
 	{
+		if (ignoreEvents) return;
 		OvermapData.SectionContainer container = null;
 
 		if (data.sections.TryGetValue(location, out container))

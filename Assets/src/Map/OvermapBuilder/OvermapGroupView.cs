@@ -14,11 +14,10 @@ public class OvermapGroupView : MonoBehaviour
 	InputField spawner;
 	[SerializeField]
 	Image spawnNameValidator;
-	
-
 
 	OvermapData data;
 	OvermapData.SectionGroupData group;
+	bool ignoreEvents = false; // Unity UI breaks the VMC contract and acts as if player change the value on a view update. This is a workaround to ignore events during the refresh.
 
 	void Start()
 	{
@@ -57,6 +56,8 @@ public class OvermapGroupView : MonoBehaviour
 
 	public void Refresh()
 	{
+		ignoreEvents = true;
+
 		float h;
 		float s;
 		float v;
@@ -68,29 +69,28 @@ public class OvermapGroupView : MonoBehaviour
 		generator.value = (int)group.generator;
 
 		spawner.text = group.spawntable;
+		spawnNameValidator.color = (CreatureSpawner.HasSpawner(group.spawntable)) ? new Color(0.7f, 1f, 0.7f) : new Color(1f, 0.7f, 0.7f);
 
-		
+		ignoreEvents = false;
 	}
 
 	void OnDropdown(int i)
 	{
 		// print(((MapType)i).ToString());
-
+		if (ignoreEvents) return;
 		data.SetGroupGenerator(group, (MapType)i);
 	}
 
 	void OnSpawnerEdit(string s)
 	{
-		if (CreatureSpawner.Get(s) == null)
-			spawnNameValidator.color = new Color(1f, 0.7f, 0.7f);
-		else
-			spawnNameValidator.color = new Color(0.7f, 1f, 0.7f);
+		if (ignoreEvents) return;
 
 		data.SetGroupSpawner(group, s);
 	}
 
 	void OnHueSlider(float f)
 	{
+		if (ignoreEvents) return;
 		data.SetGroupColor(group, Color.HSVToRGB(f, 0.5f, 0.95f));
 	}
 }
