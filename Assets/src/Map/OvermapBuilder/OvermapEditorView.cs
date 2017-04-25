@@ -17,7 +17,7 @@ public class OvermapEditorView : MonoBehaviour
 
 		model = new OvermapData();
 
-		model.AddSection(new IntVector2(0, 0));
+		model.AddSection(IntVector2.zero);
 
 
 		RefreshView();
@@ -25,6 +25,8 @@ public class OvermapEditorView : MonoBehaviour
 		model.EventEditGroup.AddListener(OnEditGroup);
 
 		model.AddSection(new IntVector2(0, 1));
+
+		model.SetSectionColor(IntVector2.zero, Color.white);
 	}
 	
 	// Update is called once per frame
@@ -49,7 +51,12 @@ public class OvermapEditorView : MonoBehaviour
 
 	void OnEditGroup(OvermapData.SectionGroupData group)
 	{
-
+		foreach(IntVector2 location in group.members)
+		{
+			OvermapData.SectionContainer member;
+			if (model.sections.TryGetValue(location, out member))
+				OnEditSection(location, member);
+		}
 	}
 
 	SpriteRenderer GetOrBuildAt(IntVector2 location)
@@ -58,6 +65,7 @@ public class OvermapEditorView : MonoBehaviour
 		tiles.TryGetValue(location, out render);
 		if (render) return render;
 		render = Instantiate(sectionIconPrefab, (Vector3)location, Quaternion.identity) as SpriteRenderer;
+		tiles.Add(location, render);
 		return render;
 	}
 }

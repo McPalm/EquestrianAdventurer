@@ -46,6 +46,16 @@ public class OvermapData
 		}
 	}
 
+	public void SetSectionColor(IntVector2 iv2, Color c)
+	{
+		SectionContainer sc = null;
+		if (sections.TryGetValue(iv2, out sc))
+		{
+			sc.color = c;
+			EventEditSection.Invoke(iv2, sc);
+		}
+	}
+
 	public void AddConnection(IntVector2 iv2, CompassDirection direction)
 	{
 		SectionContainer sc = null;
