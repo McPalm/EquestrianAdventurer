@@ -27,6 +27,7 @@ public class OvermapEditorView : MonoBehaviour
 
 		model.EventEditGroup.AddListener(OnEditGroup);
 		model.EventEditSection.AddListener(OnEditSection);
+		model.EventRemoveSection.AddListener(OnRemoveSection);
 	}
 	
 	void SelectAt(IntVector2 iv2)
@@ -93,6 +94,16 @@ public class OvermapEditorView : MonoBehaviour
 		}
 	}
 
+	void OnRemoveSection(IntVector2 location, OvermapData.SectionContainer section)
+	{
+		SectionMapIcon tile = null;
+		if(tiles.TryGetValue(location, out tile))
+		{
+			Destroy(tile.gameObject);
+			tiles.Remove(location);
+		}
+	}
+
 	SectionMapIcon GetOrBuildAt(IntVector2 location)
 	{
 		SectionMapIcon render = null;
@@ -108,6 +119,7 @@ public class OvermapEditorView : MonoBehaviour
 	void Update()
 	{
 		editMode();
+		select();
 	}
 
 	void SelectMode()
@@ -119,7 +131,6 @@ public class OvermapEditorView : MonoBehaviour
 			SelectAt(IntVector2.RoundFrom(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
 			return;
 		}
-		select();
 	}
 
 	void AddMode()
@@ -153,7 +164,17 @@ public class OvermapEditorView : MonoBehaviour
 			
 			return;
 		}
-		select();
+	}
+
+	void DeleteMode()
+	{
+		if (EventSystem.current.IsPointerOverGameObject()) return;
+
+		if (Input.GetMouseButtonDown(0))
+		{
+			IntVector2 location = IntVector2.RoundFrom(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+			model.RemoveAt(location);
+		}
 	}
 
 	void select()
@@ -167,6 +188,11 @@ public class OvermapEditorView : MonoBehaviour
 		{
 			editMode = AddMode;
 			print("Add Mode");
+		}
+		else if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			editMode = DeleteMode;
+			print("Delete Mode");
 		}
 	}
 }

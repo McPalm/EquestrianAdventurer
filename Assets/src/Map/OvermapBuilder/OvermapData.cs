@@ -11,6 +11,7 @@ public class OvermapData
 
 	public SectionEvent EventEditSection = new SectionEvent();
 	public GroupEvent EventEditGroup = new GroupEvent();
+	public SectionEvent EventRemoveSection = new SectionEvent();
 
 	public SectionContainer AddSection(IntVector2 location)
 	{
@@ -19,6 +20,18 @@ public class OvermapData
 		ret.color = Color.HSVToRGB(Random.value, Random.Range(0.7f, 1f), Random.Range(0.5f, 1f));
 		EventEditSection.Invoke(location, ret);
 		return ret;
+	}
+
+	public void RemoveAt(IntVector2 location)
+	{
+		if(sections.ContainsKey(location))
+		{
+			RemoveSectionFromGroup(location);
+			SectionContainer container = null;
+			sections.TryGetValue(location, out container);
+			sections.Remove(location);
+			EventRemoveSection.Invoke(location, container);
+		}
 	}
 
 	public void SetSectionGenerator(IntVector2 iv2, MapType type)
