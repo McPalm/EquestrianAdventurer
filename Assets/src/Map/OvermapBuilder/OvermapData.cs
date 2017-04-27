@@ -121,6 +121,11 @@ public class OvermapData
 	{
 		if (members.Length == 0) return;
 
+		for(int i = 0; i < members.Length; i++)
+		{
+			RemoveSectionFromGroup(members[i]);
+		}
+
 		SectionGroupData group = new SectionGroupData(members);
 		groups.Add(group);
 		Color c = Color.HSVToRGB(Random.value, 0.8f, 0.8f);

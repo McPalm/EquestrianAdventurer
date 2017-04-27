@@ -146,7 +146,7 @@ public class OvermapEditorView : MonoBehaviour
 			}
 			else if(selectedTile != IntVector2.MaxValue)
 			{
-				model.AddGroup(location, selectedTile);
+				model.AddGroup(selectedTile, location);
 				SelectAt(location);
 			}
 			
