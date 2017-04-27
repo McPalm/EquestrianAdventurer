@@ -23,7 +23,9 @@ public class OvermapEditorView : MonoBehaviour
 	void Start ()
 	{
 		editMode = SelectMode;
-		model = new OvermapData();
+		//model = new OvermapData();
+		Load();
+		
 
 		model.EventEditGroup.AddListener(OnEditGroup);
 		model.EventEditSection.AddListener(OnEditSection);
@@ -193,4 +195,16 @@ public class OvermapEditorView : MonoBehaviour
 			print("Delete Mode");
 		}
 	}
+
+	void Load()
+	{
+		model = XmlTool.LoadFromXML<OvermapData>("XML/WorldMap");
+		RefreshView();
+	}
+
+	public void Save()
+	{
+		XmlTool.EditorSaveObjectAsXML(model, "XML/WorldMap");
+	}
 }
+

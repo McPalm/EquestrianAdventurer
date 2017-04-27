@@ -6,12 +6,14 @@ using System.Collections.Generic;
 [System.Serializable]
 public class OvermapData
 {
+	[XmlIgnore]
 	public Dictionary<IntVector2, SectionContainer> sections = new Dictionary<IntVector2, SectionContainer>();
 	public List<SectionGroupData> groups = new List<SectionGroupData>();
 
 	public SectionEvent EventEditSection = new SectionEvent();
 	public GroupEvent EventEditGroup = new GroupEvent();
 	public SectionEvent EventRemoveSection = new SectionEvent();
+	
 
 	public SectionContainer AddSection(IntVector2 location)
 	{
@@ -307,6 +309,55 @@ public class OvermapData
 			members = new List<IntVector2>();
 		}
 	}
+
+
+	//////////////////
+	/// Seralization Stuffs
+	///
+	
+
+	/// <summary>
+	/// Only to be used by the XML seralizer.
+	/// </summary>
+	public KeyValuePair<IntVector2, SectionContainer>[] XMLSerializedSections
+	{
+		get
+		{
+			List<KeyValuePair<IntVector2, SectionContainer>> list = new List<KeyValuePair<IntVector2, SectionContainer>>();
+			foreach(KeyValuePair<IntVector2, SectionContainer> pair in sections)
+			{
+				list.Add(pair);
+			}
+
+			list.Sort(comparer);
+
+			return list.ToArray();
+		}
+
+		set
+		{
+			for(int i = 0; i < value.Length; i++)
+			{
+				sections.Add(value[i].Key, value[i].Value);
+			}
+		}
+	}
+
+	/// <summary>
+	/// A simple IComparer implementation to sort  sctions first by their x value and then by their y value.
+	/// Used for seralization so that everything is always sorted the same way in the final document, purely for the benefit of git.
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <returns></returns>
+	private int comparer(KeyValuePair<IntVector2, SectionContainer> a, KeyValuePair<IntVector2, SectionContainer> b)
+	{
+		if (a.Key.x == b.Key.x)
+			return a.Key.y - b.Key.y;
+		return a.Key.x - b.Key.x;
+	}
+
+
 
 	public class SectionEvent : UnityEvent<IntVector2, SectionContainer> { }
 	public class GroupEvent : UnityEvent<SectionGroupData> { }
