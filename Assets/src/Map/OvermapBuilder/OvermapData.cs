@@ -139,6 +139,7 @@ public class OvermapData
 		for(int i = 0; i < members.Length; i++)
 		{
 			RemoveSectionFromGroup(members[i]);
+
 		}
 
 		SectionGroupData group = new SectionGroupData(members);
@@ -150,12 +151,18 @@ public class OvermapData
 		if(sections.TryGetValue(members[0], out con))
 		{
 			c = con.color;
+			group.generator = con.generator;
+			group.spawntable = con.spawntable;
 		}
 
 		group.color = c;
 		EventEditGroup.Invoke(group);
 		for (int i = 0; i < members.Length; i++)
+		{
 			SetSectionColor(members[i], group.color);
+			SetSectionGeneratorInherit(members[i], true);
+			SetSectionSpawnInherit(members[i], true);
+		}
 	}
 
 	public void AddSectionToGroup(SectionGroupData group, IntVector2 member)
@@ -171,6 +178,9 @@ public class OvermapData
 				EventEditGroup.Invoke(groups[i]);
 			}	
 		}
+
+		SetSectionGeneratorInherit(member, true);
+		SetSectionSpawnInherit(member, true);
 
 		group.members.Add(member);
 		SetSectionColor(member, group.color);

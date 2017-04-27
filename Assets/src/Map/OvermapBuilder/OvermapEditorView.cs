@@ -25,7 +25,6 @@ public class OvermapEditorView : MonoBehaviour
 		editMode = SelectMode;
 		//model = new OvermapData();
 		Load();
-		
 
 		model.EventEditGroup.AddListener(OnEditGroup);
 		model.EventEditSection.AddListener(OnEditSection);
@@ -198,7 +197,20 @@ public class OvermapEditorView : MonoBehaviour
 
 	void Load()
 	{
-		model = XmlTool.LoadFromXML<OvermapData>("XML/WorldMap");
+		try
+		{
+			model = XmlTool.LoadFromXML<OvermapData>("XML/WorldMap");	
+		}
+		catch
+		{
+			model = new OvermapData();
+			Debug.LogError("Unable to load map, making a new one. Be careful with overwriting any old one.");
+		}
+		if (model == null)
+		{
+			model = new OvermapData();
+			Debug.LogError("Unable to load map, making a new one. Be careful with overwriting any old one.");
+		}
 		RefreshView();
 	}
 

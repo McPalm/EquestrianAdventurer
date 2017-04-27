@@ -1,4 +1,4 @@
-﻿
+﻿[System.Flags, System.Serializable]
 public enum CompassDirection
 {
 	nowhere = 0x0,

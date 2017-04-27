@@ -2,30 +2,47 @@
 <OvermapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <groups>
     <SectionGroupData>
-      <groupName>new group</groupName>
+      <groupName>Everfree Forest</groupName>
       <members>
         <IntVector2>
-          <x>-1</x>
-          <y>-2</y>
+          <x>1</x>
+          <y>0</y>
         </IntVector2>
         <IntVector2>
-          <x>0</x>
-          <y>-2</y>
-        </IntVector2>
-        <IntVector2>
-          <x>0</x>
+          <x>1</x>
           <y>-1</y>
         </IntVector2>
         <IntVector2>
-          <x>-1</x>
+          <x>2</x>
           <y>-1</y>
+        </IntVector2>
+        <IntVector2>
+          <x>2</x>
+          <y>0</y>
+        </IntVector2>
+        <IntVector2>
+          <x>2</x>
+          <y>1</y>
+        </IntVector2>
+        <IntVector2>
+          <x>3</x>
+          <y>1</y>
+        </IntVector2>
+        <IntVector2>
+          <x>3</x>
+          <y>0</y>
+        </IntVector2>
+        <IntVector2>
+          <x>1</x>
+          <y>1</y>
         </IntVector2>
       </members>
-      <generator>pregenerated</generator>
+      <generator>forest</generator>
+      <spawntable>forest</spawntable>
       <color>
-        <r>0.0251827911</r>
-        <g>0.373968244</g>
-        <b>0.5154359</b>
+        <r>0.630042732</r>
+        <g>0.95</g>
+        <b>0.475</b>
         <a>1</a>
       </color>
     </SectionGroupData>
@@ -33,27 +50,122 @@
       <groupName>new group</groupName>
       <members>
         <IntVector2>
-          <x>1</x>
-          <y>-1</y>
-        </IntVector2>
-        <IntVector2>
-          <x>1</x>
+          <x>0</x>
           <y>0</y>
-        </IntVector2>
-        <IntVector2>
-          <x>2</x>
-          <y>0</y>
-        </IntVector2>
-        <IntVector2>
-          <x>2</x>
-          <y>-1</y>
         </IntVector2>
       </members>
       <generator>pregenerated</generator>
       <color>
-        <r>0.8198488</r>
-        <g>0.04510752</g>
-        <b>0.197164133</b>
+        <r>0.16</r>
+        <g>0.8</g>
+        <b>0.16036056</b>
+        <a>1</a>
+      </color>
+    </SectionGroupData>
+    <SectionGroupData>
+      <groupName>Deep Forest</groupName>
+      <members>
+        <IntVector2>
+          <x>3</x>
+          <y>-1</y>
+        </IntVector2>
+        <IntVector2>
+          <x>4</x>
+          <y>-1</y>
+        </IntVector2>
+        <IntVector2>
+          <x>4</x>
+          <y>0</y>
+        </IntVector2>
+        <IntVector2>
+          <x>5</x>
+          <y>0</y>
+        </IntVector2>
+        <IntVector2>
+          <x>5</x>
+          <y>-1</y>
+        </IntVector2>
+      </members>
+      <generator>forest</generator>
+      <spawntable>deepforest</spawntable>
+      <color>
+        <r>0.0999451</r>
+        <g>0.4810668</g>
+        <b>0.5108602</b>
+        <a>1</a>
+      </color>
+    </SectionGroupData>
+    <SectionGroupData>
+      <groupName>Cave</groupName>
+      <members>
+        <IntVector2>
+          <x>3</x>
+          <y>2</y>
+        </IntVector2>
+        <IntVector2>
+          <x>2</x>
+          <y>2</y>
+        </IntVector2>
+        <IntVector2>
+          <x>2</x>
+          <y>3</y>
+        </IntVector2>
+        <IntVector2>
+          <x>4</x>
+          <y>3</y>
+        </IntVector2>
+        <IntVector2>
+          <x>4</x>
+          <y>2</y>
+        </IntVector2>
+        <IntVector2>
+          <x>3</x>
+          <y>3</y>
+        </IntVector2>
+        <IntVector2>
+          <x>3</x>
+          <y>4</y>
+        </IntVector2>
+        <IntVector2>
+          <x>2</x>
+          <y>4</y>
+        </IntVector2>
+      </members>
+      <generator>cave</generator>
+      <spawntable>cave</spawntable>
+      <color>
+        <r>0.95</r>
+        <g>0.743245065</g>
+        <b>0.475</b>
+        <a>1</a>
+      </color>
+    </SectionGroupData>
+    <SectionGroupData>
+      <groupName>new group</groupName>
+      <members>
+        <IntVector2>
+          <x>5</x>
+          <y>1</y>
+        </IntVector2>
+        <IntVector2>
+          <x>5</x>
+          <y>2</y>
+        </IntVector2>
+        <IntVector2>
+          <x>6</x>
+          <y>1</y>
+        </IntVector2>
+        <IntVector2>
+          <x>6</x>
+          <y>2</y>
+        </IntVector2>
+      </members>
+      <generator>rooms</generator>
+      <spawntable>castle</spawntable>
+      <color>
+        <r>0.4914453</r>
+        <g>0.475</g>
+        <b>0.95</b>
         <a>1</a>
       </color>
     </SectionGroupData>
@@ -64,72 +176,20 @@
   <XMLSerializedSections>
     <KeyValuePairOfIntVector2SectionContainer>
       <Key>
-        <x>-1</x>
-        <y>-2</y>
-      </Key>
-      <Value>
-        <inheritGenerator>false</inheritGenerator>
-        <generator>pregenerated</generator>
-        <inheritSpawnTable>false</inheritSpawnTable>
-        <connections>nowhere</connections>
-        <color>
-          <r>0.0251827911</r>
-          <g>0.373968244</g>
-          <b>0.5154359</b>
-          <a>1</a>
-        </color>
-      </Value>
-    </KeyValuePairOfIntVector2SectionContainer>
-    <KeyValuePairOfIntVector2SectionContainer>
-      <Key>
         <x>0</x>
-        <y>-2</y>
+        <y>0</y>
       </Key>
       <Value>
         <inheritGenerator>false</inheritGenerator>
         <generator>pregenerated</generator>
+        <pregeneratedName>ponyville</pregeneratedName>
         <inheritSpawnTable>false</inheritSpawnTable>
-        <connections>nowhere</connections>
+        <spawntable>ponyville</spawntable>
+        <connections>east</connections>
         <color>
-          <r>0.0251827911</r>
-          <g>0.373968244</g>
-          <b>0.5154359</b>
-          <a>1</a>
-        </color>
-      </Value>
-    </KeyValuePairOfIntVector2SectionContainer>
-    <KeyValuePairOfIntVector2SectionContainer>
-      <Key>
-        <x>0</x>
-        <y>-1</y>
-      </Key>
-      <Value>
-        <inheritGenerator>false</inheritGenerator>
-        <generator>pregenerated</generator>
-        <inheritSpawnTable>false</inheritSpawnTable>
-        <connections>nowhere</connections>
-        <color>
-          <r>0.0251827911</r>
-          <g>0.373968244</g>
-          <b>0.5154359</b>
-          <a>1</a>
-        </color>
-      </Value>
-    </KeyValuePairOfIntVector2SectionContainer>
-    <KeyValuePairOfIntVector2SectionContainer>
-      <Key>
-        <x>-1</x>
-        <y>-1</y>
-      </Key>
-      <Value>
-        <inheritGenerator>false</inheritGenerator>
-        <generator>pregenerated</generator>
-        <inheritSpawnTable>false</inheritSpawnTable>
-        <connections>nowhere</connections>
-        <color>
-          <r>0.0251827911</r>
-          <g>0.373968244</g>
-          <b>0.5154359</b>
+          <r>0.0168223642</r>
+          <g>0.3868748</g>
+          <b>0.7944883</b>
           <a>1</a>
         </color>
       </Value>
@@ -140,14 +200,15 @@
         <y>-1</y>
       </Key>
       <Value>
-        <inheritGenerator>false</inheritGenerator>
-        <generator>pregenerated</generator>
-        <inheritSpawnTable>false</inheritSpawnTable>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>forest</spawntable>
         <connections>nowhere</connections>
         <color>
-          <r>0.8198488</r>
-          <g>0.04510752</g>
-          <b>0.197164133</b>
+          <r>0.630042732</r>
+          <g>0.95</g>
+          <b>0.475</b>
           <a>1</a>
         </color>
       </Value>
@@ -158,32 +219,34 @@
         <y>0</y>
       </Key>
       <Value>
-        <inheritGenerator>false</inheritGenerator>
-        <generator>pregenerated</generator>
-        <inheritSpawnTable>false</inheritSpawnTable>
-        <connections>nowhere</connections>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>forest</spawntable>
+        <connections>west</connections>
         <color>
-          <r>0.8198488</r>
-          <g>0.04510752</g>
-          <b>0.197164133</b>
+          <r>0.630042732</r>
+          <g>0.95</g>
+          <b>0.475</b>
           <a>1</a>
         </color>
       </Value>
     </KeyValuePairOfIntVector2SectionContainer>
     <KeyValuePairOfIntVector2SectionContainer>
       <Key>
-        <x>2</x>
-        <y>0</y>
+        <x>1</x>
+        <y>1</y>
       </Key>
       <Value>
-        <inheritGenerator>false</inheritGenerator>
-        <generator>pregenerated</generator>
-        <inheritSpawnTable>false</inheritSpawnTable>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>forest</spawntable>
         <connections>nowhere</connections>
         <color>
-          <r>0.8198488</r>
-          <g>0.04510752</g>
-          <b>0.197164133</b>
+          <r>0.630042732</r>
+          <g>0.95</g>
+          <b>0.475</b>
           <a>1</a>
         </color>
       </Value>
@@ -194,14 +257,454 @@
         <y>-1</y>
       </Key>
       <Value>
-        <inheritGenerator>false</inheritGenerator>
-        <generator>pregenerated</generator>
-        <inheritSpawnTable>false</inheritSpawnTable>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>forest</spawntable>
+        <connections>east</connections>
+        <color>
+          <r>0.630042732</r>
+          <g>0.95</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>2</x>
+        <y>0</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>forest</spawntable>
         <connections>nowhere</connections>
         <color>
-          <r>0.8198488</r>
-          <g>0.04510752</g>
-          <b>0.197164133</b>
+          <r>0.630042732</r>
+          <g>0.95</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>2</x>
+        <y>1</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>forest</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.630042732</r>
+          <g>0.95</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>2</x>
+        <y>2</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>cave</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>cave</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.95</r>
+          <g>0.743245065</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>2</x>
+        <y>3</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>cave</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>cave</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.95</r>
+          <g>0.743245065</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>2</x>
+        <y>4</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>cave</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>cave</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.95</r>
+          <g>0.743245065</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>3</x>
+        <y>-1</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>deepforest</spawntable>
+        <connections>north west</connections>
+        <color>
+          <r>0.0999451</r>
+          <g>0.4810668</g>
+          <b>0.5108602</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>3</x>
+        <y>0</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>forest</spawntable>
+        <connections>south</connections>
+        <color>
+          <r>0.630042732</r>
+          <g>0.95</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>3</x>
+        <y>1</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>forest</spawntable>
+        <connections>north</connections>
+        <color>
+          <r>0.630042732</r>
+          <g>0.95</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>3</x>
+        <y>2</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>cave</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>cave</spawntable>
+        <connections>south</connections>
+        <color>
+          <r>0.95</r>
+          <g>0.743245065</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>3</x>
+        <y>3</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>cave</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>cave</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.95</r>
+          <g>0.743245065</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>3</x>
+        <y>4</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>cave</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>cave</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.95</r>
+          <g>0.743245065</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>4</x>
+        <y>-1</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>deepforest</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.0999451</r>
+          <g>0.4810668</g>
+          <b>0.5108602</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>4</x>
+        <y>0</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>deepforest</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.0999451</r>
+          <g>0.4810668</g>
+          <b>0.5108602</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>4</x>
+        <y>2</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>cave</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>cave</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.95</r>
+          <g>0.743245065</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>4</x>
+        <y>3</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>cave</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>cave</spawntable>
+        <connections>north</connections>
+        <color>
+          <r>0.95</r>
+          <g>0.743245065</g>
+          <b>0.475</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>4</x>
+        <y>4</y>
+      </Key>
+      <Value>
+        <inheritGenerator>false</inheritGenerator>
+        <generator>pregenerated</generator>
+        <pregeneratedName>ursalair</pregeneratedName>
+        <inheritSpawnTable>false</inheritSpawnTable>
+        <spawntable>ursalair</spawntable>
+        <connections>south</connections>
+        <color>
+          <r>0.435911983</r>
+          <g>0.621272</g>
+          <b>0.0306765269</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>5</x>
+        <y>-1</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>deepforest</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.0999451</r>
+          <g>0.4810668</g>
+          <b>0.5108602</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>5</x>
+        <y>0</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>forest</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>deepforest</spawntable>
+        <connections>north</connections>
+        <color>
+          <r>0.0999451</r>
+          <g>0.4810668</g>
+          <b>0.5108602</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>5</x>
+        <y>1</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>rooms</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>castle</spawntable>
+        <connections>south</connections>
+        <color>
+          <r>0.4914453</r>
+          <g>0.475</g>
+          <b>0.95</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>5</x>
+        <y>2</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>rooms</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>castle</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.4914453</r>
+          <g>0.475</g>
+          <b>0.95</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>6</x>
+        <y>1</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>rooms</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>castle</spawntable>
+        <connections>nowhere</connections>
+        <color>
+          <r>0.4914453</r>
+          <g>0.475</g>
+          <b>0.95</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>6</x>
+        <y>2</y>
+      </Key>
+      <Value>
+        <inheritGenerator>true</inheritGenerator>
+        <generator>rooms</generator>
+        <inheritSpawnTable>true</inheritSpawnTable>
+        <spawntable>castle</spawntable>
+        <connections>north</connections>
+        <color>
+          <r>0.4914453</r>
+          <g>0.475</g>
+          <b>0.95</b>
+          <a>1</a>
+        </color>
+      </Value>
+    </KeyValuePairOfIntVector2SectionContainer>
+    <KeyValuePairOfIntVector2SectionContainer>
+      <Key>
+        <x>6</x>
+        <y>3</y>
+      </Key>
+      <Value>
+        <inheritGenerator>false</inheritGenerator>
+        <generator>pregenerated</generator>
+        <pregeneratedName>castleboss</pregeneratedName>
+        <inheritSpawnTable>false</inheritSpawnTable>
+        <spawntable>castleboss</spawntable>
+        <connections>south</connections>
+        <color>
+          <r>0.5184899</r>
+          <g>0.09500002</g>
+          <b>0.95</b>
           <a>1</a>
         </color>
       </Value>
