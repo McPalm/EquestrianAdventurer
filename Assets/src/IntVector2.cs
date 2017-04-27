@@ -38,6 +38,14 @@ public struct IntVector2 : IEquatable<IntVector2>
 		}
 	}
 
+	static public IntVector2 MaxValue
+	{
+		get
+		{
+			return new IntVector2(int.MaxValue, int.MaxValue);
+		}
+	}
+
 	static public IntVector2 up
 	{
 		get

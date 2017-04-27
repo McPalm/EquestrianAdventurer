@@ -16,36 +16,17 @@ public class OvermapEditorView : MonoBehaviour
 	Dictionary<IntVector2, SectionMapIcon> tiles = new Dictionary<IntVector2, SectionMapIcon>();
 	System.Action editMode;
 
+	OvermapData.SectionGroupData selectedGroup;
+	IntVector2 selectedTile;
+
 	// Use this for initialization
 	void Start ()
 	{
-		// hack together a model for testing
-
 		editMode = SelectMode;
-
 		model = new OvermapData();
 
-		model.AddSection(IntVector2.zero);
-
-
-		RefreshView();
-		model.EventEditSection.AddListener(OnEditSection);
 		model.EventEditGroup.AddListener(OnEditGroup);
-
-		model.AddSection(new IntVector2(0, 1));
-		model.AddSection(new IntVector2(1, 1));
-		model.AddSection(new IntVector2(1, 0));
-
-		model.SetSectionColor(IntVector2.zero, Color.white);
-
-		model.AddGroup(IntVector2.zero, new IntVector2(0, 1), new IntVector2(1, 1));
-
-		/*
-		groupView.Show(model, model.groups[0]);
-
-		sectionView.Show(model, new IntVector2(1, 1));
-		*/
-		SelectAt(new IntVector2(1, 1));
+		model.EventEditSection.AddListener(OnEditSection);
 	}
 	
 	void SelectAt(IntVector2 iv2)
@@ -59,15 +40,16 @@ public class OvermapEditorView : MonoBehaviour
 		if(model.sections.ContainsKey(iv2))
 		{
 			// select thingy
+			selectedTile = iv2;
 			sectionView.Show(model, iv2);
-			OvermapData.SectionGroupData group = model.GroupOf(iv2);
-			if (group != null)
+			selectedGroup = model.GroupOf(iv2);
+			if (selectedGroup != null)
 			{
-				foreach (IntVector2 member in group.members)
+				foreach (IntVector2 member in selectedGroup.members)
 				{
 					GetOrBuildAt(member).FocusGroup = true;
 				}
-				groupView.Show(model, group);
+				groupView.Show(model, selectedGroup);
 			}
 			else
 				groupView.Hide();
@@ -79,6 +61,8 @@ public class OvermapEditorView : MonoBehaviour
 			// deselect
 			groupView.Hide();
 			sectionView.Hide();
+			selectedGroup = null;
+			selectedTile = IntVector2.MaxValue;
 		}
 	}
 
@@ -134,6 +118,55 @@ public class OvermapEditorView : MonoBehaviour
 		{
 			SelectAt(IntVector2.RoundFrom(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
 			return;
+		}
+		select();
+	}
+
+	void AddMode()
+	{
+		if (EventSystem.current.IsPointerOverGameObject()) return;
+
+		if (Input.GetMouseButtonDown(0))
+		{
+			IntVector2 location = IntVector2.RoundFrom(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+			if (model.sections.ContainsKey(location))
+			{
+				
+			}
+			else
+			{
+				model.AddSection(location);
+			}
+
+			
+			if (selectedGroup != null)
+			{
+				model.AddSectionToGroup(selectedGroup, location);
+				SelectAt(location);
+			}
+			else if(selectedTile != IntVector2.MaxValue)
+			{
+				model.AddGroup(location, selectedTile);
+				SelectAt(location);
+			}
+			
+			
+			return;
+		}
+		select();
+	}
+
+	void select()
+	{
+		if (Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			editMode = SelectMode;
+			print("Select Mode");
+		}
+		else if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			editMode = AddMode;
+			print("Add Mode");
 		}
 	}
 }

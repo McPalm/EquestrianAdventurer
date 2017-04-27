@@ -119,9 +119,23 @@ public class OvermapData
 
 	public void AddGroup(params IntVector2[] members)
 	{
+		if (members.Length == 0) return;
+
 		SectionGroupData group = new SectionGroupData(members);
 		groups.Add(group);
+		Color c = Color.HSVToRGB(Random.value, 0.8f, 0.8f);
+
+		// float h, s, v;
+		SectionContainer con = null;
+		if(sections.TryGetValue(members[0], out con))
+		{
+			c = con.color;
+		}
+
+		group.color = c;
 		EventEditGroup.Invoke(group);
+		for (int i = 0; i < members.Length; i++)
+			SetSectionColor(members[i], group.color);
 	}
 
 	public void AddSectionToGroup(SectionGroupData group, IntVector2 member)
@@ -139,6 +153,7 @@ public class OvermapData
 		}
 
 		group.members.Add(member);
+		SetSectionColor(member, group.color);
 		EventEditGroup.Invoke(group);
 	}
 
