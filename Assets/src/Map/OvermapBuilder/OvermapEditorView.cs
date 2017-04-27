@@ -114,8 +114,6 @@ public class OvermapEditorView : MonoBehaviour
 		return render;
 	}
 
-
-
 	void Update()
 	{
 		editMode();

@@ -182,6 +182,8 @@ public class OvermapData
 			if(groups[i].members.Remove(member))
 			{
 				EventEditGroup.Invoke(groups[i]);
+				if (groups[i].members.Count == 0)
+					groups.RemoveAt(i);
 				return;
 			}
 		}
