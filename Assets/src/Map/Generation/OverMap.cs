@@ -35,8 +35,6 @@ public class OverMap : MonoBehaviour {
 		data = XmlTool.LoadFromXML<OvermapData>("XML/WorldMap");
 
 		/*
-		FindObjectOfType<RogueController>().GetComponent<Mobile>().EventMovement.AddListener(PlayerMoveEvent);
-
 		MapSectionContainer con = GetSectionAt(new IntVector2(0, -1));
 		con.terrain = MapType.pregenerated;
 		con.sectionName = "ponyville";
@@ -56,7 +54,8 @@ public class OverMap : MonoBehaviour {
 		foreach (IntVector2 iv2 in map.Keys)
 			StartCoroutine(LoadSection(iv2));
 			*/
-		StartCoroutine(LoadOnDemand(new IntVector2(0, -1))); // load around the player
+		StartCoroutine(LoadOnDemand(new IntVector2(0, 0))); // load around the player
+		FindObjectOfType<RogueController>().GetComponent<Mobile>().EventMovement.AddListener(PlayerMoveEvent); // listend to player movement to load on demand
 	}
 
 	/// <summary>
