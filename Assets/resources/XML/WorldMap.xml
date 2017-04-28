@@ -332,7 +332,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>forest</spawntable>
         <connections>nowhere</connections>
-        <module />
+        <module>zecorashut</module>
         <color>
           <r>0.630042732</r>
           <g>0.95</g>

@@ -23,6 +23,8 @@ public class OvermapSectioneditorView : MonoBehaviour
 	GameObject InheritSpawntableEnabledIcon;
 	[SerializeField]
 	InputField SpawntableInput;
+	[SerializeField]
+	InputField Module;
 
 	[Space(10f)]
 
@@ -65,6 +67,8 @@ public class OvermapSectioneditorView : MonoBehaviour
 
 		InheritGeneratorButton.onClick.AddListener(OnInheritGenerator);
 		InheritSpawntableButton.onClick.AddListener(OnInheritSpawn);
+
+		Module.onEndEdit.AddListener(OnEditModule);
 
 		NorthConnectionButton.onClick.AddListener(OnNorthConnection);
 		EastConnectionButton.onClick.AddListener(OnEastConnection);
@@ -131,6 +135,8 @@ public class OvermapSectioneditorView : MonoBehaviour
 		InheritSpawntableEnabledIcon.SetActive(section.inheritSpawnTable);
 		SpawntableInput.interactable = !section.inheritSpawnTable;
 		SpawntableInput.text = section.spawntable;
+
+		Module.text = section.module;
 		
 		SpawntableInput.GetComponent<Image>().color = (CreatureSpawner.HasSpawner(section.spawntable)) ? new Color(0.7f, 1f, 0.7f) : new Color(1f, 0.7f, 0.7f);
 	
@@ -226,5 +232,10 @@ public class OvermapSectioneditorView : MonoBehaviour
 			else
 				data.RemoveConnection(location, direction);
 		}
+	}
+
+	void OnEditModule(string s)
+	{
+		data.SetSectionModule(location, s);
 	}
 }
