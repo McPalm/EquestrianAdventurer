@@ -18,27 +18,7 @@ public class OverMap : MonoBehaviour
 	void Start ()
 	{
 		data = XmlTool.LoadFromXML<OvermapData>("XML/WorldMap");
-
-		/*
-		MapSectionContainer con = GetSectionAt(new IntVector2(0, -1));
-		con.terrain = MapType.pregenerated;
-		con.sectionName = "ponyville";
-
-		con = GetSectionAt(new IntVector2(-4, 3));
-		con.terrain = MapType.pregenerated;
-		con.sectionName = "ursalair";
-
-		con = GetSectionAt(new IntVector2(3, 4));
-		con.terrain = MapType.pregenerated;
-		con.sectionName = "castleboss";
-		*/
-
 		GenerateOverMap();
-
-		/*
-		foreach (IntVector2 iv2 in map.Keys)
-			StartCoroutine(LoadSection(iv2));
-			*/
 		StartCoroutine(LoadOnDemand(new IntVector2(0, 0))); // load around the player
 		FindObjectOfType<RogueController>().GetComponent<Mobile>().EventMovement.AddListener(PlayerMoveEvent); // listend to player movement to load on demand
 	}
@@ -49,18 +29,6 @@ public class OverMap : MonoBehaviour
 	void GenerateOverMap()
 	{
 		// define sections
-
-		/*
-		IntVector2[] forest = IntVector2Utility.GetRect(new IntVector2(-1, 0), new IntVector2(1, 2));
-		IntVector2[] castle = IntVector2Utility.GetRect(new IntVector2(2, 2), new IntVector2(4, 3));
-		List<IntVector2> build = new List<IntVector2>();
-		build.AddRange(IntVector2Utility.GetRect(new IntVector2(-4, 1), new IntVector2(-2, 2)));
-		build.Add(new IntVector2(-3, 3));
-		build.Add(new IntVector2(-2, 3));
-		IntVector2[] cave = build.ToArray();
-		*/
-
-		// setup basic information in all teh sections
 		foreach(KeyValuePair<IntVector2, OvermapData.SectionContainer> section in data.sections)
 		{
 			MapSectionContainer container = GetSectionAt(section.Key);
@@ -83,78 +51,6 @@ public class OverMap : MonoBehaviour
 				foreach (string s in group.modules)
 					modules.Add(MapModule.Get(s));
 				RollModules(group.members.ToArray(), modules.ToArray(), group.moduleCount);
-			}
-		}
-
-		/*
-		foreach (IntVector2 iv2 in forest)
-			GetSectionAt(iv2).connections = CompassDirection.nowhere;
-		foreach (IntVector2 iv2 in castle)
-			GetSectionAt(iv2).connections = CompassDirection.nowhere;
-		foreach (IntVector2 iv2 in cave)
-			GetSectionAt(iv2).connections = CompassDirection.nowhere;
-			*/
-
-		// setup connections between zones
-
-		/*
-		con = GetSectionAt(new IntVector2(0, 0));
-		con.AddConnection(CompassDirection.south);
-		con.terrain = MapType.forest;
-
-		con = GetSectionAt(new IntVector2(1, 2));
-		con.AddConnection(CompassDirection.east);
-		con.terrain = MapType.forest;
-
-		con = GetSectionAt(new IntVector2(-1, 2));
-		con.AddConnection(CompassDirection.west);
-		con.terrain = MapType.forest;
-
-		con = GetSectionAt(new IntVector2(2, 2));
-		con.AddConnection(CompassDirection.west);
-		con.terrain = MapType.rooms;
-		
-		con = GetSectionAt(new IntVector2(-2, 2));
-		con.AddConnection(CompassDirection.east);
-		con.terrain = MapType.cave;
-
-		con = GetSectionAt(new IntVector2(-4, 2));
-		con.AddConnection(CompassDirection.north);
-		con.terrain = MapType.cave;
-
-		con = GetSectionAt(new IntVector2(3, 3));
-		con.AddConnection(CompassDirection.north);
-		con.terrain = MapType.cave;
-		*/
-
-		// setup terrain
-
-
-		/*
-		InitSections(debugType, new MapModule[] {forestModules[Random.Range(0, forestModules.Length)]}, forest); // the initial biome. using debug. for testing ofc.
-		InitSections(MapType.rooms, new MapModule[] { castleModules[Random.Range(0, castleModules.Length / 2)], castleModules[Random.Range(castleModules.Length / 2, castleModules.Length)] }, castle);
-		InitSections(MapType.cave, new MapModule[] { caveModules[Random.Range(0, caveModules.Length/2)], caveModules[Random.Range(caveModules.Length / 2, caveModules.Length)] }, cave);
-		*/
-	}
-
-	void InitSections(MapType terrain, MapModule[] modules, params IntVector2[] sections)
-	{
-		for(int i = 0; i < sections.Length; i++)
-		{
-			GetSectionAt(sections[i]).terrain = terrain;
-			GetSectionAt(sections[i]).givenModule = null;
-		}
-		for(int i = 0; i < modules.Length; i++)
-		{
-			int random = UnityEngine.Random.Range(0, sections.Length);
-			for(int j = 0; j < sections.Length; j++)
-			{
-				MapSectionContainer c = GetSectionAt(sections[(random + j) % sections.Length]);
-				if (c.givenModule == null)
-				{
-					c.givenModule = modules[i];
-					break;
-				}
 			}
 		}
 	}
@@ -410,15 +306,21 @@ public class OverMap : MonoBehaviour
 	/// </summary>
 	public void Reset()
 	{
-		StartCoroutine(UnloadLoad());
+		StartCoroutine(UnloadLoad(FindObjectOfType<RogueController>().transform.position)); // Hack, at current ponyville
 	}
 
-	IEnumerator UnloadLoad()
+	// except the current location of the player.
+	IEnumerator UnloadLoad(Vector2 except)
 	{
-		IntVector2[] nature = IntVector2Utility.GetRect(new IntVector2(-4, 0), new IntVector2(4, 5));
-		yield return  AsyncUnload(nature);
+		List<IntVector2> everything = new List<IntVector2>();
+		foreach (IntVector2 iv2 in data.sections.Keys)
+			everything.Add(iv2);
+		everything.Remove(IntVector2.FloorFrom(except / MapSectionData.DIMENSIONS));
+
+		// IntVector2[] nature = IntVector2Utility.GetRect(new IntVector2(-4, 0), new IntVector2(4, 5));
+		yield return  AsyncUnload(everything.ToArray());
 		GenerateOverMap();
-		yield return new WaitForSeconds(0f);
+		yield return null;
 		yield return LoadOnDemand(new IntVector2(0, -1)); // load around ponyville
 	}
 
