@@ -49,24 +49,6 @@
       <moduleCount>0</moduleCount>
     </SectionGroupData>
     <SectionGroupData>
-      <groupName>new group</groupName>
-      <members>
-        <IntVector2>
-          <x>0</x>
-          <y>0</y>
-        </IntVector2>
-      </members>
-      <generator>pregenerated</generator>
-      <color>
-        <r>0.16</r>
-        <g>0.8</g>
-        <b>0.16036056</b>
-        <a>1</a>
-      </color>
-      <modules />
-      <moduleCount>0</moduleCount>
-    </SectionGroupData>
-    <SectionGroupData>
       <groupName>Deep Forest</groupName>
       <members>
         <IntVector2>
@@ -91,7 +73,7 @@
         </IntVector2>
       </members>
       <generator>forest</generator>
-      <spawntable>deepforest</spawntable>
+      <spawntable>forest</spawntable>
       <color>
         <r>0.0999451</r>
         <g>0.4810668</g>
@@ -214,9 +196,9 @@
         <connections>east</connections>
         <module />
         <color>
-          <r>0.0168223642</r>
-          <g>0.3868748</g>
-          <b>0.7944883</b>
+          <r>0.95</r>
+          <g>0.09500002</g>
+          <b>0.716822863</b>
           <a>1</a>
         </color>
       </Value>
@@ -410,7 +392,7 @@
         <inheritGenerator>true</inheritGenerator>
         <generator>forest</generator>
         <inheritSpawnTable>true</inheritSpawnTable>
-        <spawntable>deepforest</spawntable>
+        <spawntable>forest</spawntable>
         <connections>north west</connections>
         <module />
         <color>
@@ -530,7 +512,7 @@
         <inheritGenerator>true</inheritGenerator>
         <generator>forest</generator>
         <inheritSpawnTable>true</inheritSpawnTable>
-        <spawntable>deepforest</spawntable>
+        <spawntable>forest</spawntable>
         <connections>nowhere</connections>
         <module />
         <color>
@@ -550,7 +532,7 @@
         <inheritGenerator>true</inheritGenerator>
         <generator>forest</generator>
         <inheritSpawnTable>true</inheritSpawnTable>
-        <spawntable>deepforest</spawntable>
+        <spawntable>forest</spawntable>
         <connections>nowhere</connections>
         <module />
         <color>
@@ -631,7 +613,7 @@
         <inheritGenerator>true</inheritGenerator>
         <generator>forest</generator>
         <inheritSpawnTable>true</inheritSpawnTable>
-        <spawntable>deepforest</spawntable>
+        <spawntable>forest</spawntable>
         <connections>nowhere</connections>
         <module />
         <color>
@@ -651,7 +633,7 @@
         <inheritGenerator>true</inheritGenerator>
         <generator>forest</generator>
         <inheritSpawnTable>true</inheritSpawnTable>
-        <spawntable>deepforest</spawntable>
+        <spawntable>forest</spawntable>
         <connections>north</connections>
         <module />
         <color>
