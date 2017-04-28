@@ -288,6 +288,28 @@ public class OvermapData
 		EventEditGroup.Invoke(group);
 	}
 
+	public void SetSectionModule(IntVector2 section, string module)
+	{
+		SectionContainer container = null;
+		if(sections.TryGetValue(section, out container))
+		{
+			container.module = module;
+		}
+		EventEditSection.Invoke(section, container);
+	}
+
+	public void SetGroupModules(SectionGroupData group, params string[] modules)
+	{
+		group.modules = modules;
+		EventEditGroup.Invoke(group);
+	}
+
+	public void SetGroupModuleCount(SectionGroupData group, int moduleCount)
+	{
+		group.moduleCount = moduleCount;
+		EventEditGroup.Invoke(group);
+	}
+
 	[System.Serializable]
 	public class SectionContainer
 	{
@@ -297,6 +319,7 @@ public class OvermapData
 		public bool inheritSpawnTable;
 		public string spawntable;
 		public CompassDirection connections;
+		public string module = "";
 
 		// editor attributes
 		public SerializedColor color;
@@ -314,6 +337,8 @@ public class OvermapData
 
 		public SerializedColor color = Color.white;
 		public string editorname;
+		public string[] modules = new string[0];
+		public int moduleCount = 0;
 
 		public SectionGroupData(params IntVector2[] members)
 		{

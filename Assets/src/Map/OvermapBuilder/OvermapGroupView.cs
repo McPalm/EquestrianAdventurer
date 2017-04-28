@@ -16,6 +16,11 @@ public class OvermapGroupView : MonoBehaviour
 	InputField spawner;
 	[SerializeField]
 	Image spawnNameValidator;
+	[SerializeField]
+	InputField moduleCount;
+	[SerializeField]
+	GroupModulesUI modules;
+	
 
 	OvermapData data;
 	OvermapData.SectionGroupData group;
@@ -32,6 +37,9 @@ public class OvermapGroupView : MonoBehaviour
 		hue.onValueChanged.AddListener(OnHueSlider);
 
 		groupName.onEndEdit.AddListener(OnChangeName);
+
+		moduleCount.onEndEdit.AddListener(OnModuleCount);
+		modules.EventChange.AddListener(OnChangeModules);
 	}
 
 	public void Show(OvermapData data, OvermapData.SectionGroupData group)
@@ -77,6 +85,10 @@ public class OvermapGroupView : MonoBehaviour
 		spawner.text = group.spawntable;
 		spawnNameValidator.color = (CreatureSpawner.HasSpawner(group.spawntable)) ? new Color(0.7f, 1f, 0.7f) : new Color(1f, 0.7f, 0.7f);
 
+
+		moduleCount.text = group.moduleCount.ToString();
+		modules.Build(group.modules);
+
 		ignoreEvents = false;
 	}
 
@@ -104,5 +116,15 @@ public class OvermapGroupView : MonoBehaviour
 	{
 		if (ignoreEvents) return;
 		data.SetGroupColor(group, Color.HSVToRGB(f, 0.5f, 0.95f));
+	}
+
+	void OnChangeModules(string[] modules)
+	{
+		data.SetGroupModules(group, modules);
+	}
+
+	void OnModuleCount(string number)
+	{
+		data.SetGroupModuleCount(group, int.Parse(number));
 	}
 }

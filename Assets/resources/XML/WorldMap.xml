@@ -45,6 +45,8 @@
         <b>0.475</b>
         <a>1</a>
       </color>
+      <modules />
+      <moduleCount>0</moduleCount>
     </SectionGroupData>
     <SectionGroupData>
       <groupName>new group</groupName>
@@ -61,6 +63,8 @@
         <b>0.16036056</b>
         <a>1</a>
       </color>
+      <modules />
+      <moduleCount>0</moduleCount>
     </SectionGroupData>
     <SectionGroupData>
       <groupName>Deep Forest</groupName>
@@ -94,6 +98,10 @@
         <b>0.5108602</b>
         <a>1</a>
       </color>
+      <modules>
+        <string>forestpillars</string>
+      </modules>
+      <moduleCount>1</moduleCount>
     </SectionGroupData>
     <SectionGroupData>
       <groupName>Cave</groupName>
@@ -139,9 +147,18 @@
         <b>0.475</b>
         <a>1</a>
       </color>
+      <modules>
+        <string>cave/cave fireplace</string>
+        <string>cave/cave Opening</string>
+        <string>cave/lightshafts</string>
+        <string>cave/mushrooms</string>
+        <string>cave/secretcave</string>
+        <string>cave/stealthchallenge</string>
+      </modules>
+      <moduleCount>2</moduleCount>
     </SectionGroupData>
     <SectionGroupData>
-      <groupName>new group</groupName>
+      <groupName>Castle</groupName>
       <members>
         <IntVector2>
           <x>5</x>
@@ -168,6 +185,15 @@
         <b>0.95</b>
         <a>1</a>
       </color>
+      <modules>
+        <string>castle/castletree</string>
+        <string>castle/funt</string>
+        <string>castle/garden</string>
+        <string>castle/grand library</string>
+        <string>castle/irregular room</string>
+        <string>castle/ruined room</string>
+      </modules>
+      <moduleCount>3</moduleCount>
     </SectionGroupData>
   </groups>
   <EventEditSection />
@@ -186,6 +212,7 @@
         <inheritSpawnTable>false</inheritSpawnTable>
         <spawntable>ponyville</spawntable>
         <connections>east</connections>
+        <module />
         <color>
           <r>0.0168223642</r>
           <g>0.3868748</g>
@@ -205,6 +232,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>forest</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.630042732</r>
           <g>0.95</g>
@@ -224,6 +252,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>forest</spawntable>
         <connections>west</connections>
+        <module />
         <color>
           <r>0.630042732</r>
           <g>0.95</g>
@@ -243,6 +272,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>forest</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.630042732</r>
           <g>0.95</g>
@@ -262,6 +292,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>forest</spawntable>
         <connections>east</connections>
+        <module />
         <color>
           <r>0.630042732</r>
           <g>0.95</g>
@@ -281,6 +312,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>forest</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.630042732</r>
           <g>0.95</g>
@@ -300,6 +332,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>forest</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.630042732</r>
           <g>0.95</g>
@@ -319,6 +352,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>cave</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.95</r>
           <g>0.743245065</g>
@@ -338,6 +372,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>cave</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.95</r>
           <g>0.743245065</g>
@@ -357,6 +392,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>cave</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.95</r>
           <g>0.743245065</g>
@@ -376,6 +412,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>deepforest</spawntable>
         <connections>north west</connections>
+        <module />
         <color>
           <r>0.0999451</r>
           <g>0.4810668</g>
@@ -395,6 +432,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>forest</spawntable>
         <connections>south</connections>
+        <module />
         <color>
           <r>0.630042732</r>
           <g>0.95</g>
@@ -414,6 +452,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>forest</spawntable>
         <connections>north</connections>
+        <module />
         <color>
           <r>0.630042732</r>
           <g>0.95</g>
@@ -433,6 +472,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>cave</spawntable>
         <connections>south</connections>
+        <module />
         <color>
           <r>0.95</r>
           <g>0.743245065</g>
@@ -452,6 +492,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>cave</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.95</r>
           <g>0.743245065</g>
@@ -471,6 +512,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>cave</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.95</r>
           <g>0.743245065</g>
@@ -490,6 +532,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>deepforest</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.0999451</r>
           <g>0.4810668</g>
@@ -509,6 +552,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>deepforest</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.0999451</r>
           <g>0.4810668</g>
@@ -528,6 +572,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>cave</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.95</r>
           <g>0.743245065</g>
@@ -547,6 +592,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>cave</spawntable>
         <connections>north</connections>
+        <module />
         <color>
           <r>0.95</r>
           <g>0.743245065</g>
@@ -567,6 +613,7 @@
         <inheritSpawnTable>false</inheritSpawnTable>
         <spawntable>ursalair</spawntable>
         <connections>south</connections>
+        <module />
         <color>
           <r>0.435911983</r>
           <g>0.621272</g>
@@ -586,6 +633,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>deepforest</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.0999451</r>
           <g>0.4810668</g>
@@ -605,6 +653,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>deepforest</spawntable>
         <connections>north</connections>
+        <module />
         <color>
           <r>0.0999451</r>
           <g>0.4810668</g>
@@ -624,6 +673,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>castle</spawntable>
         <connections>south</connections>
+        <module />
         <color>
           <r>0.4914453</r>
           <g>0.475</g>
@@ -643,6 +693,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>castle</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.4914453</r>
           <g>0.475</g>
@@ -662,6 +713,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>castle</spawntable>
         <connections>nowhere</connections>
+        <module />
         <color>
           <r>0.4914453</r>
           <g>0.475</g>
@@ -681,6 +733,7 @@
         <inheritSpawnTable>true</inheritSpawnTable>
         <spawntable>castle</spawntable>
         <connections>north</connections>
+        <module />
         <color>
           <r>0.4914453</r>
           <g>0.475</g>
@@ -701,6 +754,7 @@
         <inheritSpawnTable>false</inheritSpawnTable>
         <spawntable>castleboss</spawntable>
         <connections>south</connections>
+        <module />
         <color>
           <r>0.5184899</r>
           <g>0.09500002</g>
