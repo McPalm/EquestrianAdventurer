@@ -4,29 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class OverMap : MonoBehaviour {
-
-	Dictionary<IntVector2, MapSectionContainer> map = new Dictionary<IntVector2, MapSectionContainer>();
-
+public class OverMap : MonoBehaviour
+{
 	public GameObject LoadingIcon;
-	public MapType debugType;
-
-	public CreatureSpawner forest;
-	public CreatureSpawner cave;
-	public CreatureSpawner castle;
-
+	public bool testDisableSpawn;
 	public MapSectionEvent EventEnterNewSection = new MapSectionEvent();
 
-
-	public MapModule[] forestModules;
-	public MapModule[] caveModules;
-	public MapModule[] castleModules;
-	public MapModule zecorasHut;
-
-	[Space(10)]
-	public bool testDisableSpawn;
-	public MapModule testModule;
-
+	Dictionary<IntVector2, MapSectionContainer> map = new Dictionary<IntVector2, MapSectionContainer>();
+	Dictionary<string, CreatureSpawner> spawners = new Dictionary<string, CreatureSpawner>();
 	OvermapData data;
 
 	// Use this for initialization
@@ -85,6 +70,7 @@ public class OverMap : MonoBehaviour {
 			container.givenModule = MapModule.Get(section.Value.module);
 
 			container.connections = section.Value.connections;
+			container.spawner = section.Value.spawntable;
 		}
 
 		// build connections in all the groups
@@ -156,12 +142,7 @@ public class OverMap : MonoBehaviour {
 		for(int i = 0; i < sections.Length; i++)
 		{
 			GetSectionAt(sections[i]).terrain = terrain;
-			if (testModule)
-			{
-				GetSectionAt(sections[i]).givenModule = testModule;
-			}
-			else GetSectionAt(sections[i]).givenModule = null;
-			
+			GetSectionAt(sections[i]).givenModule = null;
 		}
 		for(int i = 0; i < modules.Length; i++)
 		{
@@ -393,10 +374,13 @@ public class OverMap : MonoBehaviour {
 
 			yield return new WaitForSeconds(0f);
 			CreatureSpawner cs = null;
-			if (msc.terrain == MapType.forest) cs = forest;
-			if (msc.terrain == MapType.cave) cs = cave;
-			if (msc.terrain == MapType.rooms) cs = castle;
-			if (msc.terrain == MapType.pregenerated) cs = CreatureSpawner.Get(msc.sectionName);
+			if(spawners.TryGetValue(msc.spawner, out cs) == false)
+			{
+				cs = Instantiate(CreatureSpawner.Get(msc.spawner));
+				cs.transform.parent = transform;
+				if (cs) spawners.Add(msc.spawner, cs);
+			}
+
 			if (cs &! testDisableSpawn)
 			{
 				cs.targetSection = msc.section;
@@ -517,6 +501,7 @@ public class OverMap : MonoBehaviour {
 		public CompassDirection connections;
 		public MapType terrain;
 		public MapModule givenModule;
+		public string spawner;
 		public string sectionName; // used for pregenerated maps
 
 		bool loaded = false;

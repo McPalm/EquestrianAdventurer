@@ -64,7 +64,8 @@ public class CreatureSpawner : MonoBehaviour
 
 	static public CreatureSpawner Get(string name)
 	{
-		PremadeSpawner ps = Resources.Load<PremadeSpawner>(PATH + name);
+		print(PATH + name);
+		CreatureSpawner ps = Resources.Load<CreatureSpawner>(PATH + name);
 		if (!ps) Debug.LogWarning("Cannot creature spawning file for " + name);
 		return ps;
 	}
@@ -74,3 +75,4 @@ public class CreatureSpawner : MonoBehaviour
 		return Resources.Load(PATH + name) != null;
 	}
 }
+
