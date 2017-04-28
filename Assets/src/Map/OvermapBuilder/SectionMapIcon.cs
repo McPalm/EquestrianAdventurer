@@ -7,6 +7,10 @@ public class SectionMapIcon : MonoBehaviour
 	GameObject FocusTileMarker;
 	[SerializeField]
 	GameObject FocusGroupMarker;
+	[SerializeField]
+	GameObject ModuleMarker;
+	[SerializeField]
+	GameObject CustomMarker;
 
 	[Space(10f)]
 
@@ -52,6 +56,22 @@ public class SectionMapIcon : MonoBehaviour
 			EastConnection.gameObject.SetActive((value & CompassDirection.east) == CompassDirection.east);
 			SouthConnection.gameObject.SetActive((value & CompassDirection.south) == CompassDirection.south);
 			WestConnection.gameObject.SetActive((value & CompassDirection.west) == CompassDirection.west);
+		}
+	}
+
+	public bool Module
+	{
+		set
+		{
+			ModuleMarker.SetActive(value);
+		}
+	}
+
+	public bool Custom
+	{
+		set
+		{
+			CustomMarker.SetActive(value);
 		}
 	}
 }

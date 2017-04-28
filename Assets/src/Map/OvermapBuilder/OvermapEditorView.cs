@@ -83,6 +83,9 @@ public class OvermapEditorView : MonoBehaviour
 
 		render.Color = section.color;
 		render.SetConnections = section.connections;
+
+		render.Module = section.module.Length > 0;
+		render.Custom = !(section.inheritGenerator && section.inheritSpawnTable);
 	}
 
 	void OnEditGroup(OvermapData.SectionGroupData group)
