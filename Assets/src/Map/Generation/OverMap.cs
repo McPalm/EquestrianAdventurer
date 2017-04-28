@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class OverMap : MonoBehaviour {
 
@@ -26,10 +27,14 @@ public class OverMap : MonoBehaviour {
 	public bool testDisableSpawn;
 	public MapModule testModule;
 
+	OvermapData data;
 
 	// Use this for initialization
 	void Start ()
 	{
+		data = XmlTool.LoadFromXML<OvermapData>("XML/WorldMap");
+
+		/*
 		FindObjectOfType<RogueController>().GetComponent<Mobile>().EventMovement.AddListener(PlayerMoveEvent);
 
 		MapSectionContainer con = GetSectionAt(new IntVector2(0, -1));
@@ -43,6 +48,7 @@ public class OverMap : MonoBehaviour {
 		con = GetSectionAt(new IntVector2(3, 4));
 		con.terrain = MapType.pregenerated;
 		con.sectionName = "castleboss";
+		*/
 
 		GenerateOverMap();
 
@@ -58,10 +64,9 @@ public class OverMap : MonoBehaviour {
 	/// </summary>
 	void GenerateOverMap()
 	{
-		MapSectionContainer con;
-
 		// define sections
 
+		/*
 		IntVector2[] forest = IntVector2Utility.GetRect(new IntVector2(-1, 0), new IntVector2(1, 2));
 		IntVector2[] castle = IntVector2Utility.GetRect(new IntVector2(2, 2), new IntVector2(4, 3));
 		List<IntVector2> build = new List<IntVector2>();
@@ -69,18 +74,45 @@ public class OverMap : MonoBehaviour {
 		build.Add(new IntVector2(-3, 3));
 		build.Add(new IntVector2(-2, 3));
 		IntVector2[] cave = build.ToArray();
+		*/
 
-		// clear up connections in case we already had one
+		// setup basic information in all teh sections
+		foreach(KeyValuePair<IntVector2, OvermapData.SectionContainer> section in data.sections)
+		{
+			MapSectionContainer container = GetSectionAt(section.Key);
 
+			container.terrain = section.Value.generator;
+			container.sectionName = section.Value.pregeneratedName;
+			container.givenModule = MapModule.Get(section.Value.module);
+
+			container.connections = section.Value.connections;
+		}
+
+		// build connections in all the groups
+		foreach (OvermapData.SectionGroupData group in data.groups)
+		{
+			RandomizeConnections(group.members.ToArray());
+			if (group.moduleCount > 0)
+			{
+				List<MapModule> modules = new List<MapModule>();
+				foreach (string s in group.modules)
+					modules.Add(MapModule.Get(s));
+				RollModules(group.members.ToArray(), modules.ToArray(), group.moduleCount);
+			}
+		}
+
+		/*
 		foreach (IntVector2 iv2 in forest)
 			GetSectionAt(iv2).connections = CompassDirection.nowhere;
 		foreach (IntVector2 iv2 in castle)
 			GetSectionAt(iv2).connections = CompassDirection.nowhere;
 		foreach (IntVector2 iv2 in cave)
 			GetSectionAt(iv2).connections = CompassDirection.nowhere;
+			*/
 
 		// setup connections between zones
 
+		/*
 		con = GetSectionAt(new IntVector2(0, 0));
 		con.AddConnection(CompassDirection.south);
 		con.terrain = MapType.forest;
@@ -108,20 +140,16 @@ public class OverMap : MonoBehaviour {
 		con = GetSectionAt(new IntVector2(3, 3));
 		con.AddConnection(CompassDirection.north);
 		con.terrain = MapType.cave;
+		*/
 
 		// setup terrain
 
+
+		/*
 		InitSections(debugType, new MapModule[] {forestModules[Random.Range(0, forestModules.Length)]}, forest); // the initial biome. using debug. for testing ofc.
 		InitSections(MapType.rooms, new MapModule[] { castleModules[Random.Range(0, castleModules.Length / 2)], castleModules[Random.Range(castleModules.Length / 2, castleModules.Length)] }, castle);
 		InitSections(MapType.cave, new MapModule[] { caveModules[Random.Range(0, caveModules.Length/2)], caveModules[Random.Range(caveModules.Length / 2, caveModules.Length)] }, cave);
-
-		GetSectionAt(new IntVector2(-1, 1)).givenModule = zecorasHut;
-
-		// roll up connections within section
-
-		RandomizeConnections(forest);
-		RandomizeConnections(castle);
-		RandomizeConnections(cave);
+		*/
 	}
 
 	void InitSections(MapType terrain, MapModule[] modules, params IntVector2[] sections)
@@ -138,7 +166,7 @@ public class OverMap : MonoBehaviour {
 		}
 		for(int i = 0; i < modules.Length; i++)
 		{
-			int random = Random.Range(0, sections.Length);
+			int random = UnityEngine.Random.Range(0, sections.Length);
 			for(int j = 0; j < sections.Length; j++)
 			{
 				MapSectionContainer c = GetSectionAt(sections[(random + j) % sections.Length]);
@@ -148,6 +176,25 @@ public class OverMap : MonoBehaviour {
 					break;
 				}
 			}
+		}
+	}
+
+	void RollModules(IntVector2[] sections, MapModule[] modules, int moduleCount)
+	{
+		int randomSection = UnityEngine.Random.Range(0, sections.Length);
+		int randomModule = UnityEngine.Random.Range(0, modules.Length);
+		for(int i = 0; i < moduleCount; i++)
+		{
+
+			MapSectionContainer container = GetSectionAt(sections[randomSection]);
+			if(container.givenModule == null)
+			{
+				container.givenModule = modules[randomModule];
+			}
+			randomSection += UnityEngine.Random.Range(1, 2 + sections.Length / moduleCount);
+			randomModule += UnityEngine.Random.Range(1, 2 + modules.Length / moduleCount);
+			randomSection %= sections.Length;
+			randomModule %= modules.Length;
 		}
 	}
 
@@ -176,7 +223,7 @@ public class OverMap : MonoBehaviour {
 		while (unconnected.Count > 0)
 		{
 			// step 1: pick a random connected section
-			r = Random.Range(0, connected.Count);
+			r = UnityEngine.Random.Range(0, connected.Count);
 			// step 2: expand into random adjacent section
 			IntVector2 into = RandomNearby(connected[r]);
 			
@@ -201,7 +248,7 @@ public class OverMap : MonoBehaviour {
 		for (int i = 0; i < cb.Length; i++)
 			cb[i] = false;
 		cb[0] = true;
-		r = Random.Range(0, connected.Count); // start at a random place
+		r = UnityEngine.Random.Range(0, connected.Count); // start at a random place
 		while (connectionsMade < entrances - 1)
 		{
 			// check if any of the connections from R connects an connected and an unconnected section.
@@ -216,7 +263,7 @@ public class OverMap : MonoBehaviour {
 					connectionsMade++;
 					cb[GetSectionAt(connected[r]).GenInfo-1] = true;
 					cb[GetSectionAt(into).GenInfo-1] = true;
-					r = Random.Range(0, connected.Count); // start at a new location
+					r = UnityEngine.Random.Range(0, connected.Count); // start at a new location
 					break;
 				}
 			}
@@ -241,7 +288,7 @@ public class OverMap : MonoBehaviour {
 
 		for (int i = 0; i < 1 + Mathf.Sqrt(sections.Length); i++)
 		{
-			r = Random.Range(0, connected.Count);
+			r = UnityEngine.Random.Range(0, connected.Count);
 			IntVector2 into = RandomNearby(connected[r]);
 			if (connected.Contains(into))
 			{
@@ -286,7 +333,7 @@ public class OverMap : MonoBehaviour {
 
 	IntVector2 RandomNearby(IntVector2 v2)
 	{
-		switch (Random.Range(0, 4))
+		switch (UnityEngine.Random.Range(0, 4))
 		{
 			case 0:
 				return v2 + IntVector2.up;
@@ -302,7 +349,7 @@ public class OverMap : MonoBehaviour {
 	IntVector2[] AllNearbyRandomFirst(IntVector2 v2)
 	{
 		IntVector2[] ret = new IntVector2[4];
-		switch (Random.Range(0, 4))
+		switch (UnityEngine.Random.Range(0, 4))
 		{
 			case 0:
 				ret[0] = v2 + IntVector2.up;
@@ -359,6 +406,11 @@ public class OverMap : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Builds a section at or get the current one.
+	/// </summary>
+	/// <param name="v2"></param>
+	/// <returns></returns>
 	MapSectionContainer GetSectionAt(IntVector2 v2)
 	{
 		MapSectionContainer ret = null;
