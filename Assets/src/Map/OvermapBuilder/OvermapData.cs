@@ -282,6 +282,12 @@ public class OvermapData
 		return null;
 	}
 
+	public void DisbandGroup(SectionGroupData group)
+	{
+		groups.Remove(group);
+		EventEditGroup.Invoke(group);
+	}
+
 	[System.Serializable]
 	public class SectionContainer
 	{

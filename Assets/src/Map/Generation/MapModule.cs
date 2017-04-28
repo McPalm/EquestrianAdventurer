@@ -17,4 +17,11 @@ public class MapModule : MonoBehaviour
 			usedTiles[i] = IntVector2.RoundFrom(v[i].transform.localPosition);
 		}
 	}
+
+	const string PATH = "Modules/";
+
+	static public MapModule Get(string source)
+	{
+		return Resources.Load<MapModule>(PATH + source);
+	}
 }
