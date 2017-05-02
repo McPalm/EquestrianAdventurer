@@ -43,41 +43,17 @@ public class MapSectionData
 		return XmlTool.LoadFromXML<MapSectionData>(resourcePath + name);
 	}
 
-	/*
-	 * public void Save()
+	static public MapSectionData TryGet(string name)
 	{
-		if (!dirty) return;
+		// MapSectionData data = new MapSectionData();
 		try
 		{
-			XmlSerializer xml = new XmlSerializer(typeof(CharacterSheet));
-			Debug.Log("Writing to: " + Application.persistentDataPath +  "/" + name + ".xml");
-			TextWriter writer = new StreamWriter(Application.persistentDataPath + "/" + name + ".xml");
-			xml.Serialize(writer, this);
-			writer.Close();
-			dirty = false;
+			return XmlTool.LoadFromXML<MapSectionData>(resourcePath + name, false);
 		}
-		catch(Exception e)
+		catch
 		{
-			Debug.LogException(e);
+			return null;
 		}
-	}
 
-	static public CharacterSheet Load(string name)
-	{
-		try
-		{
-			XmlSerializer xml = new XmlSerializer(typeof(CharacterSheet));
-			XmlTextReader reader = new XmlTextReader(Application.persistentDataPath + "/" + name + ".xml");
-			CharacterSheet sheet = xml.Deserialize(reader) as CharacterSheet;
-			reader.Close();
-			sheet.dirty = false;
-			return sheet;
-		}
-		catch (Exception e)
-		{
-			Debug.LogException(e);
-		}
-		return new CharacterSheet(name);
 	}
-	*/
 }

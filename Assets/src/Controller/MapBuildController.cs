@@ -17,7 +17,7 @@ public class MapBuildController : MonoBehaviour
 	[SerializeField]
 	GameObject[] tools;
 
-
+	string sectionName;
 
 	List<SpriteRenderer> rectMarker = new List<SpriteRenderer>();
 
@@ -31,6 +31,12 @@ public class MapBuildController : MonoBehaviour
 	Vector2 lastPos;
 
 	public bool hollowRect = true;
+
+	void Start()
+	{
+		editSection.LoadFromFilename(sectionName);
+		editSection.gameObject.SetActive(true);
+	}
 
 	protected void OnEnable()
 	{
@@ -207,7 +213,19 @@ public class MapBuildController : MonoBehaviour
 			return EventSystem.current.IsPointerOverGameObject();
 		}
 	}
-		
+
+	public string SectionName
+	{
+		get
+		{
+			return sectionName;
+		}
+
+		set
+		{
+			sectionName = value;
+		}
+	}
 }
 
 

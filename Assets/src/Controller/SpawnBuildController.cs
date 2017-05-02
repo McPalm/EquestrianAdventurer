@@ -27,12 +27,14 @@ public class SpawnBuildController : MonoBehaviour
 		// show stuffs
 		foreach (GameObject o in tools) o.SetActive(true);
 		mode = Neutral;
+		foreach (SpriteRenderer r in placed) r.gameObject.SetActive(true);
 	}
 
 	void OnDisable()
 	{
 		// hide stuffs
 		foreach (GameObject o in tools) o.SetActive(false);
+		foreach (SpriteRenderer r in placed) r.gameObject.SetActive(false);
 	}
 
 	void Update()

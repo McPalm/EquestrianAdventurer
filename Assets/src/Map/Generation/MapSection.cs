@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class MapSection : MonoBehaviour
 {
-	
-	public string sectionName;
+
+	private string sectionName;
 	public string paletteName;
 	public Color overlayTint = Color.gray;
 
@@ -33,18 +33,31 @@ public class MapSection : MonoBehaviour
 		}
 	}
 
+	public string SectionName
+	{
+		get
+		{
+			return sectionName;
+		}
+
+		set
+		{
+			sectionName = value;
+		}
+	}
+
 	void Start()
 	{
 		if (data == null)
 		{
 			if (loadSection)
 			{
-				LoadFromFilename(sectionName);
+				LoadFromFilename(SectionName);
 
 			}
 			else
 			{
-				data = new MapSectionData(sectionName);
+				data = new MapSectionData(SectionName);
 				DrawAll();
 			}
 		}
@@ -196,7 +209,7 @@ public class MapSection : MonoBehaviour
 			return ret;
 		}
 
-		GameObject o = new GameObject(sectionName + " " + IntVector2.RoundFrom(v2));
+		GameObject o = new GameObject(SectionName + " " + IntVector2.RoundFrom(v2));
 		SpriteRenderer s = o.AddComponent<SpriteRenderer>();
 		o.transform.SetParent(transform);
 		o.transform.localPosition = v2;
@@ -232,11 +245,11 @@ public class MapSection : MonoBehaviour
 
 	public void LoadFromFilename(string filename)
 	{
-		sectionName = filename;
-		data = MapSectionData.Load(sectionName);
+		SectionName = filename;
+		data = MapSectionData.Load(SectionName);
 		paletteName = data.palette;
 		overlayTint = data.tint;
-		if (data == null) data = new MapSectionData(sectionName);
+		if (data == null) data = new MapSectionData(SectionName);
 		DrawAll();
 	}
 
@@ -245,7 +258,7 @@ public class MapSection : MonoBehaviour
 		GameObject o = new GameObject(name + "(section)");
 		o.transform.position = offset;
 		MapSection s = o.AddComponent<MapSection>();
-		s.sectionName = name;
+		s.SectionName = name;
 		return s;
 	}
 }
