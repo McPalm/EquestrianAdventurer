@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class PremadeSpawner : CreatureSpawner
-{
-	
-
+{	
 	public SpawnContainer[] spawnlist;
 
 	public override void Spawn()

@@ -14,6 +14,11 @@ public class MapBuildController : MonoBehaviour
 	SpriteRenderer marker;
 	[SerializeField]
 	SpriteRenderer MarkerPrefab;
+	[SerializeField]
+	GameObject[] tools;
+
+
+
 	List<SpriteRenderer> rectMarker = new List<SpriteRenderer>();
 
 	public MapSection editSection;
@@ -35,11 +40,16 @@ public class MapBuildController : MonoBehaviour
 		b = marker.sprite;
 		State = DrawRectPassive;
 		editing = true;
+		foreach (GameObject o in tools) o.SetActive(true);
+
 	}
 
 	protected void OnDisable()
 	{
 		editing = false;
+		marker.gameObject.SetActive(false);
+		foreach (SpriteRenderer sr in rectMarker) sr.gameObject.SetActive(false);
+		foreach (GameObject o in tools) o.SetActive(false);
 	}
 
 	public void SetSwatch(int i)

@@ -65,5 +65,6 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 		}
 	}
 
+	[System.Serializable]
 	public class DragEvent : UnityEvent<GameObject> { }
 }

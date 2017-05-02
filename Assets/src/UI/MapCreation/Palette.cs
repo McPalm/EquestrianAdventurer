@@ -48,6 +48,4 @@ public class Palette : MonoBehaviour
 	{
 		controller.SetSwatch(i);
 	}
-
-	
 }
