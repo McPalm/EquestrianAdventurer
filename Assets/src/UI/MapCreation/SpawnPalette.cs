@@ -9,6 +9,8 @@ public class SpawnPalette : MonoBehaviour
 	GameObject[] prefabs;
 	[SerializeField]
 	GameObject swatch1;
+	[SerializeField]
+	Sprite fallbackSprite;
 
 	List<GameObject> Swatches = new List<GameObject>();
 
@@ -42,7 +44,10 @@ public class SpawnPalette : MonoBehaviour
 			{
 				// assign swatch properly
 				Swatches[i].SetActive(true);
-				Swatches[i].GetComponentInChildren<Draggable>().GetComponent<Image>().sprite = prefabs[i].GetComponent<SpriteRenderer>().sprite;	
+				if (prefabs[i].GetComponent<SpriteRenderer>())
+					Swatches[i].GetComponentInChildren<Draggable>().GetComponent<Image>().sprite = prefabs[i].GetComponent<SpriteRenderer>().sprite;
+				else
+					Swatches[i].GetComponentInChildren<Draggable>().GetComponent<Image>().sprite = fallbackSprite;
 			}
 			else
 			{

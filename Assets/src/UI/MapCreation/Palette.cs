@@ -14,12 +14,12 @@ public class Palette : MonoBehaviour
 	// Use this for initialization
 	void Start () {
 		controller = FindObjectOfType<MapBuildController>();
-		SetupButtons(controller.palette);
+		SetupButtons(controller.TileDB);
 	}
 
-	void SetupButtons(string p)
+	void SetupButtons(TileDB t)
 	{
-		tileDB = TileDB.LoadPalette(p);
+		tileDB = t;
 		swatches = new int[tileDB.tiles.Length];
 		//bool flip;
 		Color c;

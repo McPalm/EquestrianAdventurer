@@ -7,7 +7,6 @@ public class MapBuildController : MonoBehaviour
 {
 	static public bool editing = false;
 
-	public string palette;
 	private TileDB tileDB;
 
 	[SerializeField]
@@ -36,18 +35,18 @@ public class MapBuildController : MonoBehaviour
 	{
 		editSection.LoadFromFilename(sectionName);
 		editSection.gameObject.SetActive(true);
+		tileDB = TileDB.LoadPalette(editSection.paletteName);
 	}
 
 	protected void OnEnable()
 	{
-		tileDB = TileDB.LoadPalette(palette);
+		
 		marker.gameObject.SetActive(true);
 		marker.GetComponent<OOBTint>().target = editSection;
 		b = marker.sprite;
 		State = DrawRectPassive;
 		editing = true;
 		foreach (GameObject o in tools) o.SetActive(true);
-
 	}
 
 	protected void OnDisable()
@@ -224,6 +223,19 @@ public class MapBuildController : MonoBehaviour
 		set
 		{
 			sectionName = value;
+		}
+	}
+
+	public TileDB TileDB
+	{
+		get
+		{
+			return tileDB;
+		}
+
+		set
+		{
+			tileDB = value;
 		}
 	}
 }

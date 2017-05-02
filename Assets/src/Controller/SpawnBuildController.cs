@@ -10,7 +10,10 @@ public class SpawnBuildController : MonoBehaviour
 	GameObject[] tools;
 	[SerializeField]
 	PremadeSpawner spawner;
+	[SerializeField]
+	Sprite fallbackSprite;
 
+	
 
 	System.Action mode;
 	HashSet<SpriteRenderer> placed = new HashSet<SpriteRenderer>();
@@ -20,6 +23,13 @@ public class SpawnBuildController : MonoBehaviour
 	{
 		if (spawner)
 			LoadSpawner();
+	}
+
+	public void SetSpawner(string s)
+	{
+		CreatureSpawner cs = CreatureSpawner.Get(s);
+		if(cs && cs is PremadeSpawner)
+			spawner = cs as PremadeSpawner;
 	}
 
 	void OnEnable()
@@ -91,7 +101,10 @@ public class SpawnBuildController : MonoBehaviour
 		SpriteRenderer r = go.AddComponent<SpriteRenderer>();
 		r.sortingLayerName = "Active";
 		placed.Add(r);
-		r.sprite = o.GetComponent<SpriteRenderer>().sprite;
+		if (o.GetComponent<SpriteRenderer>())
+			 r.sprite = o.GetComponent<SpriteRenderer>().sprite;
+		else
+			r.sprite = fallbackSprite;
 		go.transform.position = (Vector3)iv2;
 		go.AddComponent<Reference>().prefab = o;
 	}
