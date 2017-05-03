@@ -11,7 +11,6 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 	public Purse purse;
 	public Inventory playerInventory;
 
-
 	public override void ResetToDefaults()
 	{
 		data = new Dictionary<string, Value>();
@@ -28,23 +27,16 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 		}
 		else if(variableName.Length > 11 && variableName.Substring(0, 11) == "$inventory.")
 		{
-			print("Checking Inventory");
-			print(variableName);
 			if (variableName.Length > 19)
-				print(variableName.Substring(11, 8).ToLower());
 			if(variableName.Length > 19 && variableName.Substring(11, 8).ToLower() == "valuable")
 			{
-				print("Checking Valuables");
-				print(variableName.Substring(20));
 				if (playerInventory.Contains(variableName.Substring(20))) return new Value(true);
 				if (playerInventory.Contains("pristine " + variableName.Substring(20))) return new Value(true);
 				if (playerInventory.Contains("divine " + variableName.Substring(20))) return new Value(true);
-				print("Had none");
 				return new Value(false);
 			}
 			else
 			{
-				print("Checking Item");
 				string parseName = variableName.Substring(11);
 				string exactName = "";
 				for (int i = 0; i < parseName.Length; i++)
@@ -52,8 +44,6 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 					if (parseName[i] == '_') exactName += ' ';
 					else exactName += parseName[i];
 				}
-				print(parseName);
-				print(exactName);
 				return new Value(playerInventory.Contains(exactName));
 			}
 		}
