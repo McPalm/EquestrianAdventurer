@@ -26,6 +26,7 @@ public class CommandParser : MonoBehaviour
 		switch (s.ToLower())
 		{
 			case "open shop":
+			case "open store":
 				ShopInventory shop = null;
 				FindObjectOfType<DialogieUIYarn>().AutoClose = true;
 				if (talkTo)
