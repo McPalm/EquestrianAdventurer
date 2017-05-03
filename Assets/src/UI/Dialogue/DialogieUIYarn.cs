@@ -24,6 +24,19 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 	string log;
 	bool runLine;
 	bool waiting = true;
+	bool autoClose = false;
+
+	public bool AutoClose
+	{
+		get
+		{
+			return autoClose;
+		}
+		set
+		{
+			autoClose = value;
+		}
+	}
 
 	public override IEnumerator RunCommand(Command command)
 	{
@@ -109,7 +122,7 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 
 	public override IEnumerator DialogueComplete()
 	{
-		if(runLine)
+		if(runLine &! autoClose)
 		{
 			optionButtons[0].GetComponentInChildren<Text>().text = "end";
 			yield return Wait();
@@ -127,10 +140,11 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 		player = FindObjectOfType<RogueController>();
 		player.enabled = false;
 		log = "";
+		autoClose = false;
 		yield break;
 	}
 
-	private IEnumerator Wait()
+	public IEnumerator Wait()
 	{
 		buttonAnchor.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, text.preferredHeight + bodyOptionPadding, 35);
 		optionButtons[0].gameObject.SetActive(true);
