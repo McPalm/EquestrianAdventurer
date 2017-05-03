@@ -49,7 +49,8 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 		GetComponent<MapCharacter>().EventHearNoise.AddListener(OnHearNoise);
 
 		LOS.sightRadius = relaxedRadius;
-		
+
+		GetComponent<HitPoints>().EventBeforeHurt.AddListener(OnHurt);
 	}
 
 	public void DoTurn()
@@ -224,10 +225,7 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 	{
 		if (source == me.RealLocation) return;
 		if (!investigate) CombatTextPool.Instance.PrintAt((Vector3)me.RealLocation + new Vector3(0f, 0.4f), "?", Color.yellow, 1.2f);
-		lastSeenLocation = source;
-		investigate = true;
-		relaxed = false;
-		LOS.sightRadius = alertRadius;
+		Investigate(source);
 	}
 
 	void RandomMove()
@@ -243,6 +241,24 @@ public class RangedAI : MonoBehaviour, TurnTracker.TurnEntry
 			case 3:
 				controller.Perform(Vector2.left); break;
 		}
+	}
+
+	void OnHurt(DamageData damage)
+	{
+		if(!investigate && damage.source)
+		{
+			CombatTextPool.Instance.PrintAt((Vector3)me.RealLocation + new Vector3(0f, 0.4f), "!!", Color.red, 1.2f);
+			Investigate(IntVector2.RoundFrom(damage.source.transform.position));
+			Yell();
+		}
+	}
+
+	void Investigate(IntVector2 location)
+	{
+		investigate = true;
+		relaxed = false;
+		lastSeenLocation = location;
+		LOS.sightRadius = alertRadius;
 	}
 }
 
