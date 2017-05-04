@@ -60,7 +60,7 @@ public class AbilityUI : MonoBehaviour
 			character.SelectedAbility = abilitites[i];
 			selectedMarker.SetParent(abilityButtons[i].transform);
 			selectedMarker.localPosition = Vector3.zero;
-			selectedMarker.SetAsFirstSibling();
+			// selectedMarker.SetAsFirstSibling();
 		}
 	}
 }
