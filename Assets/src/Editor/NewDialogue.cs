@@ -6,7 +6,7 @@ public class NewDialogue : EditorWindow
 {
 
 
-	[MenuItem("EQA/New Dialogue")]
+	// [MenuItem("EQA/New Dialogue")]
 	static void Init()
 	{
 		// Get existing open window or if none, make a new one:
