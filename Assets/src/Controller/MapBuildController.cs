@@ -7,7 +7,7 @@ public class MapBuildController : MonoBehaviour
 {
 	static public bool editing = false;
 
-	private TileDB tileDB;
+	private TileSet tileSet;
 
 	[SerializeField]
 	SpriteRenderer marker;
@@ -35,7 +35,7 @@ public class MapBuildController : MonoBehaviour
 	{
 		editSection.LoadFromFilename(sectionName);
 		editSection.gameObject.SetActive(true);
-		tileDB = TileDB.LoadPalette(editSection.paletteName);
+		tileSet = TileSet.GetTileSet(editSection.paletteName);
 	}
 
 	protected void OnEnable()
@@ -63,7 +63,7 @@ public class MapBuildController : MonoBehaviour
 		// bool flip = false;
 		if (i < 0) s = b;
 		else
-			s = tileDB.GetSprite(i, out c);  //tiles[i].GetComponent<SpriteRenderer>().sprite;  // I dont actually know what this does
+			s = tileSet.GetSprite(i, out c);  //tiles[i].GetComponent<SpriteRenderer>().sprite;  // I dont actually know what this does
 		// else s = TileDB.GetTile(i, out flip);
 		swatch = i;
 		marker.GetComponent<SpriteRenderer>().sprite = s;
@@ -226,16 +226,16 @@ public class MapBuildController : MonoBehaviour
 		}
 	}
 
-	public TileDB TileDB
+	public TileSet TileDB
 	{
 		get
 		{
-			return tileDB;
+			return tileSet;
 		}
 
 		set
 		{
-			tileDB = value;
+			tileSet = value;
 		}
 	}
 }

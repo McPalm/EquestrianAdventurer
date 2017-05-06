@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TileDB : MonoBehaviour
+public class TileSet : MonoBehaviour
 {
-	
-
-	static public TileDB LoadPalette(string name)
+	static public TileSet GetTileSet(string name)
 	{
-		TileDB r = Resources.Load<TileDB>("palette/" + name);
+		TileSet r = Resources.Load<TileSet>("tileset/" + name);
 		if (r) return r;
-		Debug.LogWarning("Cannot find palette " + name + ". Using default instead!");
-		return Resources.Load<TileDB>("palette/default");
+		Debug.LogWarning("Cannot find tileset " + name + ". Using default instead!");
+		return Resources.Load<TileSet>("tileset/default");
 	}
 
 	public GameObject[] tiles;

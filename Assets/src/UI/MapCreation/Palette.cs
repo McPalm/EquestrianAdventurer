@@ -6,7 +6,7 @@ public class Palette : MonoBehaviour
 {
 	public float buttonDistance;
 	public Button prototype;
-	public TileDB tileDB;
+	public TileSet tileDB;
 
 	int[] swatches;
 	MapBuildController controller;
@@ -17,7 +17,7 @@ public class Palette : MonoBehaviour
 		SetupButtons(controller.TileDB);
 	}
 
-	void SetupButtons(TileDB t)
+	void SetupButtons(TileSet t)
 	{
 		tileDB = t;
 		swatches = new int[tileDB.tiles.Length];

@@ -34,6 +34,11 @@ public class NewMapSection : EditorWindow
 				Debug.LogError("Name already in use!");
 				pass = false;
 			}
+			if (TileSet.GetTileSet(tileset) == null)
+			{
+				Debug.LogError("Missing tileset: " + tileset);
+				pass = false;
+			}
 
 			if (pass)
 			{

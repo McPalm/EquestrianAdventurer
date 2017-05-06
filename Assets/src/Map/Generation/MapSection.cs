@@ -12,7 +12,7 @@ public class MapSection : MonoBehaviour
 
 	Dictionary<IntVector2, GameObject> map = new Dictionary<IntVector2, GameObject>();
 	MapSectionData data;
-	TileDB tileDB;
+	TileSet tileSet;
 
 	public MapModule modulePrefab;
 	MapModule module;
@@ -89,7 +89,7 @@ public class MapSection : MonoBehaviour
 
 	public void DrawAll()
 	{
-		tileDB = TileDB.LoadPalette(paletteName);
+		tileSet = TileSet.GetTileSet(paletteName);
 		HashSet<IntVector2> blocked = new HashSet<IntVector2>();
 
 		// for now, assume that we always spawn the section at 20, 20
@@ -173,7 +173,7 @@ public class MapSection : MonoBehaviour
 	void DrawSprite(Vector2 v2, int t)
 	{
 		EraseAt(v2);
-		GameObject tile = Instantiate(tileDB.GetPrefab(t), transform.position + (Vector3)v2, Quaternion.identity) as GameObject;
+		GameObject tile = Instantiate(tileSet.GetPrefab(t), transform.position + (Vector3)v2, Quaternion.identity) as GameObject;
 		tile.transform.SetParent(transform);
 		map.Add(IntVector2.RoundFrom(v2), tile);
 
