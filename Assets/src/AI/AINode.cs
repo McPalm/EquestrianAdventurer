@@ -11,6 +11,7 @@ public class AINode
 
 	public AINode(Condition condition, Action action)
 	{
+		if (condition == null) condition = autoPass;
 		this.condition = condition;
 		this.action = action;
 	}
@@ -18,5 +19,10 @@ public class AINode
 	public bool Try()
 	{
 		return condition() && action();
+	}
+
+	bool autoPass()
+	{
+		return true;
 	}
 }

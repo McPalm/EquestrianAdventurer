@@ -2,31 +2,41 @@
 using System.Collections.Generic;
 using System;
 
-public class GenericAI : MyBehaviour, TurnTracker.TurnEntry
+abstract public class GenericAI : MyBehaviour, TurnTracker.TurnEntry
 {
-
-	List<AINode> entries = new List<AINode>();
+	protected List<AINode> combatEntries = new List<AINode>();
+	protected List<AINode> searchEntries = new List<AINode>();
 	protected CharacterActionController controller;
+	protected Action Idle;
+	protected Func<bool> Combat;
+	protected Func<bool> Search;
 
 	public void DoTurn()
 	{
-		GameObject target = null;
-		// aquire target code.
-
-		if (target)
+		if (Combat())
 		{
-			foreach (AINode node in entries)
+			foreach (AINode node in combatEntries)
 			{
 				if (node.Try()) return;
 			}
+			controller.Perform(CharacterActionController.Actions.idle);
+		}
+		else if(Search())
+		{
+			foreach(AINode node in searchEntries)
+			{
+				if (node.Try()) return;
+			}
+			controller.Perform(CharacterActionController.Actions.idle);
 		}
 		else
 		{
 			// do the whole idle, search thing.
+			Idle();
 		}
 	}
 	
-	void Awake()
+	protected void Awake()
 	{
 		GetComponent<MapCharacter>().EventDeath.AddListener(delegate { TurnTracker.Instance.Remove(this); });
 		EventDisable.AddListener(delegate { TurnTracker.Instance.Remove(this); });
