@@ -139,6 +139,74 @@ public class CharacterActionController : MonoBehaviour
 		return false;
 	}
 
+	public bool MoveTowards(IntVector2 destination)
+	{
+		bool moved = true;
+
+		Vector2 delta = (Vector2)destination - (Vector2)mobile.RealLocation;
+
+		if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+		{
+			if (delta.x < 0f) moved = Perform(Vector2.left);
+			else if (delta.x > 0f) moved = Perform(Vector2.right);
+			if (!moved)
+			{
+				if (delta.y < 0f) moved = Perform(Vector2.down);
+				else if (delta.y > 0f) moved = Perform(Vector2.up);
+				else moved = Perform((UnityEngine.Random.value < 0.5f) ? Vector2.up : Vector2.down);
+			}
+
+		}
+		else if (delta.y != 0f)
+		{
+
+			if (delta.y < 0f) moved = Perform(Vector2.down);
+			else if (delta.y > 0f) moved = Perform(Vector2.up);
+			if (!moved)
+			{
+				if (delta.x < 0f) moved = Perform(Vector2.left);
+				else if (delta.x > 0f) moved = Perform(Vector2.right);
+				else moved = Perform((UnityEngine.Random.value < 0.5f) ? Vector2.left : Vector2.right);
+			}
+		}
+
+		return moved;
+	}
+
+	public bool MoveAway(IntVector2 destination)
+	{
+		bool moved = true;
+
+		Vector2 delta = (Vector2)destination - (Vector2)mobile.RealLocation;
+
+		if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+		{
+			if (delta.x < 0f) moved = Perform(Vector2.right);
+			else if (delta.x > 0f) moved = Perform(Vector2.left);
+			if (!moved)
+			{
+				if (delta.y < 0f) moved = Perform(Vector2.up);
+				else if (delta.y > 0f) moved = Perform(Vector2.down);
+				else moved = Perform((UnityEngine.Random.value < 0.5f) ? Vector2.down : Vector2.up);
+			}
+
+		}
+		else if (delta.y != 0f)
+		{
+
+			if (delta.y < 0f) moved = Perform(Vector2.up);
+			else if (delta.y > 0f) moved = Perform(Vector2.down);
+			if (!moved)
+			{
+				if (delta.x < 0f) moved = Perform(Vector2.right);
+				else if (delta.x > 0f) moved = Perform(Vector2.left);
+				else moved = Perform((UnityEngine.Random.value < 0.5f) ? Vector2.right : Vector2.left);
+			}
+		}
+
+		return moved;
+	}
+
 	[System.Serializable]
 	public class CharacterActionControllerEvent : UnityEvent<CharacterActionController, Actions> { }
 
