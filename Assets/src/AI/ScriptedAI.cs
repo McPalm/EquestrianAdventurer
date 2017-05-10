@@ -39,7 +39,13 @@ public class ScriptedAI : GenericAI
 	bool ApproachLastSeenLocation()
 	{
 		atHome = false;
-		return controller.MoveTowards(lastSeen);
+		if (controller.MoveTowards(lastSeen))
+		{
+			if (!target)
+				FindTarget();
+			return true;
+		}
+		else return false;
 	}
 
 	bool StillLooking()
@@ -97,10 +103,14 @@ public class ScriptedAI : GenericAI
 		}
 
 
-		if(target)
+		if (target)
+		{
+			alert = true;
 			return true;
+		}
 		return false;
 	}
+
 
 
 	void Wander()
