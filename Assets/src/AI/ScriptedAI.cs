@@ -30,6 +30,11 @@ public class ScriptedAI : GenericAI
 		home = IntVector2.RoundFrom(transform.position);
 	}
 
+	void Start()
+	{
+		GetComponent<HitPoints>().EventBeforeHurt.AddListener(OnHurt);
+	}
+
 	bool AttackTarget()
 	{
 		atHome = false;
@@ -110,9 +115,7 @@ public class ScriptedAI : GenericAI
 		}
 		return false;
 	}
-
-
-
+	
 	void Wander()
 	{
 		// % chance we move in a random direction
@@ -134,4 +137,31 @@ public class ScriptedAI : GenericAI
 
 	}
 
+	//////////////////
+	// Some external events to modify logic n stuffs
+	//
+
+	// react to getting hurt
+	void OnHurt(DamageData data)
+	{
+		if(data.source && data.source.GetComponent<MapCharacter>())
+		{
+			MapCharacter foe = data.source.GetComponent<MapCharacter>();
+			if (foe == target) return;
+			
+			if(GetComponent<MapCharacter>().HostileTowards(foe))
+			{
+				IntVector2 foeLocation = foe.GetComponent<MapObject>().RealLocation;
+				IntVector2 myLocation = GetComponent<MapObject>().RealLocation;
+
+				if (!target || (foeLocation - myLocation).MagnitudePF < (lastSeen - myLocation).MagnitudePF ) // (GetComponent<MapObject>().RealLocation - target.GetComponent<MapObject>().RealLocation).MagnitudePF < 
+				{
+					alert = true;
+					atHome = false;
+					target = foe;
+					lastSeen = foe.GetComponent<MapObject>().RealLocation;
+				}
+			}
+		}
+	}
 }
