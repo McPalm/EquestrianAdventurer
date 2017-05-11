@@ -5,12 +5,23 @@ public class DialogueStarter : MonoBehaviour
 {
 	public TextAsset jsonFile;
 
+	[SerializeField]
+	StoryDialoguePicker[] StoryDialogues;
+
 
 	public void StartConversation()
 	{
+		foreach (StoryDialoguePicker option in StoryDialogues)
+		{
+			if (option.ShouldPlay())
+			{
+				StartConversation(option.DialogueFile);
+				option.Played();
+				return;
+			}
+		}
 		StartConversation(jsonFile);
 	}
-
 
 	public void StartConversation(TextAsset file)
 	{
