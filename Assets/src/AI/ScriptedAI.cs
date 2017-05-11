@@ -6,6 +6,7 @@ public class ScriptedAI : GenericAI
 	MapCharacter target;
 	bool alert = false;
 	bool atHome = true;
+	LOSCheck los;
 
 	IntVector2 home;
 	IntVector2 lastSeen; // if the target is visible, last seen is the targets current location.
@@ -14,8 +15,11 @@ public class ScriptedAI : GenericAI
 	new void Awake()
 	{
 		base.Awake();
-		Combat = FindTarget;
 
+		los = GetComponent<LOSCheck>();
+		los.sightRadius = 6;
+
+		Combat = FindTarget;
 		// hack some default AI
 		// attack target
 		combatEntries.Add(new AINode(null, AttackTarget));
@@ -64,6 +68,7 @@ public class ScriptedAI : GenericAI
 	bool GoHome()
 	{
 		alert = false;
+		los.sightRadius = 6;
 		controller.MoveTowards(home); // do some fancy failsafe later, like, start pathing if failing the movetowards
 		if (GetComponent<MapObject>().RealLocation == home) atHome = true;
 		return true;
@@ -80,7 +85,7 @@ public class ScriptedAI : GenericAI
 		if(target)
 		{
 			// verify LOS
-			if (false == GetComponent<LOSCheck>().HasLOS(target.GetComponent<Mobile>()))
+			if (false == los.HasLOS(target.GetComponent<Mobile>()))
 				target = null;
 			else
 				lastSeen = target.GetComponent<MapObject>().RealLocation;
@@ -91,10 +96,10 @@ public class ScriptedAI : GenericAI
 			int bestdelta = 10;
 
 			// find a (new) target
-			foreach (MapObject o in ObjectMap.Instance.GetRange(realLocation.x - 8, realLocation.y - 8, realLocation.x + 8, realLocation.y + 8))
+			foreach (MapObject o in ObjectMap.Instance.GetRange(realLocation.x - los.sightRadius, realLocation.y - los.sightRadius, realLocation.x + los.sightRadius, realLocation.y + los.sightRadius))
 			{
 				MapCharacter mc = o.GetComponent<MapCharacter>();
-				if(mc && GetComponent<MapCharacter>().HostileTowards(mc) && GetComponent<LOSCheck>().HasLOS(o))
+				if(mc && GetComponent<MapCharacter>().HostileTowards(mc) && los.HasLOS(o, atHome, atHome))
 				{
 
 					if ((realLocation - o.RealLocation).MagnitudePF < bestdelta)
@@ -111,6 +116,7 @@ public class ScriptedAI : GenericAI
 		if (target)
 		{
 			alert = true;
+			los.sightRadius = 8;
 			return true;
 		}
 		return false;
@@ -157,6 +163,7 @@ public class ScriptedAI : GenericAI
 				if (!target || (foeLocation - myLocation).MagnitudePF < (lastSeen - myLocation).MagnitudePF ) // (GetComponent<MapObject>().RealLocation - target.GetComponent<MapObject>().RealLocation).MagnitudePF < 
 				{
 					alert = true;
+					los.sightRadius = 8;
 					atHome = false;
 					target = foe;
 					lastSeen = foe.GetComponent<MapObject>().RealLocation;

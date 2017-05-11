@@ -26,6 +26,7 @@ public class LOSCheck : MonoBehaviour
 	/// <summary>
 	/// A special LOS that takes cover and concealment into account
 	/// If there is cover in between, sightradius is effectively halved. (rounded down)
+	/// Slow
 	/// </summary>
 	/// <param name="t"></param>
 	/// <param name="cover"></param>
