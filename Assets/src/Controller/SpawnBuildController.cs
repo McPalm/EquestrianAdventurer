@@ -27,7 +27,7 @@ public class SpawnBuildController : MonoBehaviour
 
 	public void SetSpawner(string s)
 	{
-		CreatureSpawner cs = CreatureSpawner.Get(s);
+		CreatureSpawner cs = CreatureSpawner.Get(s, false);
 		if(cs && cs is PremadeSpawner)
 			spawner = cs as PremadeSpawner;
 	}

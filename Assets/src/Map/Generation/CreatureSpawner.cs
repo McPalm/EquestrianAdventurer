@@ -62,10 +62,10 @@ public class CreatureSpawner : MonoBehaviour
 		Instantiate(o, targetSection.transform.position + new Vector3(x, y), Quaternion.identity);
 	}
 
-	static public CreatureSpawner Get(string name)
+	static public CreatureSpawner Get(string name, bool printWarningMessages = true)
 	{
 		CreatureSpawner ps = Resources.Load<CreatureSpawner>(PATH + name);
-		if (!ps) Debug.LogWarning("Cannot creature spawning file for " + name);
+		if (!ps && printWarningMessages) Debug.LogWarning("Cannot creature spawning file for " + name);
 		return ps;
 	}
 

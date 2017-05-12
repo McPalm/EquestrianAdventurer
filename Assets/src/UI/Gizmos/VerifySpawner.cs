@@ -15,7 +15,7 @@ public class VerifySpawner : MonoBehaviour
 
 	public void Verify(string name)
 	{
-		CreatureSpawner spawn = CreatureSpawner.Get(name);
+		CreatureSpawner spawn = CreatureSpawner.Get(name, false);
 
 		if (name == "")
 		{
