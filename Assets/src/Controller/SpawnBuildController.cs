@@ -133,6 +133,8 @@ public class SpawnBuildController : MonoBehaviour
 			list.Add(container);
 		}
 		spawner.spawnlist = list.ToArray();
+		UnityEditor.EditorUtility.SetDirty(spawner);
+		print("Saved: " + spawner.name);
 	}
 
 
