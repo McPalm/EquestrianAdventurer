@@ -47,7 +47,12 @@ public class CommandParser : MonoBehaviour
 			case "give":
 				string itemName = s.Substring(5);
 				Item item = null;
-				if (CreateItem.Instance.TryGet(itemName.ToLower(), out item))
+				if(s.Length > 9 && s.Substring(5, 4) == "bits")
+				{
+					int bits = int.Parse(s.Substring(10));
+					player.GetComponent<Purse>().AddBits(bits);
+				}
+				else if (CreateItem.Instance.TryGet(itemName.ToLower(), out item))
 					player.GetComponent<Inventory>().AddOrPutOnGround(item);
 				else
 					Debug.LogError("Unable to find " + itemName + " in Item Database");
