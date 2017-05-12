@@ -10,24 +10,20 @@ public class Talk : MonoBehaviour
 	[SerializeField]
 	GameObject anchor;
 
-	int test = 0;
-
-	// Update is called once per frame
-	void FixedUpdate ()
+	public void SaySomething()
 	{
-		test++;
+		Say(text);
+	}
 
 
-		if(test == 300)
+	public void Say(string text)
+	{
+		if (!anchor)
 		{
-			test = 0;
-			if (!anchor)
-			{
-				anchor = new GameObject("Speech Anchor");
-				anchor.transform.parent = transform;
-				anchor.transform.localPosition = new Vector2(0f, 0.65f);
-			}
-			SpeechBubblePool.Instance.Show(anchor, text);
+			anchor = new GameObject("Speech Anchor");
+			anchor.transform.parent = transform;
+			anchor.transform.localPosition = new Vector2(0f, 0.7f);
 		}
+		SpeechBubblePool.Instance.Show(anchor, text);
 	}
 }

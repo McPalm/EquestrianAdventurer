@@ -20,7 +20,8 @@ public class DialogueStarter : MonoBehaviour
 				return;
 			}
 		}
-		StartConversation(jsonFile);
+		if(jsonFile)
+			StartConversation(jsonFile);
 	}
 
 	public void StartConversation(TextAsset file)
