@@ -572,6 +572,30 @@ public class Inventory : MonoBehaviour
 		return false;
 	}
 
+	public int Quantity(string s)
+	{
+		int qty = 0;
+
+		foreach (Item i in items)
+		{
+			if (i.displayName.ToLower() == s.ToLower())
+				qty++;
+		}
+		for (int i = 0; i < SLOTS; i++)
+		{
+			for (int j = 0; j < STACKS; j++)
+			{
+				if (consumables[i, j] != null)
+				{
+					if (consumables[i, j].displayName.ToLower() == s.ToLower())
+						qty++;
+				}
+			}
+		}
+
+		return qty;
+	}
+
 	public bool RemoveItem(string s)
 	{
 		foreach (Item i in items)

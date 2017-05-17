@@ -12,7 +12,7 @@
 	{
 		"title": "Start",
 		"tags": "",
-		"body": "<<if $flag.daisy.quest1.started is true>>\nHow is it going? You got the flowers yet?\n-> Yes, here they are.\n    [[TurnIn]]\n-> I am afraid not. But don't lose hope.\n    I belive in you!\n    I need them before the evening.\n-> I am sorry, but I could not do it.\n    Oh no!\n    *Daisy faints*\n<<else>>\n[[FirstEncounter]]\n<<endif>>",
+		"body": "<<if $flag.daisy.quest1.started is true>>\nHow is it going? You got the flowers yet?\n-> Yes, here they are. <<if $inventory.number.flower >= 5>>\n    [[TurnIn]]\n-> I am afraid not. But don't lose hope.\n    I belive in you!\n    I need them before the evening.\n-> I am sorry, but I could not do it.\n    Oh no!\n    *Daisy faints*\n<<else>>\n[[FirstEncounter]]\n<<endif>>",
 		"position": {
 			"x": 501,
 			"y": 100
@@ -22,9 +22,9 @@
 	{
 		"title": "TurnIn",
 		"tags": "",
-		"body": "Oh. that you did!\nThank you so much!\n<<take purple flower>>\n<<take purple flower>>\n<<take purple flower>>\n<<take purple flower>>\n<<take purple flower>>\n<<set $flag.daisy.quest1.completed to true>>\nAnd of course, here is 100 bits for all your trouble.\n<<give bits 100>>\nYou are my hero!",
+		"body": "Oh. that you did!\nThank you so much!\n<<take flower>>\n<<take flower>>\n<<take flower>>\n<<take flower>>\n<<take flower>>\n<<set $flag.daisy.quest1.completed to true>>\nAnd of course, here is 100 bits for all your trouble.\n<<give bits 100>>\nYou are my hero!",
 		"position": {
-			"x": 397,
+			"x": 395,
 			"y": 421
 		},
 		"colorID": 0

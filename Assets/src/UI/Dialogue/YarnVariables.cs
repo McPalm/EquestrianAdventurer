@@ -16,8 +16,6 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 		data = new Dictionary<string, Value>();
 	}
 
-
-
 	public override Value GetValue(string variableName)
 	{
 		if(variableName.Length > 6 && variableName.Substring(0, 6) == "$flag.")
@@ -27,16 +25,35 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 		}
 		else if(variableName.Length > 11 && variableName.Substring(0, 11) == "$inventory.")
 		{
-			if (variableName.Length > 19)
-			if(variableName.Length > 19 && variableName.Substring(11, 8).ToLower() == "valuable")
+			print("Inventory");
+			print(variableName.Length);
+			print(variableName.Substring(11, 6).ToLower());
+			print(variableName.Substring(11, 6).ToLower() == "number");
+			// if (variableName.Length > 19)
+			if (variableName.Length > 19 && variableName.Substring(11, 8).ToLower() == "valuable")
 			{
+				print("valuable");
 				if (playerInventory.Contains(variableName.Substring(20))) return new Value(true);
 				if (playerInventory.Contains("pristine " + variableName.Substring(20))) return new Value(true);
 				if (playerInventory.Contains("divine " + variableName.Substring(20))) return new Value(true);
 				return new Value(false);
 			}
+			else if (variableName.Length > 17 && variableName.Substring(11, 6).ToLower() == "number")
+			{
+				print("Here!");
+				string parseName = variableName.Substring(18);
+				string exactName = "";
+				for (int i = 0; i < parseName.Length; i++)
+				{
+					if (parseName[i] == '_') exactName += ' ';
+					else exactName += parseName[i];
+				}
+				print(playerInventory.Quantity(exactName));
+				return new Value((float)playerInventory.Quantity(exactName));
+			}
 			else
 			{
+				print("default");
 				string parseName = variableName.Substring(11);
 				string exactName = "";
 				for (int i = 0; i < parseName.Length; i++)
@@ -72,6 +89,7 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 
 	public override float GetNumber(string variableName)
 	{
+		print("number?");
 		if (variableName == "bits") return purse.bits;
 		Value v;
 		if(data.TryGetValue(variableName, out v))
