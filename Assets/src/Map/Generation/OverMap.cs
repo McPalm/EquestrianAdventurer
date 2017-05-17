@@ -462,7 +462,7 @@ public class OverMap : MonoBehaviour
 				case MapType.forest:
 					generator = new ForestGenerator();
 					palette = new int[] { 7, 5, 6, 2, 3, 4 };
-					section.paletteName = "default";
+					section.paletteName = "forest";
 					section.overlayTint = new Color(0.45f, 0.5f, 0.55f);
 					break;
 				case MapType.minimumPath:

@@ -25,14 +25,9 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 		}
 		else if(variableName.Length > 11 && variableName.Substring(0, 11) == "$inventory.")
 		{
-			print("Inventory");
-			print(variableName.Length);
-			print(variableName.Substring(11, 6).ToLower());
-			print(variableName.Substring(11, 6).ToLower() == "number");
 			// if (variableName.Length > 19)
 			if (variableName.Length > 19 && variableName.Substring(11, 8).ToLower() == "valuable")
 			{
-				print("valuable");
 				if (playerInventory.Contains(variableName.Substring(20))) return new Value(true);
 				if (playerInventory.Contains("pristine " + variableName.Substring(20))) return new Value(true);
 				if (playerInventory.Contains("divine " + variableName.Substring(20))) return new Value(true);
@@ -40,7 +35,6 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 			}
 			else if (variableName.Length > 17 && variableName.Substring(11, 6).ToLower() == "number")
 			{
-				print("Here!");
 				string parseName = variableName.Substring(18);
 				string exactName = "";
 				for (int i = 0; i < parseName.Length; i++)
@@ -48,12 +42,10 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 					if (parseName[i] == '_') exactName += ' ';
 					else exactName += parseName[i];
 				}
-				print(playerInventory.Quantity(exactName));
 				return new Value((float)playerInventory.Quantity(exactName));
 			}
 			else
 			{
-				print("default");
 				string parseName = variableName.Substring(11);
 				string exactName = "";
 				for (int i = 0; i < parseName.Length; i++)

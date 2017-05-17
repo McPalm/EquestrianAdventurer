@@ -610,7 +610,9 @@ public class Inventory : MonoBehaviour
 			if (consumables[i, 0] != null)
 			{
 				if (consumables[i, 0].displayName.ToLower() == s.ToLower())
-					return DestroyItem(consumables[i, 0]);
+				{
+					return RemoveConsumable(consumables[i, 0]);
+				}
 			}
 		}
 		return false;

@@ -16,7 +16,7 @@ public class SpawnTable : MonoBehaviour
 	public GameObject[] Rare;
 
 	// Use this for initialization
-	void Start ()
+	protected void Start ()
 	{
 		GameObject Spawn;
 		if(Rare.Length > 0 && Random.value < 0.02f)
