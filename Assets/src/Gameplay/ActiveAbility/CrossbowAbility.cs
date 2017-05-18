@@ -7,10 +7,9 @@ public class CrossbowAbility : RangedAbility
 	[SerializeField]
 	MapCharacter character;
 
-	/*
 	[SerializeField]
 	Sprite reloadIcon;
-	*/
+	
 
 	public override bool CanUse
 	{
@@ -41,6 +40,17 @@ public class CrossbowAbility : RangedAbility
 		return true;
 	}
 
+	public override Sprite Icon
+	{
+		get
+		{
+			if(loaded)
+				return base.Icon;
+			return reloadIcon;
+		}
+	}
+
+
 	public override bool TryUseAt(IntVector2 targetLocation)
 	{
 		if (Loaded)
@@ -48,6 +58,7 @@ public class CrossbowAbility : RangedAbility
 			GetComponent<Hurt>().damage = 5 + User.Attributes.Dexterity / 2;
 			if(base.TryUseAt(targetLocation))
 			{
+				SetIcon.Invoke(reloadIcon);
 				Loaded = false;
 				return true;
 			}
@@ -62,6 +73,7 @@ public class CrossbowAbility : RangedAbility
 			cac.StackAction(CharacterActionController.Actions.ability);
 			CombatTextPool.Instance.PrintAt(transform.position, "reloading...", Color.white);
 			Loaded = true;
+			SetIcon.Invoke(icon);
 			return true;
 		}
 	} 

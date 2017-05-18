@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public abstract class AActiveAbility : MonoBehaviour
@@ -52,8 +53,14 @@ public abstract class AActiveAbility : MonoBehaviour
 	/// if we meet all the conditions to use the ability
 	/// </summary>
 	abstract public Sprite Icon { get; }
+	/// <summary>
+	/// Called if we need to change the icon during runetime for some reason.
+	/// </summary>
+	internal SpriteEvent SetIcon = new SpriteEvent();
 
 	public string AbilityName;
 	[TextArea]
 	public string Description;
+
+	public class SpriteEvent : UnityEvent<Sprite> { }
 }

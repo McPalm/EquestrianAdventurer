@@ -5,7 +5,7 @@ using System.Collections;
 public class RangedAbility : AActiveAbility
 {
 	[SerializeField]
-	Sprite icon;
+	protected Sprite icon;
 
 	[Space(10)]
 	public int staminaCost = 0;

@@ -47,6 +47,12 @@ public class AbilityUI : MonoBehaviour
 
 	void SetButton(int i, AActiveAbility a)
 	{
+		a.SetIcon.AddListener(
+			(Sprite s) =>
+			{
+				AbilityIcons[i].sprite = s;
+			}
+			);
 		AbilityIcons[i].sprite = a.Icon;
 		AbilityIcons[i].enabled = true;
 		abilitites[i] = a;
