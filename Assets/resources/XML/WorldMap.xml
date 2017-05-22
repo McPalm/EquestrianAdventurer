@@ -190,9 +190,9 @@
       <Value>
         <inheritGenerator>false</inheritGenerator>
         <generator>pregenerated</generator>
-        <pregeneratedName>ponyville</pregeneratedName>
+        <pregeneratedName>ponyville_east</pregeneratedName>
         <inheritSpawnTable>false</inheritSpawnTable>
-        <spawntable>ponyville</spawntable>
+        <spawntable>ponyvilleeast</spawntable>
         <connections>east</connections>
         <module />
         <color>
