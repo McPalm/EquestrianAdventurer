@@ -18,7 +18,7 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 
 	public override Value GetValue(string variableName)
 	{
-		if(variableName.Length > 6 && variableName.Substring(0, 6) == "$flag.")
+		if (variableName.Length > 6 && variableName.Substring(0, 6) == "$flag.")
 		{
 			bool f = StoryFlags.Instance.HasFlag(variableName.Substring(6));
 			return new Value(f);
@@ -83,6 +83,8 @@ public class YarnVariables : Yarn.Unity.VariableStorageBehaviour
 	{
 		print("number?");
 		if (variableName == "bits") return purse.bits;
+		if (variableName == "day") return TimeAndDay.Instance.Day;
+		if (variableName == "hour") return TimeAndDay.Instance.Hour;
 		Value v;
 		if(data.TryGetValue(variableName, out v))
 		{
