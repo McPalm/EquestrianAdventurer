@@ -22,6 +22,40 @@ public class TimeAndDay : MonoBehaviour, TurnTracker.TurnEntry
 		}
 	}
 
+	public int Hour
+	{
+		get
+		{
+			return hour;
+		}
+
+		set
+		{
+			hour = value;
+		}
+	}
+
+	public int Day
+	{
+		get
+		{
+			return day;
+		}
+
+		set
+		{
+			day = value;
+		}
+	}
+
+	public int Minute
+	{
+		get
+		{
+			return second * 60 / SecPerHour;
+		}
+	}
+
 	public UnityEvent EventNewDay = new UnityEvent();
 	public TimeEvent EventNewHour = new TimeEvent();
 
