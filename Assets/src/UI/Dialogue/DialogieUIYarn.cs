@@ -86,18 +86,26 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 
 	public override IEnumerator RunOptions(Options optionsCollection, OptionChooser optionChooser)
 	{
+
 		runLine = false;
 		yield return new WaitForSeconds(0.25f);
 
-		buttonAnchor.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, text.preferredHeight + bodyOptionPadding, 35);
+        for (int i = 0; i < optionsCollection.options.Count; i++)
+        {
+            optionButtons[i].GetComponentInChildren<Text>().text = "";
+            // activate all options buttons before moving, or the text position wont sync properly
+            optionButtons[i].gameObject.SetActive(true);
+        }
 
-		for (int i = 0; i < optionsCollection.options.Count; i++)
-		{
-			optionButtons[i].GetComponentInChildren<Text>().text = optionsCollection.options[i];
-			optionButtons[i].gameObject.SetActive(true);
-			yield return new WaitForSeconds(0.05f);
-		}
-		currentChooser = optionChooser;
+        buttonAnchor.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, text.preferredHeight + bodyOptionPadding, 35);
+
+        for (int i = 0; i < optionsCollection.options.Count; i++)
+        {
+            optionButtons[i].GetComponentInChildren<Text>().text = optionsCollection.options[i];
+            yield return new WaitForSeconds(0.15f);
+        }
+
+        currentChooser = optionChooser;
 		while (currentChooser != null)
 			yield return null;
 	}
@@ -146,8 +154,8 @@ public class DialogieUIYarn : Yarn.Unity.DialogueUIBehaviour
 
 	public IEnumerator Wait()
 	{
-		buttonAnchor.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, text.preferredHeight + bodyOptionPadding, 35);
-		optionButtons[0].gameObject.SetActive(true);
+        optionButtons[0].gameObject.SetActive(true); // we must activate gameobject before we move parents, or it wont work properly.
+        buttonAnchor.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, text.preferredHeight + bodyOptionPadding, 35);
 		waiting = true;
 		do
 		{
