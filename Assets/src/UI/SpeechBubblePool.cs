@@ -41,7 +41,7 @@ public class SpeechBubblePool : MonoBehaviour
 		}
 
 		SpeechBubble bub = Instantiate(prefab);
-		bub.transform.parent = transform;
+		bub.transform.SetParent(transform);
 		pool.Add(bub);
 		return bub;
 
