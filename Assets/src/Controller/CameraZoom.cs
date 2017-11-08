@@ -4,7 +4,8 @@ using UnityEngine.EventSystems;
 
 public class CameraZoom : MonoBehaviour {
 
-	
+    public float maxSize = 10f;
+    public float minSize = 4f;
 	
 
 	// Update is called once per frame
@@ -15,10 +16,13 @@ public class CameraZoom : MonoBehaviour {
 		if(f < -0f)
 		{
 			Camera.main.orthographicSize *= 1.34f;
-		}
+            if (Camera.main.orthographicSize > maxSize) Camera.main.orthographicSize = maxSize;
+
+        }
 		else if(f > 0f)
 		{
 			Camera.main.orthographicSize /= 1.34f;
-		}
+            if (Camera.main.orthographicSize < minSize) Camera.main.orthographicSize = minSize;
+        }
 	}
 }
