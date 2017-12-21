@@ -76,6 +76,8 @@ public class MapCharacter : MonoBehaviour
 	public NoiseEvent EventHearNoise = new NoiseEvent();
 	public GameobjectEvent EventHit = new GameobjectEvent();
 	public GameobjectEvent EventMiss = new GameobjectEvent();
+    public GameobjectEvent EventDodge = new GameobjectEvent();
+    public GameobjectEvent EventStruck = new GameobjectEvent();
 
 	// Use this for initialization
 	void Start ()
@@ -112,6 +114,7 @@ public class MapCharacter : MonoBehaviour
 		if (hit)
 		{
 			EventHit.Invoke(target.gameObject);
+            target.EventStruck.Invoke(gameObject);
 			DamageData data = new DamageData(gameObject)
 				.SetDamage(Stats.damage * Random.Range(0.75f, 1.25f), Stats.damage * 0.75f)
 				.SetArmorPen(Stats.armorpen)
@@ -127,6 +130,7 @@ public class MapCharacter : MonoBehaviour
 		{
 			CombatTextPool.Instance.PrintAt((Vector3)target.GetComponent<MapObject>().RealLocation + new Vector3(0f, 0.4f), "Dodge", Color.cyan);
 			EventMiss.Invoke(target.gameObject);
+            target.EventDodge.Invoke(gameObject);
 		}
 	}
 
