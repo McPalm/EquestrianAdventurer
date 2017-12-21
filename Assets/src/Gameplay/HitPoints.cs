@@ -8,6 +8,7 @@ public class HitPoints : MonoBehaviour
 	
 	public HealthEvent EventChangeHealth;
 	public DamageData.DamageEvent EventBeforeHurt;
+    public DamageData.DamageEvent EventBeforeHurtFinal; // nice spaghetti code there cowboy
 	public DamageData.DamageEvent EventBeforeHeal;
 	public IntEvent EventHurt = new IntEvent();
 	public IntEvent EventHeal = new IntEvent();
@@ -57,6 +58,7 @@ public class HitPoints : MonoBehaviour
 	public void Hurt(DamageData d)
 	{
 		EventBeforeHurt.Invoke(d);
+        EventBeforeHurtFinal.Invoke(d);
 		damageTaken += d.TotalDamage;
 		EventChangeHealth.Invoke(maxHealth - damageTaken, maxHealth);
 		EventHurt.Invoke(d.TotalDamage);
