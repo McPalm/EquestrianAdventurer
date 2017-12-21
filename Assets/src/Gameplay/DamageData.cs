@@ -9,6 +9,7 @@ public class DamageData
 
 	// all fields need to be public in order to be serialized and sent over the network.
 	public int damage = 0;
+    public int minDamage = 0;
 
 	public float multiplier = 1f;
 	public int armorPenetration = 0;
@@ -29,14 +30,16 @@ public class DamageData
 		this.source = source;
 	}
 
-	public DamageData SetDamage(int d)
+	public DamageData SetDamage(int d, int minDamage = -1)
 	{
 		damage = d;
+        this.minDamage = (minDamage >= 0) ? minDamage : d;
 		return this;
 	}
-	public DamageData SetDamage(float d)
+	public DamageData SetDamage(float d, float minDamage = -1f)
 	{
 		damage = Mathf.RoundToInt(d);
+        this.minDamage = (minDamage >= 0f) ? Mathf.RoundToInt(minDamage) : damage;
 		return this;
 	}
 	public DamageData SetArmorPen(int ap)

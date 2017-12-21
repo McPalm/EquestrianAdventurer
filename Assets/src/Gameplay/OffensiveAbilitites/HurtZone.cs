@@ -22,7 +22,7 @@ public class HurtZone : MyBehaviour, TurnTracker.TurnEntry
 			float currentDamage = (scale) ? damage * duration / startSize : damage;
 			DamageData d = new DamageData(gameObject)
 				.AddType(damageType)
-				.SetDamage(currentDamage * Random.Range(0.75f, 1.25f));
+				.SetDamage(currentDamage * Random.Range(0.75f, 1.25f), currentDamage * 0.75f);
 			mc.GetComponent<HitPoints>().Hurt(d);
 			if(mc.GetComponent<RogueController>()) EventHurtMC.Invoke();
 		}

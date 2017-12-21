@@ -113,7 +113,7 @@ public class MapCharacter : MonoBehaviour
 		{
 			EventHit.Invoke(target.gameObject);
 			DamageData data = new DamageData(gameObject)
-				.SetDamage(Stats.damage * Random.Range(0.75f, 1.25f))
+				.SetDamage(Stats.damage * Random.Range(0.75f, 1.25f), Stats.damage * 0.75f)
 				.SetArmorPen(Stats.armorpen)
 				.AddType(Stats.damageTypes)
 				.SetCritical(Random.value < Stats.CritChance(target.Stats));

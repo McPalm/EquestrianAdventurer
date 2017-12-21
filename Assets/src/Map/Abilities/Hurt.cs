@@ -16,7 +16,7 @@ public class Hurt : MonoBehaviour
 			d |= dd;
 		DamageData data = new DamageData(source)
 			.AddType(d)
-			.SetDamage(damage * Random.Range(0.75f, 1.25f));
+			.SetDamage(damage * Random.Range(0.75f, 1.25f), damage * 0.75f);
 		target.GetComponent<HitPoints>().Hurt(data);
 		if (damageNumbers) HurtPool.Instance.DoHurt(IntVector2.RoundFrom(target.transform.position), data.TotalDamage);
 	}

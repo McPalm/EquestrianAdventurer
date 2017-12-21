@@ -23,6 +23,16 @@ public class OverMap : MonoBehaviour
 		FindObjectOfType<RogueController>().GetComponent<Mobile>().EventMovement.AddListener(PlayerMoveEvent); // listend to player movement to load on demand
 	}
 
+    /// <summary>
+    /// Checks if there is a loaded mapsection at the given location
+    /// </summary>
+    /// <param name="location"></param>
+    /// <returns></returns>
+    public bool HasSectionAt(IntVector2 location)
+    {
+        return map.ContainsKey(location);
+    }
+
 	/// <summary>
 	/// Randomize the connections between sections
 	/// </summary>
