@@ -21,7 +21,12 @@ public class MapCharacter : MonoBehaviour
 	Stats stats;
 	Stats equip;
 
-	public Stats Stats
+    static Gameplay.DiceDeck hostileHitDice;
+    static Gameplay.DiceDeck hostileCritDice;
+    Gameplay.DiceDeck myHitDice;
+    Gameplay.DiceDeck myCritDice;
+
+    public Stats Stats
 	{
 		get
 		{
@@ -65,6 +70,53 @@ public class MapCharacter : MonoBehaviour
 		}
 	}
 
+    /// <summary>
+    /// Make ana ttack roll against the target
+    /// </summary>
+    /// <param name="target">target</param>
+    /// <param name="mayCrit">true if the attack may score a critical hit</param>
+    /// <param name="weapon">name of the weapon for logging purposes</param>
+    /// <returns>0 = miss, 1 = hit, 2 = critical hit</returns>
+    public int HitRollVs(MapCharacter target, bool mayCrit = true, string weapon = "")
+    {
+        int roll = myHitDice.Next();
+        bool hit = roll >= Stats.HitNumber(target.Stats);
+
+        // only draw a number if critical hits are possible.
+        int critRoll = (Stats.CritNumber(target.Stats) < 21 && mayCrit) ? myCritDice.Next() : Random.Range(1, 21);
+        bool crit = critRoll >= Stats.CritNumber(target.Stats);
+
+        if (weapon != "") weapon = " with " + weapon;
+        if(!hit)
+            Debug.Log(string.Format("{0} attack {1}{2}, and ({3}) {4}!",
+                GetComponent<Mobile>().displayName,
+                target.GetComponent<Mobile>().displayName,
+                weapon,
+                roll,
+                "Miss"
+                ));
+        else if(mayCrit)
+            Debug.Log(string.Format("{0} attack {1}{2}, and ({3})({4}) {5}!",
+                GetComponent<Mobile>().displayName,
+                target.GetComponent<Mobile>().displayName,
+                weapon,
+                roll,
+                critRoll,
+                (crit) ? "Critical Hit" : "Hit"
+                ));
+        else
+            Debug.Log(string.Format("{0} attack {1}{2}, and ({3}) {4}!",
+                GetComponent<Mobile>().displayName,
+                target.GetComponent<Mobile>().displayName,
+                weapon,
+                roll,
+                (hit) ? "Hit" : "Miss"
+                ));
+
+
+        return (hit) ? ((crit) ? 2 : 1) : 0;
+    }
+
 	[Space(10)]
 
 	public GameObject skull;
@@ -91,8 +143,12 @@ public class MapCharacter : MonoBehaviour
 		GetComponent<HitPoints>().EventBeforeHurt.AddListener(OnHurt);
 		if (GetComponent<Inventory>()) GetComponent<Inventory>().EventChangeEquipment.AddListener(OnChangeEquipment);
 		if (EventDeath.GetPersistentEventCount() == 0) EventDeath.AddListener(DefaultDeath);
-		// maybe get a health bar and shit
-		Refresh();
+        if (hostileHitDice == null) hostileHitDice = new Gameplay.DiceDeck(20, 5);
+        if (hostileCritDice == null) hostileCritDice = new Gameplay.DiceDeck(20, 0);
+        myHitDice = (alignment == Hostility.player) ? new Gameplay.DiceDeck(20, 5) : hostileHitDice;
+        myCritDice = (alignment == Hostility.player) ? new Gameplay.DiceDeck(20, 5) : hostileCritDice;
+        // maybe get a health bar and shit
+        Refresh();
 	}
 
 	public bool HostileTowards(MapCharacter other)
@@ -109,18 +165,17 @@ public class MapCharacter : MonoBehaviour
 	{
 		transform.position = (transform.position + target.transform.position) * 0.5f;
 		GetComponent<Mobile>().ForceMove(GetComponent<MapObject>().RealLocation);
-
-		bool hit = Mathf.Min(Random.value, Random.value) < Stats.HitChance(target.Stats); // (hitSkill / (target.dodgeSkill + hitSkill));
-		if (hit)
+        int hitRoll = HitRollVs(target);
+        if (hitRoll > 0)
 		{
 			EventHit.Invoke(target.gameObject);
             target.EventStruck.Invoke(gameObject);
-			DamageData data = new DamageData(gameObject)
-				.SetDamage(Stats.damage * Random.Range(0.75f, 1.25f), Stats.damage * 0.75f)
-				.SetArmorPen(Stats.armorpen)
-				.AddType(Stats.damageTypes)
-				.SetCritical(Random.value < Stats.CritChance(target.Stats));
-			target.GetComponent<HitPoints>().Hurt(data);
+            DamageData data = new DamageData(gameObject)
+                .SetDamage(Stats.damage * Random.Range(0.75f, 1.25f), Stats.damage * 0.75f)
+                .SetArmorPen(Stats.armorpen)
+                .AddType(Stats.damageTypes)
+                .SetCritical(hitRoll == 2);
+            target.GetComponent<HitPoints>().Hurt(data);
 			HurtPool.Instance.DoHurt(target.GetComponent<MapObject>().RealLocation, data.TotalDamage);
 			if (data.critical) CombatTextPool.Instance.PrintAt((Vector3)target.GetComponent<MapObject>().RealLocation + new Vector3(0f, 0.4f), "Crit!", new Color(1f, 0.5f, 0f));
 			if (target.GetComponent<HitPoints>().CurrentHealth <= 0) EventKillingBlow.Invoke(target);

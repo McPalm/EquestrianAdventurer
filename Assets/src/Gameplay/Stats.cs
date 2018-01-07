@@ -29,21 +29,35 @@ public struct Stats
 		this.critAvoid = critAvoid;
 	}
 
-	public float HitChance(Stats target)
-	{
-		if (target.dodge < 1 && hit < 1) return 0.5f;
-		if (target.dodge < 1) return 1f;
-		if (hit < 1 || hit * 9 < target.dodge) return 0.1f;
-		return hit / (float)(hit + target.dodge);
-	}
+    /// <summary>
+    /// A number between 1 and 20, you need to roll at least this high on a d20 to hit the target
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public int HitNumber(Stats target)
+    {
+        int n = 10 - hit + target.dodge;
+        if (n > 13) n = n / 2 + 6;
+        n = System.Math.Min(20, n);
+        return n;
+    }
 
-	public float CritChance(Stats target)
-	{
-		if (critChance < 1) return 0f;
-		if (target.critAvoid < 0) return 0.25f;
-		return (float)critChance / (critChance + target.critAvoid + 1) * 0.25f;
+    /// <summary>
+    /// A number between 1 and 20, you need to roll at least this high on a d20 to critically hit the target
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public float CritNumber(Stats target)
+    {
+        if (critChance <= 0) return 21; // cant crit
+        if (target.critAvoid / 2 > critChance) return 21; // cant crit
+        int c = critChance - target.critAvoid;
+        if (c < 0) return 20;
+        if (target.critAvoid <= 0) return 19 - c;
+        int factor = critChance * 2 / target.critAvoid; // how many crit chance x2 can we fit into crit avoid.
+        return (c < factor) ? 19 - c : 19 - factor;
 
-	}
+    }
 
 	public float HitChance(Stats target, int hitbonus, int dodgebonus)
 	{

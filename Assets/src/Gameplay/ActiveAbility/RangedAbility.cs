@@ -70,7 +70,7 @@ public class RangedAbility : AActiveAbility
 		{
 			if(target)
 			{
-				if(Random.value < User.Stats.HitChance(target.Stats))
+				if(User.HitRollVs(target, false) == 1)
 				{
 					OnHit.Invoke(target.gameObject);
 					OnHitLocation.Invoke(targetLocation);
