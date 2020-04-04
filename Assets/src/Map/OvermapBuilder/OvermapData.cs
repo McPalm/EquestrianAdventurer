@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 using System.Xml.Serialization;
 using System.Collections.Generic;
@@ -377,9 +377,13 @@ public class OvermapData
 
 		set
 		{
-			for(int i = 0; i < value.Length; i++)
+            Debug.Log(value.Length);
+            Debug.Log(value);
+            for (int i = 0; i < value.Length; i++)
 			{
-				sections.Add(value[i].Key, value[i].Value);
+                Debug.Log(value[i].Key + ": " + value[i].Value);
+                sections[value[i].Key] = value[i].Value;
+                // sections.Add(value[i].Key, value[i].Value);
 			}
 		}
 	}

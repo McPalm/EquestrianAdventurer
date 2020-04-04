@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.IO;
 using System.Xml.Serialization;
@@ -51,8 +51,9 @@ public static class XmlTool
 	{
 		try
 		{
-			// Debug.Log("Loading from: " + pathInResources);
+			Debug.Log("Loading from: " + pathInResources);
 			TextAsset temp = Resources.Load(pathInResources) as TextAsset;
+            Debug.Log(temp.text);
 			return LoadFromXMLString<T>(temp.text);
 		}
 		catch (Exception e)
@@ -64,10 +65,12 @@ public static class XmlTool
 
 	public static T LoadFromXMLString<T>(string s)
 	{
-		try
+        Stream stream = null;
+
+        try
 		{
 			XmlSerializer xml = new XmlSerializer(typeof(T));
-			Stream stream = GenerateStreamFromString(s);
+			stream = GenerateStreamFromString(s);
 			T file = (T)xml.Deserialize(stream);
 			stream.Close();
 			return file;
@@ -75,9 +78,9 @@ public static class XmlTool
 		catch (Exception e)
 		{
 			Debug.LogException(e);
-			throw new Exception("unable to generate file.");
+            stream?.Close();
+            throw new Exception("unable to generate file.");
 		}
-		
 	}
 
 	public static Stream GenerateStreamFromString(string s)

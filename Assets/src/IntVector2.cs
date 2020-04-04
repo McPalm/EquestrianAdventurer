@@ -1,10 +1,8 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 [System.Serializable]
-#pragma warning disable
 public struct IntVector2 : IEquatable<IntVector2>
-#pragma warning restore
 {
 	public int x;
 	public int y;
@@ -128,7 +126,17 @@ public struct IntVector2 : IEquatable<IntVector2>
 		return Math.Max(Math.Abs(x - other.x), Math.Abs(y - other.y));
 	}
 
-	public int MagnitudeMax
+    public override bool Equals(object obj)
+    {
+        return base.Equals(obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+    public int MagnitudeMax
 	{
 		get
 		{

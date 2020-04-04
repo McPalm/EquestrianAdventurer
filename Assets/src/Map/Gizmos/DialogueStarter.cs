@@ -45,7 +45,7 @@ public class DialogueStarter : MonoBehaviour
 
 	public void Close()
 	{
-		// UIDialogueWindow.Instance.Close(name);
-		Debug.LogWarning("Not Implemented!");
+        Debug.Log("Close invoked");
+        UIDialogueWindow.Instance.Close();
 	}
 }

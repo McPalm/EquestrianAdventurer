@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,7 +43,10 @@ public class OverMap : MonoBehaviour
 		{
 			MapSectionContainer container = GetSectionAt(section.Key);
 
-			container.terrain = section.Value.generator;
+            Debug.Log(container);
+            Debug.Log(section);
+            Debug.Log(section.Value.generator);
+            container.terrain = section.Value.generator;
 			container.sectionName = section.Value.pregeneratedName;
 			container.givenModule = MapModule.Get(section.Value.module);
 

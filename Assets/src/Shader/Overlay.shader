@@ -4,8 +4,9 @@ Shader "Unlit/Overlay"
 {
 	Properties
 	{
-		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
 		[PerRendererData] _Color("Color", Color) = (1,1,1,1)
+		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
+		
 		
 	}
 

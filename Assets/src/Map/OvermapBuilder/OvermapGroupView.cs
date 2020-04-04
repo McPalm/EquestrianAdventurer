@@ -1,25 +1,17 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class OvermapGroupView : MonoBehaviour
 {
-	[SerializeField]
-	Slider hue;
-	[SerializeField]
-	InputField groupName;
-	[SerializeField]
-	Image colorDisplay;
-	[SerializeField]
-	Dropdown generator;
-	[SerializeField]
-	InputField spawner;
-	[SerializeField]
-	Image spawnNameValidator;
-	[SerializeField]
-	InputField moduleCount;
-	[SerializeField]
-	GroupModulesUI modules;
+	public Slider hue;
+	public InputField groupName;
+	public Image colorDisplay;
+	public Dropdown generator;
+	public InputField spawner;
+	public Image spawnNameValidator;
+	public InputField moduleCount;
+	public GroupModulesUI modules;
 	
 
 	OvermapData data;
